@@ -1,0 +1,155 @@
+﻿body {
+    font-size: 12px;
+    padding-top: 10px;
+    padding-bottom: 20px; /**/
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default
+input,
+select,
+textarea {
+    max-width: 280px;
+} */
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.header {
+    padding: 0px;
+    margin: 0px 0px 5px 0px;
+    line-height: 0px;
+}
+
+.form-control {
+    padding: 2px 4px;
+    font-size: 12px;
+}
+
+.main-left-page {
+    padding: 0px;
+}
+
+
+.main-right-page {
+    padding: 0px;
+}
+
+    .main-right-page > li > a {
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+.padding-3 {
+    padding: 3px;
+}
+
+.padding-top-3 {
+    padding-top: 3px;
+}
+
+.margin-top-3 {
+    margin-top: 3px;
+}
+
+.margin-tb-5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.margin-tb-10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+footer {
+    font-size: 10px;
+    text-align: center;
+}
+
+.blocks .btn-primary {
+    padding: 5px 8px;
+    -ms-border-radius: 0;
+    border-radius: 0;
+}
+
+.blocks {
+    border-spacing: 3px;
+}
+
+/* tab color */
+.nav-tabs > li > a {
+    background-color: #FCBE9F;
+    border-color: #777777;
+    color: #000000;
+}
+
+/* active tab color */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #888888;
+}
+
+/* hover tab color */
+.nav-tabs > li > a:hover {
+    border-color: #000000;
+    background-color: #ffffff;
+}
+
+.btn-atm {
+    color: #000000;
+    background-color: #FF8D54;
+    border-color: #000000;
+    font-weight: bold;
+}
+
+.btn-atm.active {
+    background-color: #FFC6AA;
+    color: #ffffff;
+    
+}
+
+.emptyspace {
+    padding: 5px;
+}
+
+.form-readonly {
+    border: none;
+}
+
+.tab-pane {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}

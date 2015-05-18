@@ -1,0 +1,1007 @@
+﻿@{
+    ViewBag.Title = "Resume Saya";
+    Layout = "../Shared/_EmptyLayoutWithMenu.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs" id="resume">
+            <li role="presentation" class="active"><a data-toggle="tab" href="#peribadi">Peribadi</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#akademik">Keputusan Akademik</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#sport">Kegiatan Sukan &amp; Kokurikulum</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#service">Maklumat Perkhidmatan &amp; Ikatan</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#computer">Kemahiran Komputer</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#skill">Kebolehan/Kemahiran</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#crime">Jenayah/Dadah</a></li>
+        </ul>
+    </div>
+    <div class="tab-content">
+        <div class="tab-pane active" id="peribadi">
+            <form class="form-horizontal" id="form_peribadi" action="#">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="emptyspace"></div>
+                        <div class="form-group">
+                            <label for="fullname" class="col-sm-4 control-label">Nama Penuh</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="fullname" placeholder="Nama Penuh">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="idnumber" class="col-sm-4 control-label">No Kad Pengenalan</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="idnumber" placeholder="No Kad Pengenalan">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="col-sm-4 control-label">Emel</label>
+                            <div class="col-sm-8">
+                                <input type="email" class="form-control" id="email" placeholder="Emel">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateofbirth" class="col-sm-4 control-label">Tarikh Lahir</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="01/01/1900">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar "></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Status Perkahwinan</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Belum Berkahwin</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Berkahwin</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Duda</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Janda</span>
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Balu</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="emptyspace"></div>
+                        <div class="media">
+                            <div class="media-right">
+                                <a href="#">
+                                    <img class="media-object" src="" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="emptyspace"></div>
+                        <div class="form-group">
+                            <label for="dateofbirth" class="col-sm-4 control-label">Tinggi</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="100">
+                                    <span class="input-group-addon">M</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nationality" class="col-sm-4 control-label">Kerakyatan</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="nationality"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="religion" class="col-sm-4 control-label">Agama</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="religion"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="placeofliving" class="col-sm-4 control-label">Tempat Tinggal</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="placeofliving" placeholder="Tempat Tinggal">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mailingaddress1" class="col-sm-4 control-label">Alamat Surat Menyurat Terkini</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="mailingaddress1" placeholder="Alamat">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mailingpostcode" class="col-sm-4 control-label">Poskod</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="mailingpostcode" placeholder="10000">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mailingcountry" class="col-sm-4 control-label">Negara</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="mailingcountry"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mailingstate" class="col-sm-4 control-label">Negeri</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="mailingstate"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mailingcity" class="col-sm-4 control-label">Bandar</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="mailingcity"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mothersname" class="col-sm-4 control-label">Nama Ibu</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="mothersname" placeholder="Nama Ibu">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="motheroccupation" class="col-sm-4 control-label">Pekerjaan Ibu</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="motheroccupation"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fathername" class="col-sm-4 control-label">Nama Bapa</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="fathername" placeholder="Nama Bapa">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fatheroccupation" class="col-sm-4 control-label">Pekerjaan Bapa</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="fatheroccupation"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianname" class="col-sm-4 control-label">Nama Penjaga</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="guardianname" placeholder="Nama Penjaga">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianoccupation" class="col-sm-4 control-label">Pekerjaan Penjaga</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="guardianoccupation"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="familyhigheducation" class="col-sm-4 control-label">Kelulusan Tertinggi Keluarga</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="familyhigheducation" placeholder="Kelulusan Tertinggi Keluarga">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="emptyspace"></div>
+                        <div class="form-group">
+                            <label for="dateofbirth" class="col-sm-4 control-label">Berat</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="100">
+                                    <span class="input-group-addon">Kg</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nationalitycertno" class="col-sm-4 control-label">No Sijil Kerakyatan</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="nationalitycertno" placeholder="No. Sijil Kerakyatan">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="race" class="col-sm-4 control-label">Bangsa</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="race"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ethnic" class="col-sm-4 control-label">Etnik</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="ethnic"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="homephoneno" class="col-sm-4 control-label">No. Tel Rumah</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="homephoneno" placeholder="03-12345678">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobilephoneno" class="col-sm-4 control-label">No Tel Bimbit</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="mobilephoneno" placeholder="019-12345678">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="relativephoneno" class="col-sm-4 control-label">No Tel Waris</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="relativephoneno" placeholder="03-12345678/019-12345678">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="childno" class="col-sm-4 control-label">Anak Ke</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="childno" placeholder="1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motheridnumber" class="col-sm-4 control-label">No Kad Pengenalan/Passport Ibu</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="motheridnumber" placeholder="190101-01-0101/A123456789">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="motherincome" class="col-sm-4 control-label">Pendapatan Sebulan (RM)</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">RM</span>
+                                    <input type="text" class="form-control" placeholder="1000.00" id="motherincome">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fatheridnumber" class="col-sm-4 control-label">No Kad Pengenalan/Passort Bapa</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="fatheridnumber" placeholder="190101-01-0101/A123456789">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fatherincome" class="col-sm-4 control-label">Pendapatan Sebulan (RM)</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">RM</span>
+                                    <input type="text" class="form-control" placeholder="1000.00" id="fatherincome">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianidnumber" class="col-sm-4 control-label">No Kad Pengenalan/Passport Penjaga</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="guardianidnumber" placeholder="190101-01-0101/A123456789">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateofbirth" class="col-sm-4 control-label">Pendapatan Sebulan (RM)</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">RM</span>
+                                    <input type="text" class="form-control" placeholder="1000.00">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dateofbirth" class="col-sm-4 control-label">Bercermin Mata/Kanta Lekap?</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline">
+                                    <input type="radio" name="spectacle" value="Y" />Ya
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="spectacle" value="N" />Tidak
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="bmi" class="col-sm-4 control-label">BMI</label>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="50.00" id="bmi">
+                                    <span class="input-group-addon">BMI</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthcertno" class="col-sm-4 control-label">No Sijil Lahir</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="birthcertno" placeholder="REG010012">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthcountry" class="col-sm-4 control-label">Negara Kelahiran</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="birthcountry"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthstate" class="col-sm-4 control-label">Negeri Kelahiran</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="birthstate"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthcity" class="col-sm-4 control-label">Bandar Kelahiran</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="birthcity"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="placeofbirth" class="col-sm-4 control-label">Tempat Kelahiran</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="placeofbirth" placeholder="Tempat Lahir">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="childfrom" class="col-sm-4 control-label">Daripada</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="childfrom" placeholder="5">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mothernationality" class="col-sm-4 control-label">Warganegara Ibu</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="mothernationality"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="motherphoneno" class="col-sm-4 control-label">No Telefor</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="motherphoneno" placeholder="03-12345678/019-12345678">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fathernationality" class="col-sm-4 control-label">Warganegara Bapa</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="fathernationality"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fahterphoneno" class="col-sm-4 control-label">No Telefon</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="fahterphoneno" placeholder="03-12345678/019-12345678">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardiannationality" class="col-sm-4 control-label">Warganegara Penjaga</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" id="guardiannationality"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianphoneno" class="col-sm-4 control-label">No Telefon</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="guardianphoneno" placeholder="03-12345678/019-12345678">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="akademik">
+            <form id="form_akademik" class="form-horizontal">
+                <div class="row">
+                    <div class="emptyspace"></div>
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Bil.</th>
+                                    <th>Tahap Pendidikan</th>
+                                    <th>Sijil/Bidang</th>
+                                    <th>Keputusan</th>
+                                    <th>Tahun</th>
+                                    <th>Pusat Pengajian</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            SUBJEK SPM dan Setaraf
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Subjek (jika perlu)</th>
+                                        <th>Subjek</th>
+                                        <th>Gred/Keputusan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i>(SPM Sahaja)</i></td>
+                                        <td>Bahasa Malaysia</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Bahasa Inggeris</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Matematik</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Kimia</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Fizik</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Sains</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td></td>
+                                        <td>Sejarah</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Matematik Tambahan</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Sastera</td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><select class="form-control"></select></td>
+                                        <td><input type="checkbox" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="sport">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Bil.</th>
+                                <th>Kegiatan Sukan Yang Disertai</th>
+                                <th>Pencapaian/Peringkat</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Bil.</th>
+                                <th>Kegiatan Ko-Kurikulum Yang Disertai</th>
+                                <th>Pencapaian/Peringkat</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Bil.</th>
+                                <th>Lain-Lain</th>
+                                <th>Pencapaian/Peringkat</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="service">
+            <div class="emptyspace"></div>
+            <div class="row">
+                <form id="service_form" class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs" id="servicetab">
+                                <li role="presentation" class="active"><a data-toggle="tab" href="#servicetab_now">Perkhidmatan Sekarang</a></li>
+                                <li role="presentation"><a data-toggle="tab" href="#servicetab_contract">Ikatan/Kontrak</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="servicetab_now">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="servicetab_currentoccupation" class="col-sm-4 control-label">Pekerjaan Sekarang</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_currentoccupation" placeholder="Pekerjaan Sekarang">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_currentorganization" class="col-sm-4 control-label">Organisasi</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_currentorganization" placeholder="Organisasi">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_currentsalary" class="col-sm-4 control-label">Gaji Sebulan</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">RM</span>
+                                                        <input type="text" class="form-control" id="servicetab_currentsalary" placeholder="1,000.00">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary btn-sm">
+                                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="servicetab_contract">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="col-md-12">
+                                                    * Adakah anda ditauliahkan di dalam Pasukan Latihan Pegawai Simpanan (PALAPES) ? <label class="radio-inline"><input type="radio" name="servicetab_ispalapes" value="Y" />Ya</label><label class="radio-inline"><input type="radio" name="servicetab_ispalapes" value="N" />Tidak</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    Tahun
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control"></select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_armyno" class="col-sm-4 control-label">No. Tentera</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_armyno" placeholder="12345">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_palapesgraduationdate" class="col-sm-4 control-label">Tarikh Tamat Tauliah Sukarela</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="servicetab_palapesgraduationdate" placeholder="01/01/1900" />
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_palapesinstitute" class="col-sm-4 control-label">Pusat Pengajian</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_palapesinstitute" placeholder="Pusat Pengajian">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_otherqualification" class="col-sm-4 control-label">Lain-Lain Kelulusan (jika ada)</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_otherqualification" placeholder="Lain-Lain">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            * Adakah anda terikat dalam perjanjian dengan mana-mana majikan atau badan bernaung biasiswa?
+                                            <label class="radio-inline">
+                                                <input type="radio" name="servicetab_scholarship" value="Y" /> Ya
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="servicetab_scholarship" value="N" /> Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_oldemployername" class="col-sm-4 control-label">Nama Majikan</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_oldemployername" placeholder="Nama Majikan">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_contractperiod" class="col-sm-4 control-label">Ikatan Perjanjian Selama</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_contractperiod" placeholder="2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_employeraddress" class="col-sm-4 control-label">Alamat</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_employeraddress" placeholder="Alamat">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="servicetab_contractstart" class="col-sm-4 control-label">Mulai</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_contractstart" placeholder="1900">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            Adakah majikan anda sanggup memberikan pelepasan sekiranya anda dipilih untuk berkhidmat di dalam ATM?
+                                            <label class="radio-inline">
+                                                <input type="radio" name="servicetab_employeraggrement" value="Y" />Ya
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="servicetab_employeraggrement" value="N" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="servicetab_currentorganization" class="col-sm-4 control-label">Surat rasmi pelepasan majikan</label>
+                                            <div class="col-sm-8">
+                                                <input type="file" />
+                                                <input type="button" class="btn btn-primary" value="Hapus" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <strong>* Pernahkah anda menghadiri pemilihan pegawai tentera ?</strong>
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radio" name="servicetab_attendatmofficer" value="Y" /> Ya
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radio" name="servicetab_attendatmofficer" value="N" />Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_attendatmofficerdate" class="col-sm-4 control-label">Tarikh</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input input-group">
+                                                        <input type="text" class="form-control" id="servicetab_attendatmofficerdate" placeholder="01/01/1900">
+                                                        <div class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_attendatmplace" class="col-sm-4 control-label">Tempat</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_attendatmplace" placeholder="Tempat">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <strong>* Pernahkah anda berkhidmat di ATM ?</strong>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="radio" name="servicetab_exatm" value="Y" /> Ya
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" class="radio" name="servicetab_exatm" value="N" /> Tidak
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_exatmperiod" class="col-sm-4 control-label">Tempoh Perkhidmatan</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_exatmperiod" placeholder="10">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="servicetab_exatmplace" class="col-sm-4 control-label">Tempat</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="servicetab_exatmplace" placeholder="Tempat">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <strong>Keutamaan Perkhidmatan Pilihan</strong>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Pilihan Pertama</label>
+                                                <div class="col-sm-8">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_firstchoice" value="TDM" />Tentera Darat
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_firstchoice" value="TLDM" />Tentera Laut Diraja Malaysia
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_firstchoice" value="TUDM" />Tentera Udara Diraja Malaysia
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Pilihan Kedua</label>
+                                                <div class="col-sm-8">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_secondchoice" value="TDM" />Tentera Darat
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_secondchoice" value="TLDM" />Tentera Laut Diraja Malaysia
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_secondchoice" value="TUDM" />Tentera Udara Diraja Malaysia
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-4 control-label">Pilihan Ketiga</label>
+                                                <div class="col-sm-8">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_thirdchoice" value="TDM" />Tentera Darat
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_thirdchoice" value="TLDM" />Tentera Laut Diraja Malaysia
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input type="radio" class="radio" name="servicetab_thirdchoice" value="TUDM" />Tentera Udara Diraja Malaysia
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="computer">
+            <div class="row">
+                <form class="form-inline" id="computer_form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" class="checkbox" value="MSWord" />MS Word
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" class="checkbox" value="MSExcel" />MS Excel
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" class="checkbox" value="MSPoint" />MS Power Point
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" class="checkbox" value="ICT" />ICT
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" class="checkbox" value="MSExcel" />Lain-Lain
+                                </label>
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="skill">
+            <div class="row">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bil.</th>
+                            <th>Jenis</th>
+                            <th>Kebolehan/Kelebihan</th>
+                            <th>Pencapaian</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="crime">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal" id="crime_form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Pernahkan anda terlibat di dalam mana-mana kes jenayah ?
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="radio" name="crime_involve" value="Y" />Ya
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="radio" name="crime_involve" value="N" />Tidak
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Pernahkan anda terlibat di dalam mana-mana kes dadah ?
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="radio" name="crime_drug" value="Y" />Ya
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" class="radio" name="crime_drug" value="N" />Tidak
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script src="@Url.Content("~/Scripts/Main/public_resume.js")"></script>
+}
