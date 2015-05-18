@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4BC025B8-6498-4BD1-A55D-1D8DD4E2D6C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SevenH.MMCSB.Atm.Persistance</RootNamespace>
+    <AssemblyName>atm.persistance</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AtmEntitiesModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtmEntitiesModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AtmEntitiesModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AtmEntitiesModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tblAcqCriteria.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqEducationCriteria.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqEducationCriteriaSubject.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqEduCriteriaFieldOfStudy.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqQuestion.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqQuestionnaire.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqQuestionnaireScale.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcquisition.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicant.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantDispStatu.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantEdu.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantEduSubject.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantSkill.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantSportAssoc.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplication.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFAchievement.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFAcqType.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblRefBloodType.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFCity.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFCountry.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFEthnic.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFGender.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFHighEduLevel.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFInstitution.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFInstitutionCat.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFLoginStatu.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFMajorMinor.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFMaritalStatu.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFPersonalityType.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFQuestionnareType.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFRace.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFReligion.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFService.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFSkill.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFSkillCat.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFSportAndAssociation.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFState.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFSubject.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFSubjectGrade.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblUser.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblUserLog.cs">
+      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="AtmEntitiesModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AtmEntitiesModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="AtmEntitiesModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
+      <LastGenOutput>AtmEntitiesModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="AtmEntitiesModel.edmx.diagram">
+      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
+    </None>
+    <None Include="AtmEntitiesModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
+      <LastGenOutput>AtmEntitiesModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

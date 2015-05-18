@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSpy v2005 sp1 U (http://www.xmlspy.com) by NorAzmi Shaparuddin (SPK Healthline Sdn Bhd) -->
+<!-- 
+bs attributes
+inheritance - set to abstract, sealed or blank
+new -  to call new at the field init
+
+-->
+<xs:schema xmlns="http://www.dagangnet.com.my/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bs="http://www.dagangnet.com.my/xsd/" targetNamespace="http://www.dagangnet.com.my/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:element name="Address">
+    <xs:complexType>
+      <xs:attribute name="Id" type="xs:int" use="required"/>
+      <xs:attribute name="Address1" type="xs:string" use="required"/>
+      <xs:attribute name="Address2" type="xs:string" use="required"/>
+      <xs:attribute name="Address3" type="xs:string" use="required"/>
+      <xs:attribute name="City" type="xs:string" use="required"/>
+      <xs:attribute name="CityId" type="xs:int" use="required"/>
+      <xs:attribute name="Postcode" type="xs:string" use="required"/>
+      <xs:attribute name="State" type="xs:string" use="required"/>
+      <xs:attribute name="StateId" type="xs:int" use="required"/>
+      <xs:attribute name="Country" type="xs:string" use="required"/>
+      <xs:attribute name="CountryId" type="xs:int" use="required"/>
+      <xs:attribute name="MobilePhoneNo" type="xs:string" use="required"/>
+      <xs:attribute name="PhoneNo" type="xs:string" use="required"/>
+      <xs:attribute name="FaxNo" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginUser">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="Address"/>
+        <xs:element ref="Biodata"/>
+        <xs:element name="Roles">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element ref="LoginRole" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CreatedDate" type="xs:dateTime" nillable="true"/>
+        <xs:element name="LastLoginDate" type="xs:dateTime" nillable="true"/>
+        <xs:element name="UpdatedDate" type="xs:dateTime" nillable="true"/>
+      </xs:all>
+      <xs:attribute name="Salt" type="xs:string" use="required"/>
+      <xs:attribute name="UserName" type="xs:string" use="required"/>
+      <xs:attribute name="Password" type="xs:string" use="required"/>
+      <xs:attribute name="Status" type="xs:string" use="required"/>
+      <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="IsLocked" type="xs:boolean" use="required"/>
+      <xs:attribute name="IsAdmin" type="xs:boolean" use="required"/>
+      <xs:attribute name="UserType" type="xs:string" use="required"/>
+      <xs:attribute name="UserId" type="xs:string" use="required"/>
+      <xs:attribute name="TempId" type="xs:string" use="required"/>
+      <xs:attribute name="AccountNo" type="xs:string" use="required"/>
+      <xs:attribute name="UserToken" type="xs:string" use="required"/>
+      <xs:attribute name="Email" type="xs:string" use="required"/>
+      <xs:attribute name="Id" type="xs:int" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Biodata">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="DateOfBirth" type="xs:date" nillable="true"/>
+      </xs:all>
+      <xs:attribute name="SalutationName" type="xs:string" use="required"/>
+      <xs:attribute name="FullName" type="xs:string" use="required"/>
+      <xs:attribute name="Email" type="xs:string" use="required"/>
+      <xs:attribute name="IDType" type="xs:string" use="required"/>
+      <xs:attribute name="IDNumber" type="xs:string" use="required"/>
+      <xs:attribute name="PassportNo" type="xs:string" use="required"/>
+      <xs:attribute name="MobilePhoneNo" type="xs:string" use="required"/>
+      <xs:attribute name="PhoneNo" type="xs:string" use="required"/>
+      <xs:attribute name="FaxNo" type="xs:string" use="required"/>
+      <xs:attribute name="Designation" type="xs:string" use="required"/>
+      <xs:attribute name="Department" type="xs:string" use="required"/>
+      <xs:attribute name="Nationality" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginRole">
+    <xs:complexType>
+      <xs:attribute name="Role" type="xs:string" use="required"/>
+      <xs:attribute name="Id" type="xs:int" use="required"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
