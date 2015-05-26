@@ -54,7 +54,7 @@
 						[XmlAttribute]
             [DebuggerHidden]
 
-            public <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
+            public virtual <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
             <xsl:value-of select="@name"/>
 						{
 						set
@@ -80,7 +80,7 @@
             ///&lt;/summary&gt;
             [DebuggerHidden]
 
-            public <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
+            public virtual <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
             <xsl:value-of select="@name"/>
 						{
 						set
@@ -131,7 +131,7 @@
 			// public properties members
 			<xsl:for-each select="xs:attribute">
 				[XmlAttribute]
-        public <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
+        public virtual <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
         <xsl:value-of select="@name"/>
 				{
 				set
@@ -155,7 +155,7 @@
         ///&lt;summary&gt;
         /// <xsl:value-of select="xs:annotation/xs:documentation"/>
         ///&lt;/summary&gt;
-        public <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
+        public virtual <xsl:value-of select="sevenhpk:GetCLRDataType(@type, @nillable)"/>
         <xsl:value-of select="@name"/>
 				{
 				set

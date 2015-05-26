@@ -79,7 +79,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public int Id
+        public virtual int Id
         {
             set
             {
@@ -104,7 +104,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Address1
+        public virtual string Address1
         {
             set
             {
@@ -129,7 +129,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Address2
+        public virtual string Address2
         {
             set
             {
@@ -154,7 +154,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Address3
+        public virtual string Address3
         {
             set
             {
@@ -179,7 +179,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string City
+        public virtual string City
         {
             set
             {
@@ -204,7 +204,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public int CityId
+        public virtual int CityId
         {
             set
             {
@@ -229,7 +229,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Postcode
+        public virtual string Postcode
         {
             set
             {
@@ -254,7 +254,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string State
+        public virtual string State
         {
             set
             {
@@ -279,7 +279,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public int StateId
+        public virtual int StateId
         {
             set
             {
@@ -304,7 +304,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Country
+        public virtual string Country
         {
             set
             {
@@ -329,7 +329,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public int CountryId
+        public virtual int CountryId
         {
             set
             {
@@ -354,7 +354,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string MobilePhoneNo
+        public virtual string MobilePhoneNo
         {
             set
             {
@@ -379,7 +379,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string PhoneNo
+        public virtual string PhoneNo
         {
             set
             {
@@ -404,7 +404,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string FaxNo
+        public virtual string FaxNo
         {
             set
             {
@@ -515,7 +515,7 @@ namespace SevenH.MMCSB.Atm.Domain
         public const string PropertyNameAddress = "Address";
         [DebuggerHidden]
 
-        public Address Address
+        public virtual Address Address
         {
             get { return m_Address; }
             set
@@ -532,7 +532,7 @@ namespace SevenH.MMCSB.Atm.Domain
         public const string PropertyNameBiodata = "Biodata";
         [DebuggerHidden]
 
-        public Biodata Biodata
+        public virtual Biodata Biodata
         {
             get { return m_Biodata; }
             set
@@ -552,7 +552,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlArrayItem("LoginRole", IsNullable = false)]
         [DebuggerHidden]
 
-        public ObjectCollection<LoginRole> LoginRoleCollection
+        public virtual ObjectCollection<LoginRole> LoginRoleCollection
         {
             get { return m_LoginRoleCollection; }
         }
@@ -563,7 +563,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Salt
+        public virtual string Salt
         {
             set
             {
@@ -588,7 +588,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string UserName
+        public virtual string UserName
         {
             set
             {
@@ -613,7 +613,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Password
+        public virtual string Password
         {
             set
             {
@@ -638,7 +638,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Status
+        public virtual string Status
         {
             set
             {
@@ -663,7 +663,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string CreatedBy
+        public virtual string CreatedBy
         {
             set
             {
@@ -688,7 +688,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public bool IsLocked
+        public virtual bool IsLocked
         {
             set
             {
@@ -713,7 +713,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public bool IsAdmin
+        public virtual bool IsAdmin
         {
             set
             {
@@ -738,7 +738,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string UserType
+        public virtual string UserType
         {
             set
             {
@@ -763,7 +763,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string UserId
+        public virtual string UserId
         {
             set
             {
@@ -788,7 +788,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string TempId
+        public virtual string TempId
         {
             set
             {
@@ -813,7 +813,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string AccountNo
+        public virtual string AccountNo
         {
             set
             {
@@ -838,7 +838,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string UserToken
+        public virtual string UserToken
         {
             set
             {
@@ -863,7 +863,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Email
+        public virtual string Email
         {
             set
             {
@@ -888,7 +888,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public int Id
+        public virtual int Id
         {
             set
             {
@@ -913,7 +913,7 @@ namespace SevenH.MMCSB.Atm.Domain
         ///</summary>
         [DebuggerHidden]
 
-        public DateTime? CreatedDate
+        public virtual DateTime? CreatedDate
         {
             set
             {
@@ -935,7 +935,7 @@ namespace SevenH.MMCSB.Atm.Domain
         ///</summary>
         [DebuggerHidden]
 
-        public DateTime? LastLoginDate
+        public virtual DateTime? LastLoginDate
         {
             set
             {
@@ -957,7 +957,7 @@ namespace SevenH.MMCSB.Atm.Domain
         ///</summary>
         [DebuggerHidden]
 
-        public DateTime? UpdatedDate
+        public virtual DateTime? UpdatedDate
         {
             set
             {
@@ -1046,7 +1046,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string SalutationName
+        public virtual string SalutationName
         {
             set
             {
@@ -1071,7 +1071,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string FullName
+        public virtual string FullName
         {
             set
             {
@@ -1096,7 +1096,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Email
+        public virtual string Email
         {
             set
             {
@@ -1121,7 +1121,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string IDType
+        public virtual string IDType
         {
             set
             {
@@ -1146,7 +1146,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string IDNumber
+        public virtual string IDNumber
         {
             set
             {
@@ -1171,7 +1171,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string PassportNo
+        public virtual string PassportNo
         {
             set
             {
@@ -1196,7 +1196,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string MobilePhoneNo
+        public virtual string MobilePhoneNo
         {
             set
             {
@@ -1221,7 +1221,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string PhoneNo
+        public virtual string PhoneNo
         {
             set
             {
@@ -1246,7 +1246,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string FaxNo
+        public virtual string FaxNo
         {
             set
             {
@@ -1271,7 +1271,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Designation
+        public virtual string Designation
         {
             set
             {
@@ -1296,7 +1296,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Department
+        public virtual string Department
         {
             set
             {
@@ -1321,7 +1321,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Nationality
+        public virtual string Nationality
         {
             set
             {
@@ -1346,7 +1346,7 @@ namespace SevenH.MMCSB.Atm.Domain
         ///</summary>
         [DebuggerHidden]
 
-        public DateTime? DateOfBirth
+        public virtual DateTime? DateOfBirth
         {
             set
             {
@@ -1390,7 +1390,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public string Role
+        public virtual string Role
         {
             set
             {
@@ -1415,7 +1415,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
-        public int Id
+        public virtual int Id
         {
             set
             {
