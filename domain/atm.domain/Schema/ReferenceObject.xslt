@@ -19,7 +19,7 @@
       [XmlArrayItem("<xsl:value-of select="@ref"/>", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/> <xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/>
+      public virtual <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/> <xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/>
       {
       get{ return m_<xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/>;}
       }
@@ -41,7 +41,7 @@
       public const string PropertyName<xsl:value-of select="@ref"/> = "<xsl:value-of select="@ref"/>";
 		[DebuggerHidden]
 
-      public <xsl:value-of select="@ref"/><xsl:text> </xsl:text> <xsl:value-of select="@ref"/>
+      public virtual <xsl:value-of select="@ref"/><xsl:text> </xsl:text> <xsl:value-of select="@ref"/>
       {
       get{ return m_<xsl:value-of select="@ref"/>;}
       set
@@ -60,7 +60,7 @@
       private <xsl:value-of select="sevenhpk:GetCLRDataType(xs:simpleType/xs:restriction/@base, xs:simpleType/xs:restriction/@nillable)"/> m_<xsl:value-of select="@name"/>;
       public const string PropertyName<xsl:value-of select="@name"/> = "<xsl:value-of select="@name"/>";
 
-      public <xsl:value-of select="sevenhpk:GetCLRDataType(xs:simpleType/xs:restriction/@base, xs:simpleType/xs:restriction/@nillable)"/> <xsl:value-of select="@name"/>
+      public virtual <xsl:value-of select="sevenhpk:GetCLRDataType(xs:simpleType/xs:restriction/@base, xs:simpleType/xs:restriction/@nillable)"/> <xsl:value-of select="@name"/>
       {
       get { return m_<xsl:value-of select="@name"/>; }
 
