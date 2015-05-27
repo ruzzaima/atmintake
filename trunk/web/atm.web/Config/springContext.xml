@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+
+  <object
+    id="siteRoot"
+    type="System.Web.Hosting.HostingEnvironment, System.Web"
+    factory-method="get_ApplicationPhysicalPath" />
+
+  <object
+    id="dataFile"
+    type="System.IO.Path, mscorlib"
+    factory-method="Combine">
+    <constructor-arg name="path1" ref="siteRoot" />
+    <constructor-arg name="path2" value="App_Data\data.db3" />
+  </object>
+  
+ <object id="CodeItemPersistence" type="SevenH.MMCSB.Persistance.CodeItemPersistence, atm.nhibernate.persistance" />
+  
+  
+
+</objects>
