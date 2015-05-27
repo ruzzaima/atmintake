@@ -8,5 +8,9 @@ namespace SevenH.MMCSB.Atm.Domain
 {
     public partial class Address : DomainObject
     {
+
+        public virtual Biodata Parent { get; set; }
+        
+
     }
 }
