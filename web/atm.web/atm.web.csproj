@@ -194,6 +194,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\ajax-loader.png" />
     <Content Include="Images\Header-Atm-2.png" />
     <Content Include="Images\Header-Logo-Atm-1.png" />
     <Content Include="Scripts\Core\bootstrap.js" />
@@ -210,6 +211,10 @@
     <Content Include="Scripts\Core\jquery.validate.min.js" />
     <Content Include="Scripts\Core\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Core\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Core\knockout-3.3.0.js" />
+    <Content Include="Scripts\Core\knockout.jqueryui.autocomplete.js" />
+    <Content Include="Scripts\Core\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\Core\knockout.mapping-latest.js" />
     <Content Include="Scripts\Core\modernizr-2.6.2.js" />
     <Content Include="Scripts\Core\npm.js" />
     <Content Include="Scripts\Core\respond.js" />

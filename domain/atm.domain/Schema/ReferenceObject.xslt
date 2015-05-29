@@ -10,7 +10,7 @@
     <!-- Collection -->
     <xsl:for-each select="xs:complexType/xs:sequence/xs:element">
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/> m_<xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/> = new <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/>();
+      private <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/> m_<xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/> = new <xsl:value-of select="sevenhpk:RemovePrefixDataTypeForNew(@ref, @maxOccurs)"/>();
 
 
       ///&lt;summary&gt;
@@ -135,7 +135,31 @@
 				if( maxOccur == "unbounded")
 				{	
 					suffix = ">";
-					prefix = "ObjectCollection<";
+					prefix = "IList<";
+				}
+			}
+			
+			int indexOfColon = value.IndexOf(":") + 1;
+			return prefix + value.Substring(indexOfColon, value.Length - indexOfColon) + suffix;
+		}
+		public string RemovePrefixDataTypeForNew(string value, string maxOccur)
+		{
+			int max ;
+			string suffix = string.Empty;
+			string prefix = string.Empty;
+			if( int.TryParse(maxOccur, out max))
+			{
+				if( max > 1) 
+				{	
+					suffix = ">";
+					prefix = "BindingList<";
+				}
+			}else
+			{
+				if( maxOccur == "unbounded")
+				{	
+					suffix = ">";
+					prefix = "List<";
 				}
 			}
 			

@@ -45,3 +45,43 @@ $(function () {
     });
 
 });
+
+
+function ShowMessage(message) {
+    $("#message_dialog .modal-body").html(message);
+    $("#message_dialog").modal({
+        show: 'true',
+        backdrop: 'true',
+        keyboard: 'true'
+    });
+
+    $('#message_dialog .btn-cancel').click(function () {
+        $('#message_dialog').modal('hide');
+    });
+}
+
+function ShowMessageAndRedirect(message, url) {
+    $("#message_dialog .modal-body").html(message);
+    $("#message_dialog").modal({
+        show: 'true',
+        backdrop: 'true',
+        keyboard: 'true'
+    });
+
+    $('#message_dialog .btn-cancel').click(function () {
+        $('#message_dialog').modal('hide');
+        window.location = url;
+    });
+}
+
+function showLoading() {
+    $("#loading_dialog").modal({
+        show: 'true',
+        backdrop: 'true',
+        keyboard: 'true'
+    });
+}
+
+function hideLoading() {
+    $("#loading_dialog").modal('hide');
+}

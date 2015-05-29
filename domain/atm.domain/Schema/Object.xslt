@@ -9,6 +9,7 @@
     using System.Xml.Serialization;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Collections.Generic;
 
     namespace SevenH.MMCSB.Atm.Domain
     {

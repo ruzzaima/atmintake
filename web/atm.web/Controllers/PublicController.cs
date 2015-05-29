@@ -26,5 +26,11 @@ namespace SevenH.MMCSB.Atm.Web
         {
             return View();
         }
-	}
+
+        // checking existing in applicant table and ATM database based on IC
+        public ActionResult IsExist(string mykadno)
+        {
+            return Json(new { OK = false, message = "Tidak Wujud" });
+        }
+    }
 }
