@@ -52,17 +52,73 @@
         </div>
     </div>
     <hr />
-    <footer>
-        <div class="container-fluid">
-            <p>
-                [  Penafian ] : Markas Angkatan Tentera Malaysia tidak bertanggungjawab ke atas apa-apa kehilangan atau kerosakan disebab oleh penggunaan maklumat yang diambil dari laman web ini. 
-            </p>
-            <p>&copy; @DateTime.Now.Year - JOM MASUK TENTERA Angkatan Tentera Malaysia</p>
-        </div>
-    </footer>
+<footer>
+    <div class="container-fluid">
+        <p>
+            [ Penafian ] : Markas Angkatan Tentera Malaysia tidak bertanggungjawab ke atas apa-apa kehilangan atau kerosakan disebab oleh penggunaan maklumat yang diambil dari laman web ini.
+        </p>
+        <p>&copy; @DateTime.Now.Year - JOM MASUK TENTERA Angkatan Tentera Malaysia</p>
+    </div>
+</footer>
 
-    @Scripts.Render("~/bundles/jquery")
+
+    <div id="notification_dialog" class="modal fade" role="dialog" data-keyboard="false" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">
+                        Notifikasi
+                    </h3>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-submit margin-2 padding-37" aria-hidden="true">
+                        Ya
+                    </button>
+                    <button class="btn btn-default btn-cancel margin-2 padding-37" data-dismiss="modal" aria-hidden="true">
+                        Batal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="message_dialog" class="modal fade" role="dialog" data-keyboard="false" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="myModalLabel">
+                        Mesej
+                    </h3>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary btn-cancel margin-2 padding-37" data-dismiss="modal" aria-hidden="true">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loading_dialog" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col-md-12 text-center">
+                        <img src="@Url.Content("~/Images/ajax-loader.png")" alt="Sila Tunggu..." />
+                        <p>Sedang diproses...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="@Url.Content("~/Scripts/Core/knockout-3.3.0.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/knockout.mapping-latest.debug.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/knockout.jqueryui.autocomplete.js")"></script>
     <script type="text/javascript">
         var virtualdirectory = '';
     </script>
