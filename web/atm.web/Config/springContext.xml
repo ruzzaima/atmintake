@@ -13,9 +13,9 @@
     <constructor-arg name="path1" ref="siteRoot" />
     <constructor-arg name="path2" value="App_Data\data.db3" />
   </object>
-  
- <object id="CodeItemPersistence" type="SevenH.MMCSB.Persistance.CodeItemPersistence, atm.nhibernate.persistance" />
-  
-  
 
+ <object id="ReferencePersistence" type="SevenH.MMCSB.Persistance.ReferencePersistence, atm.nhibernate.persistance" />
+  <object id="ApplicantPersistence" type="SevenH.MMCSB.Persistance.ApplicantPersistence, atm.nhibernate.persistance" />
+  <object id="AcquisitionPersistence" type="SevenH.MMCSB.Persistance.AcquisitionPersistence, atm.nhibernate.persistance" />
+  
 </objects>

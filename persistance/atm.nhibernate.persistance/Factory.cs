@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Web;
 using FluentNHibernate.Cfg;
+using FluentNHibernate.Cfg.Db;
 using NHibernate;
 
 namespace SevenH.MMCSB.Persistance
@@ -20,11 +21,18 @@ namespace SevenH.MMCSB.Persistance
                 if ((_sf == null))
                 {
 
-                    var config = new NHibernate.Cfg.Configuration();
-                    config.Configure(); // read config default style
-                    _sf = Fluently.Configure(config).Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.Load("atm.domain")))
-                        .BuildSessionFactory();
-                }
+                    _sf  = Fluently.Configure()
+                           .Database(config: FluentNHibernate.Cfg.Db.MsSqlConfiguration.MsSql2008
+                            .ConnectionString("data source=bo3-pc\\sqlexpressdnf;initial catalog=dbpengambilan;integrated security=true")
+                            #if DEBUG
+                            .ShowSql()
+                            .FormatSql()
+                            #endif
+                            .Dialect<NHibernate.Dialect.MsSql2012Dialect>()
+                            .AdoNetBatchSize(50))
+                            .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.Load("atm.domain")))
+                            .BuildSessionFactory();
+   }
                 return _sf;
             }
         }

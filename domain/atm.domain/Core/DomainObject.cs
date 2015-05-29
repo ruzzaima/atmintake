@@ -18,7 +18,7 @@ namespace SevenH.MMCSB.Atm.Domain
         [NonSerialized]
         private static TraceSource m_traceSource;
 
-        protected TraceSource TraceSource
+        protected virtual TraceSource TraceSource
         {
             get
             {
@@ -34,7 +34,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <param name="id">error id</param>
         /// <param name="message">message format</param>
         /// <param name="args">args to the message format</param>
-        protected void TraceInfo(int id, string message, params object[] args)
+        protected virtual void TraceInfo(int id, string message, params object[] args)
         {
             TraceSource.TraceEvent(TraceEventType.Information, id, string.Format(message, args));
         }
@@ -45,7 +45,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <param name="id">error id</param>
         /// <param name="message">message format</param>
         /// <param name="args">args to the message format</param>
-        protected void TraceError(int id, string message, params object[] args)
+        protected virtual void TraceError(int id, string message, params object[] args)
         {
             TraceSource.TraceEvent(TraceEventType.Error, id, string.Format(message, args));
         }
@@ -68,7 +68,7 @@ namespace SevenH.MMCSB.Atm.Domain
         ///<summary>
         ///A flag wether this instance has been modified or not</summary>
         [XmlIgnore]
-        public bool Dirty
+        public virtual bool Dirty
         {
             get { return m_dirty; }
             set { m_dirty = value; }
@@ -76,19 +76,19 @@ namespace SevenH.MMCSB.Atm.Domain
 
         private int m_bil;
         [XmlIgnore]
-        public int Bil
+        public virtual int Bil
         {
             get { return m_bil; }
             set { m_bil = value; }
         }
 
-        protected bool IsInBlend()
+        protected virtual bool IsInBlend()
         {
             return string.Equals(Process.GetCurrentProcess().ProcessName, "Blend", StringComparison.OrdinalIgnoreCase);
         }
 
         #region Public API
-        public bool HasErrors()
+        public virtual bool HasErrors()
         {
             return (this.Errors.Count > 0);
         }
@@ -125,8 +125,8 @@ namespace SevenH.MMCSB.Atm.Domain
 
         #region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public event PropertyChangingEventHandler PropertyChanging;
+        public virtual event PropertyChangedEventHandler PropertyChanged;
+        public virtual event PropertyChangingEventHandler PropertyChanging;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -144,12 +144,12 @@ namespace SevenH.MMCSB.Atm.Domain
         #endregion
 
         #region IDataErrorInfo Members
-        public string Error
+        public virtual string Error
         {
             get { return ((Errors.Count > 0) ? "Business object is in an invalid state" : string.Empty); }
         }
 
-        public string this[string columnName]
+        public virtual string this[string columnName]
         {
             get { return GetColumnError(columnName); }
         }
@@ -166,7 +166,7 @@ namespace SevenH.MMCSB.Atm.Domain
             return col;
         }
 
-        protected void SetColumnError(string column, string error)
+        protected virtual void SetColumnError(string column, string error)
         {
             string col = GetColumn(column);
 
@@ -180,12 +180,12 @@ namespace SevenH.MMCSB.Atm.Domain
             }
         }
 
-        protected void ClearColumnErrors()
+        protected virtual void ClearColumnErrors()
         {
             ClearColumnError(null);
         }
 
-        protected void ClearColumnError(string column)
+        protected virtual void ClearColumnError(string column)
         {
             if (String.IsNullOrEmpty(column))
             {
@@ -197,7 +197,7 @@ namespace SevenH.MMCSB.Atm.Domain
             }
         }
 
-        protected string GetColumnError(string column)
+        protected virtual string GetColumnError(string column)
         {
             string col = GetColumn(column);
 
@@ -216,13 +216,13 @@ namespace SevenH.MMCSB.Atm.Domain
         #region IEditableObject Members
         [NonSerialized]
         private bool m_usingIEditable;
-        public event EventHandler BeginEditFired;
+        public virtual event EventHandler BeginEditFired;
 
         /// <summary>
         /// Workaround for Windows Forms BindingSource to have the tendency to call BeginEdit on every IEditableObject 
         /// </summary>
         /// <param name="useIEditableObject">true to begin to use IEditableObject</param>
-        public void BeginEdit(bool useIEditableObject)
+        public virtual void BeginEdit(bool useIEditableObject)
         {
             m_usingIEditable = useIEditableObject;
             BeginEdit();
@@ -231,7 +231,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// Creates a temporary store before changes made to this instance is commited, see EndEdit and CancelEdit for followup
         /// NOTE : call BeginEdit(true) to actually use this interface
         /// </summary>
-        public void BeginEdit()
+        public virtual void BeginEdit()
         {
             if (!m_usingIEditable) return;
             if (null != BeginEditFired) BeginEditFired(this, EventArgs.Empty);
@@ -247,7 +247,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// CancelEdit would discard the temporary store , since BeginEdit is called thus it would not be committed,
         /// use EndEdit to commit the changes to the instance
         /// </summary>
-        public void CancelEdit()
+        public virtual void CancelEdit()
         {
             m_usingIEditable = false;
             m_propertyHashtable = null;
@@ -256,7 +256,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <summary>
         /// Calling EndEdit will commit all the transient values into the instance
         /// </summary>
-        public void EndEdit()
+        public virtual void EndEdit()
         {
             if (m_propertyHashtable == null) return;
 

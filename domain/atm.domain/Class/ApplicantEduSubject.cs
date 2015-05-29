@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
-    public partial class Address : DomainObject
+    public partial class ApplicantEduSubject : DomainObject
     {
 
-        public virtual Schema.Biodata Parent { get; set; }
+      public virtual ApplicantEducation Parent { get; set; }
         
 
     }

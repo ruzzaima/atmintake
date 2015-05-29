@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Data;
 using NHibernate;
+using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
-using CodeItem = SevenH.MMCSB.Atm.Domain.CodeItem;
 
 namespace SevenH.MMCSB.Persistance
 {
-    public class CodeItemPersistence : ICodeItemPersistence
+    public class ApplicantPersistence : IApplicantPersistence
     {
 
         private static NHibernate.ISession _mSession;
@@ -34,27 +34,28 @@ namespace SevenH.MMCSB.Persistance
             throw new NotImplementedException();
         }
 
-        public int Save(CodeItem cd)
+        public int Save(Applicant appl)
         {
-            Factory.OpenSession().Save(cd);
+            Factory.OpenSession().Save(appl);
             Factory.OpenSession().Flush();
             return 1;
         }
 
-        CodeItem ICodeItemPersistence.GetCode(int id)
+        public Applicant GetApplicant(int id)
         {
-            var cd = Session.Get<CodeItem>(id);
-            return cd;
+            var app = Session.Get<Applicant>(id);
+            return app;
         }
 
-       
-        //public IEnumerable<DeSCo.Models.CodeItem> GetCodeItems()
-        //{
-        //    var returnList = Factory.OpenSession().CreateSQLQuery("select * from Codeitem").AddEntity(typeof(CodeItem));
-        //    return returnList.List<CodeItem>();
-        //}
 
 
+        private Applicant SetParent(Applicant app)
+        {
+            //toto set child parent
+
+
+            return app;
+        }
     }
 
 
