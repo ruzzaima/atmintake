@@ -196,12 +196,12 @@ namespace SevenH.MMCSB.Persistance
             return returnList.List<Skill>();
         }
 
-        public System.Collections.Generic.IEnumerable<SportAndAssociation> GetSportAndAssociations()
+        public System.Collections.Generic.IEnumerable<ApplicantSport> GetSportAndAssociations()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFSportAndAssociation")
-         .AddEntity(typeof(SportAndAssociation));
-            return returnList.List<SportAndAssociation>();
+         .AddEntity(typeof(ApplicantSport));
+            return returnList.List<ApplicantSport>();
         }
 
         public System.Collections.Generic.IEnumerable<State> GetStates()

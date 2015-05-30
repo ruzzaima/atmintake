@@ -9,7 +9,7 @@ namespace SevenH.MMCSB.Atm.Domain
             public ApplicantMap()
             {
                 Table("tblApplicant");
-                Id(x => x.ApplicantId).GeneratedBy.Identity();
+                Id(x => x.ApplicantId).GeneratedBy.Increment();
                 Map(x => x.NewICNo);
                 Map(x => x.NoTentera);
                 Map(x => x.FullName);
@@ -60,7 +60,7 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.GuardianOccupation);
                 Map(x => x.GuardianSalary);
                 Map(x => x.FamilyHighestEduLevel);
-                Map(x => x.Photo);
+                //Map(x => x.Photo);
                 Map(x => x.CurrentOccupation);
                 Map(x => x.CurrentOrganisation);
                 Map(x => x.CurrentSalary);
@@ -99,7 +99,7 @@ namespace SevenH.MMCSB.Atm.Domain
 
                 HasMany<ApplicantEducation>(x => x.ApplicantEducations).KeyColumn("ApplicantId").Inverse().Cascade.All();
                 HasMany<ApplicantSkill>(x => x.ApplicantSkills).KeyColumn("ApplicantId").Inverse().Cascade.All();
-                HasMany<SportAndAssociation>(x => x.SportAndAssociations).KeyColumn("ApplicantId").Inverse().Cascade.All();
+                HasMany<ApplicantSport>(x => x.SportAndAssociations).KeyColumn("ApplicantId").Inverse().Cascade.All();
                 HasMany<Application>(x => x.Applications).KeyColumn("ApplicantId").Inverse().Cascade.All();
                 HasMany<ApplicantDispStatus>(x => x.ApplicantDispStatuses).KeyColumn("ApplicantId").Inverse().Cascade.All();
 
@@ -113,7 +113,7 @@ namespace SevenH.MMCSB.Atm.Domain
             public ApplicantEducationMap()
             {
                 Table("tblApplicantEdu");
-                Id(x => x.ApplicantEduId).GeneratedBy.Identity();
+                Id(x => x.ApplicantEduId).GeneratedBy.Increment();
                 Map(x => x.HighEduLevelCd);
                 Map(x => x.EduCertTitle);
                 Map(x => x.OverallGrade);
@@ -140,7 +140,7 @@ namespace SevenH.MMCSB.Atm.Domain
             public ApplicantEducationSubjectMap()
             {
                 Table("tblApplicantEduSubject");
-                Id(x => x.EduSubjectId).GeneratedBy.Identity();
+                Id(x => x.EduSubjectId).GeneratedBy.Increment();
                 Map(x => x.SubjectCd);
                 Map(x => x.GradeCd);
                 Map(x => x.CreatedBy);
@@ -153,13 +153,13 @@ namespace SevenH.MMCSB.Atm.Domain
         }
 
 
-        
+
         public class ApplicantSkillMap : ClassMap<ApplicantSkill>
         {
             public ApplicantSkillMap()
             {
                 Table("tblApplicantSkill");
-                Id(x => x.ApplicantSkillId).GeneratedBy.Identity();
+                Id(x => x.ApplicantSkillId).GeneratedBy.Increment();
                 Map(x => x.SkillCd);
                 Map(x => x.SkillCatCd);
                 Map(x => x.LanguageSkillSpeak);
@@ -179,7 +179,7 @@ namespace SevenH.MMCSB.Atm.Domain
             public ApplicantSportMap()
             {
                 Table("tblApplicantSportAssoc");
-                Id(x => x.ApplicantSportAssocId).GeneratedBy.Identity();
+                Id(x => x.ApplicantSportAssocId).GeneratedBy.Increment();
                 Map(x => x.AchievementCd);
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
@@ -191,12 +191,12 @@ namespace SevenH.MMCSB.Atm.Domain
         }
 
 
-         public class ApplicantDispStatusMap : ClassMap<ApplicantDispStatus>
+        public class ApplicantDispStatusMap : ClassMap<ApplicantDispStatus>
         {
             public ApplicantDispStatusMap()
             {
                 Table("tblApplicantDispStatus");
-                Id(x => x.ApplicantDispStatusId).GeneratedBy.Identity();
+                Id(x => x.ApplicantDispStatusId).GeneratedBy.Increment();
                 Map(x => x.Disciplinary);
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
@@ -207,18 +207,19 @@ namespace SevenH.MMCSB.Atm.Domain
             }
         }
 
-          public class ApplicationMap : ClassMap<Application>
+        public class ApplicationMap : ClassMap<Application>
         {
             public ApplicationMap()
             {
                 Table("tblApplication");
-                Id(x => x.AppId).GeneratedBy.Identity();
+                Id(x => x.AppId).GeneratedBy.Increment();
                 Map(x => x.AcquisitionId);
-                 Map(x => x.SelectionCenterId);
+                Map(x => x.SelectionCenterId);
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
+              
 
                 References(x => x.Parent, "ApplicantId").Cascade.All();
             }

@@ -17,7 +17,7 @@ namespace SevenH.MMCSB.Atm.Domain
 
         public virtual ICollection<ApplicantEducation> ApplicantEducations { get; set; }
         public virtual ICollection<ApplicantSkill> ApplicantSkills { get; set; }
-        public virtual ICollection<SportAndAssociation> SportAndAssociations { get; set; }
+        public virtual ICollection<ApplicantSport> SportAndAssociations { get; set; }
         public virtual ICollection<Application> Applications { get; set; }
         public virtual ICollection<ApplicantDispStatus> ApplicantDispStatuses { get; set; }
 
@@ -31,7 +31,7 @@ namespace SevenH.MMCSB.Atm.Domain
                 if (((_mPersistence == null)))
                 {
                     var ctx = ContextRegistry.GetContext();
-                    _mPersistence = ((IObjectFactory)ctx).GetObject("ApplicantPersistence;") as IApplicantPersistence;
+                    _mPersistence = ((IObjectFactory)ctx).GetObject("ApplicantPersistence") as IApplicantPersistence;
                 }
                 return _mPersistence;
             }

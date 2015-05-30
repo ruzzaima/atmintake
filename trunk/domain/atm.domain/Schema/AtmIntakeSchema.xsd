@@ -105,13 +105,13 @@ new -  to call new at the field init
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ApplicanSports">
+        <!--<xs:element name="ApplicantSports">
           <xs:complexType>
             <xs:sequence>
               <xs:element ref="ApplicantSport" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
           </xs:complexType>
-        </xs:element>
+        </xs:element>-->
         <xs:element name="ApplicantDispStatuses">
           <xs:complexType>
             <xs:sequence>
@@ -165,12 +165,12 @@ new -  to call new at the field init
       <xs:attribute name="HomePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="Email" type="xs:string" use="required"/>
       <xs:attribute name="ChildNo" type="xs:int" use="required"/>
-      <xs:attribute name="NoOfSibling" type="xs:string" use="required"/>
+      <xs:attribute name="NoOfSibling" type="xs:int" use="required"/>
       <xs:attribute name="MomName" type="xs:string" use="required"/>
       <xs:attribute name="MomICNo" type="xs:string" use="required"/>
       <xs:attribute name="MomNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="MomOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="MomSalary" type="xs:string" use="required"/>
+      <xs:attribute name="MomSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="DadName" type="xs:string" use="required"/>
       <xs:attribute name="DadICNo" type="xs:string" use="required"/>
       <xs:attribute name="DadNationalityCd" type="xs:string" use="required"/>
@@ -182,7 +182,7 @@ new -  to call new at the field init
       <xs:attribute name="GuardianOccupation" type="xs:string" use="required"/>
       <xs:attribute name="GuardianSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="FamilyHighestEduLevel" type="xs:string" use="required"/>
-      <xs:attribute name="Photo" type="xs:string" use="required"/>
+      <xs:attribute name="Photo" type="xs:byte" use="required"/>
       <xs:attribute name="CurrentOccupation" type="xs:string" use="required"/>
       <xs:attribute name="CurrentOrganisation" type="xs:string" use="required"/>
       <xs:attribute name="CurrentSalary" type="xs:decimal" use="required"/>
@@ -192,7 +192,7 @@ new -  to call new at the field init
       <xs:attribute name="PalapesInstitution" type="xs:string" use="required"/>
       <xs:attribute name="PalapesRemark" type="xs:string" use="required"/>
       <xs:attribute name="ScholarshipInd" type="xs:boolean" use="required"/>
-      <xs:attribute name="ScholarshipBody" type="xs:string" use="required"/>
+      <xs:attribute name="ScholarshipBody" type="xs:boolean" use="required"/>
       <xs:attribute name="ScholarshipBodyAddr" type="xs:string" use="required"/>
       <xs:attribute name="ScholarshipNoOfYrContract" type="xs:string" use="required"/>
       <xs:attribute name="ArmySelectionInd" type="xs:boolean" use="required"/>
@@ -276,6 +276,7 @@ new -  to call new at the field init
       <xs:attribute name="SkillCatCd" type="xs:string" use="required"/>
       <xs:attribute name="LanguageSkillSpeak" type="xs:boolean" use="required"/>
       <xs:attribute name="LanguageSkillWrite" type="xs:boolean" use="required"/>
+       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="Others" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
@@ -290,6 +291,7 @@ new -  to call new at the field init
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantSportAssocId" type="xs:int" use="required"/>
+      <xs:attribute name="SportAssocId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
@@ -691,7 +693,7 @@ new -  to call new at the field init
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="SportAndAssociation">
+  <!--<xs:element name="SportAndAssociation">
     <xs:complexType>
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
@@ -704,7 +706,7 @@ new -  to call new at the field init
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
-  </xs:element>
+  </xs:element>-->
 
   <xs:element name="State">
     <xs:complexType>

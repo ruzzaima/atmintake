@@ -60,7 +60,6 @@
     <Compile Include="Class\SubjectGrade.cs" />
     <Compile Include="Class\Subject.cs" />
     <Compile Include="Class\State.cs" />
-    <Compile Include="Class\SportAndAssociation.cs" />
     <Compile Include="Class\SkillCat.cs" />
     <Compile Include="Class\Skill.cs" />
     <Compile Include="Class\Service.cs" />
