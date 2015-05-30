@@ -10,7 +10,8 @@ namespace SevenH.MMCSB.Atm.Domain
     {
 
         public virtual Applicant Parent { get; set; }
-        
+
+        public virtual Acquisition Acquisition { get; set; }
 
     }
 }

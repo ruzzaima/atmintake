@@ -3,6 +3,7 @@
     using System.Xml.Serialization;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Collections.Generic;
 
     namespace SevenH.MMCSB.Atm.Domain
     {
@@ -105,7 +106,7 @@
 						public const string PropertyNameModifiedDt = "ModifiedDt";
 					
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<LoginRole> m_LoginRoleCollection = new ObjectCollection<LoginRole>();
+      private IList<LoginRole> m_LoginRoleCollection = new List<LoginRole>();
 
 
       ///<summary>
@@ -114,7 +115,7 @@
       [XmlArrayItem("LoginRole", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<LoginRole>LoginRoleCollection
+      public virtual IList<LoginRole>LoginRoleCollection
       {
       get{ return m_LoginRoleCollection;}
       }
@@ -768,7 +769,7 @@
 						public const string PropertyNameChildNo = "ChildNo";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_NoOfSibling;
+						private  int  m_NoOfSibling;
 						public const string PropertyNameNoOfSibling = "NoOfSibling";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -788,7 +789,7 @@
 						public const string PropertyNameMomOccupation = "MomOccupation";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_MomSalary;
+						private  decimal  m_MomSalary;
 						public const string PropertyNameMomSalary = "MomSalary";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -836,7 +837,7 @@
 						public const string PropertyNameFamilyHighestEduLevel = "FamilyHighestEduLevel";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_Photo;
+						private  byte[]  m_Photo;
 						public const string PropertyNamePhoto = "Photo";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -876,7 +877,7 @@
 						public const string PropertyNameScholarshipInd = "ScholarshipInd";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_ScholarshipBody;
+						private  bool  m_ScholarshipBody;
 						public const string PropertyNameScholarshipBody = "ScholarshipBody";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -986,7 +987,7 @@
 						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
 					
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<ApplicantEducation> m_ApplicantEducationCollection = new ObjectCollection<ApplicantEducation>();
+      private IList<ApplicantEducation> m_ApplicantEducationCollection = new List<ApplicantEducation>();
 
 
       ///<summary>
@@ -995,13 +996,13 @@
       [XmlArrayItem("ApplicantEducation", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<ApplicantEducation>ApplicantEducationCollection
+      public virtual IList<ApplicantEducation>ApplicantEducationCollection
       {
       get{ return m_ApplicantEducationCollection;}
       }
     
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<ApplicantSkill> m_ApplicantSkillCollection = new ObjectCollection<ApplicantSkill>();
+      private IList<ApplicantSkill> m_ApplicantSkillCollection = new List<ApplicantSkill>();
 
 
       ///<summary>
@@ -1010,28 +1011,13 @@
       [XmlArrayItem("ApplicantSkill", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<ApplicantSkill>ApplicantSkillCollection
+      public virtual IList<ApplicantSkill>ApplicantSkillCollection
       {
       get{ return m_ApplicantSkillCollection;}
       }
     
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<ApplicantSport> m_ApplicantSportCollection = new ObjectCollection<ApplicantSport>();
-
-
-      ///<summary>
-      /// 
-      ///</summary>
-      [XmlArrayItem("ApplicantSport", IsNullable = false)]
-		[DebuggerHidden]
-		 
-      public virtual ObjectCollection<ApplicantSport>ApplicantSportCollection
-      {
-      get{ return m_ApplicantSportCollection;}
-      }
-    
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<ApplicantDispStatus> m_ApplicantDispStatusCollection = new ObjectCollection<ApplicantDispStatus>();
+      private IList<ApplicantDispStatus> m_ApplicantDispStatusCollection = new List<ApplicantDispStatus>();
 
 
       ///<summary>
@@ -1040,13 +1026,13 @@
       [XmlArrayItem("ApplicantDispStatus", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<ApplicantDispStatus>ApplicantDispStatusCollection
+      public virtual IList<ApplicantDispStatus>ApplicantDispStatusCollection
       {
       get{ return m_ApplicantDispStatusCollection;}
       }
     
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<Application> m_ApplicationCollection = new ObjectCollection<Application>();
+      private IList<Application> m_ApplicationCollection = new List<Application>();
 
 
       ///<summary>
@@ -1055,7 +1041,7 @@
       [XmlArrayItem("Application", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<Application>ApplicationCollection
+      public virtual IList<Application>ApplicationCollection
       {
       get{ return m_ApplicationCollection;}
       }
@@ -1882,11 +1868,11 @@
 						[XmlAttribute]
             [DebuggerHidden]
 
-            public virtual string NoOfSibling
+            public virtual int NoOfSibling
 						{
 						set
 						{
-						if( String.Equals( m_NoOfSibling, value, StringComparison.Ordinal)) return;
+						if( m_NoOfSibling == value) return;
 						var arg = new PropertyChangingEventArgs(PropertyNameNoOfSibling, value);
 						OnPropertyChanging(arg);
 						if( !arg.Cancel)
@@ -2002,11 +1988,11 @@
 						[XmlAttribute]
             [DebuggerHidden]
 
-            public virtual string MomSalary
+            public virtual decimal MomSalary
 						{
 						set
 						{
-						if( String.Equals( m_MomSalary, value, StringComparison.Ordinal)) return;
+						if( m_MomSalary == value) return;
 						var arg = new PropertyChangingEventArgs(PropertyNameMomSalary, value);
 						OnPropertyChanging(arg);
 						if( !arg.Cancel)
@@ -2290,11 +2276,11 @@
 						[XmlAttribute]
             [DebuggerHidden]
 
-            public virtual string Photo
+            public virtual byte[] Photo
 						{
 						set
 						{
-						if( String.Equals( m_Photo, value, StringComparison.Ordinal)) return;
+						if( m_Photo == value) return;
 						var arg = new PropertyChangingEventArgs(PropertyNamePhoto, value);
 						OnPropertyChanging(arg);
 						if( !arg.Cancel)
@@ -2530,11 +2516,11 @@
 						[XmlAttribute]
             [DebuggerHidden]
 
-            public virtual string ScholarshipBody
+            public virtual bool ScholarshipBody
 						{
 						set
 						{
-						if( String.Equals( m_ScholarshipBody, value, StringComparison.Ordinal)) return;
+						if( m_ScholarshipBody == value) return;
 						var arg = new PropertyChangingEventArgs(PropertyNameScholarshipBody, value);
 						OnPropertyChanging(arg);
 						if( !arg.Cancel)
@@ -3213,7 +3199,7 @@
 						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
 					
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<ApplicantEduSubject> m_ApplicantEduSubjectCollection = new ObjectCollection<ApplicantEduSubject>();
+      private IList<ApplicantEduSubject> m_ApplicantEduSubjectCollection = new List<ApplicantEduSubject>();
 
 
       ///<summary>
@@ -3222,7 +3208,7 @@
       [XmlArrayItem("ApplicantEduSubject", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<ApplicantEduSubject>ApplicantEduSubjectCollection
+      public virtual IList<ApplicantEduSubject>ApplicantEduSubjectCollection
       {
       get{ return m_ApplicantEduSubjectCollection;}
       }
@@ -3886,6 +3872,10 @@
 						public const string PropertyNameLanguageSkillWrite = "LanguageSkillWrite";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_AchievementCd;
+						public const string PropertyNameAchievementCd = "AchievementCd";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 						private  string  m_Others;
 						public const string PropertyNameOthers = "Others";
 					
@@ -4057,6 +4047,30 @@
 						[XmlAttribute]
             [DebuggerHidden]
 
+            public virtual string AchievementCd
+						{
+						set
+						{
+						if( String.Equals( m_AchievementCd, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameAchievementCd, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_AchievementCd= value;
+						OnPropertyChanged(PropertyNameAchievementCd);
+						}
+						}
+						get
+						{
+						return m_AchievementCd;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
             public virtual string Others
 						{
 						set
@@ -4186,6 +4200,10 @@
 						public const string PropertyNameApplicantSportAssocId = "ApplicantSportAssocId";
 					
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_SportAssocId;
+						public const string PropertyNameSportAssocId = "SportAssocId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 						private  int  m_ApplicantId;
 						public const string PropertyNameApplicantId = "ApplicantId";
 					
@@ -4233,6 +4251,30 @@
 						get
 						{
 						return m_ApplicantSportAssocId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int SportAssocId
+						{
+						set
+						{
+						if( m_SportAssocId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameSportAssocId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_SportAssocId= value;
+						OnPropertyChanged(PropertyNameSportAssocId);
+						}
+						}
+						get
+						{
+						return m_SportAssocId;}
 						}
 					
             ///<summary>
@@ -4965,7 +5007,7 @@
 						public const string PropertyNameClosingDate = "ClosingDate";
 					
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<AcquisitionCriteria> m_AcquisitionCriteriaCollection = new ObjectCollection<AcquisitionCriteria>();
+      private IList<AcquisitionCriteria> m_AcquisitionCriteriaCollection = new List<AcquisitionCriteria>();
 
 
       ///<summary>
@@ -4974,13 +5016,13 @@
       [XmlArrayItem("AcquisitionCriteria", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<AcquisitionCriteria>AcquisitionCriteriaCollection
+      public virtual IList<AcquisitionCriteria>AcquisitionCriteriaCollection
       {
       get{ return m_AcquisitionCriteriaCollection;}
       }
     
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<AcquisitionEducationCriteria> m_AcquisitionEducationCriteriaCollection = new ObjectCollection<AcquisitionEducationCriteria>();
+      private IList<AcquisitionEducationCriteria> m_AcquisitionEducationCriteriaCollection = new List<AcquisitionEducationCriteria>();
 
 
       ///<summary>
@@ -4989,7 +5031,7 @@
       [XmlArrayItem("AcquisitionEducationCriteria", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<AcquisitionEducationCriteria>AcquisitionEducationCriteriaCollection
+      public virtual IList<AcquisitionEducationCriteria>AcquisitionEducationCriteriaCollection
       {
       get{ return m_AcquisitionEducationCriteriaCollection;}
       }
@@ -6512,7 +6554,7 @@
 						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
 					
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private ObjectCollection<AcquisitionEducationCriteriaSubject> m_AcquisitionEducationCriteriaSubjectCollection = new ObjectCollection<AcquisitionEducationCriteriaSubject>();
+      private IList<AcquisitionEducationCriteriaSubject> m_AcquisitionEducationCriteriaSubjectCollection = new List<AcquisitionEducationCriteriaSubject>();
 
 
       ///<summary>
@@ -6521,7 +6563,7 @@
       [XmlArrayItem("AcquisitionEducationCriteriaSubject", IsNullable = false)]
 		[DebuggerHidden]
 		 
-      public virtual ObjectCollection<AcquisitionEducationCriteriaSubject>AcquisitionEducationCriteriaSubjectCollection
+      public virtual IList<AcquisitionEducationCriteriaSubject>AcquisitionEducationCriteriaSubjectCollection
       {
       get{ return m_AcquisitionEducationCriteriaSubjectCollection;}
       }
@@ -9972,242 +10014,6 @@
 						get
 						{
 						return m_SkillCatDesc;}
-						}
-					
-
-
-					}
-				
-          ///<summary>
-          /// 
-          ///</summary>
-          [DataObject(true)]
-          [Serializable]
-					[XmlType("SportAndAssociation",  Namespace=Strings.DefaultNamespace)]
-					public  partial class SportAndAssociation
-					{
-
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  int  m_SportAssocId;
-						public const string PropertyNameSportAssocId = "SportAssocId";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_SportAssociatType;
-						public const string PropertyNameSportAssociatType = "SportAssociatType";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_SportAssociatName;
-						public const string PropertyNameSportAssociatName = "SportAssociatName";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  bool  m_ActiveInd;
-						public const string PropertyNameActiveInd = "ActiveInd";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_CreatedBy;
-						public const string PropertyNameCreatedBy = "CreatedBy";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-						private  string  m_LastModifiedBy;
-						public const string PropertyNameLastModifiedBy = "LastModifiedBy";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-
-						private DateTime?  m_CreatedDt;
-						public const string PropertyNameCreatedDt = "CreatedDt";
-					
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-
-						private DateTime?  m_LastModifiedDt;
-						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
-					
-            ///<summary>
-            /// 
-            ///</summary>
-						[XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual int SportAssocId
-						{
-						set
-						{
-						if( m_SportAssocId == value) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameSportAssocId, value);
-						OnPropertyChanging(arg);
-						if( !arg.Cancel)
-						{
-						m_SportAssocId= value;
-						OnPropertyChanged(PropertyNameSportAssocId);
-						}
-						}
-						get
-						{
-						return m_SportAssocId;}
-						}
-					
-            ///<summary>
-            /// 
-            ///</summary>
-						[XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual string SportAssociatType
-						{
-						set
-						{
-						if( String.Equals( m_SportAssociatType, value, StringComparison.Ordinal)) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameSportAssociatType, value);
-						OnPropertyChanging(arg);
-						if( !arg.Cancel)
-						{
-						m_SportAssociatType= value;
-						OnPropertyChanged(PropertyNameSportAssociatType);
-						}
-						}
-						get
-						{
-						return m_SportAssociatType;}
-						}
-					
-            ///<summary>
-            /// 
-            ///</summary>
-						[XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual string SportAssociatName
-						{
-						set
-						{
-						if( String.Equals( m_SportAssociatName, value, StringComparison.Ordinal)) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameSportAssociatName, value);
-						OnPropertyChanging(arg);
-						if( !arg.Cancel)
-						{
-						m_SportAssociatName= value;
-						OnPropertyChanged(PropertyNameSportAssociatName);
-						}
-						}
-						get
-						{
-						return m_SportAssociatName;}
-						}
-					
-            ///<summary>
-            /// 
-            ///</summary>
-						[XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual bool ActiveInd
-						{
-						set
-						{
-						if( m_ActiveInd == value) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameActiveInd, value);
-						OnPropertyChanging(arg);
-						if( !arg.Cancel)
-						{
-						m_ActiveInd= value;
-						OnPropertyChanged(PropertyNameActiveInd);
-						}
-						}
-						get
-						{
-						return m_ActiveInd;}
-						}
-					
-            ///<summary>
-            /// 
-            ///</summary>
-						[XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual string CreatedBy
-						{
-						set
-						{
-						if( String.Equals( m_CreatedBy, value, StringComparison.Ordinal)) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameCreatedBy, value);
-						OnPropertyChanging(arg);
-						if( !arg.Cancel)
-						{
-						m_CreatedBy= value;
-						OnPropertyChanged(PropertyNameCreatedBy);
-						}
-						}
-						get
-						{
-						return m_CreatedBy;}
-						}
-					
-            ///<summary>
-            /// 
-            ///</summary>
-						[XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual string LastModifiedBy
-						{
-						set
-						{
-						if( String.Equals( m_LastModifiedBy, value, StringComparison.Ordinal)) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedBy, value);
-						OnPropertyChanging(arg);
-						if( !arg.Cancel)
-						{
-						m_LastModifiedBy= value;
-						OnPropertyChanged(PropertyNameLastModifiedBy);
-						}
-						}
-						get
-						{
-						return m_LastModifiedBy;}
-						}
-					
-
-            ///<summary>
-            /// 
-            ///</summary>
-            [DebuggerHidden]
-
-            public virtual DateTime? CreatedDt
-						{
-						set
-						{
-						if(m_CreatedDt == value) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameCreatedDt, value);
-						OnPropertyChanging(arg);
-						if(! arg.Cancel)
-						{
-						m_CreatedDt= value;
-						OnPropertyChanged(PropertyNameCreatedDt);
-						}
-						}
-						get { return m_CreatedDt;}
-						}
-					
-
-            ///<summary>
-            /// 
-            ///</summary>
-            [DebuggerHidden]
-
-            public virtual DateTime? LastModifiedDt
-						{
-						set
-						{
-						if(m_LastModifiedDt == value) return;
-						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedDt, value);
-						OnPropertyChanging(arg);
-						if(! arg.Cancel)
-						{
-						m_LastModifiedDt= value;
-						OnPropertyChanged(PropertyNameLastModifiedDt);
-						}
-						}
-						get { return m_LastModifiedDt;}
 						}
 					
 

@@ -24,7 +24,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         IEnumerable<Service> GetServices();
         IEnumerable<Skill> GetSkills();
         IEnumerable<SkillCat> GetSkillCats();
-        IEnumerable<SportAndAssociation> GetSportAndAssociations();
+        IEnumerable<ApplicantSport> GetSportAndAssociations();
         IEnumerable<State> GetStates();
         IEnumerable<Subject> GetSubjects();
         IEnumerable<SubjectGrade> GetSubjectGrades();

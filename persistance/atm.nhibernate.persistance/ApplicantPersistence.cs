@@ -31,11 +31,13 @@ namespace SevenH.MMCSB.Persistance
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var app = GetApplicant(id);
+            Factory.OpenSession().Delete(app);
         }
 
         public int Save(Applicant appl)
         {
+            appl = SetParent(appl);
             Factory.OpenSession().Save(appl);
             Factory.OpenSession().Flush();
             return 1;
@@ -48,11 +50,118 @@ namespace SevenH.MMCSB.Persistance
         }
 
 
-
         private Applicant SetParent(Applicant app)
         {
             //toto set child parent
 
+            foreach (var a in app.ApplicantEducations)
+            {
+                if (a.ApplicantEduId == 0)
+                {
+                    a.CreatedDt = app.CreatedDt;
+                    a.CreatedBy = app.CreatedBy;
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+                else
+                {
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+
+                foreach (var b in a.ApplicantEduSubjects)
+                {
+                    if (b.EduSubjectId == 0)
+                    {
+                        a.CreatedDt = app.CreatedDt;
+                        a.CreatedBy = app.CreatedBy;
+                        a.LastModifiedDt = app.LastModifiedDt;
+                        a.LastModifiedBy = app.LastModifiedBy;
+                    }
+                    else
+                    {
+                        a.LastModifiedDt = app.LastModifiedDt;
+                        a.LastModifiedBy = app.LastModifiedBy;
+                    }
+
+                    b.Parent = a;
+                }
+
+
+                a.Parent = app;
+            }
+
+            foreach (var a in app.ApplicantSkills)
+            {
+                if (a.ApplicantSkillId == 0)
+                {
+                    a.CreatedDt = app.CreatedDt;
+                    a.CreatedBy = app.CreatedBy;
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+                else
+                {
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+
+                a.Parent = app;
+            }
+
+            foreach (var a in app.SportAndAssociations)
+            {
+                if (a.SportAssocId == 0)
+                {
+                    a.CreatedDt = app.CreatedDt;
+                    a.CreatedBy = app.CreatedBy;
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+                else
+                {
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+
+                a.Parent = app;
+            }
+
+            foreach (var a in app.Applications)
+            {
+                if (a.AppId == 0)
+                {
+                    a.CreatedDt = app.CreatedDt;
+                    a.CreatedBy = app.CreatedBy;
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+                else
+                {
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+
+                a.Parent = app;
+            }
+
+            foreach (var a in app.ApplicantDispStatuses)
+            {
+                if (a.ApplicantDispStatusId == 0)
+                {
+                    a.CreatedDt = app.CreatedDt;
+                    a.CreatedBy = app.CreatedBy;
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+                else
+                {
+                    a.LastModifiedDt = app.LastModifiedDt;
+                    a.LastModifiedBy = app.LastModifiedBy;
+                }
+
+                a.Parent = app;
+            }
 
             return app;
         }
@@ -60,3 +169,4 @@ namespace SevenH.MMCSB.Persistance
 
 
 }
+

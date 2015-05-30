@@ -32,7 +32,8 @@ namespace SevenH.MMCSB.Persistance
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var acq = GetAcquisition(id);
+            Factory.OpenSession().Delete(acq);
         }
 
         public int Save(Acquisition acq)
@@ -53,7 +54,7 @@ namespace SevenH.MMCSB.Persistance
         private Acquisition SetParent(Acquisition acq)
         {
             //toto set child parent
-            
+ 
       
             foreach (var a in acq.AcquisitionCriterias)
             {
@@ -110,16 +111,6 @@ namespace SevenH.MMCSB.Persistance
             return acq;
         }
 
-
-         private static DateTime ConvertDate(string date, string pattern)
-        {
-            var retval = DateTime.MinValue;
-            if (System.DateTime.TryParseExact(date, pattern, System.Globalization.CultureInfo.InvariantCulture, DateTimeStyles.None, out retval))
-               return retval;
-
-            // Could not convert date..
-            return DateTime.MinValue;
-        }
 
     }
 

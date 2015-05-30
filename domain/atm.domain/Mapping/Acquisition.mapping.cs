@@ -51,11 +51,7 @@ namespace SevenH.MMCSB.Atm.Domain
 
                 HasMany<AcquisitionEducationCriteria>(x => x.AcquisitionEducationCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All();
 
-                //HasMany(x => x.AcquisitionCriterias)
-                //.KeyColumn("AcquisitionId")
-                //.AsBag()
-                //.Cascade.All()
-                //.Not.LazyLoad();
+
 
             }
 

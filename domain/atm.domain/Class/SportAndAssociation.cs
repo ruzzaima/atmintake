@@ -8,7 +8,6 @@ namespace SevenH.MMCSB.Atm.Domain
 {
     public partial class SportAndAssociation : DomainObject
     {
-
-      
+        public virtual Applicant Parent { get; set; }
     }
 }

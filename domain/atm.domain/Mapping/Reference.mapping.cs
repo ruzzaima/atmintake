@@ -258,15 +258,14 @@ namespace SevenH.MMCSB.Atm.Domain
             }
         }
 
-        public class SportAndAssociationMap : ClassMap<SportAndAssociation>
+        public class ApplicantSportMap : ClassMap<ApplicantSport>
         {
-            public SportAndAssociationMap()
+            public ApplicantSportMap()
             {
                 Table("tblREFSportAndAssociation");
-                Id(x => x.SportAssocId);
-                Map(x => x.SportAssociatName);
-                Map(x => x.SportAssociatType);
-                Map(x => x.ActiveInd);
+                Id(x => x.ApplicantSportAssocId);
+                Map(x => x.SportAssocId);
+                Map(x => x.AchievementCd);
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);

@@ -126,7 +126,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return PersistanceLayer.GetSkillCats();
         }
 
-        public IEnumerable<SportAndAssociation> GetSportAndAssociations()
+        public IEnumerable<ApplicantSport> GetSportAndAssociations()
         {
             return PersistanceLayer.GetSportAndAssociations();
         }

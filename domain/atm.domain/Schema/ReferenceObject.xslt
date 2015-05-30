@@ -172,6 +172,9 @@
 			string type = "object";
 			switch(xsType)
 			{
+        case "xs:byte":
+          type = "byte[]";
+					break;
 				case "xs:string":
 					type = "string";
 					break;
