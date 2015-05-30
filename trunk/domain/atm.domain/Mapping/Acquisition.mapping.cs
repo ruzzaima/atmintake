@@ -105,6 +105,8 @@ namespace SevenH.MMCSB.Atm.Domain
 
                     References(x => x.Parent, "AcquisitionId").Cascade.All();
                     HasMany<AcquisitionEducationCriteriaSubject>(x => x.AcquisitionEducationCriteriaSubjects).KeyColumn("AcqEduCriteriaId").Inverse().Cascade.All();
+                    HasMany<AcqEduCriteriaFieldOfStudy>(x => x.AcqEduCriteriaFieldOfStudys).KeyColumn("AcqEduCriteriaId").Inverse().Cascade.All();
+
                 }
             }
 
@@ -127,7 +129,24 @@ namespace SevenH.MMCSB.Atm.Domain
                     References(x => x.Parent, "AcqEduCriteriaId").Cascade.All();
                 }
             }
-           
+
+
+            public class AcquisitionEduCriteriaFieldOfStudyMap : ClassMap<AcqEduCriteriaFieldOfStudy>
+            {
+                public AcquisitionEduCriteriaFieldOfStudyMap()
+                {
+                    Table("tblAcqEduCriteriaFieldOfStudy");
+                    Id(x => x.AcqEduCriFOS).GeneratedBy.Increment();
+                    Map(x => x.MajorMinorCd);
+                    Map(x => x.CreatedBy);
+                    Map(x => x.LastModifiedBy);
+                    Map(x => x.CreatedDt);
+                    Map(x => x.LastModifiedDt);
+
+                    References(x => x.Parent, "AcqEduCriteriaId").Cascade.All();
+                }
+            }
+
 
         }
    

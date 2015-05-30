@@ -264,6 +264,20 @@ new -  to call new at the field init
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="AcqEduCriteriaFieldOfStudy">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
+        <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+      </xs:all>
+      <xs:attribute name="AcqEduCriFOS" type="xs:int" use="required"/>
+      <xs:attribute name="MajorMinorCd" type="xs:string" use="required"/>
+      <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+
   <xs:element name="ApplicantSkill">
     <xs:complexType>
       <xs:all>
@@ -276,7 +290,7 @@ new -  to call new at the field init
       <xs:attribute name="SkillCatCd" type="xs:string" use="required"/>
       <xs:attribute name="LanguageSkillSpeak" type="xs:boolean" use="required"/>
       <xs:attribute name="LanguageSkillWrite" type="xs:boolean" use="required"/>
-       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
+      <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="Others" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
@@ -330,6 +344,50 @@ new -  to call new at the field init
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="AcqQuestionnaire">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
+        <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+      </xs:all>
+      <xs:attribute name="QuestionnaireId" type="xs:int" use="required"/>
+      <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
+      <xs:attribute name="QuestionnaireTypeCd" type="xs:string" use="required"/>
+      <xs:attribute name="Weightage" type="xs:int" use="required"/>
+      <xs:attribute name="PersonalityTypeCd" type="xs:string" use="required"/>
+      <xs:attribute name="PersonalityAcceptedMarkFrom" type="xs:int" use="required"/>
+      <xs:attribute name="PersonalityAcceptedMarkTo" type="xs:int" use="required"/>
+      <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AcqQuestion">
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
+        <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+      </xs:all>
+      <xs:attribute name="AcqQuestionId" type="xs:int" use="required"/>
+      <xs:attribute name="QuestionnaireId" type="xs:int" use="required"/>
+      <xs:attribute name="Statement" type="xs:string" use="required"/>
+      <xs:attribute name="SequenceNo" type="xs:int" use="required"/>
+      <xs:attribute name="PersonalityYesMark" type="xs:int" use="required"/>
+      <xs:attribute name="PersonalityNoMark" type="xs:int" use="required"/>
+      <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="AcqQuestionnaireScale">
+    <xs:complexType>
+      <xs:attribute name="QuestionnaireScaleId" type="xs:int" use="required"/>
+      <xs:attribute name="QuestionnaireId" type="xs:int" use="required"/>
+      <xs:attribute name="ScaleRemark" type="xs:string" use="required"/>
+      <xs:attribute name="Scale" type="xs:int" use="required"/>
+      <xs:attribute name="MeritMark" type="xs:int" use="required"/>
+    </xs:complexType>
+  </xs:element>
 
 
   <xs:element name="Acquisition">
@@ -413,7 +471,7 @@ new -  to call new at the field init
       <xs:attribute name="FemaleBMIFrom" type="xs:decimal" use="required"/>
       <xs:attribute name="FemaleBMITo" type="xs:decimal" use="required"/>
       <xs:attribute name="AgeMinimum" type="xs:int" use="required"/>
-      
+
       <xs:attribute name="MaleChestMinimum" type="xs:decimal" use="required"/>
 
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
@@ -469,7 +527,7 @@ new -  to call new at the field init
       <xs:attribute name="Id" type="xs:int" use="required"/>
     </xs:complexType>
   </xs:element>
-  
+
   <!--<xs:element name="CodeItem">
     <xs:complexType>
       <xs:attribute name="Grouping" type="xs:string" use="required"/>
@@ -622,8 +680,8 @@ new -  to call new at the field init
       <xs:attribute name="PersonalityTypeDesc" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>
-  
-    <xs:element name="LoginStatus">
+
+  <xs:element name="LoginStatus">
     <xs:complexType>
       <xs:attribute name="LoginStatusCd" type="xs:string" use="required"/>
       <xs:attribute name="LoginStatusNm" type="xs:string" use="required"/>
