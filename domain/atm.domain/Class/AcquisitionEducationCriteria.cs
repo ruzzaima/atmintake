@@ -12,6 +12,6 @@ namespace SevenH.MMCSB.Atm.Domain
         public virtual Acquisition Parent { get; set; }
 
         public virtual ICollection<AcquisitionEducationCriteriaSubject> AcquisitionEducationCriteriaSubjects { get; set; }
-
+        public virtual ICollection<AcqEduCriteriaFieldOfStudy> AcqEduCriteriaFieldOfStudys { get; set; }
     }
 }

@@ -38,7 +38,7 @@ namespace SevenH.MMCSB.Persistance
 
         public int Save(Acquisition acq)
         {
-            acq=SetParent(acq);
+            acq = SetParent(acq);
             Factory.OpenSession().Save(acq);
             Factory.OpenSession().Flush();
             return 1;
@@ -54,13 +54,13 @@ namespace SevenH.MMCSB.Persistance
         private Acquisition SetParent(Acquisition acq)
         {
             //toto set child parent
- 
-      
+
+
             foreach (var a in acq.AcquisitionCriterias)
             {
                 if (a.AcqCriteriaId == 0)
                 {
-                    a.CreatedDt =  acq.CreatedDt;
+                    a.CreatedDt = acq.CreatedDt;
                     a.CreatedBy = acq.CreatedBy;
                     a.LastModifiedDt = acq.LastModifiedDt;
                     a.LastModifiedBy = acq.LastModifiedBy;
@@ -70,7 +70,7 @@ namespace SevenH.MMCSB.Persistance
                     a.LastModifiedDt = acq.LastModifiedDt;
                     a.LastModifiedBy = acq.LastModifiedBy;
                 }
-               
+
                 a.Parent = acq;
             }
 
@@ -78,7 +78,7 @@ namespace SevenH.MMCSB.Persistance
             {
                 if (a.AcqEduCriteriaId == 0)
                 {
-                    a.CreatedDt =  acq.CreatedDt;
+                    a.CreatedDt = acq.CreatedDt;
                     a.CreatedBy = acq.CreatedBy;
                     a.LastModifiedDt = acq.LastModifiedDt;
                     a.LastModifiedBy = acq.LastModifiedBy;
@@ -97,24 +97,42 @@ namespace SevenH.MMCSB.Persistance
                         b.CreatedDt = acq.CreatedDt;
                         b.CreatedBy = a.CreatedBy;
                         b.LastModifiedDt = acq.LastModifiedDt;
-                        b.LastModifiedBy = a.LastModifiedBy;
+                        b.LastModifiedBy = acq.LastModifiedBy;
                     }
                     else
                     {
                         b.LastModifiedDt = acq.LastModifiedDt;
-                        b.LastModifiedBy = a.LastModifiedBy;
+                        b.LastModifiedBy = acq.LastModifiedBy;
                     }
                     b.Parent = a;
-
                 }
+
+                foreach (var c in a.AcqEduCriteriaFieldOfStudys)
+                {
+                    if (c.AcqEduCriFOS == 0)
+                    {
+                        c.CreatedDt = acq.CreatedDt;
+                        c.CreatedBy = acq.CreatedBy;
+                        c.LastModifiedDt = acq.LastModifiedDt;
+                        c.LastModifiedBy = acq.LastModifiedBy;
+                    }
+                    else
+                    {
+                        c.LastModifiedDt = acq.LastModifiedDt;
+                        c.LastModifiedBy = acq.LastModifiedBy;
+                    }
+                    c.Parent = a;
+                }
+
             }
+
             return acq;
         }
 
 
     }
 
-   
+
 
 
 

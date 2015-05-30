@@ -54,6 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Achievement.cs" />
+    <Compile Include="Class\AcqQuestionnaireScale.cs" />
+    <Compile Include="Class\AcqQuestion.cs" />
+    <Compile Include="Class\AcqQuestionnaire.cs" />
+    <Compile Include="Class\AcqEduCriteriaFieldOfStudy.cs" />
     <Compile Include="Class\AcquisitionType.cs" />
     <Compile Include="Class\BloodType.cs" />
     <Compile Include="Class\LoginStatus.cs" />

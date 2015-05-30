@@ -3842,6 +3842,186 @@
           ///</summary>
           [DataObject(true)]
           [Serializable]
+					[XmlType("AcqEduCriteriaFieldOfStudy",  Namespace=Strings.DefaultNamespace)]
+					public  partial class AcqEduCriteriaFieldOfStudy
+					{
+
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_AcqEduCriFOS;
+						public const string PropertyNameAcqEduCriFOS = "AcqEduCriFOS";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_MajorMinorCd;
+						public const string PropertyNameMajorMinorCd = "MajorMinorCd";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_CreatedBy;
+						public const string PropertyNameCreatedBy = "CreatedBy";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_LastModifiedBy;
+						public const string PropertyNameLastModifiedBy = "LastModifiedBy";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+						private DateTime?  m_CreatedDt;
+						public const string PropertyNameCreatedDt = "CreatedDt";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+						private DateTime?  m_LastModifiedDt;
+						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int AcqEduCriFOS
+						{
+						set
+						{
+						if( m_AcqEduCriFOS == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameAcqEduCriFOS, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_AcqEduCriFOS= value;
+						OnPropertyChanged(PropertyNameAcqEduCriFOS);
+						}
+						}
+						get
+						{
+						return m_AcqEduCriFOS;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string MajorMinorCd
+						{
+						set
+						{
+						if( String.Equals( m_MajorMinorCd, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameMajorMinorCd, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_MajorMinorCd= value;
+						OnPropertyChanged(PropertyNameMajorMinorCd);
+						}
+						}
+						get
+						{
+						return m_MajorMinorCd;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string CreatedBy
+						{
+						set
+						{
+						if( String.Equals( m_CreatedBy, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameCreatedBy, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_CreatedBy= value;
+						OnPropertyChanged(PropertyNameCreatedBy);
+						}
+						}
+						get
+						{
+						return m_CreatedBy;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string LastModifiedBy
+						{
+						set
+						{
+						if( String.Equals( m_LastModifiedBy, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedBy, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_LastModifiedBy= value;
+						OnPropertyChanged(PropertyNameLastModifiedBy);
+						}
+						}
+						get
+						{
+						return m_LastModifiedBy;}
+						}
+					
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? CreatedDt
+						{
+						set
+						{
+						if(m_CreatedDt == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameCreatedDt, value);
+						OnPropertyChanging(arg);
+						if(! arg.Cancel)
+						{
+						m_CreatedDt= value;
+						OnPropertyChanged(PropertyNameCreatedDt);
+						}
+						}
+						get { return m_CreatedDt;}
+						}
+					
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? LastModifiedDt
+						{
+						set
+						{
+						if(m_LastModifiedDt == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedDt, value);
+						OnPropertyChanging(arg);
+						if(! arg.Cancel)
+						{
+						m_LastModifiedDt= value;
+						OnPropertyChanged(PropertyNameLastModifiedDt);
+						}
+						}
+						get { return m_LastModifiedDt;}
+						}
+					
+
+
+					}
+				
+          ///<summary>
+          /// 
+          ///</summary>
+          [DataObject(true)]
+          [Serializable]
 					[XmlType("ApplicantSkill",  Namespace=Strings.DefaultNamespace)]
 					public  partial class ApplicantSkill
 					{
@@ -4859,6 +5039,772 @@
 						}
 						}
 						get { return m_LastModifiedDt;}
+						}
+					
+
+
+					}
+				
+          ///<summary>
+          /// 
+          ///</summary>
+          [DataObject(true)]
+          [Serializable]
+					[XmlType("AcqQuestionnaire",  Namespace=Strings.DefaultNamespace)]
+					public  partial class AcqQuestionnaire
+					{
+
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_QuestionnaireId;
+						public const string PropertyNameQuestionnaireId = "QuestionnaireId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_AcquisitionId;
+						public const string PropertyNameAcquisitionId = "AcquisitionId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_QuestionnaireTypeCd;
+						public const string PropertyNameQuestionnaireTypeCd = "QuestionnaireTypeCd";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_Weightage;
+						public const string PropertyNameWeightage = "Weightage";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_PersonalityTypeCd;
+						public const string PropertyNamePersonalityTypeCd = "PersonalityTypeCd";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_PersonalityAcceptedMarkFrom;
+						public const string PropertyNamePersonalityAcceptedMarkFrom = "PersonalityAcceptedMarkFrom";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_PersonalityAcceptedMarkTo;
+						public const string PropertyNamePersonalityAcceptedMarkTo = "PersonalityAcceptedMarkTo";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_CreatedBy;
+						public const string PropertyNameCreatedBy = "CreatedBy";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_LastModifiedBy;
+						public const string PropertyNameLastModifiedBy = "LastModifiedBy";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+						private DateTime?  m_CreatedDt;
+						public const string PropertyNameCreatedDt = "CreatedDt";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+						private DateTime?  m_LastModifiedDt;
+						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int QuestionnaireId
+						{
+						set
+						{
+						if( m_QuestionnaireId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameQuestionnaireId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_QuestionnaireId= value;
+						OnPropertyChanged(PropertyNameQuestionnaireId);
+						}
+						}
+						get
+						{
+						return m_QuestionnaireId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int AcquisitionId
+						{
+						set
+						{
+						if( m_AcquisitionId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameAcquisitionId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_AcquisitionId= value;
+						OnPropertyChanged(PropertyNameAcquisitionId);
+						}
+						}
+						get
+						{
+						return m_AcquisitionId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string QuestionnaireTypeCd
+						{
+						set
+						{
+						if( String.Equals( m_QuestionnaireTypeCd, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameQuestionnaireTypeCd, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_QuestionnaireTypeCd= value;
+						OnPropertyChanged(PropertyNameQuestionnaireTypeCd);
+						}
+						}
+						get
+						{
+						return m_QuestionnaireTypeCd;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int Weightage
+						{
+						set
+						{
+						if( m_Weightage == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameWeightage, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_Weightage= value;
+						OnPropertyChanged(PropertyNameWeightage);
+						}
+						}
+						get
+						{
+						return m_Weightage;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string PersonalityTypeCd
+						{
+						set
+						{
+						if( String.Equals( m_PersonalityTypeCd, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNamePersonalityTypeCd, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_PersonalityTypeCd= value;
+						OnPropertyChanged(PropertyNamePersonalityTypeCd);
+						}
+						}
+						get
+						{
+						return m_PersonalityTypeCd;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int PersonalityAcceptedMarkFrom
+						{
+						set
+						{
+						if( m_PersonalityAcceptedMarkFrom == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNamePersonalityAcceptedMarkFrom, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_PersonalityAcceptedMarkFrom= value;
+						OnPropertyChanged(PropertyNamePersonalityAcceptedMarkFrom);
+						}
+						}
+						get
+						{
+						return m_PersonalityAcceptedMarkFrom;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int PersonalityAcceptedMarkTo
+						{
+						set
+						{
+						if( m_PersonalityAcceptedMarkTo == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNamePersonalityAcceptedMarkTo, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_PersonalityAcceptedMarkTo= value;
+						OnPropertyChanged(PropertyNamePersonalityAcceptedMarkTo);
+						}
+						}
+						get
+						{
+						return m_PersonalityAcceptedMarkTo;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string CreatedBy
+						{
+						set
+						{
+						if( String.Equals( m_CreatedBy, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameCreatedBy, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_CreatedBy= value;
+						OnPropertyChanged(PropertyNameCreatedBy);
+						}
+						}
+						get
+						{
+						return m_CreatedBy;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string LastModifiedBy
+						{
+						set
+						{
+						if( String.Equals( m_LastModifiedBy, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedBy, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_LastModifiedBy= value;
+						OnPropertyChanged(PropertyNameLastModifiedBy);
+						}
+						}
+						get
+						{
+						return m_LastModifiedBy;}
+						}
+					
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? CreatedDt
+						{
+						set
+						{
+						if(m_CreatedDt == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameCreatedDt, value);
+						OnPropertyChanging(arg);
+						if(! arg.Cancel)
+						{
+						m_CreatedDt= value;
+						OnPropertyChanged(PropertyNameCreatedDt);
+						}
+						}
+						get { return m_CreatedDt;}
+						}
+					
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? LastModifiedDt
+						{
+						set
+						{
+						if(m_LastModifiedDt == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedDt, value);
+						OnPropertyChanging(arg);
+						if(! arg.Cancel)
+						{
+						m_LastModifiedDt= value;
+						OnPropertyChanged(PropertyNameLastModifiedDt);
+						}
+						}
+						get { return m_LastModifiedDt;}
+						}
+					
+
+
+					}
+				
+          ///<summary>
+          /// 
+          ///</summary>
+          [DataObject(true)]
+          [Serializable]
+					[XmlType("AcqQuestion",  Namespace=Strings.DefaultNamespace)]
+					public  partial class AcqQuestion
+					{
+
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_AcqQuestionId;
+						public const string PropertyNameAcqQuestionId = "AcqQuestionId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_QuestionnaireId;
+						public const string PropertyNameQuestionnaireId = "QuestionnaireId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_Statement;
+						public const string PropertyNameStatement = "Statement";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_SequenceNo;
+						public const string PropertyNameSequenceNo = "SequenceNo";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_PersonalityYesMark;
+						public const string PropertyNamePersonalityYesMark = "PersonalityYesMark";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_PersonalityNoMark;
+						public const string PropertyNamePersonalityNoMark = "PersonalityNoMark";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_CreatedBy;
+						public const string PropertyNameCreatedBy = "CreatedBy";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_LastModifiedBy;
+						public const string PropertyNameLastModifiedBy = "LastModifiedBy";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+						private DateTime?  m_CreatedDt;
+						public const string PropertyNameCreatedDt = "CreatedDt";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+						private DateTime?  m_LastModifiedDt;
+						public const string PropertyNameLastModifiedDt = "LastModifiedDt";
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int AcqQuestionId
+						{
+						set
+						{
+						if( m_AcqQuestionId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameAcqQuestionId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_AcqQuestionId= value;
+						OnPropertyChanged(PropertyNameAcqQuestionId);
+						}
+						}
+						get
+						{
+						return m_AcqQuestionId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int QuestionnaireId
+						{
+						set
+						{
+						if( m_QuestionnaireId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameQuestionnaireId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_QuestionnaireId= value;
+						OnPropertyChanged(PropertyNameQuestionnaireId);
+						}
+						}
+						get
+						{
+						return m_QuestionnaireId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string Statement
+						{
+						set
+						{
+						if( String.Equals( m_Statement, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameStatement, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_Statement= value;
+						OnPropertyChanged(PropertyNameStatement);
+						}
+						}
+						get
+						{
+						return m_Statement;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int SequenceNo
+						{
+						set
+						{
+						if( m_SequenceNo == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameSequenceNo, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_SequenceNo= value;
+						OnPropertyChanged(PropertyNameSequenceNo);
+						}
+						}
+						get
+						{
+						return m_SequenceNo;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int PersonalityYesMark
+						{
+						set
+						{
+						if( m_PersonalityYesMark == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNamePersonalityYesMark, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_PersonalityYesMark= value;
+						OnPropertyChanged(PropertyNamePersonalityYesMark);
+						}
+						}
+						get
+						{
+						return m_PersonalityYesMark;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int PersonalityNoMark
+						{
+						set
+						{
+						if( m_PersonalityNoMark == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNamePersonalityNoMark, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_PersonalityNoMark= value;
+						OnPropertyChanged(PropertyNamePersonalityNoMark);
+						}
+						}
+						get
+						{
+						return m_PersonalityNoMark;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string CreatedBy
+						{
+						set
+						{
+						if( String.Equals( m_CreatedBy, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameCreatedBy, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_CreatedBy= value;
+						OnPropertyChanged(PropertyNameCreatedBy);
+						}
+						}
+						get
+						{
+						return m_CreatedBy;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string LastModifiedBy
+						{
+						set
+						{
+						if( String.Equals( m_LastModifiedBy, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedBy, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_LastModifiedBy= value;
+						OnPropertyChanged(PropertyNameLastModifiedBy);
+						}
+						}
+						get
+						{
+						return m_LastModifiedBy;}
+						}
+					
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? CreatedDt
+						{
+						set
+						{
+						if(m_CreatedDt == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameCreatedDt, value);
+						OnPropertyChanging(arg);
+						if(! arg.Cancel)
+						{
+						m_CreatedDt= value;
+						OnPropertyChanged(PropertyNameCreatedDt);
+						}
+						}
+						get { return m_CreatedDt;}
+						}
+					
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? LastModifiedDt
+						{
+						set
+						{
+						if(m_LastModifiedDt == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedDt, value);
+						OnPropertyChanging(arg);
+						if(! arg.Cancel)
+						{
+						m_LastModifiedDt= value;
+						OnPropertyChanged(PropertyNameLastModifiedDt);
+						}
+						}
+						get { return m_LastModifiedDt;}
+						}
+					
+
+
+					}
+				
+          ///<summary>
+          /// 
+          ///</summary>
+          [DataObject(true)]
+          [Serializable]
+					[XmlType("AcqQuestionnaireScale",  Namespace=Strings.DefaultNamespace)]
+					public  partial class AcqQuestionnaireScale
+					{
+
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_QuestionnaireScaleId;
+						public const string PropertyNameQuestionnaireScaleId = "QuestionnaireScaleId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_QuestionnaireId;
+						public const string PropertyNameQuestionnaireId = "QuestionnaireId";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  string  m_ScaleRemark;
+						public const string PropertyNameScaleRemark = "ScaleRemark";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_Scale;
+						public const string PropertyNameScale = "Scale";
+					
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+						private  int  m_MeritMark;
+						public const string PropertyNameMeritMark = "MeritMark";
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int QuestionnaireScaleId
+						{
+						set
+						{
+						if( m_QuestionnaireScaleId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameQuestionnaireScaleId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_QuestionnaireScaleId= value;
+						OnPropertyChanged(PropertyNameQuestionnaireScaleId);
+						}
+						}
+						get
+						{
+						return m_QuestionnaireScaleId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int QuestionnaireId
+						{
+						set
+						{
+						if( m_QuestionnaireId == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameQuestionnaireId, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_QuestionnaireId= value;
+						OnPropertyChanged(PropertyNameQuestionnaireId);
+						}
+						}
+						get
+						{
+						return m_QuestionnaireId;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string ScaleRemark
+						{
+						set
+						{
+						if( String.Equals( m_ScaleRemark, value, StringComparison.Ordinal)) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameScaleRemark, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_ScaleRemark= value;
+						OnPropertyChanged(PropertyNameScaleRemark);
+						}
+						}
+						get
+						{
+						return m_ScaleRemark;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int Scale
+						{
+						set
+						{
+						if( m_Scale == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameScale, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_Scale= value;
+						OnPropertyChanged(PropertyNameScale);
+						}
+						}
+						get
+						{
+						return m_Scale;}
+						}
+					
+            ///<summary>
+            /// 
+            ///</summary>
+						[XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int MeritMark
+						{
+						set
+						{
+						if( m_MeritMark == value) return;
+						var arg = new PropertyChangingEventArgs(PropertyNameMeritMark, value);
+						OnPropertyChanging(arg);
+						if( !arg.Cancel)
+						{
+						m_MeritMark= value;
+						OnPropertyChanged(PropertyNameMeritMark);
+						}
+						}
+						get
+						{
+						return m_MeritMark;}
 						}
 					
 
