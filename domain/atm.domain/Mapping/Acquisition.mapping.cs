@@ -51,6 +51,7 @@ namespace SevenH.MMCSB.Atm.Domain
 
                 HasMany<AcquisitionEducationCriteria>(x => x.AcquisitionEducationCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All();
 
+                HasMany<AcqQuestionnaire>(x => x.AcqQuestionnaires).KeyColumn("AcquisitionId").Inverse().Cascade.All();
 
 
             }
@@ -147,6 +148,63 @@ namespace SevenH.MMCSB.Atm.Domain
                 }
             }
 
+
+            public class AcqQuestionnaireMap : ClassMap<AcqQuestionnaire>
+            {
+                public AcqQuestionnaireMap()
+                {
+                    Table("tblAcqQuestionnaire");
+                    Id(x => x.QuestionnaireId).GeneratedBy.Increment();
+                    Map(x => x.QuestionnaireTypeCd);
+                    Map(x => x.Weightage);
+                    Map(x => x.PersonalityAcceptedMarkFrom);
+                    Map(x => x.PersonalityAcceptedMarkTo);
+                    Map(x => x.CreatedBy);
+                    Map(x => x.LastModifiedBy);
+                    Map(x => x.CreatedDt);
+                    Map(x => x.LastModifiedDt);
+
+                    References(x => x.Parent, "AcquisitionId").Cascade.All();
+
+                    HasMany<AcqQuestion>(x => x.AcqQuestions).KeyColumn("QuestionnaireId").Inverse().Cascade.All();
+                    HasMany<AcqQuestionnaireScale>(x => x.AcqQuestionnaireScales).KeyColumn("QuestionnaireId").Inverse().Cascade.All();
+                }
+            }
+
+
+            public class AcqQuestionMap : ClassMap<AcqQuestion>
+            {
+                public AcqQuestionMap()
+                {
+                    Table("tblAcqQuestion");
+                    Id(x => x.AcqQuestionId).GeneratedBy.Increment();
+                    Map(x => x.Statement);
+                    Map(x => x.SequenceNo);
+                    Map(x => x.PersonalityYesMark);
+                    Map(x => x.PersonalityNoMark);
+                    Map(x => x.CreatedBy);
+                    Map(x => x.LastModifiedBy);
+                    Map(x => x.CreatedDt);
+                    Map(x => x.LastModifiedDt);
+
+                    References(x => x.Parent, "QuestionnaireId").Cascade.All();
+                }
+            }
+
+
+            public class AcqQuestionnaireScaleMap : ClassMap<AcqQuestionnaireScale>
+            {
+                public AcqQuestionnaireScaleMap()
+                {
+                    Table("tblAcqQuestionnaireScale");
+                    Id(x => x.QuestionnaireScaleId).GeneratedBy.Increment();
+                    Map(x => x.Scale);
+                    Map(x => x.ScaleRemark);
+                    Map(x => x.MeritMark);
+                 
+                    References(x => x.Parent, "QuestionnaireId").Cascade.All();
+                }
+            }
 
         }
    
