@@ -109,7 +109,47 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 acqField,
             };
 
-            // acq.AcquisitionEducationCriterias.Add(acqEdu);
+
+            var acqQ = new AcqQuestionnaire()
+            {
+                QuestionnaireTypeCd = "1",
+                Weightage = 10,
+                PersonalityTypeCd = "E",
+                PersonalityAcceptedMarkFrom = 1,
+                PersonalityAcceptedMarkTo = 2,
+             };
+
+            var acqQue = new AcqQuestion()
+            {
+               Statement="aaa",
+               SequenceNo=1,
+               PersonalityNoMark = 1,
+               PersonalityYesMark = 1,
+            };
+
+            acqQ.AcqQuestions = new List<AcqQuestion>
+            {
+               acqQue
+            };
+
+            var acqQueScale = new AcqQuestionnaireScale()
+            {
+             Scale = 1,
+             ScaleRemark = "Ok",
+             MeritMark = 1
+            };
+
+            acqQ.AcqQuestionnaireScales= new List<AcqQuestionnaireScale>
+            {
+               acqQueScale
+            };
+
+
+            acq.AcqQuestionnaires = new List<AcqQuestionnaire>
+            {
+               acqQ
+            };
+
 
             var res2 = acq.Save();
 

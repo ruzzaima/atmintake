@@ -74,6 +74,49 @@ namespace SevenH.MMCSB.Persistance
                 a.Parent = acq;
             }
 
+            foreach (var a in acq.AcqQuestionnaires)
+            {
+                if (a.QuestionnaireId == 0)
+                {
+                    a.CreatedDt = acq.CreatedDt;
+                    a.CreatedBy = acq.CreatedBy;
+                    a.LastModifiedDt = acq.LastModifiedDt;
+                    a.LastModifiedBy = acq.LastModifiedBy;
+                }
+                else
+                {
+                    a.LastModifiedDt = acq.LastModifiedDt;
+                    a.LastModifiedBy = acq.LastModifiedBy;
+                }
+
+                a.Parent = acq;
+
+                foreach (var b in a.AcqQuestions)
+                {
+                    if (b.AcqQuestionId == 0)
+                    {
+                        b.CreatedDt = acq.CreatedDt;
+                        b.CreatedBy = acq.CreatedBy;
+                        b.LastModifiedDt = acq.LastModifiedDt;
+                        b.LastModifiedBy = acq.LastModifiedBy;
+                    }
+                    else
+                    {
+                        b.LastModifiedDt = acq.LastModifiedDt;
+                        b.LastModifiedBy = acq.LastModifiedBy;
+                    }
+
+                    b.Parent = a;
+                }
+
+                foreach (var c in a.AcqQuestionnaireScales)
+                {
+                   c.Parent = a;
+                }
+
+            }
+
+
             foreach (var a in acq.AcquisitionEducationCriterias)
             {
                 if (a.AcqEduCriteriaId == 0)

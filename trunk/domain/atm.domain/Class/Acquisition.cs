@@ -14,6 +14,9 @@ namespace SevenH.MMCSB.Atm.Domain
         public virtual ICollection<AcquisitionCriteria> AcquisitionCriterias { get; set; }
         public virtual ICollection<AcquisitionEducationCriteria> AcquisitionEducationCriterias { get; set; }
 
+        public virtual ICollection<AcqQuestionnaire> AcqQuestionnaires { get; set; }
+
+
         private IAcquisitionPersistence _mPersistence;
 
 
