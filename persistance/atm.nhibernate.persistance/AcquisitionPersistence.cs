@@ -41,7 +41,7 @@ namespace SevenH.MMCSB.Persistance
             acq = SetParent(acq);
             Factory.OpenSession().Save(acq);
             Factory.OpenSession().Flush();
-            return 1;
+            return acq.AcquisitionId;
         }
 
         public Acquisition GetAcquisition(int id)
