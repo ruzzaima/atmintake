@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentNHibernate;
-using FluentNHibernate.Mapping;
-using SevenH.MMCSB.Atm.Domain;
+﻿using System.Collections.Generic;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using Spring.Context.Support;
 using Spring.Objects.Factory;
@@ -40,14 +33,16 @@ namespace SevenH.MMCSB.Atm.Domain
 
         public virtual int Save()
         {
-            return (int)PersistanceLayer.Save(this);
+            if (ApplicantId == 0)
+                return (int)PersistanceLayer.Save(this);
+            return (int)PersistanceLayer.Update(this);
         }
 
         public virtual Applicant GetApplicant(int id)
         {
             return (Applicant)PersistanceLayer.GetApplicant(id);
         }
-     }
+    }
 
 
 }

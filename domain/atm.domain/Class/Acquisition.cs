@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using Spring.Context.Support;
 using Spring.Objects.Factory;

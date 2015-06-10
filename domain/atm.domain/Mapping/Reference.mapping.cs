@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
@@ -258,17 +252,18 @@ namespace SevenH.MMCSB.Atm.Domain
             }
         }
 
-        public class ApplicantSportMap : ClassMap<ApplicantSport>
+        public class SportAndAssociationMap : ClassMap<SportAndAssociation>
         {
-            public ApplicantSportMap()
+            public SportAndAssociationMap()
             {
                 Table("tblREFSportAndAssociation");
-                Id(x => x.ApplicantSportAssocId);
-                Map(x => x.SportAssocId);
-                Map(x => x.AchievementCd);
+                Id(x => x.SportAssocId);
+                Id(x => x.SportAssociatType);
+                Map(x => x.ActiveInd);
+                Map(x => x.SportAssociatName);
                 Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
+                Map(x => x.LastModifiedBy);
                 Map(x => x.LastModifiedDt);
             }
         }
@@ -325,27 +320,21 @@ namespace SevenH.MMCSB.Atm.Domain
             }
         }
 
-        public class LoginUserMap : ClassMap<LoginUser>
+       
+        public class OccupationMap : ClassMap<Occupation>
         {
-            public LoginUserMap()
+            public OccupationMap()
             {
-                Table("tblUser");
-                Id(x => x.LoginId).Column("UserId");
-                Map(x => x.UserName);
-                Map(x => x.UserPassword);
-                Map(x => x.Email);
-                Map(x => x.AlternativeEmail);
-                Map(x => x.ServiceCd);
+                Table("tblREFOccupation");
+                Id(x => x.OccupationCd);
+                Map(x => x.OccupationName);
                 Map(x => x.CreatedBy);
+                Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
-                Map(x => x.ModifiedBy);
-                Map(x => x.ModifiedDt);
+                Map(x => x.LastModifiedDt);
             }
         }
-
-      
-
-
+        
     }
 }
 

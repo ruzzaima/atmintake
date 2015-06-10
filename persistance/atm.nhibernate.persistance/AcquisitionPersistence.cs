@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Globalization;
+﻿using System.Data;
 using NHibernate;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
@@ -10,7 +8,7 @@ namespace SevenH.MMCSB.Persistance
     public class AcquisitionPersistence : IAcquisitionPersistence
     {
 
-        private static NHibernate.ISession _mSession;
+        private static ISession _mSession;
         public ISession Session
         {
             get

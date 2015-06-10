@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SevenH.MMCSB.Atm.Domain;
+﻿using System.Collections.Generic;
 
 namespace SevenH.MMCSB.Atm.Domain
 {

@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblApplicantEduSubject
     {
         public int EduSubjectId { get; set; }
@@ -20,9 +19,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string GradeCd { get; set; }
         public string Grade { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual tblApplicantEdu tblApplicantEdu { get; set; }
         public virtual tblREFSubject tblREFSubject { get; set; }

@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblAcquisition
     {
         public tblAcquisition()
@@ -26,7 +26,7 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string AcquisitionTypeCd { get; set; }
         public Nullable<int> Year { get; set; }
         public Nullable<int> Siri { get; set; }
-        public Nullable<System.DateTime> ClosingDate { get; set; }
+        public Nullable<DateTime> ClosingDate { get; set; }
         public Nullable<int> Target { get; set; }
         public Nullable<bool> NewStatus { get; set; }
         public string NewStatusBy { get; set; }
@@ -51,9 +51,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<bool> CompleteStatus { get; set; }
         public string CompleteStatusBy { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual ICollection<tblAcqCriteria> tblAcqCriterias { get; set; }
         public virtual ICollection<tblAcqEducationCriteria> tblAcqEducationCriterias { get; set; }

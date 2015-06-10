@@ -153,3 +153,7 @@ footer {
 .nav-tabs {
     margin-bottom: 0;
 }
+
+.red {
+    color: red;
+}

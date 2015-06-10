@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="antlr.runtime">
+      <HintPath>..\..\library\antlr.runtime.dll</HintPath>
+    </Reference>
     <Reference Include="atm.domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\domain\atm.domain\bin\Debug\atm.domain.dll</HintPath>
@@ -47,7 +50,26 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\persistance\atm.nhibernate.persistance\bin\Debug\atm.nhibernate.persistance.dll</HintPath>
     </Reference>
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\library\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Iesi.Collections.4.0.1.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NHibernate.4.0.3.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Spring.Core">
       <HintPath>..\..\library\Spring.Core.dll</HintPath>
     </Reference>
@@ -170,13 +192,21 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
-    <Compile Include="Controllers\ReferenceRepo.cs" />
+    <Compile Include="Helper\ReferenceRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ATMHelper.cs" />
+    <Compile Include="Helper\MailService.cs" />
+    <Compile Include="Helper\NHibernateContractResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ApplicantModel.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\UserAccountViewModel.cs" />
+    <Compile Include="Models\ResumeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -184,6 +214,7 @@
     <Content Include="Config\springContext.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -195,6 +226,9 @@
     <Content Include="Images\ajax-loader.png" />
     <Content Include="Images\Header-Atm-2.png" />
     <Content Include="Images\Header-Logo-Atm-1.png" />
+    <Content Include="log4net.xml" />
+    <Content Include="Scripts\Core\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\Core\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\Core\bootstrap.js" />
     <Content Include="Scripts\Core\bootstrap.min.js" />
     <Content Include="Content\bootstrap-theme.css.map" />
@@ -218,10 +252,20 @@
     <Content Include="Scripts\Core\respond.js" />
     <Content Include="Scripts\Core\respond.min.js" />
     <Content Include="Scripts\Core\_references.js" />
+    <Content Include="Scripts\Core\less-1.5.1.js" />
+    <Content Include="Scripts\Core\less-1.5.1.min.js" />
     <Content Include="Scripts\Main\default.js" />
+    <Content Include="Scripts\Main\public_register.js" />
     <Content Include="Scripts\Main\public_resume.js" />
     <Content Include="Scripts\Main\public_account.js" />
-    <Content Include="Web.config" />
+    <Content Include="Scripts\Core\moment-with-locales.js" />
+    <Content Include="Scripts\Core\moment-with-locales.min.js" />
+    <Content Include="Scripts\Core\moment.js" />
+    <Content Include="Scripts\Core\moment.min.js" />
+    <Content Include="Templates\Registration.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -246,10 +290,12 @@
     <Content Include="Views\Public\Resume.cshtml" />
     <Content Include="Views\Public\Application.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\FirstTimeLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
+    <Folder Include="Views\Common\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -262,6 +308,10 @@
     <ProjectReference Include="..\..\domain\atm.domain\atm.domain.csproj">
       <Project>{f703db7f-124f-48c7-b449-81cecaa4d6cb}</Project>
       <Name>atm.domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\services\atm.cryptor\atm.cryptor.csproj">
+      <Project>{0858df2e-a28f-48ad-a93e-f1612a430171}</Project>
+      <Name>atm.cryptor</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

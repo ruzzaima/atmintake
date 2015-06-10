@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblREFHighEduLevel
     {
         public tblREFHighEduLevel()
@@ -24,9 +24,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<int> HighestEduLevelRank { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual ICollection<tblApplicantEdu> tblApplicantEdus { get; set; }
     }

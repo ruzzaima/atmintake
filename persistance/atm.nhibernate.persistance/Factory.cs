@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Configuration;
 using System.Reflection;
 using System.Web;
 using FluentNHibernate.Cfg;
-using FluentNHibernate.Cfg.Db;
 using NHibernate;
 
 namespace SevenH.MMCSB.Persistance
@@ -11,6 +11,13 @@ namespace SevenH.MMCSB.Persistance
     {
 
         const string SessionKey = "MySession";
+
+        public static string ConnectionString
+        {
+            get { return ConfigurationManager.ConnectionStrings["atm"].ConnectionString; }
+
+        }
+
 
         private static NHibernate.ISessionFactory _sf;
 
@@ -21,18 +28,15 @@ namespace SevenH.MMCSB.Persistance
                 if ((_sf == null))
                 {
 
-                    _sf  = Fluently.Configure()
-                           .Database(config: FluentNHibernate.Cfg.Db.MsSqlConfiguration.MsSql2008
-                            .ConnectionString("data source=bo3-pc\\sqlexpressdnf;initial catalog=dbpengambilan;integrated security=true")
-                            #if DEBUG
-                            .ShowSql()
-                            .FormatSql()
-                            #endif
-                            .Dialect<NHibernate.Dialect.MsSql2012Dialect>()
-                            .AdoNetBatchSize(50))
-                            .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.Load("atm.domain")))
-                            .BuildSessionFactory();
-   }
+                    _sf = Fluently.Configure().Database(config: FluentNHibernate.Cfg.Db.MsSqlConfiguration.MsSql2008.ConnectionString(ConnectionString)
+                    #if DEBUG
+                    .ShowSql().FormatSql()
+                    #endif
+                    .Dialect<NHibernate.Dialect.MsSql2012Dialect>()
+                    .AdoNetBatchSize(50))
+                    .Mappings(m => m.FluentMappings.AddFromAssembly(Assembly.Load("atm.domain")))
+                    .BuildSessionFactory();
+                }
                 return _sf;
             }
         }
@@ -46,37 +50,30 @@ namespace SevenH.MMCSB.Persistance
                 if (context != null && context.Items.Contains(SessionKey))
                 {
                     //Return already open ISession
-                    if (val==0)
+                    if (val == 0)
                     {
-                       HttpRuntime.Cache["context"] = context;
-                    return (ISession)context.Items[SessionKey];  
+                        HttpRuntime.Cache["context"] = context;
+                        return (ISession)context.Items[SessionKey];
                     }
-                    else
-                    {
-                        newSession = SessionFactory.OpenSession();
-                        return newSession;
-                    }
-                 
-                }
-                else
-                {
-                    //Create new ISession and store in HttpContext
                     newSession = SessionFactory.OpenSession();
-                    if (context != null && val == 0)
-                    {
-                        context.Items[SessionKey] = newSession;
-
-                        return newSession;
-                    }
-                    if (context != null) return (ISession)context.Items[SessionKey];
+                    return newSession;
                 }
+                //Create new ISession and store in HttpContext
+                newSession = SessionFactory.OpenSession();
+                if (context != null && val == 0)
+                {
+                    context.Items[SessionKey] = newSession;
+
+                    return newSession;
+                }
+                if (context != null) return (ISession)context.Items[SessionKey];
             }
             catch (Exception)
             {
-                HttpContext.Current = (HttpContext) HttpRuntime.Cache["context"];
+                HttpContext.Current = (HttpContext)HttpRuntime.Cache["context"];
                 if (context != null) return (ISession)context.Items[SessionKey];
             }
-            return  newSession = SessionFactory.OpenSession();
+            return newSession = SessionFactory.OpenSession();
         }
     }
 }

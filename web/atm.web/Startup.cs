@@ -1,7 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using SevenH.MMCSB.Atm.Web;
 
-[assembly: OwinStartupAttribute(typeof(SevenH.MMCSB.Atm.Web.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace SevenH.MMCSB.Atm.Web
 {
     public partial class Startup

@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{80F5FC4B-B3A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "atm.nhibernate.persistance", "persistance\atm.nhibernate.persistance\atm.nhibernate.persistance.csproj", "{21B84AC3-08A8-49C8-926B-974ACCBCA79D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{C8DFA7EA-0E88-4CE3-AD62-C0294F224C72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "atm.cryptor", "services\atm.cryptor\atm.cryptor.csproj", "{0858DF2E-A28F-48AD-A93E-F1612A430171}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,10 @@ Global
 		{21B84AC3-08A8-49C8-926B-974ACCBCA79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21B84AC3-08A8-49C8-926B-974ACCBCA79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21B84AC3-08A8-49C8-926B-974ACCBCA79D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0858DF2E-A28F-48AD-A93E-F1612A430171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0858DF2E-A28F-48AD-A93E-F1612A430171}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0858DF2E-A28F-48AD-A93E-F1612A430171}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0858DF2E-A28F-48AD-A93E-F1612A430171}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,5 +56,6 @@ Global
 		{4BC025B8-6498-4BD1-A55D-1D8DD4E2D6C9} = {33D17568-8ECB-4C97-9304-9AAAFA3581E3}
 		{21B84AC3-08A8-49C8-926B-974ACCBCA79D} = {33D17568-8ECB-4C97-9304-9AAAFA3581E3}
 		{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94} = {80F5FC4B-B3AE-4CEC-BCB3-0FD2004AE3BD}
+		{0858DF2E-A28F-48AD-A93E-F1612A430171} = {C8DFA7EA-0E88-4CE3-AD62-C0294F224C72}
 	EndGlobalSection
 EndGlobal

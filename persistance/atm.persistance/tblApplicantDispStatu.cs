@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblApplicantDispStatu
     {
         public int ApplicantDispStatusId { get; set; }
         public Nullable<int> ApplicantId { get; set; }
         public string Disciplinary { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual tblApplicant tblApplicant { get; set; }
     }

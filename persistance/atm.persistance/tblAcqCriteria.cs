@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblAcqCriteria
     {
         public int AcqCriteriaId { get; set; }
@@ -34,12 +33,12 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<decimal> FemaleBMITo { get; set; }
         public Nullable<int> AgeMinimum { get; set; }
         public Nullable<int> AgeMaximum { get; set; }
-        public Nullable<System.DateTime> AgeAt { get; set; }
+        public Nullable<DateTime> AgeAt { get; set; }
         public Nullable<decimal> MaleChestMinimum { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime CreatedDt { get; set; }
+        public DateTime CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public System.DateTime LastModifiedDt { get; set; }
+        public DateTime LastModifiedDt { get; set; }
     
         public virtual tblAcquisition tblAcquisition { get; set; }
     }

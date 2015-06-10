@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblREFSkill
     {
         public tblREFSkill()
@@ -23,9 +23,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string Skill { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual ICollection<tblApplicantSkill> tblApplicantSkills { get; set; }
     }

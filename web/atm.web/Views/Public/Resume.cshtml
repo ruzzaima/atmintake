@@ -1,8 +1,13 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@model SevenH.MMCSB.Atm.Web.Models.ResumeViewModel
+@{
     ViewBag.Title = "Resume Saya";
     Layout = "../Shared/_EmptyLayoutWithMenu.cshtml";
 }
-
+@section styles
+{
+    @Styles.Render("~/Content/datepickercss")
+}
 
 
 <div class="row">
@@ -26,26 +31,27 @@
                         <div class="form-group">
                             <label for="fullname" class="col-sm-4 control-label">Nama Penuh</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="fullname" placeholder="Nama Penuh">
+                                <input type="text" class="form-control" id="fullname" data-bind="value: applicant.FullName">
+                                <input type="hidden" class="form-control" data-bind="value: applicant.ApplicantId">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="idnumber" class="col-sm-4 control-label">No Kad Pengenalan</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="idnumber" placeholder="No Kad Pengenalan">
+                                <input type="text" class="form-control" id="idnumber" data-bind="value: applicant.NewIcNo">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-sm-4 control-label">Emel</label>
                             <div class="col-sm-8">
-                                <input type="email" class="form-control" id="email" placeholder="Emel">
+                                <input type="email" class="form-control" id="email" data-bind="value: applicant.Email">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="dateofbirth" class="col-sm-4 control-label">Tarikh Lahir</label>
                             <div class="col-sm-8">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="01/01/1900">
+                                <div class="input-group" style="cursor: pointer" id="birthdatepicker">
+                                    <input type="text" class="form-control" data-bind="value: applicant.BirthDate">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar "></i></span>
                                 </div>
                             </div>
@@ -53,21 +59,12 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Status Perkahwinan</label>
                             <div class="col-sm-8">
-                                <label class="radio-inline">
-                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Belum Berkahwin</span>
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Berkahwin</span>
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Duda</span>
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Janda</span>
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" class="radio-inline" name="maritalstatus" /><span>Balu</span>
-                                </label>
+                                @foreach (var m in @Model.MaritalStatuses)
+                                {
+                                    <label class="radio-inline">
+                                        <input type="radio" class="radio-inline" name="maritalstatus" value="@m.MrtlStatusCd" data-bind="checked: applicant.MrtlStatusCd" /><span>@m.MrtlStatus</span>
+                                    </label>
+                                }
                             </div>
                         </div>
                     </div>
@@ -89,99 +86,117 @@
                             <label for="dateofbirth" class="col-sm-4 control-label">Tinggi</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="100">
-                                    <span class="input-group-addon">M</span>
+                                    <input type="text" class="form-control" data-bind="value: applicant.Height">
+                                    <span class="input-group-addon">meter</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="nationality" class="col-sm-4 control-label">Kerakyatan</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="nationality"></select>
+                                <select class="form-control" id="nationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.NationalityCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="religion" class="col-sm-4 control-label">Agama</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="religion"></select>
+                                <select class="form-control" id="religion" data-bind="options: religions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.ReligionCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="placeofliving" class="col-sm-4 control-label">Tempat Tinggal</label>
+                            <label class="col-sm-4 control-label">Tempat Tinggal</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="placeofliving" placeholder="Tempat Tinggal">
+                                <label class="radio-inline">
+                                    <input type="radio" name="placeofliving" value="L" data-bind="checked: applicant.ResidenceTypeInd" />Luar Bandar
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="placeofliving" value="B" data-bind="checked: applicant.ResidenceTypeInd" />Bandar
+                                </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mailingaddress1" class="col-sm-4 control-label">Alamat Surat Menyurat Terkini</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="mailingaddress1" placeholder="Alamat">
+                                <input type="text" class="form-control" id="mailingaddress1" data-bind="value: applicant.CorresponAddr1">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="mailingaddress1" data-bind="value: applicant.CorresponAddr2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="mailingaddress1" data-bind="value: applicant.CorresponAddr3">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mailingpostcode" class="col-sm-4 control-label">Poskod</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="mailingpostcode" placeholder="10000">
+                                <input type="text" class="form-control" id="mailingpostcode" data-bind="value: applicant.CorresponAddrPostCd">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mailingcountry" class="col-sm-4 control-label">Negara</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="mailingcountry"></select>
+                                <select class="form-control" id="mailingcountry" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrCountryCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mailingstate" class="col-sm-4 control-label">Negeri</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="mailingstate"></select>
+                                <select class="form-control" id="mailingstate" data-bind="options: states, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrStateCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mailingcity" class="col-sm-4 control-label">Bandar</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="mailingcity"></select>
+                                <select class="form-control" id="mailingcity" data-bind="options: cities, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrCityCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mothersname" class="col-sm-4 control-label">Nama Ibu</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="mothersname" placeholder="Nama Ibu">
+                                <input type="text" class="form-control" id="mothersname" data-bind="value: applicant.MomName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="motheroccupation" class="col-sm-4 control-label">Pekerjaan Ibu</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="motheroccupation"></select>
+                                <input type="text" class="form-control" id="motheroccupation" data-bind="value: applicant.MomOccupation" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="fathername" class="col-sm-4 control-label">Nama Bapa</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="fathername" placeholder="Nama Bapa">
+                                <input type="text" class="form-control" id="fathername" data-bind="value: applicant.DadName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="fatheroccupation" class="col-sm-4 control-label">Pekerjaan Bapa</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="fatheroccupation"></select>
+                                <input type="text" class="form-control" id="fatheroccupation" data-bind="value: applicant.DadOccupation" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="guardianname" class="col-sm-4 control-label">Nama Penjaga</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="guardianname" placeholder="Nama Penjaga">
+                                <input type="text" class="form-control" id="guardianname" data-bind="value: applicant.GuardianName">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="guardianoccupation" class="col-sm-4 control-label">Pekerjaan Penjaga</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="guardianoccupation"></select>
+                                <input type="text" class="form-control" id="guardianoccupation" data-bind="value: applicant.GuardianOccupation" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="familyhigheducation" class="col-sm-4 control-label">Kelulusan Tertinggi Keluarga</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="familyhigheducation" placeholder="Kelulusan Tertinggi Keluarga">
+                                <input type="text" class="form-control" id="familyhigheducation">
                             </div>
                         </div>
                     </div>
@@ -191,7 +206,7 @@
                             <label for="dateofbirth" class="col-sm-4 control-label">Berat</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="100">
+                                    <input type="text" class="form-control" data-bind="value: applicant.Weight">
                                     <span class="input-group-addon">Kg</span>
                                 </div>
                             </div>
@@ -199,54 +214,117 @@
                         <div class="form-group">
                             <label for="nationalitycertno" class="col-sm-4 control-label">No Sijil Kerakyatan</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="nationalitycertno" placeholder="No. Sijil Kerakyatan">
+                                <input type="text" class="form-control" id="nationalitycertno" data-bind="value: applicant.NationalityCertNo">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="race" class="col-sm-4 control-label">Bangsa</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="race"></select>
+                                <select class="form-control" id="race" data-bind="options: races, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.RaceCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="ethnic" class="col-sm-4 control-label">Etnik</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="ethnic"></select>
+                                <select class="form-control" id="ethnic" data-bind="options: ethnics, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.EthnicCd"></select>
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label for="homephoneno" class="col-sm-4 control-label">No. Tel Rumah</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="homephoneno" placeholder="03-12345678">
+                                <input type="text" class="form-control" id="homephoneno" data-bind="value: applicant.HomePhoneNo">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mobilephoneno" class="col-sm-4 control-label">No Tel Bimbit</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="mobilephoneno" placeholder="019-12345678">
+                                <input type="text" class="form-control" id="mobilephoneno" data-bind="value: applicant.MobilePhoneNo">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="relativephoneno" class="col-sm-4 control-label">No Tel Waris</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="relativephoneno" placeholder="03-12345678/019-12345678">
+                                <input type="text" class="form-control" id="relativephoneno">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="childno" class="col-sm-4 control-label">Anak Ke</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="childno" placeholder="1">
+                                <input type="text" class="form-control" id="childno" data-bind="value: applicant.ChildNo">
                             </div>
                         </div>
 
                         <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="motheridnumber" class="col-sm-4 control-label">No Kad Pengenalan/Passport Ibu</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="motheridnumber" placeholder="190101-01-0101/A123456789">
+                                <input type="text" class="form-control" id="motheridnumber" data-bind="value: applicant.MomIcNo">
                             </div>
                         </div>
 
@@ -255,7 +333,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon">RM</span>
-                                    <input type="text" class="form-control" placeholder="1000.00" id="motherincome">
+                                    <input type="text" class="form-control" id="motherincome" data-bind="value: applicant.MomSalary">
                                 </div>
                             </div>
                         </div>
@@ -263,7 +341,7 @@
                         <div class="form-group">
                             <label for="fatheridnumber" class="col-sm-4 control-label">No Kad Pengenalan/Passort Bapa</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="fatheridnumber" placeholder="190101-01-0101/A123456789">
+                                <input type="text" class="form-control" id="fatheridnumber" data-bind="value: applicant.DadIcNo">
                             </div>
                         </div>
                         <div class="form-group">
@@ -271,14 +349,14 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon">RM</span>
-                                    <input type="text" class="form-control" placeholder="1000.00" id="fatherincome">
+                                    <input type="text" class="form-control" id="fatherincome" data-bind="value: applicant.DadSalary">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="guardianidnumber" class="col-sm-4 control-label">No Kad Pengenalan/Passport Penjaga</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="guardianidnumber" placeholder="190101-01-0101/A123456789">
+                                <input type="text" class="form-control" id="guardianidnumber" data-bind="value: applicant.GuardianIcNo">
                             </div>
                         </div>
                         <div class="form-group">
@@ -286,7 +364,7 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <span class="input-group-addon">RM</span>
-                                    <input type="text" class="form-control" placeholder="1000.00">
+                                    <input type="text" class="form-control" data-bind="value: applicant.GuardianSalary">
                                 </div>
                             </div>
                         </div>
@@ -294,10 +372,10 @@
                             <label for="dateofbirth" class="col-sm-4 control-label">Bercermin Mata/Kanta Lekap?</label>
                             <div class="col-sm-8">
                                 <label class="radio-inline">
-                                    <input type="radio" name="spectacle" value="Y" />Ya
+                                    <input type="radio" name="spectacle" value="Y" data-bind="checked: applicant.SpectaclesUserInd" />Ya
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="spectacle" value="N" />Tidak
+                                    <input type="radio" name="spectacle" value="N" data-bind="checked: applicant.SpectaclesUserInd" />Tidak
                                 </label>
                             </div>
                         </div>
@@ -307,7 +385,7 @@
                             <label for="bmi" class="col-sm-4 control-label">BMI</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="50.00" id="bmi">
+                                    <input type="text" class="form-control" id="bmi" data-bind="value: applicant.Bmi">
                                     <span class="input-group-addon">BMI</span>
                                 </div>
                             </div>
@@ -315,73 +393,153 @@
                         <div class="form-group">
                             <label for="birthcertno" class="col-sm-4 control-label">No Sijil Lahir</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="birthcertno" placeholder="REG010012">
+                                <input type="text" class="form-control" id="birthcertno" data-bind="value: applicant.BirthCertNo">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="birthcountry" class="col-sm-4 control-label">Negara Kelahiran</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="birthcountry"></select>
+                                <select class="form-control" id="birthcountry" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.BirthCountryCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="birthstate" class="col-sm-4 control-label">Negeri Kelahiran</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="birthstate"></select>
+                                <select class="form-control" id="birthstate" data-bind="options: birthstates, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.BirthStateCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="birthcity" class="col-sm-4 control-label">Bandar Kelahiran</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="birthcity"></select>
+                                <select class="form-control" id="birthcity" data-bind="options: birthcities, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.BirthCityCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="placeofbirth" class="col-sm-4 control-label">Tempat Kelahiran</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="placeofbirth" placeholder="Tempat Lahir">
+                                <input type="text" class="form-control" id="placeofbirth" data-bind="value: applicant.BirthPlace">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="childfrom" class="col-sm-4 control-label">Daripada</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="childfrom" placeholder="5">
+                                <input type="text" class="form-control" id="childfrom" data-bind="value: applicant.NoOfSibling">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="mothernationality" class="col-sm-4 control-label">Warganegara Ibu</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="mothernationality"></select>
+                                <select class="form-control" id="mothernationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.MomNationalityCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="motherphoneno" class="col-sm-4 control-label">No Telefor</label>
+                            <label for="motherphoneno" class="col-sm-4 control-label">No Telefon</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="motherphoneno" placeholder="03-12345678/019-12345678">
+                                <input type="text" class="form-control" id="motherphoneno">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="fathernationality" class="col-sm-4 control-label">Warganegara Bapa</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="fathernationality"></select>
+                                <select class="form-control" id="fathernationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.DadNationalityCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="fahterphoneno" class="col-sm-4 control-label">No Telefon</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="fahterphoneno" placeholder="03-12345678/019-12345678">
+                                <input type="text" class="form-control" id="fahterphoneno">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="guardiannationality" class="col-sm-4 control-label">Warganegara Penjaga</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="guardiannationality"></select>
+                                <select class="form-control" id="guardiannationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.GuardianNationalityCd"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="guardianphoneno" class="col-sm-4 control-label">No Telefon</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="guardianphoneno" placeholder="03-12345678/019-12345678">
+                                <input type="text" class="form-control" id="guardianphoneno">
                             </div>
                         </div>
                     </div>
@@ -411,25 +569,37 @@
                                     <th>Keputusan</th>
                                     <th>Tahun</th>
                                     <th>Pusat Pengajian</th>
+                                    <th></th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody data-bind="foreach: applicant.ApplicantEducations">
+                            <tr>
+                                <td data-bind="text: $index() + 1"></td>
+                                <td><select class="form-control" data-bind="options: $root.higheducations, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', value: $data.HighEduLevelCd"></select></td>
+                                <td><input type="text" class="form-control" data-bind="value: $data.EduCertTitle"/></td>
+                                <td><input type="text" class="form-control" data-bind="value: $data.OverallGrade"/></td>
+                                <td><input type="text" class="form-control" data-bind="value: $data.ConfermentYr"/></td>
+                                <td>
+                                    <input type="text" class="form-control" data-bind="visible: $data.HighEduLevelCd() == 15 || $data.HighEduLevelCd() == 14 || $data.HighEduLevelCd() == 25 || $data.HighEduLevelCd() == 13,  value: $data.InstitutionName"/>
+                                    <select class="form-control" data-bind="options: $root.institutions, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code',visible: $data.HighEduLevelCd() == 11 || $data.HighEduLevelCd() == 10 || $data.HighEduLevelCd() == 01 || $data.HighEduLevelCd() == 20 || $data.HighEduLevelCd() == 08 || $data.HighEduLevelCd() == 07 || $data.HighEduLevelCd() == 26, value: $data.InstCd"></select>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-default btn-sm" data-bind="click: $root.managesubject">
+                                        <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-default btn-sm" data-bind="click: $root.removeacademic">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
+                <div class="row" data-bind="visible: isedusubject">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            SUBJEK SPM dan Setaraf
+                            SUBJEK
                         </div>
                         <div class="panel-body">
                             <table class="table table-bordered table-striped">
@@ -471,7 +641,6 @@
                                         <td>Sains</td>
                                         <td><input type="checkbox" /></td>
                                     </tr>
-
                                     <tr>
                                         <td></td>
                                         <td>Sejarah</td>
@@ -500,6 +669,15 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm" data-bind="click: addacademic">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
                             <button type="button" class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
                             </button>
@@ -517,16 +695,31 @@
                                 <th>Bil.</th>
                                 <th>Kegiatan Sukan Yang Disertai</th>
                                 <th>Pencapaian/Peringkat</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody data-bind="foreach: sports">
+                            <tr>
+                                <td data-bind="text: $index() + 1">/td>
+                                <td><select class="form-control" data-bind="options: $root.sportslist, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Id', valueAllowUnset: true, value: $data.SportAssocId"></select></td>
+                                <td>
+                                    <select class="form-control" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                                    <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removesport">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: addsport">
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
                         </button>
                     </div>
@@ -540,16 +733,31 @@
                                 <th>Bil.</th>
                                 <th>Kegiatan Ko-Kurikulum Yang Disertai</th>
                                 <th>Pencapaian/Peringkat</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody data-bind="foreach: kokos">
+                            <tr>
+                                <td data-bind="text: $index() + 1">/td>
+                                <td><select class="form-control" data-bind="options: $root.kokolist, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Id', valueAllowUnset: true, value: $data.SportAssocId"></select></td>
+                                <td>
+                                    <select class="form-control" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                                    <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removekoko">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: addkoko">
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
                         </button>
                     </div>
@@ -563,16 +771,31 @@
                                 <th>Bil.</th>
                                 <th>Lain-Lain</th>
                                 <th>Pencapaian/Peringkat</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody data-bind="foreach: otherssportandassociations">
+                            <tr>
+                                <td data-bind="text: $index() + 1">/td>
+                                <td><input type="text" class="form-control" data-bind="value: $data.SportAssocId" /></td>
+                                <td>
+                                    <select class="form-control" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                                    <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removeothersportnkoko">
+                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: addothersportnkoko">
                             <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
                         </button>
                     </div>
@@ -581,7 +804,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-sm">
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: savesportnassociation">
                             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
                         </button>
                     </div>
@@ -605,13 +828,13 @@
                                             <div class="form-group">
                                                 <label for="servicetab_currentoccupation" class="col-sm-4 control-label">Pekerjaan Sekarang</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_currentoccupation" placeholder="Pekerjaan Sekarang">
+                                                    <input type="text" class="form-control" id="servicetab_currentoccupation">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="servicetab_currentorganization" class="col-sm-4 control-label">Organisasi</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_currentorganization" placeholder="Organisasi">
+                                                    <input type="text" class="form-control" id="servicetab_currentorganization">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -619,7 +842,7 @@
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
                                                         <span class="input-group-addon">RM</span>
-                                                        <input type="text" class="form-control" id="servicetab_currentsalary" placeholder="1,000.00">
+                                                        <input type="text" class="form-control" id="servicetab_currentsalary">
                                                     </div>
                                                 </div>
                                             </div>
@@ -656,15 +879,15 @@
                                             <div class="form-group">
                                                 <label for="servicetab_armyno" class="col-sm-4 control-label">No. Tentera</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_armyno" placeholder="12345">
+                                                    <input type="text" class="form-control" id="servicetab_armyno">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="servicetab_palapesgraduationdate" class="col-sm-4 control-label">Tarikh Tamat Tauliah Sukarela</label>
                                                 <div class="col-sm-8">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" id="servicetab_palapesgraduationdate" placeholder="01/01/1900" />
-                                                        <div class="input-group-addon">
+                                                        <input type="text" class="form-control" id="servicetab_palapesgraduationdate" />
+                                                        <div class="input-group-addon" style="cursor: pointer">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </div>
                                                     </div>
@@ -675,13 +898,13 @@
                                             <div class="form-group">
                                                 <label for="servicetab_palapesinstitute" class="col-sm-4 control-label">Pusat Pengajian</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_palapesinstitute" placeholder="Pusat Pengajian">
+                                                    <input type="text" class="form-control" id="servicetab_palapesinstitute">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="servicetab_otherqualification" class="col-sm-4 control-label">Lain-Lain Kelulusan (jika ada)</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_otherqualification" placeholder="Lain-Lain">
+                                                    <input type="text" class="form-control" id="servicetab_otherqualification">
                                                 </div>
                                             </div>
                                         </div>
@@ -702,13 +925,13 @@
                                             <div class="form-group">
                                                 <label for="servicetab_oldemployername" class="col-sm-4 control-label">Nama Majikan</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_oldemployername" placeholder="Nama Majikan">
+                                                    <input type="text" class="form-control" id="servicetab_oldemployername">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="servicetab_contractperiod" class="col-sm-4 control-label">Ikatan Perjanjian Selama</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_contractperiod" placeholder="2">
+                                                    <input type="text" class="form-control" id="servicetab_contractperiod">
                                                 </div>
                                             </div>
                                         </div>
@@ -716,13 +939,13 @@
                                             <div class="form-group">
                                                 <label for="servicetab_employeraddress" class="col-sm-4 control-label">Alamat</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_employeraddress" placeholder="Alamat">
+                                                    <input type="text" class="form-control" id="servicetab_employeraddress">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="servicetab_contractstart" class="col-sm-4 control-label">Mulai</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_contractstart" placeholder="1900">
+                                                    <input type="text" class="form-control" id="servicetab_contractstart">
                                                 </div>
                                             </div>
                                         </div>
@@ -764,8 +987,8 @@
                                                 <label for="servicetab_attendatmofficerdate" class="col-sm-4 control-label">Tarikh</label>
                                                 <div class="col-sm-8">
                                                     <div class="input input-group">
-                                                        <input type="text" class="form-control" id="servicetab_attendatmofficerdate" placeholder="01/01/1900">
-                                                        <div class="input-group-addon">
+                                                        <input type="text" class="form-control" id="servicetab_attendatmofficerdate">
+                                                        <div class="input-group-addon" style="cursor: pointer">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </div>
                                                     </div>
@@ -776,7 +999,7 @@
                                             <div class="form-group">
                                                 <label for="servicetab_attendatmplace" class="col-sm-4 control-label">Tempat</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_attendatmplace" placeholder="Tempat">
+                                                    <input type="text" class="form-control" id="servicetab_attendatmplace">
                                                 </div>
                                             </div>
                                         </div>
@@ -795,7 +1018,7 @@
                                             <div class="form-group">
                                                 <label for="servicetab_exatmperiod" class="col-sm-4 control-label">Tempoh Perkhidmatan</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_exatmperiod" placeholder="10">
+                                                    <input type="text" class="form-control" id="servicetab_exatmperiod">
                                                 </div>
                                             </div>
                                         </div>
@@ -803,7 +1026,7 @@
                                             <div class="form-group">
                                                 <label for="servicetab_exatmplace" class="col-sm-4 control-label">Tempat</label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" class="form-control" id="servicetab_exatmplace" placeholder="Tempat">
+                                                    <input type="text" class="form-control" id="servicetab_exatmplace">
                                                 </div>
                                             </div>
                                         </div>
@@ -1003,5 +1226,10 @@
 </div>
 @section scripts
 {
+    <script type="text/javascript">
+        var applicant = @Html.Raw(JsonConvert.SerializeObject(@Model.ApplicantModel));
+        var appeducation = @Html.Raw(JsonConvert.SerializeObject(@Model.ApplicantEducation));
+    </script>
+    @Scripts.Render("~/bundles/datepicker")
     <script src="@Url.Content("~/Scripts/Main/public_resume.js")"></script>
 }
