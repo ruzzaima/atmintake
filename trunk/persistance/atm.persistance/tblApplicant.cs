@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblApplicant
     {
         public tblApplicant()
@@ -27,7 +27,7 @@ namespace SevenH.MMCSB.Atm.Persistance
         public int ApplicantId { get; set; }
         public string NewICNo { get; set; }
         public string NoTentera { get; set; }
-        public System.DateTime BirthDt { get; set; }
+        public DateTime BirthDt { get; set; }
         public string FullName { get; set; }
         public string MrtlStatusCd { get; set; }
         public string GenderCd { get; set; }
@@ -84,15 +84,15 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<int> PalapesYear { get; set; }
         public string PalapesArmyNo { get; set; }
         public string PalapesInstitution { get; set; }
-        public Nullable<System.DateTime> PalapesTauliahEndDt { get; set; }
+        public Nullable<DateTime> PalapesTauliahEndDt { get; set; }
         public string PalapesRemark { get; set; }
         public Nullable<bool> ScholarshipInd { get; set; }
         public string ScholarshipBody { get; set; }
         public string ScholarshipBodyAddr { get; set; }
         public string ScholarshipNoOfYrContract { get; set; }
-        public Nullable<System.DateTime> ScholarshipContractStDate { get; set; }
+        public Nullable<DateTime> ScholarshipContractStDate { get; set; }
         public Nullable<bool> ArmySelectionInd { get; set; }
-        public Nullable<System.DateTime> ArmySelectionDt { get; set; }
+        public Nullable<DateTime> ArmySelectionDt { get; set; }
         public string ArmySelectionVenue { get; set; }
         public Nullable<bool> ArmyServiceInd { get; set; }
         public string ArmyServiceYrOfServ { get; set; }
@@ -108,9 +108,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<bool> CrimeInvolvement { get; set; }
         public Nullable<bool> DrugCaseInvolvement { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual tblRefBloodType tblRefBloodType { get; set; }
         public virtual tblREFCity tblREFCity { get; set; }

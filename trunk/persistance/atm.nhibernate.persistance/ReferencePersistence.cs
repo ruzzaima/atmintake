@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using NHibernate;
-using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using CodeItem = SevenH.MMCSB.Atm.Domain;
 
@@ -29,206 +29,213 @@ namespace SevenH.MMCSB.Persistance
             }
         }
 
-   
+
         public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public System.Collections.Generic.IEnumerable<Achievement> GetAchievements()
+        public IEnumerable<CodeItem.Achievement> GetAchievements()
         {
             var returnList = Factory.OpenSession()
                 .CreateSQLQuery("select * from tblREFAchievement")
-                .AddEntity(typeof(Achievement));
-            return returnList.List<Achievement>();
+                .AddEntity(typeof(CodeItem.Achievement));
+            return returnList.List<CodeItem.Achievement>();
         }
 
-        public System.Collections.Generic.IEnumerable<AcquisitionType> GetAcquisitionTypes()
+        public IEnumerable<CodeItem.AcquisitionType> GetAcquisitionTypes()
         {
             var returnList = Factory.OpenSession()
                  .CreateSQLQuery("select * from tblREFAcqType")
-                 .AddEntity(typeof(AcquisitionType));
-            return returnList.List<AcquisitionType>();
+                 .AddEntity(typeof(CodeItem.AcquisitionType));
+            return returnList.List<CodeItem.AcquisitionType>();
         }
 
-        public System.Collections.Generic.IEnumerable<BloodType> GetBloodTypes()
+        public IEnumerable<CodeItem.BloodType> GetBloodTypes()
         {
             var returnList = Factory.OpenSession()
                 .CreateSQLQuery("select * from tblRefBloodType")
-                .AddEntity(typeof(BloodType));
-            return returnList.List<BloodType>();
+                .AddEntity(typeof(CodeItem.BloodType));
+            return returnList.List<CodeItem.BloodType>();
         }
 
-        public System.Collections.Generic.IEnumerable<City> GetCities()
+        public IEnumerable<CodeItem.City> GetCities(string statecode)
         {
             var returnList = Factory.OpenSession()
-                .CreateSQLQuery("select * from tblREFCity")
-                .AddEntity(typeof(City));
-            return returnList.List<City>();
+                .CreateSQLQuery("SELECT * FROM tblREFCity WHERE StateCd = '" + statecode + "'")
+                .AddEntity(typeof(CodeItem.City));
+            return returnList.List<CodeItem.City>();
         }
 
 
-        public System.Collections.Generic.IEnumerable<Country> GetCountries()
+        public IEnumerable<CodeItem.Country> GetCountries()
         {
             var returnList = Factory.OpenSession()
                 .CreateSQLQuery("select * from tblREFCountry")
-                .AddEntity(typeof(Country));
-            return returnList.List<Country>();
+                .AddEntity(typeof(CodeItem.Country));
+            return returnList.List<CodeItem.Country>();
         }
 
-        public System.Collections.Generic.IEnumerable<Ethnic> GetEthnics()
+        public IEnumerable<CodeItem.Ethnic> GetEthnics(string racecode)
         {
             var returnList = Factory.OpenSession()
-               .CreateSQLQuery("select * from tblREFEthnic")
-               .AddEntity(typeof(Ethnic));
-            return returnList.List<Ethnic>();
+               .CreateSQLQuery("SELECT * FROM tblREFEthnic WHERE RaceCd = '" + racecode + "'")
+               .AddEntity(typeof(CodeItem.Ethnic));
+            return returnList.List<CodeItem.Ethnic>();
         }
 
-        public System.Collections.Generic.IEnumerable<Gender> GetGenders()
+        public IEnumerable<CodeItem.Gender> GetGenders()
         {
             var returnList = Factory.OpenSession()
              .CreateSQLQuery("select * from tblREFGender")
-             .AddEntity(typeof(Gender));
-            return returnList.List<Gender>();
+             .AddEntity(typeof(CodeItem.Gender));
+            return returnList.List<CodeItem.Gender>();
         }
 
-        public System.Collections.Generic.IEnumerable<HighEduLevel> GetHighEduLevels()
+        public IEnumerable<CodeItem.HighEduLevel> GetHighEduLevels()
         {
             var returnList = Factory.OpenSession()
             .CreateSQLQuery("select * from tblREFHighEduLevel")
-            .AddEntity(typeof(HighEduLevel));
-            return returnList.List<HighEduLevel>();
+            .AddEntity(typeof(CodeItem.HighEduLevel));
+            return returnList.List<CodeItem.HighEduLevel>();
         }
 
-        public System.Collections.Generic.IEnumerable<InstitutionCat> GetInstitutionCats()
+        public IEnumerable<CodeItem.InstitutionCat> GetInstitutionCats()
         {
             var returnList = Factory.OpenSession()
            .CreateSQLQuery("select * from tblREFInstitutionCat")
-           .AddEntity(typeof(InstitutionCat));
-            return returnList.List<InstitutionCat>();
+           .AddEntity(typeof(CodeItem.InstitutionCat));
+            return returnList.List<CodeItem.InstitutionCat>();
         }
 
-        public System.Collections.Generic.IEnumerable<Institution> GetInstitutions()
+        public IEnumerable<CodeItem.Institution> GetInstitutions()
         {
             var returnList = Factory.OpenSession()
           .CreateSQLQuery("select * from tblREFInstitution")
-          .AddEntity(typeof(Institution));
-            return returnList.List<Institution>();
+          .AddEntity(typeof(CodeItem.Institution));
+            return returnList.List<CodeItem.Institution>();
         }
 
-        public System.Collections.Generic.IEnumerable<LoginStatus> GetLoginStatus()
+        public IEnumerable<CodeItem.LoginStatus> GetLoginStatus()
         {
             var returnList = Factory.OpenSession()
           .CreateSQLQuery("select * from tblREFLoginStatus")
-          .AddEntity(typeof(LoginStatus));
-            return returnList.List<LoginStatus>();
+          .AddEntity(typeof(CodeItem.LoginStatus));
+            return returnList.List<CodeItem.LoginStatus>();
         }
 
-        public System.Collections.Generic.IEnumerable<MajorMinor> GetMajorMinors()
+        public IEnumerable<CodeItem.MajorMinor> GetMajorMinors()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFMajorMinor")
-         .AddEntity(typeof(MajorMinor));
-            return returnList.List<MajorMinor>();
+         .AddEntity(typeof(CodeItem.MajorMinor));
+            return returnList.List<CodeItem.MajorMinor>();
         }
 
-        public System.Collections.Generic.IEnumerable<MaritalStatus> GetMaritalStatus()
+        public IEnumerable<CodeItem.MaritalStatus> GetMaritalStatus()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFMaritalStatus")
-         .AddEntity(typeof(MaritalStatus));
-            return returnList.List<MaritalStatus>();
+         .AddEntity(typeof(CodeItem.MaritalStatus));
+            return returnList.List<CodeItem.MaritalStatus>();
         }
 
-        public System.Collections.Generic.IEnumerable<PersonalityType> GetPersonalityTypes()
+        public IEnumerable<CodeItem.PersonalityType> GetPersonalityTypes()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFPersonalityType")
-         .AddEntity(typeof(PersonalityType));
-            return returnList.List<PersonalityType>();
+         .AddEntity(typeof(CodeItem.PersonalityType));
+            return returnList.List<CodeItem.PersonalityType>();
         }
 
-        public System.Collections.Generic.IEnumerable<QuestionnareType> GetQuestionnareTypes()
+        public IEnumerable<CodeItem.QuestionnareType> GetQuestionnareTypes()
         {
             var returnList = Factory.OpenSession()
           .CreateSQLQuery("select * from tblREFQuestionnareType")
-          .AddEntity(typeof(QuestionnareType));
-            return returnList.List<QuestionnareType>();
+          .AddEntity(typeof(CodeItem.QuestionnareType));
+            return returnList.List<CodeItem.QuestionnareType>();
         }
 
-        public System.Collections.Generic.IEnumerable<Race> GetRaces()
+        public IEnumerable<CodeItem.Race> GetRaces()
         {
             var returnList = Factory.OpenSession()
           .CreateSQLQuery("select * from tblREFRace")
-          .AddEntity(typeof(Race));
-            return returnList.List<Race>();
+          .AddEntity(typeof(CodeItem.Race));
+            return returnList.List<CodeItem.Race>();
         }
 
-        public System.Collections.Generic.IEnumerable<Religion> GetReligions()
+        public IEnumerable<CodeItem.Religion> GetReligions()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFReligion")
-         .AddEntity(typeof(Religion));
-            return returnList.List<Religion>();
+         .AddEntity(typeof(CodeItem.Religion));
+            return returnList.List<CodeItem.Religion>();
         }
 
-        public System.Collections.Generic.IEnumerable<Service> GetServices()
+        public IEnumerable<CodeItem.Service> GetServices()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFService")
-         .AddEntity(typeof(Service));
-            return returnList.List<Service>();
+         .AddEntity(typeof(CodeItem.Service));
+            return returnList.List<CodeItem.Service>();
         }
 
-        public System.Collections.Generic.IEnumerable<SkillCat> GetSkillCats()
+        public IEnumerable<CodeItem.SkillCat> GetSkillCats()
         {
             var returnList = Factory.OpenSession()
          .CreateSQLQuery("select * from tblREFSkillCat")
-         .AddEntity(typeof(SkillCat));
-            return returnList.List<SkillCat>();
+         .AddEntity(typeof(CodeItem.SkillCat));
+            return returnList.List<CodeItem.SkillCat>();
         }
 
-        public System.Collections.Generic.IEnumerable<Skill> GetSkills()
+        public IEnumerable<CodeItem.Skill> GetSkills()
         {
             var returnList = Factory.OpenSession()
           .CreateSQLQuery("select * from tblREFSkill")
-          .AddEntity(typeof(Skill));
-            return returnList.List<Skill>();
+          .AddEntity(typeof(CodeItem.Skill));
+            return returnList.List<CodeItem.Skill>();
         }
 
-        public System.Collections.Generic.IEnumerable<ApplicantSport> GetSportAndAssociations()
+        public IEnumerable<CodeItem.SportAndAssociation> GetSportAndAssociations(string type)
         {
             var returnList = Factory.OpenSession()
-         .CreateSQLQuery("select * from tblREFSportAndAssociation")
-         .AddEntity(typeof(ApplicantSport));
-            return returnList.List<ApplicantSport>();
+         .CreateSQLQuery("SELECT * FROM tblREFSportAndAssociation WHERE SportAssociatType = '" + type + "'")
+         .AddEntity(typeof(CodeItem.SportAndAssociation));
+            return returnList.List<CodeItem.SportAndAssociation>();
         }
 
-        public System.Collections.Generic.IEnumerable<State> GetStates()
+        public IEnumerable<CodeItem.State> GetStates(string countrycode)
         {
             var returnList = Factory.OpenSession()
-             .CreateSQLQuery("select * from tblREFState")
-             .AddEntity(typeof(State));
-                return returnList.List<State>();
+             .CreateSQLQuery("SELECT * FROM tblREFState WHERE CountryCd = '" + countrycode + "'")
+             .AddEntity(typeof(CodeItem.State));
+            return returnList.List<CodeItem.State>();
         }
 
-        public System.Collections.Generic.IEnumerable<SubjectGrade> GetSubjectGrades()
+        public IEnumerable<CodeItem.SubjectGrade> GetSubjectGrades()
         {
             var returnList = Factory.OpenSession()
            .CreateSQLQuery("select * from tblREFSubjectGrade")
-           .AddEntity(typeof(SubjectGrade));
-                return returnList.List<SubjectGrade>();
+           .AddEntity(typeof(CodeItem.SubjectGrade));
+            return returnList.List<CodeItem.SubjectGrade>();
         }
 
-        public System.Collections.Generic.IEnumerable<Subject> GetSubjects()
+        public IEnumerable<CodeItem.Subject> GetSubjects()
         {
             var returnList = Factory.OpenSession()
            .CreateSQLQuery("select * from tblREFSubject")
-           .AddEntity(typeof(Subject));
-            return returnList.List<Subject>();
+           .AddEntity(typeof(CodeItem.Subject));
+            return returnList.List<CodeItem.Subject>();
         }
 
-       
+
+        public IEnumerable<CodeItem.Occupation> GetOccupations()
+        {
+            var returnList = Factory.OpenSession()
+            .CreateSQLQuery("SELECT * FROM tblREFOccupation")
+            .AddEntity(typeof(CodeItem.Occupation));
+            return returnList.List<CodeItem.Occupation>();
+        }
     }
 
 

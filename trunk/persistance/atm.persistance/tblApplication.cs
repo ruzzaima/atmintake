@@ -7,11 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblApplication
     {
         public int AppId { get; set; }
@@ -19,9 +18,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<int> AcquisitionId { get; set; }
         public Nullable<int> SelectionCenterId { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblApplicant tblApplicant { get; set; }

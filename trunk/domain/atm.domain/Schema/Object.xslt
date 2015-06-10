@@ -7,7 +7,6 @@
 	<xsl:template match="xs:schema">
     using System;
     using System.Xml.Serialization;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Collections.Generic;
 
@@ -24,7 +23,6 @@
           ///&lt;summary&gt;
           /// <xsl:value-of select="xs:annotation/xs:documentation"/>
           ///&lt;/summary&gt;
-          [DataObject(true)]
           [Serializable]
 					[XmlType("<xsl:value-of select="@name"/>",  Namespace=Strings.DefaultNamespace)]
 					public <xsl:value-of select="@sevenh:inheritance"/> partial class <xsl:value-of select="@name"/>

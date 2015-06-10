@@ -4,10 +4,10 @@
     {
         //IEnumerable<CodeItem> GetCodeItems();
         //IEnumerable<CodeItem> GetCodeItemsByGroup(string username);
-        void Delete(int id);
-        int Save(CodeItem cd);
+        //void Delete(int id);
+        //int Save(CodeItem cd);
       
-        CodeItem GetCode(int id);
+        //CodeItem GetCode(int id);
 
     }
 }

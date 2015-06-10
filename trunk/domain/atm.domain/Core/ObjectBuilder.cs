@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Spring.Context.Support;
 
 namespace SevenH.MMCSB.Atm.Domain
@@ -20,6 +17,8 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <returns>the implementation</returns>
         public static T GetObject<T>(string key) where T : class
         {
+            var obj = ContextRegistry.GetContext().GetObject(key) as T;
+            if (null != obj) return obj;
             return ContextRegistry.GetContext().GetObject(key) as T;
         }
 
@@ -32,6 +31,8 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <returns>the implementation</returns>
         public static T GetObject<T>(string key, string contextName) where T : class
         {
+            var obj = ContextRegistry.GetContext().GetObject(key) as T;
+            if (null != obj) return obj;
             return ContextRegistry.GetContext().GetObject(key) as T;
         }
     }

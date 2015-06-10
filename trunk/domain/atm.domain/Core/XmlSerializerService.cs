@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Xml;
 using System.Data.SqlTypes;
-using System.Xml.Serialization;
 using System.IO;
 using System.Reflection;
+using System.Text;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
@@ -25,7 +25,7 @@ namespace SevenH.MMCSB.Atm.Domain
             {
                 ToXmlStream<T>(stream, source);
                 stream.Position = 0;
-                T clone = XmlSerializerService.DeserializeFromXml<T>(stream);
+                T clone = DeserializeFromXml<T>(stream);
 
                 return clone;
             }
@@ -40,7 +40,7 @@ namespace SevenH.MMCSB.Atm.Domain
             {
                 ToXmlStream<TInput>(stream, input);
                 stream.Position = 0;
-                TOutput clone = XmlSerializerService.DeserializeFromXml<TOutput>(stream);
+                TOutput clone = DeserializeFromXml<TOutput>(stream);
 
                 return clone;
             }
@@ -195,7 +195,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <returns></returns>
         public static T Deserialize<T>(this XElement element) where T : class
         {
-           return  XmlSerializerService.DeserializeFromXml<T>(element.ToString());
+           return  DeserializeFromXml<T>(element.ToString());
         }
 
         /// <summary>

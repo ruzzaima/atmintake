@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using System.Reflection;
 using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
+using System.Xml.Serialization;
 
 namespace SevenH.MMCSB.Atm.Domain
 {

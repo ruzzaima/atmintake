@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblUser
     {
         public tblUser()
@@ -27,10 +27,10 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string AlternativeEmail { get; set; }
         public string ServiceCd { get; set; }
         public string UserPassword { get; set; }
-        public Nullable<System.DateTime> LastLoginDt { get; set; }
-        public System.DateTime CreatedDt { get; set; }
+        public Nullable<DateTime> LastLoginDt { get; set; }
+        public DateTime CreatedDt { get; set; }
         public string CreatedBy { get; set; }
-        public System.DateTime ModifiedDt { get; set; }
+        public DateTime ModifiedDt { get; set; }
         public string ModifiedBy { get; set; }
     
         public virtual tblApplicant tblApplicant { get; set; }

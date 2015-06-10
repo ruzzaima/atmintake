@@ -17,5 +17,6 @@
   <object id="ReferencePersistence" type="SevenH.MMCSB.Persistance.ReferencePersistence, atm.nhibernate.persistance" />
   <object id="ApplicantPersistence" type="SevenH.MMCSB.Persistance.ApplicantPersistence, atm.nhibernate.persistance" />
   <object id="AcquisitionPersistence" type="SevenH.MMCSB.Persistance.AcquisitionPersistence, atm.nhibernate.persistance" />
+  <object id="LoginUserPersistance" type="SevenH.MMCSB.Persistance.LoginUserPersistance, atm.nhibernate.persistance" />
 
 </objects>

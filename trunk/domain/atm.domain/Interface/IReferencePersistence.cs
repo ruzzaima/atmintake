@@ -7,9 +7,9 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         IEnumerable<Achievement> GetAchievements();
         IEnumerable<AcquisitionType> GetAcquisitionTypes();
         IEnumerable<BloodType> GetBloodTypes();
-        IEnumerable<City> GetCities();
+        IEnumerable<City> GetCities(string statecode);
         IEnumerable<Country> GetCountries();
-        IEnumerable<Ethnic> GetEthnics();
+        IEnumerable<Ethnic> GetEthnics(string racecode);
         IEnumerable<Gender> GetGenders();
         IEnumerable<HighEduLevel> GetHighEduLevels();
         IEnumerable<Institution> GetInstitutions();
@@ -24,10 +24,11 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         IEnumerable<Service> GetServices();
         IEnumerable<Skill> GetSkills();
         IEnumerable<SkillCat> GetSkillCats();
-        IEnumerable<ApplicantSport> GetSportAndAssociations();
-        IEnumerable<State> GetStates();
+        IEnumerable<SportAndAssociation> GetSportAndAssociations(string type);
+        IEnumerable<State> GetStates(string countrycode);
         IEnumerable<Subject> GetSubjects();
         IEnumerable<SubjectGrade> GetSubjectGrades();
+        IEnumerable<Occupation> GetOccupations();
         void Delete(int id);
       
 

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using SevenH.MMCSB.Atm.Domain;
-
+﻿using System.Web.Mvc;
+using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
@@ -11,8 +8,11 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
     {
         public ActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Account", "Public");
 
-            return View();
+            var vm = new HomeViewModel();
+            return View(vm);
         }
 
     }

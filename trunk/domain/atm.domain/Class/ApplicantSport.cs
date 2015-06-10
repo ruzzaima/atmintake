@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SevenH.MMCSB.Atm.Domain.Interface;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
     public partial class ApplicantSport : DomainObject
     {
 
-       public virtual Applicant Parent { get; set; }
-        
+        public virtual Applicant Parent { get; set; }
 
+        public virtual int Save()
+        {
+            if (ApplicantSportAssocId == 0)
+                return ObjectBuilder.GetObject<IApplicantSportPersistence>("ApplicantSportPersistence").AddNew(this);
+            return ObjectBuilder.GetObject<IApplicantSportPersistence>("ApplicantSportPersistence").Update(this);
+        }
     }
 }

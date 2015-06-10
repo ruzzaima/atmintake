@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace SevenH.MMCSB.Atm.Persistance
 {
-    using System;
-    using System.Collections.Generic;
-    
     public partial class tblAcqEduCriteriaFieldOfStudy
     {
         public int AcqEduCriFOS { get; set; }
         public Nullable<int> AcqEduCriteriaId { get; set; }
         public string MajorMinorCd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDt { get; set; }
+        public Nullable<DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<DateTime> LastModifiedDt { get; set; }
     
         public virtual tblAcqEducationCriteria tblAcqEducationCriteria { get; set; }
         public virtual tblREFMajorMinor tblREFMajorMinor { get; set; }
