@@ -7,5 +7,11 @@
 
         public virtual Acquisition Acquisition { get; set; }
 
+        public virtual int Save()
+        {
+            if (AppId == 0)
+                return ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").AddNew(this);
+            return ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").Update(this);
+        }
     }
 }

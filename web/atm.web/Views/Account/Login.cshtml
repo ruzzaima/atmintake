@@ -2,53 +2,90 @@
 
 @{
     ViewBag.Title = "Log Masuk";
-    Layout = "../Shared/_EmptyLayout.cshtml";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
 }
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        <div class="panel panel-primary" id="loginForm">
-            <div class="panel-heading">Login Masuk</div>
-            <div class="panel-body">
-                @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
-                {
-                    @Html.AntiForgeryToken()
-                    <h4>Use a local account to log in.</h4>
-                    <hr/>
-                    @Html.ValidationSummary(true)
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, new {@class = "col-md-2 control-label"})
-                        <div class="col-md-10">
-                            @Html.TextBoxFor(m => m.UserName, new {@class = "form-control"})
-                            @Html.ValidationMessageFor(m => m.UserName)
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
-                        <div class="col-md-10">
-                            @Html.PasswordFor(m => m.Password, new {@class = "form-control"})
-                            @Html.ValidationMessageFor(m => m.Password)
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
+        <div class="tile" id="loginForm">
+            <div class="tile-title">Log Masuk - JOM MASUK TENTERA</div>
+            <div class="row">
+                <div class="col-md-2 text-center">
+                    <img height="60" src="@Url.Content("~/Images/logoatm.png")" alt="Angkatan Tentera Malaysia" />
+                    <img height="60" src="@Url.Content("~/Images/logotdm.png")" alt="Tentera Darat Malaysia" />
+                    <img height="60" src="@Url.Content("~/Images/logotldm.png")" alt="Tentera Laut DiRaja Malaysia" />
+                    <img height="65" src="@Url.Content("~/Images/logotudm.png")" alt="Tentera Udara DiRaja Malaysia" />
+                </div>
+                <div class="col-md-10">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "p-15", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.UserName, new { @class = "control-label pull-left" })
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control pull-left" })
+                                @Html.ValidationMessageFor(m => m.UserName)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "control-label pull-left" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control pull-left" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                            <div class="col-md-12 text-left">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger pull-left col-md-12 text-left" })
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Log Masuk" class="btn btn-sm m-t-10 pull-left" />
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-primary"/>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="media">
+                                    <i class="icon pull-right">&#61792;</i>
+                                    <div class="media-body">
+                                        <a href="@Url.Action("ForgotPassword", "Account")" class="pull-right">Lupa Kata Laluan</a>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <i class="icon pull-right">&#61873;</i>
+                                    <div class="media-body">
+                                        <a href="@Url.Action("Register", "Public")" class="pull-right">Daftar</a>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <i class="icon pull-right">&#61788;</i>
+                                    <div class="media-body">
+                                        <a href="@Url.Action("CheckStatus", "Home")" class="pull-right">Semak Status Permohonan</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group p-15">
+                        <p>
+                            Sistem ini bertujuan untuk orang awam memohon memasuki tentera, menyemak status permohonan dan membuat ujian bertulis secara online.
+                        </p>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-4"></div>
 </div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @if (TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                ShowMessage('@TempData["Message"]');
+            });
+        </script>
+    }
 }

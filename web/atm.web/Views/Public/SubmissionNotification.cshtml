@@ -1,0 +1,63 @@
+﻿@model SevenH.MMCSB.Atm.Web.Models.SubmissionNotificationViewModel
+@{
+    ViewBag.Title = "Pengesahan Penghantaran";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile p-15">
+            <div class="tile-title">
+                Pengesahan Penghantaran Permohonan
+            </div>
+            <br />
+            <br />
+            Permohonan Berjaya Dihantar!
+            <br />
+            <br />
+            Nama : @Model.Name
+            <br />
+            No Kad Pengenalan : @Model.IdNumber
+            <br />
+            Tarikh &amp; Masa: @string.Format("{0:dd MMM yyyy hh:mm tt}", Model.RegisteredDateTime)
+
+            <br />
+            <br />
+            Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi @Model.Siri .
+            <br />
+            <br />
+            Permohonan anda akan diproses secepat mungkin.
+            <br />
+            <br />
+            Sila semak status permohonan anda di dalam sistem.
+            <br />
+            <br />
+            Sekiranya anda tidak mendapat sebarang jawapan dari kami dalam masa 2 minggu, ia bermaksud anda tidak terpilih untuk menyertai pemilihan awal @Model.Service.
+
+            <br />
+            <br />
+            <p>
+                Harap Maklum. Terima Kasih.
+            </p>
+            <p>
+                <i>System auto generate-tidak memerlukan sebarang tanda tangan</i>
+            </p>
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="button" class="btn btn-primary input-sm m-t-10 hidden-print" value="Cetak" id="print_button" />
+                    <a href="@Url.Action("Application", "Public")" class="btn btn-primary input-sm m-t-10 hidden-print" id="cancel_button">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#print_button').click(function () {
+                window.print();
+            });
+        });
+    </script>
+}

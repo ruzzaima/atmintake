@@ -1,4 +1,5 @@
 ﻿using FluentNHibernate.Mapping;
+using NHibernate.Type;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
@@ -42,12 +43,12 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
 
-                HasMany<AcquisitionCriteria>(x => x.AcquisitionCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All();
+                HasMany<AcquisitionCriteria>(x => x.AcquisitionCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
+                HasMany<AcquisitionEducationCriteria>(x => x.AcquisitionEducationCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
+                HasMany<AcqQuestionnaire>(x => x.AcqQuestionnaires).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
+                HasMany<AcquisitionLocation>(x => x.AcquisitionLocationCollection).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
 
-                HasMany<AcquisitionEducationCriteria>(x => x.AcquisitionEducationCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All();
-
-                HasMany<AcqQuestionnaire>(x => x.AcqQuestionnaires).KeyColumn("AcquisitionId").Inverse().Cascade.All();
-
+                References(x => x.AcquisitionType, "AcquisitionTypeCd").Unique();
 
             }
 
@@ -186,7 +187,6 @@ namespace SevenH.MMCSB.Atm.Domain
                 }
             }
 
-
             public class AcqQuestionnaireScaleMap : ClassMap<AcqQuestionnaireScale>
             {
                 public AcqQuestionnaireScaleMap()
@@ -201,9 +201,26 @@ namespace SevenH.MMCSB.Atm.Domain
                 }
             }
 
-        }
-   
+            public class AcquisitionLocationMap : ClassMap<AcquisitionLocation>
+            {
+                public AcquisitionLocationMap()
+                {
+                    Table("tblAcquisitionLocation");
+                    Id(x => x.AcqLocationId).GeneratedBy.Increment();
+                    Map(x => x.AcquisitionId);
+                    Map(x => x.CreatedBy);
+                    Map(x => x.CreatedDt);
+                    Map(x => x.ZoneCd);
 
+                    References(x => x.Acquisition, "AcquisitionId").Cascade.All();
+                    References(x => x.Location, "LocationId").Cascade.All();
+
+                }
+            }
+
+        }
+
+        
     }
 }
 

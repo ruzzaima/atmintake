@@ -1,340 +1,382 @@
 ﻿using FluentNHibernate.Mapping;
+using NHibernate.Type;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
-    public partial class Country
+    public class CountryMap : ClassMap<Country>
     {
-
-        public class CountryMap : ClassMap<Country>
+        public CountryMap()
         {
-            public CountryMap()
-            {
-                Table("tblREFCountry");
-                Id(x => x.CountryCd);
-                Map(x => x.CountryName).Column("Country");
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFCountry");
+            Id(x => x.CountryCd).GeneratedBy.Assigned();
+            Map(x => x.CountryName).Column("Country");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class CityMap : ClassMap<City>
+    public class CityMap : ClassMap<City>
+    {
+        public CityMap()
         {
-            public CityMap()
-            {
-                Table("tblREFCity");
-                Id(x => x.CityCd);
-                Map(x => x.CityName).Column("City");
-                Map(x => x.StateCd);
-                Map(x => x.StateCapitalInd);
-                Map(x => x.MainCityInd);
+            Table("tblREFCity");
+            Id(x => x.CityCd).GeneratedBy.Assigned();
+            Map(x => x.CityName).Column("City");
+            Map(x => x.StateCd);
+            Map(x => x.StateCapitalInd);
+            Map(x => x.MainCityInd);
 
-            }
         }
+    }
 
-        public class BloodTypeMap : ClassMap<BloodType>
+    public class BloodTypeMap : ClassMap<BloodType>
+    {
+        public BloodTypeMap()
         {
-            public BloodTypeMap()
-            {
-                Table("tblRefBloodType");
-                Id(x => x.BloodTypeCd);
-                Map(x => x.BloodTypeDesc).Column("BloodType"); ;
-            }
+            Table("tblRefBloodType");
+            Id(x => x.BloodTypeCd).GeneratedBy.Assigned();
+            Map(x => x.BloodTypeDesc).Column("BloodType");
         }
+    }
 
-        public class AcquisitionTypeMap : ClassMap<AcquisitionType>
+    public class AcquisitionTypeMap : ClassMap<AcquisitionType>
+    {
+        public AcquisitionTypeMap()
         {
-            public AcquisitionTypeMap()
-            {
-                Table("tblREFAcqType");
-                Id(x => x.AcquisitionTypeCd);
-                Map(x => x.AcquisitionTypeNm);
-                Map(x => x.ServiceCd);
-            }
-        }
+            Table("tblREFAcqType");
+            Id(x => x.AcquisitionTypeCd).GeneratedBy.Assigned();
+            Map(x => x.AcquisitionTypeNm);
+            Map(x => x.ServiceCd);
 
-        public class AchievementMap : ClassMap<Achievement>
+            HasOne(x => x.Acquisition).ForeignKey("AcquisitionTypeCd");
+        }
+    }
+
+    public class AchievementMap : ClassMap<Achievement>
+    {
+        public AchievementMap()
         {
-            public AchievementMap()
-            {
-                Table("tblREFAchievement");
-                Id(x => x.AchievementCd);
-                Map(x => x.AchievementDescription).Column("Achievement");
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFAchievement");
+            Id(x => x.AchievementCd).GeneratedBy.Assigned();
+            Map(x => x.AchievementDescription).Column("Achievement");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class EthnicMap : ClassMap<Ethnic>
+    public class EthnicMap : ClassMap<Ethnic>
+    {
+        public EthnicMap()
         {
-            public EthnicMap()
-            {
-                Table("tblREFEthnic");
-                Id(x => x.EthnicCd);
-                Map(x => x.EthnicDescription).Column("Ethnic");
-                Map(x => x.EthnicParentCd);
-                Map(x => x.RaceCd);
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFEthnic");
+            Id(x => x.EthnicCd).GeneratedBy.Assigned();
+            Map(x => x.EthnicDescription).Column("Ethnic");
+            Map(x => x.EthnicParentCd);
+            Map(x => x.RaceCd);
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class GenderMap : ClassMap<Gender>
+    public class GenderMap : ClassMap<Gender>
+    {
+        public GenderMap()
         {
-            public GenderMap()
-            {
-                Table("tblREFGender");
-                Id(x => x.GenderCd);
-                Map(x => x.GenderDesc).Column("Gender");
-            }
+            Table("tblREFGender");
+            Id(x => x.GenderCd).GeneratedBy.Assigned();
+            Map(x => x.GenderDesc).Column("Gender");
         }
+    }
 
-        public class HighEduLevelMap : ClassMap<HighEduLevel>
+    public class HighEduLevelMap : ClassMap<HighEduLevel>
+    {
+        public HighEduLevelMap()
         {
-            public HighEduLevelMap()
-            {
-                Table("tblREFHighEduLevel");
-                Id(x => x.HighEduLevelCd);
-                Map(x => x.HighestEduLevel);
-                Map(x => x.HighestEduLevelRank);
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFHighEduLevel");
+            Id(x => x.HighEduLevelCd).GeneratedBy.Assigned();
+            Map(x => x.HighestEduLevel);
+            Map(x => x.HighestEduLevelRank);
+            Map(x => x.IndexNo);
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-
-        public class InstitutionMap : ClassMap<Institution>
+    public class InstitutionMap : ClassMap<Institution>
+    {
+        public InstitutionMap()
         {
-            public InstitutionMap()
-            {
-                Table("tblREFInstitution");
-                Id(x => x.InstCd);
-                Map(x => x.InstNm);
-                Map(x => x.MQAStatus);
-                Map(x => x.InstCatCd);
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFInstitution");
+            Id(x => x.InstCd).GeneratedBy.Assigned();
+            Map(x => x.InstNm);
+            Map(x => x.MQAStatus);
+            Map(x => x.InstCatCd);
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class InstitutionCatMap : ClassMap<InstitutionCat>
+    public class InstitutionCatMap : ClassMap<InstitutionCat>
+    {
+        public InstitutionCatMap()
         {
-            public InstitutionCatMap()
-            {
-                Table("tblREFInstitutionCat");
-                Id(x => x.InstCatCd);
-                Map(x => x.InstCat);
-            }
+            Table("tblREFInstitutionCat");
+            Id(x => x.InstCatCd).GeneratedBy.Assigned();
+            Map(x => x.InstCat);
         }
+    }
 
-
-        public class MajorMinorMap : ClassMap<MajorMinor>
+    public class MajorMinorMap : ClassMap<MajorMinor>
+    {
+        public MajorMinorMap()
         {
-            public MajorMinorMap()
-            {
-                Table("tblREFMajorMinor");
-                Id(x => x.MajorMinorCd);
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFMajorMinor");
+            Id(x => x.MajorMinorCd).GeneratedBy.Assigned();
+            Map(x => x.MajorMinorDesc).Column("MajorMinor");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class MaritalStatusMap : ClassMap<MaritalStatus>
+    public class MaritalStatusMap : ClassMap<MaritalStatus>
+    {
+        public MaritalStatusMap()
         {
-            public MaritalStatusMap()
-            {
-                Table("tblREFMaritalStatus");
-                Id(x => x.MrtlStatusCd);
-                Map(x => x.MrtlStatus);
-            }
+            Table("tblREFMaritalStatus");
+            Id(x => x.MrtlStatusCd).GeneratedBy.Assigned();
+            Map(x => x.MrtlStatus);
         }
+    }
 
-        public class PersonalityTypeMap : ClassMap<PersonalityType>
+    public class PersonalityTypeMap : ClassMap<PersonalityType>
+    {
+        public PersonalityTypeMap()
         {
-            public PersonalityTypeMap()
-            {
-                Table("tblREFPersonalityType");
-                Id(x => x.PersonalityTypeCd);
-                Map(x => x.PersonalityTypeDesc).Column("PersonalityType");
-            }
+            Table("tblREFPersonalityType");
+            Id(x => x.PersonalityTypeCd).GeneratedBy.Assigned();
+            Map(x => x.PersonalityTypeDesc).Column("PersonalityType");
         }
+    }
 
-
-        public class QuestionnareTypeMap : ClassMap<QuestionnareType>
+    public class QuestionnareTypeMap : ClassMap<QuestionnareType>
+    {
+        public QuestionnareTypeMap()
         {
-            public QuestionnareTypeMap()
-            {
-                Table("tblREFQuestionnareType");
-                Id(x => x.QuestionnaireTypeCd);
-                Map(x => x.QuestionnaireTypeDesc).Column("QuestionnaireType");
-            }
+            Table("tblREFQuestionnareType");
+            Id(x => x.QuestionnaireTypeCd).GeneratedBy.Assigned();
+            Map(x => x.QuestionnaireTypeDesc).Column("QuestionnaireType");
         }
+    }
 
-        public class RaceMap : ClassMap<Race>
+    public class RaceMap : ClassMap<Race>
+    {
+        public RaceMap()
         {
-            public RaceMap()
-            {
-                Table("tblREFRace");
-                Id(x => x.RaceCd);
-                Map(x => x.RaceDescription).Column("Race");
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFRace");
+            Id(x => x.RaceCd).GeneratedBy.Assigned();
+            Map(x => x.RaceDescription).Column("Race");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class ReligionMap : ClassMap<Religion>
+    public class ReligionMap : ClassMap<Religion>
+    {
+        public ReligionMap()
         {
-            public ReligionMap()
-            {
-                Table("tblREFReligion");
-                Id(x => x.ReligionCd);
-                Map(x => x.ReligionDescription).Column("Religion");
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFReligion");
+            Id(x => x.ReligionCd).GeneratedBy.Assigned();
+            Map(x => x.ReligionDescription).Column("Religion");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class ServiceMap : ClassMap<Service>
+    public class ServiceMap : ClassMap<Service>
+    {
+        public ServiceMap()
         {
-            public ServiceMap()
-            {
-                Table("tblREFService");
-                Id(x => x.ServiceCd);
-                Map(x => x.ServiceDesc).Column("Service");
-            }
+            Table("tblREFService");
+            Id(x => x.ServiceCd).GeneratedBy.Assigned();
+            Map(x => x.ServiceDesc).Column("Service");
         }
+    }
 
-        public class SkillMap : ClassMap<Skill>
+    public class SkillMap : ClassMap<Skill>
+    {
+        public SkillMap()
         {
-            public SkillMap()
-            {
-                Table("tblREFReligion");
-                Id(x => x.SkillCd);
-                Map(x => x.SkillDescription).Column("Skill");
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFSkill");
+            Id(x => x.SkillCd).GeneratedBy.Assigned();
+            Map(x => x.SkillDescription).Column("Skill");
+            Map(x => x.SkillCategory).Column("SkillCat");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class SkillCatMap : ClassMap<SkillCat>
+    public class SkillCatMap : ClassMap<SkillCat>
+    {
+        public SkillCatMap()
         {
-            public SkillCatMap()
-            {
-                Table("tblREFSkillCat");
-                Id(x => x.SkillCatCd);
-                Map(x => x.SkillCatDesc).Column("Skill");
-            }
+            Table("tblREFSkillCat");
+            Id(x => x.SkillCatCd).GeneratedBy.Assigned();
+            Map(x => x.SkillCatDesc).Column("SkillCat");
         }
+    }
 
-        public class SportAndAssociationMap : ClassMap<SportAndAssociation>
+    public class SportAndAssociationMap : ClassMap<SportAndAssociation>
+    {
+        public SportAndAssociationMap()
         {
-            public SportAndAssociationMap()
-            {
-                Table("tblREFSportAndAssociation");
-                Id(x => x.SportAssocId);
-                Id(x => x.SportAssociatType);
-                Map(x => x.ActiveInd);
-                Map(x => x.SportAssociatName);
-                Map(x => x.CreatedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.LastModifiedDt);
-            }
-        }
+            Table("tblREFSportAndAssociation");
+            Id(x => x.SportAssocId);
+            Map(x => x.SportAssociatType);
+            Map(x => x.ActiveInd);
+            Map(x => x.SportAssociatName);
+            Map(x => x.CreatedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.LastModifiedDt);
 
-        public class StateMap : ClassMap<State>
+        }
+    }
+
+    public class StateMap : ClassMap<State>
+    {
+        public StateMap()
         {
-            public StateMap()
-            {
-                Table("tblREFState");
-                Id(x => x.StateCd);
-                Map(x => x.StateDesc).Column("State");
-            }
+            Table("tblREFState");
+            Id(x => x.StateCd).GeneratedBy.Assigned();
+            Map(x => x.StateDesc).Column("State");
+            Map(x => x.ICBirthStateCd);
+            Map(x => x.CountryCd);
         }
+    }
 
-        public class LoginStatusMap : ClassMap<LoginStatus>
+    public class LoginStatusMap : ClassMap<LoginStatus>
+    {
+        public LoginStatusMap()
         {
-            public LoginStatusMap()
-            {
-                Table("tblREFLoginStatus");
-                Id(x => x.LoginStatusCd);
-                Map(x => x.LoginStatusNm);
-            }
+            Table("tblREFLoginStatus");
+            Id(x => x.LoginStatusCd).GeneratedBy.Assigned();
+            Map(x => x.LoginStatusNm);
         }
+    }
 
-
-        public class SubjectnMap : ClassMap<Subject>
+    public class SubjectnMap : ClassMap<Subject>
+    {
+        public SubjectnMap()
         {
-            public SubjectnMap()
-            {
-                Table("tblREFSubject");
-                Id(x => x.SubjectCd);
-                Map(x => x.SubjectDescription).Column("Subject");
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFSubject");
+            Id(x => x.SubjectCd).GeneratedBy.Assigned();
+            Map(x => x.HighEduLevelCd);
+            Map(x => x.SubjectDescription).Column("Subject");
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-        public class SubjectGradenMap : ClassMap<SubjectGrade>
+    public class SubjectGradenMap : ClassMap<SubjectGrade>
+    {
+        public SubjectGradenMap()
         {
-            public SubjectGradenMap()
-            {
-                Table("tblREFSubjectGrade");
-                Id(x => x.GradeCd);
-                Map(x => x.GradeDescription).Column("Grade");
-                Map(x => x.Ranking);
-                Map(x => x.ActiveInd);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFSubjectGrade");
+            Id(x => x.GradeCd).GeneratedBy.Assigned();
+            Map(x => x.GradeDescription).Column("Grade");
+            Map(x => x.Ranking);
+            Map(x => x.ActiveInd);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
+    }
 
-       
-        public class OccupationMap : ClassMap<Occupation>
+    public class OccupationMap : ClassMap<Occupation>
+    {
+        public OccupationMap()
         {
-            public OccupationMap()
-            {
-                Table("tblREFOccupation");
-                Id(x => x.OccupationCd);
-                Map(x => x.OccupationName);
-                Map(x => x.CreatedBy);
-                Map(x => x.LastModifiedBy);
-                Map(x => x.CreatedDt);
-                Map(x => x.LastModifiedDt);
-            }
+            Table("tblREFOccupation");
+            Id(x => x.OccupationCd).GeneratedBy.Assigned();
+            Map(x => x.OccupationName);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.LastModifiedDt);
         }
-        
+    }
+
+    public class ZoneMap : ClassMap<Zone>
+    {
+        public ZoneMap()
+        {
+            Table("tblREFLocationZone");
+            Id(x => x.ZoneCd).GeneratedBy.Assigned(); ;
+            Map(x => x.ZoneNm);
+        }
+    }
+
+    public class LocationMap : ClassMap<Location>
+    {
+        public LocationMap()
+        {
+            Table("tblRefLocation");
+            Id(x => x.LocationId).GeneratedBy.Increment();
+            Map(x => x.LocationNm);
+            Map(x => x.StateCd);
+            Map(x => x.CityCd);
+            Map(x => x.CreatedBy);
+            Map(x => x.CreatedDt);
+            Map(x => x.ZoneCd);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.LastModifiedDt);
+            Map(x => x.ActiveInd);
+
+            HasOne(x => x.AcquisitionLocation).ForeignKey();
+        }
+    }
+
+    public class ExistingMemberStatusMap : ClassMap<ExistingMemberStatus>
+    {
+        public ExistingMemberStatusMap()
+        {
+            Table("tblREFExistingMemberStatus");
+            Id(x => x.Code).Column("ExistingMemberStatusCd").GeneratedBy.Assigned(); 
+            Map(x => x.Status).Column("ExistingMemberStatus");
+
+            HasOne(x => x.ExistingMember).ForeignKey("ExistingMemberStatusCd");
+        }
     }
 }
 

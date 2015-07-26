@@ -1,0 +1,341 @@
+﻿@using Newtonsoft.Json
+@model SevenH.MMCSB.Atm.Web.Models.ResumeViewModel
+@{
+    ViewBag.Title = "Resume Saya";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+@section styles
+{
+    @Styles.Render("~/bundles/datepickercss")
+}
+
+
+<div class="row">
+    <h4>BORANG PERMOHONAN UNTUK BERKHIDMAT DI DALAM TENTERA LAUT DIRAJA MALAYSIA : @Model.AcquisitionName SIRI @Model.AcquisitionSiri TAHUN @Model.AcquisitionYear</h4>
+    <div class="tab-container tile">
+        <ul class="nav tab nav-tabs" id="resume">
+            <li role="presentation" class="active"><a data-toggle="tab" href="#peribadi">Peribadi</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#akademik">Keputusan Peperiksaan</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#sport">Sukan/Badan Beruniform/Kemahiran</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#crime">Pengakuan</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#confirmation">Pengesahan</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="peribadi">
+                <form id="form_peribadi" action="#" role="form">
+                    <div class="row">
+                        <div class="col-md-5">
+                            @Html.Partial("_PeribadiMainTL")
+                        </div>
+                        <div class="col-md-4">
+                            @Html.Partial("_PeribadiMaritalAndNationality")
+                        </div>
+                        <div class="col-md-3">
+                            @Html.Partial("_PeribadiPhysical")
+                        </div>
+                    </div>
+                    <div class="row">
+                        @Html.Partial("_PeribadiAddress")
+                    </div>
+                    <div class="row-fluid">
+                        @Html.Partial("_PeribadiParentsAndServices")
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveprofile">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveprofileandcontinue">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan &amp; Teruskan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="akademik">
+                <form id="form_akademik">
+                    <div class="row-fluid">
+                        <div data-bind="foreach: applicant.ApplicantEducations">
+                            <input type="hidden" data-bind="value: $data.ApplicantEduId" />
+                            <!-- ko if : $data.HighEduLevelCd() === '15' -->
+                            <div class="col-md-4">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span data-bind="text: $data.HighEduLevel"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tahun</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Keputusan</label>
+                                            <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                        </div>
+                                        <div data-bind="foreach: $data.ApplicantEduSubjectCollection">
+                                            <div class="row">
+                                                <div class="m-t-10 form-inline">
+                                                    <label class="control-label" data-bind="text: $data.Subject"></label>
+                                                    <select class="form-control col-md-2 atm-select pull-right" data-bind="options: $root.grades, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', value: $data.Grade"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ko-->
+                            <!-- ko if : $data.HighEduLevelCd() === '14'-->
+                            <div class="col-md-4">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span data-bind="text: $data.HighEduLevel"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tahun</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Keputusan</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div data-bind="foreach: $data.ApplicantEduSubjectCollection">
+                                            <div class="row">
+                                                <div class="m-t-10 form-inline">
+                                                    <!-- ko if : $index() + 1 <= 10 -->
+                                                    <label class="control-label" data-bind="text: $data.Subject"></label>
+                                                    <!--/ko-->
+                                                    <!-- ko if : $index() + 1 >= 11-->
+                                                    <select class="form-control atm-select " data-bind="options: $root.subjects, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.SubjectCd"></select>
+                                                    <!--/ko-->
+                                                    <select class="form-control atm-select input-sm pull-right" data-bind="options: $root.grades, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.GradeCd"></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ko-->
+                            <!-- ko if : $data.HighEduLevelCd() === '13'-->
+                            <div class="col-md-4">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span data-bind="text: $data.HighEduLevel"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tahun</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Keputusan</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ko-->
+                            <!-- ko if : $data.HighEduLevelCd() === '26'-->
+                            <div class="col-md-4">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span data-bind="text: $data.HighEduLevel"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tahun</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Bidang</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.EduCertTitle, valueUpdate: 'afterkeydown'" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-12">Tahap</label>
+                                                <div class="col-md-4">
+                                                    <select class="form-control atm-select" data-bind="value: $data.SKMLevel">
+                                                        <option value="">Sila Pilih</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="control-label">Pusat Pengajian</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.InstitutionName, valueUpdate: 'afterkeydown'" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ko-->
+                            <!-- ko if : $data.HighEduLevelCd() === '11'-->
+                            <div class="col-md-4">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span data-bind="text: $data.HighEduLevel"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tahun</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Keputusan(CGPA)</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" maxlength="4" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Bidang</label>
+                                            <select class="form-control atm-select " data-bind="options: $root.bidang, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.EduCertTitle"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Pusat Pengajian</label>
+                                            <select class="form-control atm-select" data-bind="options: $root.institutions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.InstCd"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ko-->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveacademics">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                </button>
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveacademicsandcontinue">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan &amp; Teruskan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="sport">
+                @Html.Partial("_SportAssociationAndSkillView")
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: saveskill">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: saveskillandcontinue">
+                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan &amp; Teruskan
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="crime">
+                @Html.Partial("_DeclarationOfCrimeAndHealth")
+            </div>
+            <div class="tab-pane fade" id="confirmation">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="confirmation_form" role="form">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"></h4>
+                                </div>
+                                <div class="panel-body">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" data-bind="iCheckBox: applicant.IsAgreeInd" /> * Saya mengaku dan mengesahkan bahawa semua maklumat dalam permohonan ini adalah benar dan betul. Saya membenarkan pihak ATM membuat
+                                        semakan dengan pihak-pihak yang relevan untuk memastikan kesahihan maklumat ini dan tidak akan mengambil sebarang tindakan undang-undang
+                                        terhadap ATM dan pihak-pihak yang berkenaan. Saya faham dan bersetuju sekiranya maklumat yang diberikan dalam borang ini atau dokumen yang
+                                        dikepilkan tidak benar, maka permohonan saya boleh dibatalkan dan tindakan ganti rugi boleh diambil terhadap saya.
+                                    </label>
+                                </div>
+                                <div class="panel-footer">
+                                    <button type="button" class="btn btn-primary btn-sm" data-bind="click: saveprofile">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm" data-bind="enable: applicant.IsAgreeInd(), click: submitapplication">
+                                        <input type="hidden" data-bind="value: applicant.ApplicantId" />
+                                        <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Hantar Borang
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        var applicant = @Html.Raw(JsonConvert.SerializeObject(@Model.ApplicantModel, Formatting.None,
+                        new JsonSerializerSettings()
+                        {
+                            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                        }));
+        var acquisitionid = @Model.AcquisitionId;
+        // checklist
+        peribadi = @Model.Peribadi;
+        akademik = @Model.Akademik;
+        sport = @Model.Sport;
+        pengakuan = @Model.Pengakuan;
+        sponsorship = @Model.Sponsorship;
+        var servicescode = '@Model.ServiceCode';
+    </script>
+    @Scripts.Render("~/bundles/datepicker")
+    <script src="@Url.Content("~/Content/frontend/js/validation/validate.min.js")"></script> <!-- jQuery Form Validation Library -->
+    <script src="@Url.Content("~/Content/frontend/js/validation/validationEngine.min.js")"></script> <!-- jQuery Form Validation Library - requirred with above js -->
+    <script src="@Url.Content("~/Scripts/Core/knockout.icheck.handler.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/public_common.load.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/public_tldm.js")"></script>
+}

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using NHibernate;
+using NHibernate.Engine;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 
@@ -7,24 +8,6 @@ namespace SevenH.MMCSB.Persistance
 {
     public class LoginUserPersistance : ILoginUserPersistance
     {
-        private static ISession _mSession;
-        public ISession Session
-        {
-            get
-            {
-                if ((_mSession == null))
-                {
-                    _mSession = Factory.OpenSession();
-                }
-                if (_mSession.Connection.State == ConnectionState.Closed)
-                {
-                    _mSession.Connection.Open();
-                }
-
-                return _mSession;
-            }
-        }
-
         public int AddNew(LoginUser loginUser)
         {
             Factory.OpenSession().Save(loginUser);
@@ -41,6 +24,8 @@ namespace SevenH.MMCSB.Persistance
                 exist.LastLoginDt = loginUser.LastLoginDt;
                 exist.ServiceCd = loginUser.ServiceCd;
                 exist.IsLocked = loginUser.IsLocked;
+                exist.Email = loginUser.Email;
+                exist.AlternativeEmail = loginUser.AlternativeEmail;
                 Factory.OpenSession().SaveOrUpdate(exist);
                 Factory.OpenSession().Flush();
             }
@@ -56,12 +41,14 @@ namespace SevenH.MMCSB.Persistance
                     return true;
             }
 
+            Factory.OpenSession().Flush();
             return false;
         }
 
         public LoginUser GetByUserName(string username)
         {
             var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.LoginId == username).SingleOrDefault();
+            Factory.OpenSession().Flush();
             return exist;
         }
 
@@ -75,7 +62,16 @@ namespace SevenH.MMCSB.Persistance
                 Factory.OpenSession().Flush();
                 return true;
             }
+            Factory.OpenSession().Flush();
             return false;
+        }
+
+
+        public LoginUser GetByIdNumber(string idnumber)
+        {
+            var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.LoginId == idnumber).SingleOrDefault();
+            Factory.OpenSession().Flush();
+            return exist;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using NHibernate;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
@@ -7,27 +8,6 @@ namespace SevenH.MMCSB.Persistance
 {
     public class AcquisitionPersistence : IAcquisitionPersistence
     {
-
-        private static ISession _mSession;
-        public ISession Session
-        {
-            get
-            {
-                if ((_mSession == null))
-                {
-
-                    _mSession = Factory.OpenSession();
-                }
-                if (_mSession.Connection.State == ConnectionState.Closed)
-                {
-                    _mSession.Connection.Open();
-                }
-
-                return _mSession;
-            }
-        }
-
-
         public void Delete(int id)
         {
             var acq = GetAcquisition(id);
@@ -44,7 +24,9 @@ namespace SevenH.MMCSB.Persistance
 
         public Acquisition GetAcquisition(int id)
         {
-            var acq = Session.Get<Acquisition>(id);
+            var acq = Factory.OpenSession().Get<Acquisition>(id);
+            //if (null != acq)
+            //    acq.AcquisitionType = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
             return acq;
         }
 
@@ -52,8 +34,6 @@ namespace SevenH.MMCSB.Persistance
         private Acquisition SetParent(Acquisition acq)
         {
             //toto set child parent
-
-
             foreach (var a in acq.AcquisitionCriterias)
             {
                 if (a.AcqCriteriaId == 0)
@@ -170,7 +150,10 @@ namespace SevenH.MMCSB.Persistance
             return acq;
         }
 
-
+        public IEnumerable<AcquisitionLocation> GetLocations(string zonecode)
+        {
+            return Factory.OpenSession().QueryOver<AcquisitionLocation>().Where(a => a.ZoneCd == zonecode).List();
+        }
     }
 
 

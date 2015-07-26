@@ -18,5 +18,7 @@
   <object id="ApplicantPersistence" type="SevenH.MMCSB.Persistance.ApplicantPersistence, atm.nhibernate.persistance" />
   <object id="AcquisitionPersistence" type="SevenH.MMCSB.Persistance.AcquisitionPersistence, atm.nhibernate.persistance" />
   <object id="LoginUserPersistance" type="SevenH.MMCSB.Persistance.LoginUserPersistance, atm.nhibernate.persistance" />
-
+  <object id="AdvertismentPersistance" type="SevenH.MMCSB.Persistance.AdvertismentPersistance, atm.nhibernate.persistance" />
+  <object id="ApplicationPersistance" type="SevenH.MMCSB.Persistance.ApplicationPersistance, atm.nhibernate.persistance" />
+  <object id="ApplicantSubmittedPersistence" type="SevenH.MMCSB.Persistance.ApplicantSubmittedPersistence, atm.nhibernate.persistance" />
 </objects>

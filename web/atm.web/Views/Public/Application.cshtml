@@ -1,7 +1,134 @@
-﻿
+﻿@using Microsoft.Ajax.Utilities
+@using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
+@model SevenH.MMCSB.Atm.Web.Models.ApplicationViewModel
 @{
     ViewBag.Title = "Permohonan Masuk Tentera";
-    Layout = "../Shared/_EmptyLayoutWithMenu.cshtml";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="tile">
+            <h2 class="tile-title">Iklan</h2>
+            <div class="p-10">
+                <table class="table tile">
+                    <thead>
+                        <tr>
+                            <th>Bil.</th>
+                            <th>Tajuk</th>
+                            <th>Keterangan</th>
+                            <th>Tarikh Tutup</th>
+                            <th style="color: #6495ed"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var index = 0;
+                        foreach (var ad in @Model.ListOfAdvertisment)
+                        {
+                            var bgcolor = "#FFFFFF";
+                            var fcolor = "#000000";
+                            switch (ad.ServiceCode)
+                            {
+                                case "10":
+                                    fcolor = "#ffffff";
+                                    bgcolor = "#4b0082";
+                                    break;
+                                case "01":
+                                    fcolor = "#ffffff";
+                                    bgcolor = "#2e8b57";
+                                    break;
+                                case "02":
+                                    fcolor = "#000000";
+                                    bgcolor = "#FFFFFF";
+                                    break;
+                                case "03":
+                                    fcolor = "#000000";
+                                    bgcolor = "#6495ed";
+                                    break;
+                            }
+                            index = index + 1;
+                            <tr style="color: @fcolor; background-color: @bgcolor">
+                                <td>@index</td>
+                                <td>@ad.Title</td>
+                                <td>@ad.Description</td>
+                                <td>@string.Format("{0:dd MMM yyyy}", ad.EndDate)</td>
+                                <td>
+                                    @{
+                            var viewonly = false;
+                            var applicationid = 0;
+                            // get check applicant and application
+                            viewonly = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").IsSubmitted(User.Identity.Name, ad.AcquisitionId, out applicationid);
 
+                                    }
+
+                                    @if (ad.ServiceCode != null)
+                                    {
+                                        if (ad.ServiceCode == "10")
+                                        {
+                                            if (viewonly)
+                                            {
+                                                <a class="btn btn-default btn-sm " href="@Url.Action("SubmissionNotification", "Public", new { id = applicationid })">Papar</a>
+                                            }
+                                            else
+                                            {
+                                                if (ad.EndDate != null && ad.EndDate.Value.Date >= DateTime.Now.Date)
+                                                {
+                                                    <a class="btn btn-default btn-sm " href="@Url.Action("PegawaiKadetForm", "Public", new { id = ad.Acquisition.AcquisitionId})">Mohon</a>
+                                                }
+                                            }
+
+                                        }
+                                        if (ad.ServiceCode == "01")
+                                        {
+                                            if (viewonly)
+                                            {
+                                                <a class="btn btn-default btn-sm " href="@Url.Action("SubmissionNotification", "Public", new {id = applicationid})">Papar</a>
+                                            }
+                                            else
+                                            {
+                                                if (ad.EndDate != null && ad.EndDate.Value.Date >= DateTime.Now.Date)
+                                                {
+                                                    <a class="btn btn-default btn-sm " href="@Url.Action("TDForm", "Public", new {id = ad.Acquisition.AcquisitionId})">Mohon</a>
+                                                }
+                                            }
+                                        }
+                                        if (ad.ServiceCode == "02")
+                                        {
+                                            if (viewonly)
+                                            {
+                                                <a class="btn btn-default btn-sm " href="@Url.Action("SubmissionNotification", "Public", new {id = applicationid})">Papar</a>
+                                            }
+                                            else
+                                            {
+                                                if (ad.EndDate != null && ad.EndDate.Value.Date >= DateTime.Now.Date)
+                                                {
+                                                    <a class="btn btn-default btn-sm " href="@Url.Action("TLDMForm", "Public", new {id = ad.Acquisition.AcquisitionId})">Mohon</a>
+                                                }
+                                            }
+
+                                        }
+                                        if (ad.ServiceCode == "03")
+                                        {
+                                            if (viewonly)
+                                            {
+                                                <a class="btn btn-default btn-sm " href="@Url.Action("SubmissionNotification", "Public", new {id = applicationid})">Papar</a>
+                                            }
+                                            else
+                                            {
+                                                if (ad.EndDate != null && ad.EndDate.Value.Date >= DateTime.Now.Date)
+                                                {
+                                                    <a class="btn btn-default btn-sm " href="@Url.Action("TUDMForm", "Public", new {id = ad.Acquisition.AcquisitionId})">Mohon</a>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
