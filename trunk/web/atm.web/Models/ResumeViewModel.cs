@@ -9,6 +9,24 @@ namespace SevenH.MMCSB.Atm.Web.Models
         private ApplicantModel _mApplicantModel = new ApplicantModel();
         private List<MaritalStatus> m_listOfMaritalStatus = new List<MaritalStatus>();
         private ApplicantEducation m_applicantEducation = new ApplicantEducation();
+        private List<Zone> m_zones = new List<Zone>();
+        public string GenderReadonly { get; set; }
+        public int Peribadi { get; set; }
+        public int Akademik { get; set; }
+        public int Sponsorship { get; set; }
+        public int Sport { get; set; }
+        public int Pengakuan { get; set; }
+        public List<Zone> Zones
+        {
+            get { return m_zones; }
+            set { m_zones = value; }
+        }
+
+        public int AcquisitionId { get; set; }
+        public string AcquisitionName { get; set; }
+        public int AcquisitionSiri { get; set; }
+        public int AcquisitionYear { get; set; }
+        public string ServiceCode { get; set; }
 
         public ApplicantEducation ApplicantEducation
         {
@@ -22,8 +40,8 @@ namespace SevenH.MMCSB.Atm.Web.Models
             get { return m_listOfMaritalStatus; }
             set { m_listOfMaritalStatus = value; }
         }
-        
-        
+
+
         public string ApplicantInJson { get; set; }
         public ApplicantModel ApplicantModel
         {
@@ -31,6 +49,6 @@ namespace SevenH.MMCSB.Atm.Web.Models
             set { _mApplicantModel = value; }
         }
 
-        
+
     }
 }

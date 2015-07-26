@@ -1,4 +1,5 @@
-﻿@if (Request.IsAuthenticated)
+﻿@model SevenH.MMCSB.Atm.Web.Models.LoginViewModel
+@if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -11,42 +12,47 @@
 }
 else
 {
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            Login Masuk
-        </div>
-        <div class="panel-body main-left-page">
-            <div class="col-md-12 main-left-page">
-                @using (Html.BeginForm("LoginFromMain", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal padding-3", role = "form" }))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)
-                    <div class="col-md-12">
-                        <label>Id Pengguna</label>
-                        @Html.TextBox("username", null, new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-12">
-                        <label>Kata Laluan</label>
-                        @Html.Password("password", null, new { @class = "form-control" })
-                    </div>
-                    <div class="col-md-12">
-                        <input type="submit" value="Masuk" class="btn btn-primary pull-right margin-tb-5" />
-                    </div>
-                    <div class="col-md-12">
+    <div class="tile">
+        <h2 class="tile-title">Login Masuk</h2>
+        @using (Html.BeginForm("LoginFromMain", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "p-15", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                 @Html.LabelFor(m => m.UserName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.UserName, new {@class = "form-control input-sm"})
+                @Html.ValidationMessageFor(m => m.UserName, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                 @Html.LabelFor(m => m.Password, new {@class = "control-label"})
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control input-sm"})
+                @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+            </div>
+            <p>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </p>
+            <div class="form-group">
+                <input type="submit" value="Masuk" class="btn btn-sm m-t-10" />
+            </div>
+            <div class="form-group">
+                <div class="media">
+                    <i class="icon pull-right">&#61792;</i>
+                    <div class="media-body">
                         <a href="@Url.Action("ResetPassword", "Account")" class="pull-right">Lupa Katalaluan</a>
-                        <br />
+                    </div>
+                </div>
+                <div class="media">
+                    <i class="icon pull-right">&#61873;</i>
+                    <div class="media-body">
                         <a href="@Url.Action("Register", "Public")" class="pull-right">Daftar</a>
                     </div>
-                    <div class="col-md-12">
-                        <p>
-                            Laman web ini bertujuan untuk orang awam memohon  memasuki tentera, menyemak  status permohonan dan membuat ujian bertulis secara online.
-                        </p>
-                    </div>
-                }
+                </div>
             </div>
-            <div class="col-md-12">
-                <a href=""></a>
+            <div class="form-group">
+                <p>
+                    Laman web ini bertujuan untuk orang awam memohon memasuki tentera, menyemak status permohonan dan membuat ujian bertulis secara online.
+                </p>
             </div>
-        </div>
+        }
+
     </div>
 }

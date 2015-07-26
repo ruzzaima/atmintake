@@ -2,5 +2,6 @@
 {
     public partial class LoginRole : DomainObject
     {
+        public virtual LoginUser LoginUser { get; set; }
     }
 }

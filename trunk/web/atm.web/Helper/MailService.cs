@@ -37,13 +37,13 @@ namespace SevenH.MMCSB.Atm.Web
             return new List<string>();
         }
 
-        public void Send(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath)
+        public void Send(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
         {
             var client = new SmtpClient();
             try
             {
 
-                MailDefinition mailDefinition = new MailDefinition();
+                var mailDefinition = new MailDefinition();
                 mailDefinition.Priority = MailPriority.High;
                 mailDefinition.From = "noreply@atm.gov.my";
                 mailDefinition.IsBodyHtml = true;
@@ -51,14 +51,18 @@ namespace SevenH.MMCSB.Atm.Web
                 mailDefinition.BodyFileName = templatepath;
 
                 var ldReplacement = new ListDictionary();
-                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
+                if (dateTime.HasValue)
+                    ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", dateTime.Value));
+                else
+                    ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
+
                 ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
                 ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
                 ldReplacement.Add("<%Password%>", user.Password);
                 ldReplacement.Add("<%LoginUrl%>", loginurl);
                 var mail = new MailMessage();
                 mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
-                mail.From = new MailAddress(from);
+                mail.From = new MailAddress(from, "No Reply");
                 if (null != tos)
                     foreach (var recipient in tos.ToList().SelectMany(Spliter))
                     {

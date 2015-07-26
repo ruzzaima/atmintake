@@ -7,5 +7,6 @@
         bool Validate(string username, string password);
         bool ChangePassword(int loginid, string newpassword);
         LoginUser GetByUserName(string username);
+        LoginUser GetByIdNumber(string username);
     }
 }

@@ -63,6 +63,11 @@ namespace SevenH.MMCSB.Atm.Web
             return PersistanceLayer.GetHighEduLevels();
         }
 
+        public IEnumerable<Institution> GetInstitutions(string category)
+        {
+            return PersistanceLayer.GetInstitutions(category);
+        }
+
         public IEnumerable<Institution> GetInstitutions()
         {
             return PersistanceLayer.GetInstitutions();
@@ -138,14 +143,39 @@ namespace SevenH.MMCSB.Atm.Web
             return PersistanceLayer.GetSubjects();
         }
 
+        public IEnumerable<Subject> GetSubjects(string highedulevelcode)
+        {
+            return PersistanceLayer.GetSubjects(highedulevelcode);
+        }
+
         public IEnumerable<SubjectGrade> GetSubjectGrades()
         {
             return PersistanceLayer.GetSubjectGrades();
         }
+
         public IEnumerable<Occupation> GetOccupations()
         {
             return PersistanceLayer.GetOccupations();
         }
 
+        public IEnumerable<Skill> GetSkills(string category)
+        {
+            return PersistanceLayer.GetSkills(category);
+        }
+
+        public IEnumerable<Zone> GetZones()
+        {
+            return PersistanceLayer.GetZones();
+        }
+
+        public IEnumerable<Location> GetLocations(string zone)
+        {
+            return PersistanceLayer.GetLocations(zone);
+        }
+
+        public IEnumerable<AcquisitionLocation> GetAcquisitionLocations(string zone)
+        {
+            return PersistanceLayer.GetAcquisitionLocations(zone);
+        }
     }
 }

@@ -5,34 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NHibernate;
+using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 
 namespace SevenH.MMCSB.Persistance
 {
    public class ApplicantSportPersistance : IApplicantSportPersistence
     {
-        private static NHibernate.ISession _mSession;
-        public ISession Session
-        {
-            get
-            {
-                if ((_mSession == null))
-                {
-
-                    _mSession = Factory.OpenSession();
-                }
-                if (_mSession.Connection.State == ConnectionState.Closed)
-                {
-                    _mSession.Connection.Open();
-                }
-
-                return _mSession;
-            }
-        }
-
         public int AddNew(Atm.Domain.ApplicantSport appl)
         {
-            throw new NotImplementedException();
+            Factory.OpenSession().SaveOrUpdate(appl);
+            Factory.OpenSession().Flush();
+            return appl.ApplicantSportAssocId;
         }
 
         public void Delete(int id)
@@ -42,12 +26,18 @@ namespace SevenH.MMCSB.Persistance
 
         public Atm.Domain.ApplicantSport GetApplicantSport(int id)
         {
-            throw new NotImplementedException();
+            return
+                Factory.OpenSession()
+                    .QueryOver<ApplicantSport>()
+                    .Where(a => a.ApplicantSportAssocId == id)
+                    .SingleOrDefault();
         }
 
         public int Update(Atm.Domain.ApplicantSport appl)
         {
-            throw new NotImplementedException();
+            Factory.OpenSession().SaveOrUpdate(appl);
+            Factory.OpenSession().Flush();
+            return appl.ApplicantSportAssocId;
         }
     }
 }

@@ -31,17 +31,59 @@ $(function () {
     $("input[name='topmenu']").change(function () {
         var val = $(this).val();
         if (val == 'account') {
-            location.href = "/Public/Account";
+            location.href = server + "/Public/Account";
         }
         if (val == 'resume') {
-            location.href = "/Public/Resume";
+            location.href = server + "/Public/Resume";
         }
         if (val == 'application') {
-            location.href = "/Public/Application";
+            location.href = server + "/Public/Application";
         }
         if (val == 'reset') {
-            location.href = "/Account/ResetPassword";
+            location.href = server + "/Account/ResetPassword";
         }
+    });
+
+    $('.popup').click(function (event) {
+        event.preventDefault();
+        window.open(server + $(this).attr("href"), "", "", false);
+    });
+
+
+    $('.logout').click(function (event) {
+        event.preventDefault();
+        $("#notification_dialog .modal-body").html("Adakah anda pasti untuk log keluar?");
+        $("#notification_dialog").modal({
+            show: 'true',
+            backdrop: 'true',
+            keyboard: 'true'
+        });
+
+        $('#notification_dialog .btn-submit').unbind("click");
+        $('#notification_dialog .btn-submit').click(function () {
+            signout();
+            $('#notification_dialog').modal('hide');
+        });
+
+        $('#notification_dialog .btn-cancel').click(function () {
+            $('#notification_dialog').modal('hide');
+        });
+    });
+
+    $('input[type=text]').val(function () {
+        return this.value.toUpperCase();
+    });
+
+    $("input[type=text]").keyup(function () {
+        $(this).val($(this).val().toUpperCase());
+    });
+
+    $('.money').val(function () {
+        return FormatCurrency(this.value);
+    });
+
+    $(".money").change(function () {
+        $(this).val(FormatCurrency(parseFloat($(this).val()).toFixed(2)));
     });
 
 });
@@ -84,4 +126,76 @@ function showLoading() {
 
 function hideLoading() {
     $("#loading_dialog").modal('hide');
+}
+
+function signout() {
+    $.ajax({
+        type: 'POST',
+        url: server + '/Account/SignOut',
+        contentType: "application/json; charset=utf-8",
+        success: function (msg) {
+            if (msg.OK) {
+                location.href = server + "/Home/";
+            }
+        },
+        error: function (xhr) {
+        }
+    });
+}
+
+function initializeChecklist(peribadi, akademik, pengakuan, sponsorship, sport, ispegawai) {
+
+    var progressperibadi = parseInt(peribadi);
+    $('.peribadi').css('width', progressperibadi + '%');
+
+    var progressakademik = parseInt(akademik);
+    $('.akademik').css('width', progressakademik + '%');
+
+    var progresspengakuan = parseInt(pengakuan);
+    $('.pengakuan').css('width', progresspengakuan + '%');
+
+    if (ispegawai) {
+        $('.pegawai').show();
+    } else {
+        $('.pegawai').hide();
+    }
+
+    var progresssponsorship = parseInt(sponsorship);
+    $('.sponsorship').css('width', progresssponsorship + '%');
+
+    var progresssport = parseInt(sport);
+    $('.sport').css('width', progresssport + '%');
+}
+
+
+function getQuerystring(key, defaultv) {
+    if (defaultv == null) defaultv = "";
+    key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + key + "=([^&#]*)");
+    var qs = regex.exec(window.location.href);
+    if (qs == null)
+        return defaultv;
+    else
+        return qs[1];
+}
+
+function FormatCurrency(num) {
+    var str = num.toString().replace("$", ""), parts = false, output = [], i = 1, formatted = null;
+    if (str.indexOf(".") > 0) {
+        parts = str.split(".");
+        str = parts[0];
+    }
+    str = str.split("").reverse();
+    for (var j = 0, len = str.length; j < len; j++) {
+        if (str[j] != ",") {
+            output.push(str[j]);
+            if (i % 3 == 0 && j < (len - 1)) {
+                output.push(",");
+            }
+            i++;
+        }
+    }
+
+    formatted = output.reverse().join("");
+    return ("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ".00"));
 }

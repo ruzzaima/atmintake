@@ -8,7 +8,8 @@ namespace SevenH.MMCSB.Atm.Web
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/Core/jquery-{version}.js"));
+                        "~/Scripts/Core/jquery-{version}.js",
+                        "~/Content/frontend/js/jquery-ui.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/Core/jquery.validate*"));
@@ -23,15 +24,34 @@ namespace SevenH.MMCSB.Atm.Web
                       "~/Scripts/Core/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/bootstrapcss").Include(
+                      "~/Content/bootstrap.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
                       "~/Scripts/Core/moment.min.js",
                       "~/Scripts/Core/bootstrap-datetimepicker.min.js"));
 
-            bundles.Add(new StyleBundle("~/Content/datepickercss").Include(
+            bundles.Add(new StyleBundle("~/bundles/datepickercss").Include(
                       "~/Content/bootstrap-datetimepicker.css"));
+
+            // frontend template
+
+            bundles.Add(new StyleBundle("~/bundles/frontendcss").Include(
+                            "~/Content/frontend/css/animate.min.css",
+                            "~/Content/frontend/css/font-awesome.min.css",            
+                            "~/Content/frontend/css/form.css",
+                            "~/Content/frontend/css/style.css",
+                            "~/Content/frontend/css/animate.css",
+                            "~/Content/frontend/css/generics.css",
+                            "~/Content/frontend/css/icons.css",
+                            "~/Content/frontend/css/generics.css"));
+
+
+            bundles.Add(new StyleBundle("~/bundles/frontendscript").Include(
+                            "~/Content/frontend/js/functions.js"));
+
         }
     }
 }

@@ -1,25 +1,515 @@
-﻿namespace SevenH.MMCSB.Atm.Web
+﻿using System;
+using System.Linq;
+using System.Web.Helpers;
+using log4net.Appender;
+using SevenH.MMCSB.Atm.Domain;
+using SevenH.MMCSB.Atm.Domain.Interface;
+using SevenH.MMCSB.Atm.Web.Models;
+
+namespace SevenH.MMCSB.Atm.Web
 {
     public static class ATMHelper
     {
         public static bool MyKadValidation(string mykadno)
         {
-            if (mykadno.Contains("-"))
+            mykadno = mykadno.Trim();
+            if (mykadno.Contains("-")) mykadno = mykadno.Replace("-", string.Empty);
+            if (mykadno.Length > 12) return false;
+            if (mykadno.Length < 12) return false;
+
+            return true;
+        }
+
+        public static bool MyKadAgeValidation(string mykadno, out string message)
+        {
+            mykadno = mykadno.Trim();
+            if (mykadno.Contains("-")) mykadno = mykadno.Replace("-", string.Empty);
+            // get first 6
+            DateTime zeroTime = new DateTime(1, 1, 1);
+            var yearstr = mykadno.Substring(0, 2);
+            var monthstr = mykadno.Substring(2, 2);
+            var daystr = mykadno.Substring(4, 2);
+            var yearint = Convert.ToInt32(yearstr);
+            if (yearint == 0) yearint = 2000;
+            if (yearint < 10) yearint = 2000 + yearint;
+            if (yearint > 10) yearint = 1900 + yearint;
+            var bdate = new DateTime(yearint, Convert.ToInt16(monthstr), Convert.ToInt16(daystr));
+            var daterange = DateTime.Now - bdate;
+            int years = (zeroTime + daterange).Year - 1;
+            if (years < 16 || years > 27)
             {
-                // check validity of first 6 digit
+                message = "Anda tidak layak mengikut syarat umum.";
+                return false;
             }
-            else
+
+            message = "Anda layak";
+            return true;
+        }
+
+        public static bool ValidateHeightWeightBmi(double? height, double? weight, int acquisitionid, string gendercode, out string message)
+        {
+            if (acquisitionid != 0)
             {
-                if (mykadno.Length > 12)
-                    return false;
-                if (mykadno.Length < 12)
-                    return false;
-                if (mykadno.Length == 12)
+                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
+                if (null != acq)
                 {
-                    // check first 6 is valid date
+                    var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                    if (null != acqtype)
+                    {
+                        // TD
+                        if (acqtype.ServiceCd == "01")
+                        {
+                            if (gendercode == "L")
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.62))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 47.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 26.9)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 26.9.";
+                                        return false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.62))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 47.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 26.9)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 26.9.";
+                                        return false;
+                                    }
+                                }
+                            }
+
+                        }
+
+                        // TLDM
+                        if (acqtype.ServiceCd == "02")
+                        {
+                            if (gendercode == "L")
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.62))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 47.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 25)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 25.";
+                                        return false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.60))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.60m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 40.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 40.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 23)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 23.";
+                                        return false;
+                                    }
+                                }
+                            }
+
+                        }
+                        // TUDM
+                        if (acqtype.ServiceCd == "03")
+                        {
+
+                            if (gendercode == "L")
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.62))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 47.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 25)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 25.";
+                                        return false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.57))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 40.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 25)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 25.";
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+
+                        // TUDM
+                        if (acqtype.ServiceCd == "10")
+                        {
+                            if (gendercode == "L")
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.62))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 47.5)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 23)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 23.";
+                                        return false;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (height.HasValue && height != 0 && (height < 1.57))
+                                {
+                                    message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.57m.";
+                                    return false;
+                                }
+                                if (weight.HasValue && weight != 0 && weight < 45)
+                                {
+                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 45kg.";
+                                    return false;
+                                }
+
+                                if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
+                                {
+                                    var bmi = weight / (height * height);
+                                    if (bmi < 18 || bmi > 23)
+                                    {
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 23.";
+                                        return false;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 }
             }
-            return false;
+            message = "Layak.";
+            return true;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="applicantid"></param>
+        /// <param name="acquisitionid"></param>
+        /// <param name="peribadipoint">Peribadi</param>
+        /// <param name="edupoint">Education</param>
+        /// <param name="spopoint">Sponsorship</param>
+        /// <param name="saspoint">Sport, Association and Skills</param>
+        /// <param name="chpoint">Crime, Health</param>
+        public static void Checklist(int applicantid, int acquisitionid, out decimal peribadipoint, out decimal edupoint, out decimal spopoint, out decimal saspoint, out decimal chpoint)
+        {
+            peribadipoint = 0.0m;
+            edupoint = 0.0m;
+            spopoint = 0.0m;
+            saspoint = 0.0m;
+            chpoint = 0.0m;
+            var applicant = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetApplicant(applicantid);
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
+            if (null != applicant && null != acq)
+            {
+                var total = 0.0;
+                if (!string.IsNullOrWhiteSpace(applicant.MrtlStatusCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.DadName))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.DadICNo))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.DadNationalityCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.DadOccupation))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.DadPhoneNo))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.MomName))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.MomICNo))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.MomOccupation))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.MomNationalityCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.MomPhoneNo))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddr1))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddr2))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrCityCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrPostCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrStateCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.BirthCertNo))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.ReligionCd))
+                    total = total + 1;
+                if (!string.IsNullOrWhiteSpace(applicant.RaceCd))
+                    total = total + 1;
+                if (applicant.Height == 0)
+                    total = total + 1;
+                if (applicant.Weight == 0)
+                    total = total + 1;
+
+                peribadipoint = Convert.ToDecimal((total / 21) * 100);
+
+                // educations
+                var totaledu = 0.0;
+                var edus =
+                    ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetEducation(applicantid);
+                if (null != edus)
+                {
+                    foreach (var ed in edus)
+                    {
+                        // SPM
+                        if (ed.HighEduLevelCd == "14")
+                        {
+                            // check the grades for 10 top subject
+                            totaledu =
+                                ed.ApplicantEduSubjectCollection.Take(10)
+                                    .Where(s => !string.IsNullOrWhiteSpace(s.GradeCd))
+                                    .Aggregate(totaledu, (current, s) => current + 1);
+                        }
+                    }
+                }
+                edupoint = Convert.ToDecimal((totaledu / 18) * 100);
+
+                var totalsponsor = 0;
+                var totalselected = 0.0;
+                // penajaan dan biasiswa
+                if (applicant.PalapesInd.HasValue)
+                {
+                    if (applicant.PalapesInd.Value)
+                    {
+                        totalsponsor = totalsponsor + 5;
+                        if (!string.IsNullOrWhiteSpace(applicant.PalapesArmyNo)) totalselected = totalselected + 1;
+                        if (!string.IsNullOrWhiteSpace(applicant.PalapesInstitution)) totalselected = totalselected + 1;
+                        if (!string.IsNullOrWhiteSpace(applicant.PalapesServices)) totalselected = totalselected + 1;
+                        if (applicant.PalapesTauliahEndDt.HasValue) totalselected = totalselected + 1;
+                        if (applicant.PalapesYear != 0) totalselected = totalselected + 1;
+                    }
+                    else
+                    {
+                        totalsponsor = totalsponsor + 1;
+                        totalselected = totalselected + 1;
+                    }
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 0;
+                }
+
+                if (applicant.ScholarshipInd.HasValue)
+                {
+                    if (applicant.ScholarshipInd.Value)
+                    {
+                        totalsponsor = totalsponsor + 4;
+                        if (!string.IsNullOrWhiteSpace(applicant.ScholarshipBody)) totalselected = totalselected + 1;
+                        if (!string.IsNullOrWhiteSpace(applicant.ScholarshipBodyAddr)) totalselected = totalselected + 1;
+                        if (!string.IsNullOrWhiteSpace(applicant.ScholarshipNoOfYrContract))
+                            totalselected = totalselected + 1;
+                        if (applicant.ScholarshipContractStDate.HasValue) totalselected = totalselected + 1;
+                    }
+                    else
+                    {
+                        totalsponsor = totalsponsor + 1;
+                        totalselected = totalselected + 1;
+
+                    }
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 0;
+                }
+
+                if (applicant.EmployeeAggreeInd.HasValue)
+                {
+                    if (applicant.EmployeeAggreeInd.Value)
+                    {
+                        totalsponsor = totalsponsor + 1;
+                        if (!string.IsNullOrWhiteSpace(applicant.PelepasanDocument)) totalselected = totalselected + 1;
+                    }
+                    else
+                    {
+                        totalsponsor = totalsponsor + 1;
+                        totalselected = totalselected + 1;
+                    }
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 0;
+                }
+
+                if (applicant.ArmySelectionInd.HasValue)
+                {
+                    if (applicant.ArmySelectionInd.Value)
+                    {
+                        totalsponsor = totalsponsor + 2;
+                        if (applicant.ArmySelectionDt.HasValue) totalselected = totalselected + 1;
+                        if (!string.IsNullOrWhiteSpace(applicant.ArmySelectionVenue)) totalselected = totalselected + 1;
+                    }
+                    else
+                    {
+                        totalsponsor = totalsponsor + 1;
+                        totalselected = totalselected + 1;
+                    }
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 0;
+                }
+
+                if (totalsponsor == 0 && totalselected == 0)
+                    spopoint = 0.0m;
+                else
+                    spopoint = Convert.ToDecimal((totalselected / totalsponsor) * 100);
+
+                // Sukan/Badan Beruniform dan Kemahiran
+                var totals = 0.0;
+
+                var sps = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSport(applicantid);
+                if (null != sps && sps.Any())
+                {
+                    var sports =
+                        sps.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "S");
+                    totals = totals + sports.Count();
+                    var kokos =
+                        sps.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "A");
+                    totals = totals + kokos.Count();
+                }
+
+                var skills = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence")
+                    .GetSkill(applicantid);
+                if (null != skills && skills.Any())
+                    totals = totals + skills.Count();
+
+                saspoint = Convert.ToDecimal((totals / 6) * 100);
+
+                var totalchd = 0;
+                var totalchdselected = 0;
+                if (applicant.CrimeInvolvement.HasValue)
+                {
+                    totalchd = totalchd + 1;
+                    totalchdselected = totalchdselected + 1;
+                }
+                else
+                {
+                    totalchd = totalchd + 1;
+                    totalchdselected = totalchdselected + 0;
+                }
+
+                if (applicant.DrugCaseInvolvement.HasValue)
+                {
+                    totalchd = totalchd + 1;
+                    totalchdselected = totalchdselected + 1;
+                }
+                else
+                {
+                    totalchd = totalchd + 1;
+                    totalchdselected = totalchdselected + 0;
+                }
+
+                if (applicant.CronicIlnessInd.HasValue)
+                {
+                    totalchd = totalchd + 1;
+                    totalchdselected = totalchdselected + 1;
+                }
+                else
+                {
+                    totalchd = totalchd + 1;
+                    totalchdselected = totalchdselected + 0;
+                }
+
+                chpoint = Convert.ToDecimal((totalchdselected / totalchd) * 100);
+            }
+        }
+
     }
 }

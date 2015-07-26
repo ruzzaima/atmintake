@@ -66,8 +66,23 @@
     <Compile Include="Class\AcqQuestion.cs" />
     <Compile Include="Class\AcqQuestionnaire.cs" />
     <Compile Include="Class\AcqEduCriteriaFieldOfStudy.cs" />
+    <Compile Include="Class\AcquisitionLocation.cs" />
     <Compile Include="Class\AcquisitionType.cs" />
+    <Compile Include="Class\Advertisment.cs" />
+    <Compile Include="Class\ApplicantDispStatusSubmitted.cs" />
+    <Compile Include="Class\ApplicantPhoto.cs" />
+    <Compile Include="Class\ApplicantSubmitted.cs" />
+    <Compile Include="Class\ApplicantEducationSubmitted.cs" />
+    <Compile Include="Class\ApplicantEduSubjectSubmitted.cs" />
+    <Compile Include="Class\ApplicantSkillSubmitted.cs" />
+    <Compile Include="Class\ApplicantSportSubmitted.cs" />
+    <Compile Include="Class\ApplicantSubmittedPhoto.cs" />
     <Compile Include="Class\BloodType.cs" />
+    <Compile Include="Class\ExistingMember.cs" />
+    <Compile Include="Class\ExistingMemberStatus.cs" />
+    <Compile Include="Class\IntakeLocation.cs" />
+    <Compile Include="Class\InterviewLocation.cs" />
+    <Compile Include="Class\Location.cs" />
     <Compile Include="Class\Occupation.cs" />
     <Compile Include="Class\LoginStatus.cs" />
     <Compile Include="Class\SportAndAssociation.cs" />
@@ -90,16 +105,26 @@
     <Compile Include="Class\Ethnic.cs" />
     <Compile Include="Class\City.cs" />
     <Compile Include="Class\Country.cs" />
+    <Compile Include="Class\Zone.cs" />
+    <Compile Include="Helper\IntCharType.cs" />
+    <Compile Include="Helper\RoleString.cs" />
     <Compile Include="Interface\IAcquisitionPersistence.cs" />
+    <Compile Include="Interface\IAdvertismentPersistance.cs" />
+    <Compile Include="Interface\IApplicantSportSubmittedPersistence.cs" />
+    <Compile Include="Interface\IApplicantSubmittedPersistence.cs" />
     <Compile Include="Interface\IApplicantSportPersistence.cs" />
     <Compile Include="Interface\IApplicantPersistence.cs" />
+    <Compile Include="Interface\IApplicationPersistance.cs" />
     <Compile Include="Interface\ICodeItemPersistence.cs" />
     <Compile Include="Interface\ICryptorService.cs" />
     <Compile Include="Interface\ILoginUserPersistance.cs" />
     <Compile Include="Interface\IReferencePersistence.cs" />
+    <Compile Include="Mapping\Acquisition.mapping.cs" />
+    <Compile Include="Mapping\ApplicantSubmitted.mapping.cs" />
+    <Compile Include="Mapping\ExistingMember.mapping.cs" />
+    <Compile Include="Mapping\LoginRole.mapping.cs" />
     <Compile Include="Mapping\LoginUser.mapping.cs" />
     <Compile Include="Mapping\Reference.mapping.cs" />
-    <Compile Include="Mapping\Acquisition.mapping.cs" />
     <Compile Include="Mapping\Applicant.mapping.cs" />
     <Compile Include="Class\Applicant.cs" />
     <Compile Include="Class\Application.cs" />
@@ -126,6 +151,7 @@
     <Compile Include="Schema\Domain.g.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapping\Advertisment.mapping.cs" />
     <None Include="packages.config" />
     <None Include="Schema\AtmIntakeSchema.xsd">
       <SubType>Designer</SubType>

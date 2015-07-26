@@ -22,10 +22,11 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.Salt);
                 Map(x => x.Password);
                 Map(x => x.ServiceCd);
-                Map(x => x.LoginId);
+                Map(x => x.LoginId).Unique();
                 Map(x => x.FirstTime);
+
+                References(x => x.LoginRole, "UserId").Unique();
             }
         }
-
     }
 }

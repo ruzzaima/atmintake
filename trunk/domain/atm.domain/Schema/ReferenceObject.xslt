@@ -9,16 +9,15 @@
   <xsl:template match="xs:element">
     <!-- Collection -->
     <xsl:for-each select="xs:complexType/xs:sequence/xs:element">
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
       private <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/> m_<xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/> = new <xsl:value-of select="sevenhpk:RemovePrefixDataTypeForNew(@ref, @maxOccurs)"/>();
-
 
       ///&lt;summary&gt;
       /// <xsl:value-of select="../../../xs:annotation/xs:documentation"/>
       ///&lt;/summary&gt;
       [XmlArrayItem("<xsl:value-of select="@ref"/>", IsNullable = false)]
-		[DebuggerHidden]
-		 
+      [DebuggerHidden]
+
       public virtual <xsl:value-of select="sevenhpk:RemovePrefixDataType(@ref, @maxOccurs)"/> <xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/>
       {
       get{ return m_<xsl:value-of select="sevenhpk:RemovePrefixMember(@ref, @maxOccurs)"/>;}
@@ -29,7 +28,7 @@
       Just plain assocation 1 to 1 
     -->
     <xsl:if test="@ref">
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
       private <xsl:value-of select="@ref"/> m_<xsl:value-of select="@ref"/>
       <xsl:choose>
         <!-- when new is missing, always new them -->
@@ -39,7 +38,7 @@
         </xsl:otherwise>
       </xsl:choose>
       public const string PropertyName<xsl:value-of select="@ref"/> = "<xsl:value-of select="@ref"/>";
-		[DebuggerHidden]
+      [DebuggerHidden]
 
       public virtual <xsl:value-of select="@ref"/><xsl:text> </xsl:text> <xsl:value-of select="@ref"/>
       {
@@ -56,7 +55,7 @@
       Element with simple restriction rules- for string and integer
       -->
     <xsl:if test="xs:simpleType">
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
       private <xsl:value-of select="sevenhpk:GetCLRDataType(xs:simpleType/xs:restriction/@base, xs:simpleType/xs:restriction/@nillable)"/> m_<xsl:value-of select="@name"/>;
       public const string PropertyName<xsl:value-of select="@name"/> = "<xsl:value-of select="@name"/>";
 

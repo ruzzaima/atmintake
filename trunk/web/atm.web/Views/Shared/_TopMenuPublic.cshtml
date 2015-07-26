@@ -1,18 +1,13 @@
-﻿<div class="row">
-    <div class="col-md-12">
-        <div class="btn-group btn-group-justified blocks mainnav" data-toggle="buttons" >
-            <label class="btn btn-atm" id="label_account" ref="Public/Account">
-                <input type="radio" name="topmenu" value="account" id="myaccount_btn"> Akaun Saya
-            </label>
-            <label class="btn btn-atm" id="label_resume" ref="Public/Resume">
-                <input type="radio" name="topmenu" value="resume" id="myresume_btn"> Resume Saya
-            </label>
-            <label class="btn btn-atm" id="label_application" ref="Public/Application">
-                <input type="radio" name="topmenu" value="application" id="myapplication_btn"> Permohonan Masuk Tentera
-            </label>
-            <label class="btn btn-atm" id="label_reset" ref="Account/ResetPassword">
-                <input type="radio" name="topmenu" value="reset" id="changepassword_btn"> Tukar Kata Laluan
-            </label>
-        </div>
-    </div>
-</div>
+﻿<ol class="breadcrumb">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Application", "Public")">Permohonan</a></li>
+        <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Account", "Public")">Profil Saya</a></li>
+        <li class="hidden-print"><a class="hidden-print" href="@Url.Action("ResetPassword", "Account")">Tukar Kata Laluan</a></li>
+        <li class="hidden-print"><a class="hidden-print logout" href="">Log Keluar</a></li>
+    }
+    else
+    {
+        <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Login", "Account")">Log Masuk</a></li>
+    }
+</ol>

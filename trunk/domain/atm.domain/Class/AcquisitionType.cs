@@ -2,7 +2,6 @@
 {
     public partial class AcquisitionType : DomainObject
     {
-
-        
+        public virtual Acquisition Acquisition { get; set; }   
     }
 }

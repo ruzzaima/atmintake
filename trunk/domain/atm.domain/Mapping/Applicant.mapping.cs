@@ -1,8 +1,9 @@
 ﻿using FluentNHibernate.Mapping;
+using NHibernate.Type;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
-    public partial class Applicant 
+    public partial class Applicant
     {
         public class ApplicantMap : ClassMap<Applicant>
         {
@@ -10,7 +11,7 @@ namespace SevenH.MMCSB.Atm.Domain
             {
                 Table("tblApplicant");
                 Id(x => x.ApplicantId).GeneratedBy.Increment();
-                Map(x => x.NewICNo);
+                Map(x => x.NewICNo).Unique();
                 Map(x => x.NoTentera);
                 Map(x => x.FullName);
                 Map(x => x.MrtlStatusCd);
@@ -49,26 +50,30 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.MomNationalityCd);
                 Map(x => x.MomOccupation);
                 Map(x => x.MomSalary);
+                Map(x => x.MomPhoneNo);
                 Map(x => x.DadName);
                 Map(x => x.DadICNo);
                 Map(x => x.DadNationalityCd);
                 Map(x => x.DadOccupation);
                 Map(x => x.DadSalary);
+                Map(x => x.DadPhoneNo);
                 Map(x => x.GuardianName);
                 Map(x => x.GuardianICNo);
                 Map(x => x.GuardianNationalityCd);
                 Map(x => x.GuardianOccupation);
                 Map(x => x.GuardianSalary);
+                Map(x => x.GuardianPhoneNo);
                 Map(x => x.FamilyHighestEduLevel);
-                //Map(x => x.Photo);
                 Map(x => x.CurrentOccupation);
                 Map(x => x.CurrentOrganisation);
                 Map(x => x.CurrentSalary);
                 Map(x => x.PalapesInd);
                 Map(x => x.PalapesYear);
                 Map(x => x.PalapesArmyNo);
+                Map(x => x.PalapesServices);
                 Map(x => x.PalapesInstitution);
                 Map(x => x.PalapesRemark);
+                Map(x => x.PalapesTauliahEndDt);
                 Map(x => x.ScholarshipInd);
                 Map(x => x.ScholarshipBody);
                 Map(x => x.ScholarshipBodyAddr);
@@ -91,19 +96,22 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
                 Map(x => x.BirthDt);
-                Map(x => x.PalapesTauliahEndDt);
                 Map(x => x.ScholarshipContractStDate);
                 Map(x => x.ArmySelectionDt);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
+                Map(x => x.CronicIlnessInd);
+                Map(x => x.EmployeeAggreeInd);
+                Map(x => x.PelepasanDocument);
+                Map(x => x.OriginalPelepasanDocument);
+                Map(x => x.MomNotApplicable);
+                Map(x => x.DadNotApplicable);
+                Map(x => x.GuardianNotApplicable);
 
-                HasMany<ApplicantEducation>(x => x.ApplicantEducations).KeyColumn("ApplicantId").Inverse().Cascade.All();
-                HasMany<ApplicantSkill>(x => x.ApplicantSkills).KeyColumn("ApplicantId").Inverse().Cascade.All();
-                HasMany<ApplicantSport>(x => x.SportAndAssociations).KeyColumn("ApplicantId").Inverse().Cascade.All();
-                HasMany<Application>(x => x.Applications).KeyColumn("ApplicantId").Inverse().Cascade.All();
-                HasMany<ApplicantDispStatus>(x => x.ApplicantDispStatuses).KeyColumn("ApplicantId").Inverse().Cascade.All();
-
-
+                //HasMany(x => x.ApplicantEducationCollection).KeyColumn("ApplicantId").Inverse().Cascade.All();
+                //HasMany(x => x.ApplicantSkillCollection).KeyColumn("ApplicantId").Cascade.All();
+                //HasMany(x => x.ApplicantSportCollection).KeyColumn("ApplicantId").Inverse().Cascade.All();
+                HasMany(x => x.ApplicantDispStatusCollection).KeyColumn("ApplicantId").Cascade.All();
             }
         }
 
@@ -114,7 +122,6 @@ namespace SevenH.MMCSB.Atm.Domain
             {
                 Table("tblApplicantEdu");
                 Id(x => x.ApplicantEduId).GeneratedBy.Increment();
-                Map(x => x.HighEduLevelCd);
                 Map(x => x.EduCertTitle);
                 Map(x => x.OverallGrade);
                 Map(x => x.SKMLevel);
@@ -127,11 +134,11 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
+                Map(x => x.HighEduLevelCd).Not.Nullable().UniqueKey("AE_HLC_AID"); 
+                Map(x => x.ApplicantId).Not.Nullable().UniqueKey("AE_HLC_AID"); 
 
-                References(x => x.Parent, "ApplicantId").Cascade.All();
-                HasMany<ApplicantEduSubject>(x => x.ApplicantEduSubjects).KeyColumn("ApplicantEduId").Inverse().Cascade.All();
-
-
+                //References(x => x.Parent, "ApplicantId").Cascade.All();
+                //HasMany(x => x.ApplicantEduSubjects).KeyColumn("ApplicantEduId").Inverse().Cascade.All();
             }
         }
 
@@ -141,26 +148,25 @@ namespace SevenH.MMCSB.Atm.Domain
             {
                 Table("tblApplicantEduSubject");
                 Id(x => x.EduSubjectId).GeneratedBy.Increment();
-                Map(x => x.SubjectCd);
                 Map(x => x.GradeCd);
+                Map(x => x.Grade);
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
+                Map(x => x.SubjectCd).Not.Nullable().UniqueKey("AES_SC_AESC"); 
+                Map(x => x.ApplicantEduId).Not.Nullable().UniqueKey("AES_SC_AESC"); 
 
-                References(x => x.Parent, "ApplicantEduId").Cascade.All();
+                //References(x => x.Parent, "ApplicantEduId").Cascade.All();
             }
         }
-
-
-
+        
         public class ApplicantSkillMap : ClassMap<ApplicantSkill>
         {
             public ApplicantSkillMap()
             {
                 Table("tblApplicantSkill");
                 Id(x => x.ApplicantSkillId).GeneratedBy.Increment();
-                Map(x => x.SkillCd);
                 Map(x => x.SkillCatCd);
                 Map(x => x.LanguageSkillSpeak);
                 Map(x => x.LanguageSkillWrite);
@@ -169,8 +175,10 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
+                Map(x => x.SkillCd).Not.Nullable().UniqueKey("AS_SC_AID");
+                Map(x => x.ApplicantId).Not.Nullable().UniqueKey("AS_SC_AID"); 
 
-                References(x => x.Parent, "ApplicantId").Cascade.All();
+                //References(x => x.Applicant, "ApplicantId");
             }
         }
 
@@ -185,8 +193,10 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
-
-                References(x => x.Parent, "ApplicantId").Cascade.All();
+                Map(x => x.Others);
+                Map(x => x.ApplicantId).Not.Nullable().UniqueKey("UK_SA_ApplicantId");
+                Map(x => x.SportAssocId).Not.Nullable().UniqueKey("UK_SA_SportAssocId");
+                Map(x => x.Year);
             }
         }
 
@@ -213,19 +223,35 @@ namespace SevenH.MMCSB.Atm.Domain
             {
                 Table("tblApplication");
                 Id(x => x.AppId).GeneratedBy.Increment();
-                Map(x => x.AcquisitionId);
+                Map(x => x.AcquisitionId).Not.Nullable().UniqueKey("A_AID");
                 Map(x => x.SelectionCenterId);
+                Map(x => x.FirstSelectionInd);
+                Map(x => x.FinalSelectionInd);
+                Map(x => x.ApplicationStatus);
                 Map(x => x.CreatedBy);
                 Map(x => x.LastModifiedBy);
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
-              
-
-                References(x => x.Parent, "ApplicantId").Cascade.All();
+                Map(x => x.ApplicantId).Not.Nullable().UniqueKey("A_AID");
             }
         }
-
-       
     }
+
+    public class ApplicantPhotoMap : ClassMap<ApplicantPhoto>
+    {
+        public ApplicantPhotoMap()
+        {
+            Table("tblApplicantPhoto");
+            Id(x => x.Id).GeneratedBy.Increment();
+            Map(x => x.Photo).CustomType<BinaryBlobType>();
+            Map(x => x.PhotoExt);
+            Map(x => x.CreatedBy);
+            Map(x => x.LastModifiedBy);
+            Map(x => x.CreatedDate).Column("CreatedDt");
+            Map(x => x.LastModifiedDate).Column("LastModifiedDt");
+            Map(x => x.ApplicantId).UniqueKey("AP_APID");
+        }
+    }
+    
 }
 

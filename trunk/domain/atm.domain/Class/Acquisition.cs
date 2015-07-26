@@ -12,6 +12,9 @@ namespace SevenH.MMCSB.Atm.Domain
 
         public virtual ICollection<AcqQuestionnaire> AcqQuestionnaires { get; set; }
 
+        public virtual Advertisment Advertisment { get; set; }
+
+        public virtual AcquisitionType AcquisitionType  { get; set; }   
 
         private IAcquisitionPersistence _mPersistence;
 

@@ -1,5 +1,12 @@
-﻿using System.Data;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web.UI.WebControls;
 using NHibernate;
+using NHibernate.Criterion;
+using NHibernate.Transform;
+using NHibernate.Util;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 
@@ -7,27 +14,6 @@ namespace SevenH.MMCSB.Persistance
 {
     public class ApplicantPersistence : IApplicantPersistence
     {
-
-        private static NHibernate.ISession _mSession;
-        public ISession Session
-        {
-            get
-            {
-                if ((_mSession == null))
-                {
-
-                    _mSession = Factory.OpenSession();
-                }
-                if (_mSession.Connection.State == ConnectionState.Closed)
-                {
-                    _mSession.Connection.Open();
-                }
-
-                return _mSession;
-            }
-        }
-
-
         public void Delete(int id)
         {
             var app = GetApplicant(id);
@@ -36,14 +22,13 @@ namespace SevenH.MMCSB.Persistance
 
         public int Save(Applicant appl)
         {
-            appl = SetParent(appl);
             Factory.OpenSession().SaveOrUpdate(appl);
             Factory.OpenSession().Flush();
             return appl.ApplicantId;
         }
+
         public int Update(Applicant appl)
         {
-            appl = SetParent(appl);
             Factory.OpenSession().SaveOrUpdate(appl);
             Factory.OpenSession().Flush();
             return appl.ApplicantId;
@@ -52,128 +37,171 @@ namespace SevenH.MMCSB.Persistance
         public Applicant GetApplicant(int id)
         {
             var exist = Factory.OpenSession().QueryOver<Applicant>().Where(a => a.ApplicantId == id).SingleOrDefault();
+            Factory.OpenSession().Flush();
             return exist;
         }
 
 
-        private Applicant SetParent(Applicant app)
+        public ApplicantPhoto GetPhoto(int applicantid)
         {
-            //toto set child parent
-            if (null != app.ApplicantEducations)
-                foreach (var a in app.ApplicantEducations)
+            return Factory.OpenSession().QueryOver<ApplicantPhoto>().Where(a => a.ApplicantId == applicantid).SingleOrDefault();
+        }
+
+
+        public int SaveApplicantPhoto(ApplicantPhoto photo)
+        {
+            Factory.OpenSession().SaveOrUpdate(photo);
+            Factory.OpenSession().Flush();
+            return photo.ApplicantId;
+        }
+
+        public int UpdateApplicantPhoto(ApplicantPhoto photo)
+        {
+            Factory.OpenSession().SaveOrUpdate(photo);
+            Factory.OpenSession().Flush();
+            return photo.ApplicantId;
+        }
+
+
+        public IEnumerable<ApplicantEducation> GetEducation(int applicantid)
+        {
+            var list = Factory.OpenSession().QueryOver<ApplicantEducation>().Where(a => a.ApplicantId == applicantid).List();
+            if (null != list && EnumerableExtensions.Any(list))
+            {
+                foreach (var edu in list)
                 {
-                    if (a.ApplicantEduId == 0)
+                    var high = Factory.OpenSession().QueryOver<HighEduLevel>().Where(a => a.HighEduLevelCd == edu.HighEduLevelCd).SingleOrDefault();
+                    edu.HighEduLevel = high.HighestEduLevel;
+                    edu.InstCd = !string.IsNullOrWhiteSpace(edu.InstCd) ? edu.InstCd.Trim() : edu.InstCd;
+
+                    //ICriteria criteria = Factory.OpenSession().CreateCriteria(typeof(ApplicantEduSubject));
+                    //criteria.SetProjection(
+                    //    Projections.Distinct(Projections.ProjectionList()
+                    //        .Add(Projections.Alias(Projections.Property("ApplicantEduId"), "ApplicantEduId"))
+                    //        .Add(Projections.Alias(Projections.Property("SubjectCd"), "SubjectCd"))));
+                    //criteria.SetResultTransformer(
+                    //    new AliasToBeanResultTransformer(typeof(ApplicantEduSubject)));
+
+                    //var subs = criteria.List();
+
+                    //var decisions = Factory.OpenSession().QueryOver<ApplicantEduSubject>()
+                    //    .Where(a => a.ApplicantEduId == edu.ApplicantEduId)
+                    //    .Fetch(a => a.SubjectCd)
+                    //    .Eager
+                    //    .List();
+
+                    var subject = Factory.OpenSession().QueryOver<ApplicantEduSubject>().Where(a => a.ApplicantEduId == edu.ApplicantEduId).TransformUsing(Transformers.DistinctRootEntity).List();
+                    foreach (var s in subject)
                     {
-                        a.CreatedDt = app.CreatedDt;
-                        a.CreatedBy = app.CreatedBy;
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
+                        var sc = Factory.OpenSession().QueryOver<Subject>().Where(a => a.SubjectCd == s.SubjectCd).SingleOrDefault();
+                        s.Subject = sc.SubjectDescription;
+                        s.Grade = !string.IsNullOrWhiteSpace(s.Grade) ? s.Grade.Trim() : s.Grade;
+                        s.GradeCd = !string.IsNullOrWhiteSpace(s.GradeCd) ? s.GradeCd.Trim() : s.GradeCd;
+                        if (!edu.ApplicantEduSubjectCollection.Any(a => a.SubjectCd == s.SubjectCd))
+                            edu.ApplicantEduSubjectCollection.Add(s);
                     }
-                    else
-                    {
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
-
-                    if (null != a.ApplicantEduSubjects)
-                        foreach (var b in a.ApplicantEduSubjects)
-                        {
-                            if (b.EduSubjectId == 0)
-                            {
-                                a.CreatedDt = app.CreatedDt;
-                                a.CreatedBy = app.CreatedBy;
-                                a.LastModifiedDt = app.LastModifiedDt;
-                                a.LastModifiedBy = app.LastModifiedBy;
-                            }
-                            else
-                            {
-                                a.LastModifiedDt = app.LastModifiedDt;
-                                a.LastModifiedBy = app.LastModifiedBy;
-                            }
-
-                            b.Parent = a;
-                        }
-
-
-                    a.Parent = app;
                 }
+            }
+            return list;
+        }
 
-            if (null != app.ApplicantSkills)
-                foreach (var a in app.ApplicantSkills)
-                {
-                    if (a.ApplicantSkillId == 0)
-                    {
-                        a.CreatedDt = app.CreatedDt;
-                        a.CreatedBy = app.CreatedBy;
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
-                    else
-                    {
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
+        public IEnumerable<ApplicantEduSubject> GetEducationSubject(int appeduid)
+        {
+            return Factory.OpenSession().QueryOver<ApplicantEduSubject>().Where(a => a.ApplicantEduId == appeduid).TransformUsing(Transformers.DistinctRootEntity).List();
+        }
 
-                    a.Parent = app;
-                }
-            if (null != app.SportAndAssociations)
-                foreach (var a in app.SportAndAssociations)
-                {
-                    if (a.SportAssocId == 0)
-                    {
-                        a.CreatedDt = app.CreatedDt;
-                        a.CreatedBy = app.CreatedBy;
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
-                    else
-                    {
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
+        public ApplicantEduSubject GetSubject(int appeduid, string subjectcode)
+        {
+            return Enumerable.LastOrDefault(Factory.OpenSession().QueryOver<ApplicantEduSubject>().Where(a => a.ApplicantEduId == appeduid && a.SubjectCd == subjectcode).List());
+        }
 
-                    a.Parent = app;
-                }
+        public int SaveEducation(ApplicantEducation education)
+        {
+            Factory.OpenSession().SaveOrUpdate(education);
+            Factory.OpenSession().Flush();
+            return education.ApplicantEduId;
+        }
 
-            if (null != app.Applications)
-                foreach (var a in app.Applications)
-                {
-                    if (a.AppId == 0)
-                    {
-                        a.CreatedDt = app.CreatedDt;
-                        a.CreatedBy = app.CreatedBy;
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
-                    else
-                    {
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
+        public int SaveEducationSubject(ApplicantEduSubject subject)
+        {
+            Factory.OpenSession().SaveOrUpdate(subject);
+            Factory.OpenSession().Flush();
+            return subject.EduSubjectId;
+        }
 
-                    a.Parent = app;
-                }
+        public int UpdateEducation(ApplicantEducation education)
+        {
+            Factory.OpenSession().SaveOrUpdate(education);
+            Factory.OpenSession().Flush();
+            return education.ApplicantEduId;
+        }
 
-            if (null != app.ApplicantDispStatuses)
-                foreach (var a in app.ApplicantDispStatuses)
-                {
-                    if (a.ApplicantDispStatusId == 0)
-                    {
-                        a.CreatedDt = app.CreatedDt;
-                        a.CreatedBy = app.CreatedBy;
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
-                    else
-                    {
-                        a.LastModifiedDt = app.LastModifiedDt;
-                        a.LastModifiedBy = app.LastModifiedBy;
-                    }
+        public int UpdateEducationSubject(ApplicantEduSubject subject)
+        {
+            Factory.OpenSession().SaveOrUpdate(subject);
+            Factory.OpenSession().Flush();
+            return subject.EduSubjectId;
+        }
 
-                    a.Parent = app;
-                }
+        public IEnumerable<ApplicantSkill> GetSkill(int applicantid)
+        {
+            var skills = Factory.OpenSession().QueryOver<ApplicantSkill>().Where(a => a.ApplicantId == applicantid).List();
+            foreach (var s in skills)
+            {
+                var sk = Factory.OpenSession().QueryOver<Skill>().Where(a => a.SkillCd == s.SkillCd).SingleOrDefault();
+                s.Skill = sk.SkillDescription;
+                s.AchievementCd = !string.IsNullOrWhiteSpace(s.AchievementCd) ? s.AchievementCd.Trim() : s.AchievementCd;
+            }
+            return skills;
+        }
 
-            return app;
+        public int SaveSkill(ApplicantSkill skill)
+        {
+            Factory.OpenSession().SaveOrUpdate(skill);
+            Factory.OpenSession().Flush();
+            return skill.ApplicantSkillId;
+        }
+
+        public int UpdateSkill(ApplicantSkill skill)
+        {
+            Factory.OpenSession().SaveOrUpdate(skill);
+            Factory.OpenSession().Flush();
+            return skill.ApplicantSkillId;
+        }
+
+
+        public IEnumerable<ApplicantSport> GetSport(int applicantid)
+        {
+            var sports = Factory.OpenSession().QueryOver<ApplicantSport>().Where(a => a.ApplicantId == applicantid).List();
+            foreach (var s in sports)
+            {
+                var sa = Factory.OpenSession().QueryOver<SportAndAssociation>().Where(a => a.SportAssocId == s.SportAssocId).SingleOrDefault();
+                s.SportAndAssociation = sa;
+                s.AchievementCd = !string.IsNullOrWhiteSpace(s.AchievementCd) ? s.AchievementCd.Trim() : s.AchievementCd;
+            }
+            return sports;
+        }
+
+        public int SaveSport(ApplicantSport sport)
+        {
+            Factory.OpenSession().SaveOrUpdate(sport);
+            Factory.OpenSession().Flush();
+            return sport.ApplicantSportAssocId;
+        }
+
+        public bool CheckingExistingAtmMember(string idnumber)
+        {
+            var exist = Factory.OpenSession().QueryOver<ExistingMember>().Where(a => a.IdNumber == idnumber).SingleOrDefault();
+            Factory.OpenSession().Flush();
+            return exist != null;
+        }
+
+
+        public ExistingMember ExistingAtmMember(string idnumber)
+        {
+            var exist = Factory.OpenSession().QueryOver<ExistingMember>().Where(a => a.IdNumber == idnumber).SingleOrDefault();
+            Factory.OpenSession().Flush();
+            return exist;
         }
     }
 
