@@ -7,16 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFRace
     {
         public tblREFRace()
         {
             this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
             this.tblREFEthnics = new HashSet<tblREFEthnic>();
         }
     
@@ -24,11 +25,13 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string Race { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public Nullable<int> SequenceNo { get; set; }
     
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
         public virtual ICollection<tblREFEthnic> tblREFEthnics { get; set; }
     }
 }

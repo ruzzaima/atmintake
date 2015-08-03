@@ -7,19 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblUserLog
     {
         public int UserLogId { get; set; }
         public Nullable<int> UserId { get; set; }
         public string LoginStatusCd { get; set; }
-        public Nullable<DateTime> ModifiedDt { get; set; }
+        public Nullable<System.DateTime> ModifiedDt { get; set; }
         public string ModifiedBy { get; set; }
-    
-        public virtual tblREFLoginStatu tblREFLoginStatu { get; set; }
-        public virtual tblUser tblUser { get; set; }
     }
 }

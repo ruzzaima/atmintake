@@ -89,7 +89,7 @@ namespace SevenH.MMCSB.Persistance
 
                 foreach (var c in a.AcqQuestionnaireScales)
                 {
-                   c.Parent = a;
+                    c.Parent = a;
                 }
 
             }
@@ -153,6 +153,12 @@ namespace SevenH.MMCSB.Persistance
         public IEnumerable<AcquisitionLocation> GetLocations(string zonecode)
         {
             return Factory.OpenSession().QueryOver<AcquisitionLocation>().Where(a => a.ZoneCd == zonecode).List();
+        }
+
+
+        public IEnumerable<Acquisition> GetAllAcquisition(bool isactive, string servicecode)
+        {
+            return Factory.OpenSession().QueryOver<Acquisition>().Where(a => a.AcquisitionType.ServiceCd == servicecode && a.OpenStatus == isactive).List();
         }
     }
 

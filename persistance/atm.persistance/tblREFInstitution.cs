@@ -7,16 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFInstitution
     {
         public tblREFInstitution()
         {
             this.tblApplicantEdus = new HashSet<tblApplicantEdu>();
+            this.tblApplicantEduSubmitteds = new HashSet<tblApplicantEduSubmitted>();
         }
     
         public string InstCd { get; set; }
@@ -25,11 +26,12 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string InstCatCd { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
         public virtual ICollection<tblApplicantEdu> tblApplicantEdus { get; set; }
+        public virtual ICollection<tblApplicantEduSubmitted> tblApplicantEduSubmitteds { get; set; }
         public virtual tblREFInstitutionCat tblREFInstitutionCat { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
+using NHibernate.Dialect.Function;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using SevenH.MMCSB.Atm.Web.Models;
@@ -241,8 +242,8 @@ namespace SevenH.MMCSB.Atm.Web
                         vm.ServiceCode = acq.AcquisitionType.ServiceCd;
                         vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
                     }
-                    vm.AcquisitionSiri = acq.Siri;
-                    vm.AcquisitionYear = acq.Year;
+                    vm.AcquisitionSiri = acq.Siri.Value;
+                    vm.AcquisitionYear = acq.Year.Value;
                 }
             }
             var repos = new ReferenceRepo();
@@ -285,8 +286,8 @@ namespace SevenH.MMCSB.Atm.Web
                         vm.ServiceCode = acq.AcquisitionType.ServiceCd;
                         vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
                     }
-                    vm.AcquisitionSiri = acq.Siri;
-                    vm.AcquisitionYear = acq.Year;
+                    vm.AcquisitionSiri = acq.Siri.Value;
+                    vm.AcquisitionYear = acq.Year.Value;
                 }
             }
             var repos = new ReferenceRepo();
@@ -329,8 +330,8 @@ namespace SevenH.MMCSB.Atm.Web
                         vm.ServiceCode = acq.AcquisitionType.ServiceCd;
                         vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
                     }
-                    vm.AcquisitionSiri = acq.Siri;
-                    vm.AcquisitionYear = acq.Year;
+                    vm.AcquisitionSiri = acq.Siri.Value;
+                    vm.AcquisitionYear = acq.Year.Value;
 
                 }
             }
@@ -365,245 +366,281 @@ namespace SevenH.MMCSB.Atm.Web
             var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
             if (null != login)
             {
-                var applicant = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetApplicant(login.ApplicantId.Value);
-
-                var message = string.Empty;
-                // check the criteria
-                if (!ATMHelper.ValidateHeightWeightBmi(Convert.ToDouble(applicant.Height), Convert.ToDouble(applicant.Weight), acquisitionid, applicant.GenderCd, out message))
-                    return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar." + message });
-
-
-                if (null != applicant && acquisitionid != 0)
+                if (login.ApplicantId.HasValue)
                 {
+                    var applicant = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetApplicant(login.ApplicantId.Value);
 
-                    // check based on acquisition
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
-                    if (null != acq)
+                    var message = string.Empty;
+                    // check the criteria
+                    if (!ATMHelper.ValidateHeightWeightBmi(Convert.ToDouble(applicant.Height), Convert.ToDouble(applicant.Weight), acquisitionid, applicant.GenderCd, out message))
+                        return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar." + message });
+
+                    if (acquisitionid != 0)
                     {
-                        var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
-                        if (acqtype != null)
+                        // check based on acquisition
+                        var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
+                        if (null != acq)
                         {
-                            // perempuan
-                            if (acq.AcquisitionTypeCd == 3)
+                            var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                            if (acqtype != null)
                             {
-                                if (applicant.GenderCd == "L")
-                                    return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar kerana pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
-                            }
-                            // lelaki
-                            if (acq.AcquisitionTypeCd == 2)
-                            {
-                                if (applicant.GenderCd == "P")
-                                    return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar kerana pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                                // perempuan
+                                if (acq.AcquisitionTypeCd == 3)
+                                    if (applicant.GenderCd == "L")
+                                        return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar kerana pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                                // lelaki
+                                if (acq.AcquisitionTypeCd == 2)
+                                    if (applicant.GenderCd == "P")
+                                        return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar kerana pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
                             }
                         }
-                    }
 
-                    // copy applicant to applicant submitted
+                        // mandatory checking on profile photo
+                        var photo = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetPhoto(applicant.ApplicantId);
+                        if (photo == null)
+                            return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Sila muat naik gambar peribadi berukuran pasport (saiz tidak melebihi 500KB)." });
 
-                    var app = new ApplicantSubmitted()
-                    {
-                        AcquisitionId = acquisitionid,
-                        Height = applicant.Height,
-                        Weight = applicant.Weight,
-                        FullName = applicant.FullName,
-                        BMI = applicant.BMI,
-                        BirthCertNo = applicant.BirthCertNo,
-                        BirthCityCd = applicant.BirthCityCd,
-                        BirthCountryCd = applicant.BirthCountryCd,
-                        BirthPlace = applicant.BirthPlace,
-                        BirthStateCd = applicant.BirthStateCd,
-                        BirthDt = applicant.BirthDt.HasValue ? applicant.BirthDt.Value : applicant.BirthDt,
-                        CreatedBy = User.Identity.Name,
-                        CreatedDt = DateTime.Now,
-                        CorresponAddr1 = applicant.CorresponAddr1,
-                        CorresponAddr2 = applicant.CorresponAddr2,
-                        CorresponAddr3 = applicant.CorresponAddr3,
-                        CorresponAddrCityCd = applicant.CorresponAddrCityCd,
-                        CorresponAddrCountryCd = applicant.CorresponAddrCountryCd,
-                        CorresponAddrPostCd = applicant.CorresponAddrPostCd,
-                        CorresponAddrStateCd = applicant.CorresponAddrStateCd,
-                        GenderCd = applicant.GenderCd,
-                        NationalityCd = applicant.NationalityCd,
-                        NationalityCertNo = applicant.NationalityCertNo,
-                        MobilePhoneNo = applicant.MobilePhoneNo,
-                        HomePhoneNo = applicant.HomePhoneNo,
-                        DadNationalityCd = applicant.DadNationalityCd,
-                        DadName = applicant.DadName,
-                        DadICNo = applicant.DadICNo,
-                        DadOccupation = applicant.DadOccupation,
-                        DadPhoneNo = applicant.DadPhoneNo,
-                        DadSalary = applicant.DadSalary,
-                        MomName = applicant.MomName,
-                        MomNationalityCd = applicant.NationalityCd,
-                        MomICNo = applicant.MomICNo,
-                        MomOccupation = applicant.MomOccupation,
-                        MomSalary = applicant.MomSalary,
-                        MomPhoneNo = applicant.MomPhoneNo,
-                        MrtlStatusCd = applicant.MrtlStatusCd,
-                        ChildNo = applicant.ChildNo,
-                        ColorBlindInd = applicant.ColorBlindInd,
-                        EthnicCd = applicant.EthnicCd,
-                        RaceCd = applicant.RaceCd,
-                        ReligionCd = applicant.ReligionCd,
-                        Email = applicant.Email,
-                        GuardianName = applicant.GuardianName,
-                        GuardianNationalityCd = applicant.GuardianNationalityCd,
-                        GuardianOccupation = applicant.GuardianOccupation,
-                        GuardianICNo = applicant.GuardianICNo,
-                        GuardianSalary = applicant.GuardianSalary,
-                        GuardianPhoneNo = applicant.GuardianPhoneNo,
-                        NewICNo = applicant.NewICNo,
-                        ScholarshipContractStDate = applicant.ScholarshipContractStDate,
-                        CurrentOccupation = applicant.CurrentOccupation,
-                        SelectionTD = applicant.SelectionTD,
-                        SelectionTL = applicant.SelectionTL,
-                        SelectionTU = applicant.SelectionTU,
-                        ArmyServiceInd = applicant.ArmyServiceInd,
-                        ArmyServiceYrOfServ = applicant.ArmyServiceYrOfServ,
-                        ArmyServiceResignRemark = applicant.ArmyServiceResignRemark,
-                        ArmySelectionInd = applicant.ArmySelectionInd,
-                        ArmySelectionDt = applicant.ArmySelectionDt,
-                        ArmySelectionVenue = applicant.ArmySelectionVenue,
-                        ComputerICT = applicant.ComputerICT,
-                        ComputerMSExcel = applicant.ComputerMSExcel,
-                        ComputerMSPwrPoint = applicant.ComputerMSPwrPoint,
-                        ComputerMSWord = applicant.ComputerMSWord,
-                        ComputerOthers = applicant.ComputerOthers,
-                        PalapesArmyNo = applicant.PalapesArmyNo,
-                        PalapesInd = applicant.PalapesInd,
-                        PalapesInstitution = applicant.PalapesInstitution,
-                        PalapesRemark = applicant.PalapesRemark,
-                        PalapesServices = applicant.PalapesServices,
-                        PalapesTauliahEndDt = applicant.PalapesTauliahEndDt,
-                        PalapesYear = applicant.PalapesYear,
-                        CurrentOrganisation = applicant.CurrentOrganisation,
-                        CurrentSalary = applicant.CurrentSalary,
-                        ScholarshipInd = applicant.ScholarshipInd,
-                        ScholarshipBody = applicant.ScholarshipBody,
-                        ScholarshipBodyAddr = applicant.ScholarshipBodyAddr,
-                        ScholarshipNoOfYrContract = applicant.ScholarshipNoOfYrContract,
-                        EmployeeAggreeInd = applicant.EmployeeAggreeInd,
-                        CronicIlnessInd = applicant.CronicIlnessInd,
-                        CrimeInvolvement = applicant.CrimeInvolvement,
-                        DrugCaseInvolvement = applicant.DrugCaseInvolvement,
-                        NoOfSibling = applicant.NoOfSibling,
-                        NoTentera = applicant.NoTentera,
-                        SpectaclesUserInd = applicant.SpectaclesUserInd,
-                        OriginalPelepasanDocument = applicant.OriginalPelepasanDocument,
-                        PelepasanDocument = applicant.PelepasanDocument,
-                        MomNotApplicable = applicant.MomNotApplicable,
-                        DadNotApplicable = applicant.DadNotApplicable,
-                        GuardianNotApplicable = applicant.GuardianNotApplicable
-                    };
+                        if (photo.Photo == null && string.IsNullOrWhiteSpace(photo.PhotoExt))
+                            return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Sila muat naik gambar peribadi berukuran pasport (saiz tidak melebihi 500KB)." });
 
-                    var idsubmitted = app.Save();
-                    app.ApplicantId = idsubmitted;
+                        // mandatory checking on basic information
+                        var peribadipoint = 0.0m;
+                        var edupoint = 0.0m;
+                        var spopoint = 0.0m;
+                        var saspoint = 0.0m;
+                        var chpoint = 0.0m;
+                        ATMHelper.Checklist(applicant.ApplicantId, acquisitionid, out peribadipoint, out edupoint, out spopoint, out saspoint, out chpoint);
 
-                    // get educations
-                    var education = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetEducation(applicant.ApplicantId);
-                    if (null != education && education.Any())
-                    {
-                        foreach (var edu in education)
+                        if (peribadipoint != 100m)
+                            return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Maklumat peribadi tidak lengkap." });
+                        if (edupoint != 100m)
+                            return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Maklumat akademik tidak lengkap." });
+
+                        // copy applicant to applicant submitted
+                        var app = new ApplicantSubmitted()
+                                  {
+                                      AcquisitionId = acquisitionid,
+                                      Height = applicant.Height,
+                                      Weight = applicant.Weight,
+                                      FullName = applicant.FullName,
+                                      BMI = applicant.BMI,
+                                      BirthCertNo = applicant.BirthCertNo,
+                                      BirthCityCd = applicant.BirthCityCd,
+                                      BirthCountryCd = applicant.BirthCountryCd,
+                                      BirthPlace = applicant.BirthPlace,
+                                      BirthStateCd = applicant.BirthStateCd,
+                                      BirthDt = applicant.BirthDt.HasValue ? applicant.BirthDt.Value : applicant.BirthDt,
+                                      CreatedBy = User.Identity.Name,
+                                      CreatedDt = DateTime.Now,
+                                      CorresponAddr1 = applicant.CorresponAddr1,
+                                      CorresponAddr2 = applicant.CorresponAddr2,
+                                      CorresponAddr3 = applicant.CorresponAddr3,
+                                      CorresponAddrCityCd = applicant.CorresponAddrCityCd,
+                                      CorresponAddrCountryCd = applicant.CorresponAddrCountryCd,
+                                      CorresponAddrPostCd = applicant.CorresponAddrPostCd,
+                                      CorresponAddrStateCd = applicant.CorresponAddrStateCd,
+                                      GenderCd = applicant.GenderCd,
+                                      NationalityCd = applicant.NationalityCd,
+                                      NationalityCertNo = applicant.NationalityCertNo,
+                                      MobilePhoneNo = applicant.MobilePhoneNo,
+                                      HomePhoneNo = applicant.HomePhoneNo,
+                                      DadNationalityCd = applicant.DadNationalityCd,
+                                      DadName = applicant.DadName,
+                                      DadICNo = applicant.DadICNo,
+                                      DadOccupation = applicant.DadOccupation,
+                                      DadPhoneNo = applicant.DadPhoneNo,
+                                      DadSalary = applicant.DadSalary,
+                                      MomName = applicant.MomName,
+                                      MomNationalityCd = applicant.NationalityCd,
+                                      MomICNo = applicant.MomICNo,
+                                      MomOccupation = applicant.MomOccupation,
+                                      MomSalary = applicant.MomSalary,
+                                      MomPhoneNo = applicant.MomPhoneNo,
+                                      MrtlStatusCd = applicant.MrtlStatusCd,
+                                      ChildNo = applicant.ChildNo,
+                                      ColorBlindInd = applicant.ColorBlindInd,
+                                      EthnicCd = applicant.EthnicCd,
+                                      RaceCd = applicant.RaceCd,
+                                      ReligionCd = applicant.ReligionCd,
+                                      Email = applicant.Email,
+                                      GuardianName = applicant.GuardianName,
+                                      GuardianNationalityCd = applicant.GuardianNationalityCd,
+                                      GuardianOccupation = applicant.GuardianOccupation,
+                                      GuardianICNo = applicant.GuardianICNo,
+                                      GuardianSalary = applicant.GuardianSalary,
+                                      GuardianPhoneNo = applicant.GuardianPhoneNo,
+                                      NewICNo = applicant.NewICNo,
+                                      ScholarshipContractStDate = applicant.ScholarshipContractStDate,
+                                      CurrentOccupation = applicant.CurrentOccupation,
+                                      SelectionTD = applicant.SelectionTD,
+                                      SelectionTL = applicant.SelectionTL,
+                                      SelectionTU = applicant.SelectionTU,
+                                      ArmyServiceInd = applicant.ArmyServiceInd,
+                                      ArmyServiceYrOfServ = applicant.ArmyServiceYrOfServ,
+                                      ArmyServiceResignRemark = applicant.ArmyServiceResignRemark,
+                                      ArmySelectionInd = applicant.ArmySelectionInd,
+                                      ArmySelectionDt = applicant.ArmySelectionDt,
+                                      ArmySelectionVenue = applicant.ArmySelectionVenue,
+                                      ComputerICT = applicant.ComputerICT,
+                                      ComputerMSExcel = applicant.ComputerMSExcel,
+                                      ComputerMSPwrPoint = applicant.ComputerMSPwrPoint,
+                                      ComputerMSWord = applicant.ComputerMSWord,
+                                      ComputerOthers = applicant.ComputerOthers,
+                                      PalapesArmyNo = applicant.PalapesArmyNo,
+                                      PalapesInd = applicant.PalapesInd,
+                                      PalapesInstitution = applicant.PalapesInstitution,
+                                      PalapesRemark = applicant.PalapesRemark,
+                                      PalapesServices = applicant.PalapesServices,
+                                      PalapesTauliahEndDt = applicant.PalapesTauliahEndDt,
+                                      PalapesYear = applicant.PalapesYear,
+                                      CurrentOrganisation = applicant.CurrentOrganisation,
+                                      CurrentSalary = applicant.CurrentSalary,
+                                      ScholarshipInd = applicant.ScholarshipInd,
+                                      ScholarshipBody = applicant.ScholarshipBody,
+                                      ScholarshipBodyAddr = applicant.ScholarshipBodyAddr,
+                                      ScholarshipNoOfYrContract = applicant.ScholarshipNoOfYrContract,
+                                      EmployeeAggreeInd = applicant.EmployeeAggreeInd,
+                                      CronicIlnessInd = applicant.CronicIlnessInd,
+                                      CrimeInvolvement = applicant.CrimeInvolvement,
+                                      DrugCaseInvolvement = applicant.DrugCaseInvolvement,
+                                      NoOfSibling = applicant.NoOfSibling,
+                                      NoTentera = applicant.NoTentera,
+                                      SpectaclesUserInd = applicant.SpectaclesUserInd,
+                                      OriginalPelepasanDocument = applicant.OriginalPelepasanDocument,
+                                      PelepasanDocument = applicant.PelepasanDocument,
+                                      MomNotApplicable = applicant.MomNotApplicable,
+                                      DadNotApplicable = applicant.DadNotApplicable,
+                                      GuardianNotApplicable = applicant.GuardianNotApplicable
+                                  };
+
+                        var idsubmitted = app.Save();
+                        if (idsubmitted != 0)
                         {
-                            if (!string.IsNullOrWhiteSpace(edu.OverallGrade) || edu.SKMLevel != 0 || edu.ConfermentYr != 0)
+                            app.ApplicantId = idsubmitted;
+
+                            // get educations
+                            var education = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetEducation(applicant.ApplicantId);
+                            if (null != education && education.Any())
                             {
-                                var subedu = new ApplicantEducationSubmitted
+                                foreach (var edu in education)
                                 {
-                                    ApplicantId = app.ApplicantId,
-                                    ConfermentYr = edu.ConfermentYr,
-                                    EduCertTitle = edu.EduCertTitle,
-                                    HighEduLevel = edu.HighEduLevel,
-                                    HighEduLevelCd = edu.HighEduLevelCd,
-                                    InstCd = edu.InstCd,
-                                    InstitutionName = edu.InstitutionName,
-                                    OverSeaInd = edu.OverSeaInd,
-                                    MajorMinorCd = edu.MajorMinorCd,
-                                    OverallGrade = edu.OverallGrade,
-                                    SKMLevel = edu.SKMLevel,
-                                    CreatedBy = User.Identity.Name,
-                                    CreatedDt = DateTime.Now,
-                                };
-                                var apeduid = subedu.Save();
-                                foreach (var subject in edu.ApplicantEduSubjectCollection)
-                                {
-                                    if (!string.IsNullOrWhiteSpace(subject.Grade) || !string.IsNullOrWhiteSpace(subject.GradeCd))
+                                    if (!string.IsNullOrWhiteSpace(edu.OverallGrade) || edu.SKMLevel != 0 ||
+                                        edu.ConfermentYr != 0)
                                     {
-                                        var subsubject = new ApplicantEduSubjectSubmitted
+                                        var subedu = new ApplicantEducationSubmitted
+                                                     {
+                                                         ApplicantId = app.ApplicantId,
+                                                         ConfermentYr = edu.ConfermentYr,
+                                                         EduCertTitle = edu.EduCertTitle,
+                                                         HighEduLevel = edu.HighEduLevel,
+                                                         HighEduLevelCd = edu.HighEduLevelCd,
+                                                         InstCd = edu.InstCd,
+                                                         InstitutionName = edu.InstitutionName,
+                                                         OverSeaInd = edu.OverSeaInd,
+                                                         MajorMinorCd = edu.MajorMinorCd,
+                                                         OverallGrade = edu.OverallGrade,
+                                                         SKMLevel = edu.SKMLevel,
+                                                         CreatedBy = User.Identity.Name,
+                                                         CreatedDt = DateTime.Now,
+                                                     };
+                                        var apeduid = subedu.Save();
+                                        foreach (var subject in edu.ApplicantEduSubjectCollection)
                                         {
-                                            GradeCd = !string.IsNullOrWhiteSpace(subject.GradeCd) ? subject.GradeCd.Trim() : subject.GradeCd,
-                                            Grade = !string.IsNullOrWhiteSpace(subject.Grade) ? subject.Grade.Trim() : subject.Grade,
-                                            ApplicantEduId = apeduid,
-                                            CreatedBy = User.Identity.Name,
-                                            CreatedDt = DateTime.Now,
-                                            Subject = subject.Subject,
-                                            SubjectCd = subject.SubjectCd,
-                                        };
-                                        subsubject.Save();
+                                            if (!string.IsNullOrWhiteSpace(subject.Grade) ||
+                                                !string.IsNullOrWhiteSpace(subject.GradeCd))
+                                            {
+                                                var subsubject = new ApplicantEduSubjectSubmitted
+                                                                 {
+                                                                     GradeCd = !string.IsNullOrWhiteSpace(subject.GradeCd) ? subject.GradeCd.Trim() : subject.GradeCd,
+                                                                     Grade = !string.IsNullOrWhiteSpace(subject.Grade) ? subject.Grade.Trim() : subject.Grade,
+                                                                     ApplicantEduId = apeduid,
+                                                                     CreatedBy = User.Identity.Name,
+                                                                     CreatedDt = DateTime.Now,
+                                                                     Subject = subject.Subject,
+                                                                     SubjectCd = subject.SubjectCd,
+                                                                 };
+                                                subsubject.Save();
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
-                    }
 
-                    var sports = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSport(applicant.ApplicantId);
-                    if (null != sports && sports.Any())
-                    {
-                        foreach (var sp in sports)
-                        {
-                            if (sp.SportAssocId.HasValue && sp.SportAssocId != 0)
+                            // get sports
+                            var sports = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSport(applicant.ApplicantId);
+                            if (null != sports && sports.Any())
                             {
-                                var ssp = new ApplicantSportSubmitted
+                                foreach (var sp in sports)
                                 {
-                                    ApplicantId = app.ApplicantId,
-                                    CreatedBy = User.Identity.Name,
-                                    CreatedDt = DateTime.Now,
-                                    AchievementCd = sp.AchievementCd,
-                                    Year = sp.Year,
-                                    SportAssocId = sp.SportAssocId.Value
-
-                                };
-                                ssp.Save();
+                                    if (sp.SportAssocId.HasValue && sp.SportAssocId != 0)
+                                    {
+                                        var ssp = new ApplicantSportSubmitted
+                                                  {
+                                                      ApplicantId = app.ApplicantId,
+                                                      CreatedBy = User.Identity.Name,
+                                                      CreatedDt = DateTime.Now,
+                                                      AchievementCd = sp.AchievementCd,
+                                                      Year = sp.Year,
+                                                      SportAssocId = sp.SportAssocId.Value
+                                                  };
+                                        ssp.Save();
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    // get skills
-                    var skills = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSkill(applicant.ApplicantId);
-                    if (null != skills && skills.Any())
-                    {
-                        foreach (var sp in skills)
-                        {
-                            if (!string.IsNullOrWhiteSpace(sp.Skill) || !string.IsNullOrWhiteSpace(sp.Others))
+                            // get skills
+                            var skills = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSkill(applicant.ApplicantId);
+                            if (null != skills && skills.Any())
                             {
-                                var ssp = new ApplicantSkillSubmitted
+                                foreach (var sp in skills)
                                 {
-                                    ApplicantId = app.ApplicantId,
-                                    CreatedBy = User.Identity.Name,
-                                    CreatedDt = DateTime.Now,
-                                    LanguageSkillSpeak = sp.LanguageSkillSpeak,
-                                    LanguageSkillWrite = sp.LanguageSkillWrite,
-                                    Skill = sp.Skill,
-                                    AchievementCd = sp.AchievementCd,
-                                    Others = sp.Others,
-                                    SkillCatCd = sp.SkillCatCd,
-                                    SkillCd = sp.SkillCd,
-                                };
-                                ssp.Save();
+                                    if (!string.IsNullOrWhiteSpace(sp.Skill) || !string.IsNullOrWhiteSpace(sp.Others))
+                                    {
+                                        var ssp = new ApplicantSkillSubmitted
+                                                  {
+                                                      ApplicantId = app.ApplicantId,
+                                                      CreatedBy = User.Identity.Name,
+                                                      CreatedDt = DateTime.Now,
+                                                      LanguageSkillSpeak = sp.LanguageSkillSpeak,
+                                                      LanguageSkillWrite = sp.LanguageSkillWrite,
+                                                      Skill = sp.Skill,
+                                                      AchievementCd = sp.AchievementCd,
+                                                      Others = sp.Others,
+                                                      SkillCatCd = sp.SkillCatCd,
+                                                      SkillCd = sp.SkillCd,
+                                                  };
+                                        ssp.Save();
+                                    }
+                                }
                             }
+
+                            // get photo
+                            if (photo.Photo != null && !string.IsNullOrWhiteSpace(photo.PhotoExt))
+                            {
+                                var sphoto = new ApplicantSubmittedPhoto()
+                                             {
+                                                 Photo = photo.Photo,
+                                                 PhotoExt = photo.PhotoExt,
+                                                 ApplicantId = app.ApplicantId,
+                                                 CreatedBy = User.Identity.Name,
+                                                 CreatedDate = DateTime.Now
+                                             };
+
+                                sphoto.Save();
+                            }
+
+                            var application = new Application()
+                                              {
+                                                  AcquisitionId = acquisitionid,
+                                                  CreatedBy = User.Identity.Name,
+                                                  CreatedDt = DateTime.Now,
+                                                  ApplicantId = app.ApplicantId
+                                              };
+                            var id = application.Save();
+                            if (id != 0)
+                                return Json(new { OK = true, message = "Permohonan anda berjaya dihantar.", id = id });
                         }
                     }
-
-                    idsubmitted = app.Save();
-                    var application = new Application()
-                    {
-                        AcquisitionId = acquisitionid,
-                        CreatedBy = User.Identity.Name,
-                        CreatedDt = DateTime.Now,
-                        ApplicantId = idsubmitted
-                    };
-                    var id = application.Save();
-                    if (id != 0)
-                        return Json(new { OK = true, message = "Permohonan anda berjaya dihantar.", id = id });
                 }
             }
             return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar." });
@@ -613,7 +650,7 @@ namespace SevenH.MMCSB.Atm.Web
         public ActionResult Application()
         {
             var vm = new ApplicationViewModel();
-            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true));
+            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true, null));
             // check if there are already applied application
             foreach (var ads in vm.ListOfAdvertisment)
             {
@@ -739,7 +776,7 @@ namespace SevenH.MMCSB.Atm.Web
                     PelepasanDocument = applicant.PelepasanDocument,
                     MomNotApplicable = applicant.MomNotApplicable,
                     DadNotApplicable = applicant.DadNotApplicable,
-                    GuardianNotApplicable = applicant.DadNotApplicable
+                    GuardianNotApplicable = applicant.GuardianNotApplicable
                 };
 
                 var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
@@ -993,6 +1030,33 @@ namespace SevenH.MMCSB.Atm.Web
             string message;
             var valid = ATMHelper.ValidateHeightWeightBmi(height, weight, acquisitionid, gendercode, out message);
             return Json(new { OK = valid, message = message });
+        }
+
+        public ActionResult CheckingGender(string gender, int acquisitionid)
+        {
+            if (!string.IsNullOrWhiteSpace(gender))
+            {
+                // get all acquisition which still on and service type is Tentera Darat
+                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
+                var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                // TODO : Need to refine this
+                // grab all advertisment where service code for TD = 01
+                var ads = ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments("01", DateTime.Now);
+                if (acqtype == null) return Json(new { OK = false, message = "Jantina diperlukan." });
+                // perempuan
+                if (acq.AcquisitionTypeCd == 3)
+                {
+                    if (gender == "L")
+                        return Json(new { OK = false, message = "Permohonan pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                }
+                // lelaki
+                if (acq.AcquisitionTypeCd == 2)
+                {
+                    if (gender == "P")
+                        return Json(new { OK = false, message = "Permohonan pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                }
+            }
+            return Json(new { OK = false, message = "Jantina diperlukan." });
         }
     }
 }

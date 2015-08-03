@@ -7,27 +7,34 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFHighEduLevel
     {
         public tblREFHighEduLevel()
         {
+            this.tblAppApplicantMeritScores = new HashSet<tblAppApplicantMeritScore>();
             this.tblApplicantEdus = new HashSet<tblApplicantEdu>();
+            this.tblApplicantEduSubmitteds = new HashSet<tblApplicantEduSubmitted>();
+            this.tblREFSubjects = new HashSet<tblREFSubject>();
         }
     
         public string HighEduLevelCd { get; set; }
         public string HighestEduLevel { get; set; }
         public Nullable<int> HighestEduLevelRank { get; set; }
+        public Nullable<int> IndexNo { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
+        public virtual ICollection<tblAppApplicantMeritScore> tblAppApplicantMeritScores { get; set; }
         public virtual ICollection<tblApplicantEdu> tblApplicantEdus { get; set; }
+        public virtual ICollection<tblApplicantEduSubmitted> tblApplicantEduSubmitteds { get; set; }
+        public virtual ICollection<tblREFSubject> tblREFSubjects { get; set; }
     }
 }

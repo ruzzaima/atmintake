@@ -7,20 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblRefBloodType
     {
         public tblRefBloodType()
         {
+            this.tblAppApplicantPhysicalExaminations = new HashSet<tblAppApplicantPhysicalExamination>();
             this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
         }
     
         public string BloodTypeCd { get; set; }
         public string BloodType { get; set; }
     
+        public virtual ICollection<tblAppApplicantPhysicalExamination> tblAppApplicantPhysicalExaminations { get; set; }
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
     }
 }

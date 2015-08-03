@@ -7,20 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFSkillCat
     {
         public tblREFSkillCat()
         {
             this.tblApplicantSkills = new HashSet<tblApplicantSkill>();
+            this.tblApplicantSkillSubmitteds = new HashSet<tblApplicantSkillSubmitted>();
+            this.tblREFSkills = new HashSet<tblREFSkill>();
         }
     
         public string SkillCatCd { get; set; }
         public string SkillCat { get; set; }
     
         public virtual ICollection<tblApplicantSkill> tblApplicantSkills { get; set; }
+        public virtual ICollection<tblApplicantSkillSubmitted> tblApplicantSkillSubmitteds { get; set; }
+        public virtual ICollection<tblREFSkill> tblREFSkills { get; set; }
     }
 }

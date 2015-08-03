@@ -7,24 +7,31 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFState
     {
         public tblREFState()
         {
             this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
+            this.tblApplicantSubmiteds1 = new HashSet<tblApplicantSubmited>();
             this.tblREFCities = new HashSet<tblREFCity>();
+            this.tblRefLocations = new HashSet<tblRefLocation>();
         }
     
         public string StateCd { get; set; }
         public string State { get; set; }
         public string CountryCd { get; set; }
+        public string ICBirthStateCd { get; set; }
     
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds1 { get; set; }
         public virtual ICollection<tblREFCity> tblREFCities { get; set; }
-        public virtual tblREFCountry tblREFCountry { get; set; }
+        public virtual ICollection<tblRefLocation> tblRefLocations { get; set; }
     }
 }

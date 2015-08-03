@@ -10,6 +10,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         ApplicantSubmitted GetApplicant(int id);
 
         ApplicantSubmitted GetApplicant(string icno);
+        ApplicantSubmitted GetApplicant(string icno, int acquisitionid);
 
         IEnumerable<ApplicantSubmitted> GetApplicants(string icno);
         int SaveEducation(ApplicantEducationSubmitted education);

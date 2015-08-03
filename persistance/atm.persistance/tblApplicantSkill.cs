@@ -7,10 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblApplicantSkill
     {
         public int ApplicantSkillId { get; set; }
@@ -22,9 +23,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string AchievementCd { get; set; }
         public string Others { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
         public virtual tblApplicant tblApplicant { get; set; }
         public virtual tblREFAchievement tblREFAchievement { get; set; }

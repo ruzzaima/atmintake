@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblApplicantEdu
     {
         public tblApplicantEdu()
@@ -31,9 +31,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<bool> OverSeaInd { get; set; }
         public string MajorMinorCd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
         public virtual tblApplicant tblApplicant { get; set; }
         public virtual tblREFHighEduLevel tblREFHighEduLevel { get; set; }

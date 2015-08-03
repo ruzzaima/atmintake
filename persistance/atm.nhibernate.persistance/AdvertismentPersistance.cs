@@ -17,7 +17,7 @@ namespace SevenH.MMCSB.Persistance
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Advertisment> GetAdvertisments(bool? isactive)
+        public IEnumerable<Advertisment> GetAdvertisments(bool? isactive, DateTime? enddate)
         {
             if (null == isactive)
             {
@@ -34,7 +34,7 @@ namespace SevenH.MMCSB.Persistance
             }
             else
             {
-                var exist = Factory.OpenSession().QueryOver<Advertisment>().List<Advertisment>();
+                var exist = Factory.OpenSession().QueryOver<Advertisment>().List();
                 return exist;
             }
         }
@@ -55,6 +55,22 @@ namespace SevenH.MMCSB.Persistance
         public int Update(Advertisment advertisment)
         {
             throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<Advertisment> GetAdvertisments(string servicecode, DateTime? enddate)
+        {
+            var exist = Factory.OpenSession().QueryOver<Advertisment>().Where(a => a.ServiceCode == servicecode).List();
+            if (enddate.HasValue) exist = exist.Where(a => a.EndDate > enddate).ToList();
+            if (exist.Any())
+            {
+                foreach (var advertisment in exist)
+                {
+                    var acq = Factory.OpenSession().QueryOver<Acquisition>().Where(a => a.AcquisitionId == advertisment.AcquisitionId).SingleOrDefault();
+                    advertisment.Acquisition = acq;
+                }
+            }
+            return exist;
         }
     }
 }

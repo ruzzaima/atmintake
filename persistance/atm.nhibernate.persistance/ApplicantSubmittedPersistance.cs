@@ -153,8 +153,7 @@ namespace SevenH.MMCSB.Persistance
             Factory.OpenSession().Flush();
             return skill.ApplicantSkillId;
         }
-
-
+        
         public IEnumerable<ApplicantSportSubmitted> GetSport(int applicantid)
         {
             var sports = Factory.OpenSession().QueryOver<ApplicantSportSubmitted>().Where(a => a.ApplicantId == applicantid).List();
@@ -179,6 +178,12 @@ namespace SevenH.MMCSB.Persistance
             throw new NotImplementedException();
         }
 
+        
+        public ApplicantSubmitted GetApplicant(string icno, int acquisitionid)
+        {
+            var exist = Factory.OpenSession().QueryOver<ApplicantSubmitted>().Where(a => a.NewICNo == icno && a.AcquisitionId == acquisitionid).SingleOrDefault();
+            return exist;
+        }
     }
 }
 

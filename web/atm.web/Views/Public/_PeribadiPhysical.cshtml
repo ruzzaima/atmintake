@@ -24,14 +24,14 @@
         <div class="form-group">
             <label class="control-label">Tinggi<span class="red">*</span></label>
             <div class="input-group">
-                <input type="text" class="form-control input-sm validate[required,custom[number]]" data-bind="value: applicant.Height, valueUpdate: 'afterkeydown'" maxlength="4">
+                <input type="text" class="form-control input-sm validate[required,custom[number]]" data-bind="value: applicant.Height, valueUpdate: 'keyup'" maxlength="4">
                 <span class="input-group-addon">meter</span>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">Berat<span class="red">*</span></label>
             <div class="input-group">
-                <input type="text" class="form-control input-sm validate[required,custom[number]]" data-bind="value: applicant.Weight, valueUpdate: 'afterkeydown'" maxlength="4">
+                <input type="text" class="form-control input-sm validate[required,custom[number]]" data-bind="value: applicant.Weight, valueUpdate: 'keyup'" maxlength="4">
                 <span class="input-group-addon">Kg</span>
             </div>
         </div>

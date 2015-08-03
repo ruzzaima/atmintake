@@ -55,7 +55,7 @@ namespace SevenH.MMCSB.Atm.Web
                             var loginurl = ConfigurationManager.AppSettings["server"] + "/Account/Login";
                             var templatepath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Templates"), "ForgotPassword.html");
                             var mail = new MailService();
-                            mail.Send(from, new List<string> { login.Email, login.AlternativeEmail }, null, null, login, loginurl, templatepath, DateTime.Now);
+                            mail.SendForgotPassword(from, new List<string> { login.Email, login.AlternativeEmail }, null, null, login, loginurl, templatepath, DateTime.Now);
                         }
 
                         TempData["Message"] = "Kata laluan sementara telah dihantar ke emel yang didaftarkan. Sila semak emel anda.";
@@ -174,7 +174,7 @@ namespace SevenH.MMCSB.Atm.Web
             // for login from main only
 
             var vm = new HomeViewModel();
-            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true));
+            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true, null));
             vm.LoginModel = model;
             return View("~/Views/Home/Index.cshtml", vm);
         }

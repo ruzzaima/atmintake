@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblAcqEducationCriteria
     {
         public tblAcqEducationCriteria()
@@ -24,9 +24,10 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<int> AcquisitionId { get; set; }
         public string HighEduLevelCd { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedDt { get; set; }
+        public System.DateTime CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public DateTime LastModifiedDt { get; set; }
+        public System.DateTime LastModifiedDt { get; set; }
+        public Nullable<bool> MandatoriInd { get; set; }
     
         public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual ICollection<tblAcqEducationCriteriaSubject> tblAcqEducationCriteriaSubjects { get; set; }

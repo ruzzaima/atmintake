@@ -7,8 +7,8 @@
     <ProjectGuid>{4BC025B8-6498-4BD1-A55D-1D8DD4E2D6C9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SevenH.MMCSB.Atm.Persistance</RootNamespace>
-    <AssemblyName>atm.persistance</AssemblyName>
+    <RootNamespace>SevenH.MMCSB.Atm.Entity.Persistance</RootNamespace>
+    <AssemblyName>atm.entity.persistance</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,171 +48,293 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AtmEntitiesModel.Context.cs">
+    <Compile Include="AcquisitionPersistence.cs" />
+    <Compile Include="AtmIntakeModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AtmEntitiesModel.Context.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="AtmEntitiesModel.cs">
+    <Compile Include="AtmIntakeModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="AtmEntitiesModel.Designer.cs">
+    <Compile Include="AtmIntakeModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
+      <DependentUpon>AtmIntakeModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqAnnouncement.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tblAcqCriteria.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcqEducationCriteria.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcqEducationCriteriaSubject.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcqEduCriteriaFieldOfStudy.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqFinalShorlistCriteria.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqLocation.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqMerit.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAcqMeritScore.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcqQuestion.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcqQuestionnaire.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcqQuestionnaireScale.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblAcquisition.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAdvertisement_Xpakai.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAdvertisment.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppApplicantDentalExamination.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppApplicantMeritScore.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppApplicantPhysicalExamIllness.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppApplicantPhysicalExamination.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppApplicantPhysicalTest.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppDocumentStatu.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplicant.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplicantDispStatu.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantDispStatusSubmitted.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplicantEdu.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplicantEduSubject.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantEduSubjectSubmitted.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantEduSubmitted.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantPhoto.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplicantSkill.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantSkillSubmitted.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplicantSportAssoc.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantSportAssocSubmitted.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantSubmited.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicantSubmittedPhoto.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblApplication.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblApplicationStatu.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppQuestionFeedback.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblAppQuestionnaireScore.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblExistingAtmMember.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFAchievement.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFAcqType.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFApplicationStatu.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblRefBloodType.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFCity.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFCountry.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFDocument.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFEthnic.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFExistingMemberStatu.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFEyeStatu.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFGender.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFHighEduLevel.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFInstitution.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFInstitutionCat.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblRefLocation.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFLocationZone.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFLoginStatu.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFMajorMinor.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFMaritalStatu.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFMedDisease.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFMeritType.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFOccupation.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFPersonalityType.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFQuestionnaireSubType.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFQuestionnaireType.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFQuestionnareType.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFRace.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFReligion.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFService.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFSkill.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFSkillCat.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFSportAndAssociation.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFState.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFSubject.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFSubjectGrade.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFTalentCat.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFUserCat.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblUser.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblUserLog.cs">
-      <DependentUpon>AtmEntitiesModel.tt</DependentUpon>
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="AtmEntitiesModel.edmx">
+    <EntityDeploy Include="AtmIntakeModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>AtmEntitiesModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>AtmIntakeModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="AtmEntitiesModel.Context.tt">
+    <None Include="AtmIntakeModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
-      <LastGenOutput>AtmEntitiesModel.Context.cs</LastGenOutput>
+      <DependentUpon>AtmIntakeModel.edmx</DependentUpon>
+      <LastGenOutput>AtmIntakeModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="AtmEntitiesModel.edmx.diagram">
-      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
+    <None Include="AtmIntakeModel.edmx.diagram">
+      <DependentUpon>AtmIntakeModel.edmx</DependentUpon>
     </None>
-    <None Include="AtmEntitiesModel.tt">
+    <None Include="AtmIntakeModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>AtmEntitiesModel.edmx</DependentUpon>
-      <LastGenOutput>AtmEntitiesModel.cs</LastGenOutput>
+      <DependentUpon>AtmIntakeModel.edmx</DependentUpon>
+      <LastGenOutput>AtmIntakeModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\domain\atm.domain\atm.domain.csproj">
+      <Project>{f703db7f-124f-48c7-b449-81cecaa4d6cb}</Project>
+      <Name>atm.domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

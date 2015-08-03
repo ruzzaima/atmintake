@@ -7,12 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblAcqQuestion
     {
+        public tblAcqQuestion()
+        {
+            this.tblAppQuestionFeedbacks = new HashSet<tblAppQuestionFeedback>();
+        }
+    
         public int AcqQuestionId { get; set; }
         public Nullable<int> QuestionnaireId { get; set; }
         public string Statement { get; set; }
@@ -20,10 +26,11 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<int> PersonalityYesMark { get; set; }
         public Nullable<int> PersonalityNoMark { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
         public virtual tblAcqQuestionnaire tblAcqQuestionnaire { get; set; }
+        public virtual ICollection<tblAppQuestionFeedback> tblAppQuestionFeedbacks { get; set; }
     }
 }

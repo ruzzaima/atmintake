@@ -7,17 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblAcqQuestionnaire
     {
         public tblAcqQuestionnaire()
         {
             this.tblAcqQuestions = new HashSet<tblAcqQuestion>();
             this.tblAcqQuestionnaireScales = new HashSet<tblAcqQuestionnaireScale>();
+            this.tblAppQuestionnaireScores = new HashSet<tblAppQuestionnaireScore>();
         }
     
         public int QuestionnaireId { get; set; }
@@ -28,14 +29,18 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<int> PersonalityAcceptedMarkFrom { get; set; }
         public Nullable<int> PersonalityAcceptedMarkTo { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
+        public string QuestionnaireSubTypeCd { get; set; }
+        public Nullable<int> SequenceNo { get; set; }
     
         public virtual ICollection<tblAcqQuestion> tblAcqQuestions { get; set; }
         public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblREFPersonalityType tblREFPersonalityType { get; set; }
-        public virtual tblREFQuestionnareType tblREFQuestionnareType { get; set; }
+        public virtual tblREFQuestionnaireSubType tblREFQuestionnaireSubType { get; set; }
+        public virtual tblREFQuestionnaireType tblREFQuestionnaireType { get; set; }
         public virtual ICollection<tblAcqQuestionnaireScale> tblAcqQuestionnaireScales { get; set; }
+        public virtual ICollection<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
     }
 }

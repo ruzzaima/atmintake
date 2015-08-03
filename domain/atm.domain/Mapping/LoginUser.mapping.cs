@@ -25,7 +25,7 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.LoginId).Unique();
                 Map(x => x.FirstTime);
 
-                References(x => x.LoginRole, "UserId").Unique();
+               // References(x => x.LoginRole, "UserId").Unique();
             }
         }
     }

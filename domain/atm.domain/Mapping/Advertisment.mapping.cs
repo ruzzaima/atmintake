@@ -27,6 +27,8 @@ namespace SevenH.MMCSB.Atm.Domain
             Map(x => x.InterviewLocationId);
             Map(x => x.ServiceCode).Column("ServiceCd");
             Map(x => x.AcquisitionId);
+
+            HasOne(x => x.Acquisition).ForeignKey("AcquisitionId");
         }
     }
 

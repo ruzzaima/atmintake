@@ -16,7 +16,7 @@ namespace SevenH.MMCSB.Atm.Domain
             Id(x => x.UserId).GeneratedBy.Assigned();
             Map(x => x.Roles);
 
-            HasOne(x => x.LoginUser).ForeignKey("UserId");
+            //HasOne(x => x.LoginUser).ForeignKey("UserId");
         }
     }
 }

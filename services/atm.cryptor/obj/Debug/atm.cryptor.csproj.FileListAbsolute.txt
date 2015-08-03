@@ -32,3 +32,20 @@ D:\Project\Work\8. ATM Intake\services\atm.cryptor\bin\Debug\Iesi.Collections.xm
 D:\Project\Work\8. ATM Intake\services\atm.cryptor\obj\Debug\atm.cryptor.csprojResolveAssemblyReference.cache
 D:\Project\Work\8. ATM Intake\services\atm.cryptor\obj\Debug\atm.cryptor.dll
 D:\Project\Work\8. ATM Intake\services\atm.cryptor\obj\Debug\atm.cryptor.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.cryptor.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.cryptor.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.domain.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\FluentNHibernate.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\NHibernate.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Spring.Core.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Iesi.Collections.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Common.Logging.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.domain.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\FluentNHibernate.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\FluentNHibernate.xml
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\NHibernate.xml
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Spring.Core.xml
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Iesi.Collections.xml
+D:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.csprojResolveAssemblyReference.cache
+D:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.dll
+D:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.pdb

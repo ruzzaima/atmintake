@@ -111,7 +111,8 @@ namespace SevenH.MMCSB.Persistance
 
         public IEnumerable<CodeItem.Religion> GetReligions()
         {
-            var returnList = Factory.OpenSession().QueryOver<CodeItem.Religion>().Where(a => a.ReligionDescription != null).List();
+            var returnList =
+                Factory.OpenSession().QueryOver<CodeItem.Religion>().Where(a => a.ReligionDescription != null).List();
             return returnList;
         }
 
@@ -135,13 +136,18 @@ namespace SevenH.MMCSB.Persistance
 
         public IEnumerable<CodeItem.SportAndAssociation> GetSportAndAssociations(string type)
         {
-            var returnList = Factory.OpenSession().QueryOver<CodeItem.SportAndAssociation>().Where(a => a.SportAssociatType == type).List();
+            var returnList =
+                Factory.OpenSession()
+                    .QueryOver<CodeItem.SportAndAssociation>()
+                    .Where(a => a.SportAssociatType == type)
+                    .List();
             return returnList;
         }
 
         public IEnumerable<CodeItem.State> GetStates(string countrycode)
         {
-            var returnList = Factory.OpenSession().QueryOver<CodeItem.State>().Where(a => a.CountryCd == countrycode).List();
+            var returnList =
+                Factory.OpenSession().QueryOver<CodeItem.State>().Where(a => a.CountryCd == countrycode).List();
             return returnList;
         }
 
@@ -165,7 +171,11 @@ namespace SevenH.MMCSB.Persistance
 
         public IEnumerable<CodeItem.Subject> GetSubjects(string higheducodelevel)
         {
-            var list = Factory.OpenSession().QueryOver<CodeItem.Subject>().Where(a => a.HighEduLevelCd == higheducodelevel).List();
+            var list =
+                Factory.OpenSession()
+                    .QueryOver<CodeItem.Subject>()
+                    .Where(a => a.HighEduLevelCd == higheducodelevel)
+                    .List();
             return list;
         }
 
@@ -185,7 +195,11 @@ namespace SevenH.MMCSB.Persistance
 
         public CodeItem.AcquisitionType GetAcquisitionType(int code)
         {
-            var acqtype = Factory.OpenSession().QueryOver<CodeItem.AcquisitionType>().Where(a => a.AcquisitionTypeCd == code).SingleOrDefault();
+            var acqtype =
+                Factory.OpenSession()
+                    .QueryOver<CodeItem.AcquisitionType>()
+                    .Where(a => a.AcquisitionTypeCd == code)
+                    .SingleOrDefault();
             return acqtype;
         }
 
@@ -219,4 +233,8 @@ namespace SevenH.MMCSB.Persistance
 
         public IEnumerable<CodeItem.Institution> GetInstitutions(string category)
         {
-            var returnList = Factory.OpenSession().QueryOver<CodeItem.Instio v e r y   i s   w r i t i n g   a   c h e c k p o i n t   i n   d a t a b a s e   ' m a s t e r '   ( 1 ) .   
+            var returnList = Factory.OpenSession().QueryOver<CodeItem.Institution>().Where(a => a.InstCatCd == category).List();
+            return returnList;
+        }
+    }
+}

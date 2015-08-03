@@ -7,20 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFQuestionnareType
     {
-        public tblREFQuestionnareType()
-        {
-            this.tblAcqQuestionnaires = new HashSet<tblAcqQuestionnaire>();
-        }
-    
         public string QuestionnaireTypeCd { get; set; }
         public string QuestionnaireType { get; set; }
-    
-        public virtual ICollection<tblAcqQuestionnaire> tblAcqQuestionnaires { get; set; }
     }
 }

@@ -288,227 +288,241 @@ namespace SevenH.MMCSB.Atm.Web
             chpoint = 0.0m;
             var applicant = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetApplicant(applicantid);
             var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
-            if (null != applicant && null != acq)
+            if (null == applicant || null == acq) return;
+
+            var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+            if (null == acqtype) return;
+
+            var total = 0.0;
+            var grandtotal = 0;
+
+            grandtotal = grandtotal + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.MrtlStatusCd))
+                total = total + 1;
+
+            if (applicant.DadNotApplicable.HasValue && !applicant.DadNotApplicable.Value)
             {
-                var total = 0.0;
-                if (!string.IsNullOrWhiteSpace(applicant.MrtlStatusCd))
-                    total = total + 1;
+                grandtotal = grandtotal + 3;
                 if (!string.IsNullOrWhiteSpace(applicant.DadName))
                     total = total + 1;
                 if (!string.IsNullOrWhiteSpace(applicant.DadICNo))
                     total = total + 1;
                 if (!string.IsNullOrWhiteSpace(applicant.DadNationalityCd))
                     total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.DadOccupation))
-                    total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.DadPhoneNo))
-                    total = total + 1;
+            }
+            if (applicant.MomNotApplicable.HasValue && !applicant.MomNotApplicable.Value)
+            {
+                grandtotal = grandtotal + 3;
                 if (!string.IsNullOrWhiteSpace(applicant.MomName))
                     total = total + 1;
                 if (!string.IsNullOrWhiteSpace(applicant.MomICNo))
                     total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.MomOccupation))
-                    total = total + 1;
                 if (!string.IsNullOrWhiteSpace(applicant.MomNationalityCd))
                     total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.MomPhoneNo))
+            }
+            if (applicant.GuardianNotApplicable.HasValue && !applicant.GuardianNotApplicable.Value)
+            {
+                grandtotal = grandtotal + 3;
+                if (!string.IsNullOrWhiteSpace(applicant.GuardianName))
                     total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddr1))
+                if (!string.IsNullOrWhiteSpace(applicant.GuardianICNo))
                     total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddr2))
+                if (!string.IsNullOrWhiteSpace(applicant.GuardianNationalityCd))
                     total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrCityCd))
-                    total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrPostCd))
-                    total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrStateCd))
-                    total = total + 1;
-                if (!string.IsNullOrWhiteSpace(applicant.BirthCertNo))
-                    total = total + 1;
+            }
+            grandtotal = grandtotal + 10;
+            if (!string.IsNullOrWhiteSpace(applicant.CorresponAddr1))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrCityCd))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrPostCd))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrStateCd))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.CorresponAddrCountryCd))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.MobilePhoneNo))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.NationalityCd))
+                total = total + 1;
+            if (!string.IsNullOrWhiteSpace(applicant.BirthCountryCd))
+                total = total + 1;
+            if (applicant.Height != 0)
+                total = total + 1;
+            if (applicant.Weight != 0)
+                total = total + 1;
+
+            if (acqtype.ServiceCd != "01")
+            {
+                grandtotal = grandtotal + 2;
                 if (!string.IsNullOrWhiteSpace(applicant.ReligionCd))
                     total = total + 1;
                 if (!string.IsNullOrWhiteSpace(applicant.RaceCd))
                     total = total + 1;
-                if (applicant.Height == 0)
-                    total = total + 1;
-                if (applicant.Weight == 0)
-                    total = total + 1;
-
-                peribadipoint = Convert.ToDecimal((total / 21) * 100);
-
-                // educations
-                var totaledu = 0.0;
-                var edus =
-                    ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetEducation(applicantid);
-                if (null != edus)
-                {
-                    foreach (var ed in edus)
-                    {
-                        // SPM
-                        if (ed.HighEduLevelCd == "14")
-                        {
-                            // check the grades for 10 top subject
-                            totaledu =
-                                ed.ApplicantEduSubjectCollection.Take(10)
-                                    .Where(s => !string.IsNullOrWhiteSpace(s.GradeCd))
-                                    .Aggregate(totaledu, (current, s) => current + 1);
-                        }
-                    }
-                }
-                edupoint = Convert.ToDecimal((totaledu / 18) * 100);
-
-                var totalsponsor = 0;
-                var totalselected = 0.0;
-                // penajaan dan biasiswa
-                if (applicant.PalapesInd.HasValue)
-                {
-                    if (applicant.PalapesInd.Value)
-                    {
-                        totalsponsor = totalsponsor + 5;
-                        if (!string.IsNullOrWhiteSpace(applicant.PalapesArmyNo)) totalselected = totalselected + 1;
-                        if (!string.IsNullOrWhiteSpace(applicant.PalapesInstitution)) totalselected = totalselected + 1;
-                        if (!string.IsNullOrWhiteSpace(applicant.PalapesServices)) totalselected = totalselected + 1;
-                        if (applicant.PalapesTauliahEndDt.HasValue) totalselected = totalselected + 1;
-                        if (applicant.PalapesYear != 0) totalselected = totalselected + 1;
-                    }
-                    else
-                    {
-                        totalsponsor = totalsponsor + 1;
-                        totalselected = totalselected + 1;
-                    }
-                }
-                else
-                {
-                    totalsponsor = totalsponsor + 1;
-                    totalselected = totalselected + 0;
-                }
-
-                if (applicant.ScholarshipInd.HasValue)
-                {
-                    if (applicant.ScholarshipInd.Value)
-                    {
-                        totalsponsor = totalsponsor + 4;
-                        if (!string.IsNullOrWhiteSpace(applicant.ScholarshipBody)) totalselected = totalselected + 1;
-                        if (!string.IsNullOrWhiteSpace(applicant.ScholarshipBodyAddr)) totalselected = totalselected + 1;
-                        if (!string.IsNullOrWhiteSpace(applicant.ScholarshipNoOfYrContract))
-                            totalselected = totalselected + 1;
-                        if (applicant.ScholarshipContractStDate.HasValue) totalselected = totalselected + 1;
-                    }
-                    else
-                    {
-                        totalsponsor = totalsponsor + 1;
-                        totalselected = totalselected + 1;
-
-                    }
-                }
-                else
-                {
-                    totalsponsor = totalsponsor + 1;
-                    totalselected = totalselected + 0;
-                }
-
-                if (applicant.EmployeeAggreeInd.HasValue)
-                {
-                    if (applicant.EmployeeAggreeInd.Value)
-                    {
-                        totalsponsor = totalsponsor + 1;
-                        if (!string.IsNullOrWhiteSpace(applicant.PelepasanDocument)) totalselected = totalselected + 1;
-                    }
-                    else
-                    {
-                        totalsponsor = totalsponsor + 1;
-                        totalselected = totalselected + 1;
-                    }
-                }
-                else
-                {
-                    totalsponsor = totalsponsor + 1;
-                    totalselected = totalselected + 0;
-                }
-
-                if (applicant.ArmySelectionInd.HasValue)
-                {
-                    if (applicant.ArmySelectionInd.Value)
-                    {
-                        totalsponsor = totalsponsor + 2;
-                        if (applicant.ArmySelectionDt.HasValue) totalselected = totalselected + 1;
-                        if (!string.IsNullOrWhiteSpace(applicant.ArmySelectionVenue)) totalselected = totalselected + 1;
-                    }
-                    else
-                    {
-                        totalsponsor = totalsponsor + 1;
-                        totalselected = totalselected + 1;
-                    }
-                }
-                else
-                {
-                    totalsponsor = totalsponsor + 1;
-                    totalselected = totalselected + 0;
-                }
-
-                if (totalsponsor == 0 && totalselected == 0)
-                    spopoint = 0.0m;
-                else
-                    spopoint = Convert.ToDecimal((totalselected / totalsponsor) * 100);
-
-                // Sukan/Badan Beruniform dan Kemahiran
-                var totals = 0.0;
-
-                var sps = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSport(applicantid);
-                if (null != sps && sps.Any())
-                {
-                    var sports =
-                        sps.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "S");
-                    totals = totals + sports.Count();
-                    var kokos =
-                        sps.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "A");
-                    totals = totals + kokos.Count();
-                }
-
-                var skills = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence")
-                    .GetSkill(applicantid);
-                if (null != skills && skills.Any())
-                    totals = totals + skills.Count();
-
-                saspoint = Convert.ToDecimal((totals / 6) * 100);
-
-                var totalchd = 0;
-                var totalchdselected = 0;
-                if (applicant.CrimeInvolvement.HasValue)
-                {
-                    totalchd = totalchd + 1;
-                    totalchdselected = totalchdselected + 1;
-                }
-                else
-                {
-                    totalchd = totalchd + 1;
-                    totalchdselected = totalchdselected + 0;
-                }
-
-                if (applicant.DrugCaseInvolvement.HasValue)
-                {
-                    totalchd = totalchd + 1;
-                    totalchdselected = totalchdselected + 1;
-                }
-                else
-                {
-                    totalchd = totalchd + 1;
-                    totalchdselected = totalchdselected + 0;
-                }
-
-                if (applicant.CronicIlnessInd.HasValue)
-                {
-                    totalchd = totalchd + 1;
-                    totalchdselected = totalchdselected + 1;
-                }
-                else
-                {
-                    totalchd = totalchd + 1;
-                    totalchdselected = totalchdselected + 0;
-                }
-
-                chpoint = Convert.ToDecimal((totalchdselected / totalchd) * 100);
             }
+
+            peribadipoint = Convert.ToDecimal((total / grandtotal) * 100);
+
+            // educations
+            var totaledu = 0.0;
+            var edus = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetEducation(applicantid);
+            if (null != edus)
+            {
+                totaledu = edus.Where(ed => ed.HighEduLevelCd == "14").Aggregate(totaledu, (current1, ed) => ed.ApplicantEduSubjectCollection.Take(3).Where(s => !string.IsNullOrWhiteSpace(s.GradeCd)).Aggregate(current1, (current, s) => current + 1));
+            }
+            edupoint = Convert.ToDecimal((totaledu / 3) * 100);
+
+            var totalsponsor = 0;
+            var totalselected = 0.0;
+            // penajaan dan biasiswa
+            if (applicant.PalapesInd.HasValue)
+            {
+                if (applicant.PalapesInd.Value)
+                {
+                    totalsponsor = totalsponsor + 5;
+                    if (!string.IsNullOrWhiteSpace(applicant.PalapesArmyNo)) totalselected = totalselected + 1;
+                    if (!string.IsNullOrWhiteSpace(applicant.PalapesInstitution)) totalselected = totalselected + 1;
+                    if (!string.IsNullOrWhiteSpace(applicant.PalapesServices)) totalselected = totalselected + 1;
+                    if (applicant.PalapesTauliahEndDt.HasValue) totalselected = totalselected + 1;
+                    if (applicant.PalapesYear != 0) totalselected = totalselected + 1;
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 1;
+                }
+            }
+            else
+            {
+                totalsponsor = totalsponsor + 1;
+                totalselected = totalselected + 0;
+            }
+
+            if (applicant.ScholarshipInd.HasValue)
+            {
+                if (applicant.ScholarshipInd.Value)
+                {
+                    totalsponsor = totalsponsor + 4;
+                    if (!string.IsNullOrWhiteSpace(applicant.ScholarshipBody)) totalselected = totalselected + 1;
+                    if (!string.IsNullOrWhiteSpace(applicant.ScholarshipBodyAddr))
+                        totalselected = totalselected + 1;
+                    if (!string.IsNullOrWhiteSpace(applicant.ScholarshipNoOfYrContract))
+                        totalselected = totalselected + 1;
+                    if (applicant.ScholarshipContractStDate.HasValue) totalselected = totalselected + 1;
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 1;
+                }
+            }
+            else
+            {
+                totalsponsor = totalsponsor + 1;
+                totalselected = totalselected + 0;
+            }
+
+            if (applicant.EmployeeAggreeInd.HasValue)
+            {
+                if (applicant.EmployeeAggreeInd.Value)
+                {
+                    totalsponsor = totalsponsor + 1;
+                    if (!string.IsNullOrWhiteSpace(applicant.PelepasanDocument)) totalselected = totalselected + 1;
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 1;
+                }
+            }
+            else
+            {
+                totalsponsor = totalsponsor + 1;
+                totalselected = totalselected + 0;
+            }
+
+            if (applicant.ArmySelectionInd.HasValue)
+            {
+                if (applicant.ArmySelectionInd.Value)
+                {
+                    totalsponsor = totalsponsor + 2;
+                    if (applicant.ArmySelectionDt.HasValue) totalselected = totalselected + 1;
+                    if (!string.IsNullOrWhiteSpace(applicant.ArmySelectionVenue)) totalselected = totalselected + 1;
+                }
+                else
+                {
+                    totalsponsor = totalsponsor + 1;
+                    totalselected = totalselected + 1;
+                }
+            }
+            else
+            {
+                totalsponsor = totalsponsor + 1;
+                totalselected = totalselected + 0;
+            }
+
+            if (totalsponsor == 0 && totalselected == 0)
+                spopoint = 0.0m;
+            else
+                spopoint = Convert.ToDecimal((totalselected / totalsponsor) * 100);
+
+            // Sukan/Badan Beruniform dan Kemahiran
+            var totals = 0.0;
+
+            var sps = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetSport(applicantid);
+            if (null != sps && sps.Any())
+            {
+                var sports =
+                    sps.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "S");
+                totals = totals + sports.Count();
+                var kokos =
+                    sps.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "A");
+                totals = totals + kokos.Count();
+            }
+
+            var skills = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence")
+                .GetSkill(applicantid);
+            if (null != skills && skills.Any())
+                totals = totals + skills.Count();
+
+            saspoint = Convert.ToDecimal((totals / 6) * 100);
+
+            var totalchd = 0;
+            var totalchdselected = 0;
+            if (applicant.CrimeInvolvement.HasValue)
+            {
+                totalchd = totalchd + 1;
+                totalchdselected = totalchdselected + 1;
+            }
+            else
+            {
+                totalchd = totalchd + 1;
+                totalchdselected = totalchdselected + 0;
+            }
+
+            if (applicant.DrugCaseInvolvement.HasValue)
+            {
+                totalchd = totalchd + 1;
+                totalchdselected = totalchdselected + 1;
+            }
+            else
+            {
+                totalchd = totalchd + 1;
+                totalchdselected = totalchdselected + 0;
+            }
+
+            if (applicant.CronicIlnessInd.HasValue)
+            {
+                totalchd = totalchd + 1;
+                totalchdselected = totalchdselected + 1;
+            }
+            else
+            {
+                totalchd = totalchd + 1;
+                totalchdselected = totalchdselected + 0;
+            }
+
+            chpoint = Convert.ToDecimal((totalchdselected / totalchd) * 100);
         }
 
     }

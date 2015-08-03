@@ -7,22 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFService
     {
         public tblREFService()
         {
-            this.tblREFAcqTypes = new HashSet<tblREFAcqType>();
-            this.tblUsers = new HashSet<tblUser>();
+            this.tblAdvertisments = new HashSet<tblAdvertisment>();
+            this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
         }
     
         public string ServiceCd { get; set; }
         public string Service { get; set; }
     
-        public virtual ICollection<tblREFAcqType> tblREFAcqTypes { get; set; }
-        public virtual ICollection<tblUser> tblUsers { get; set; }
+        public virtual ICollection<tblAdvertisment> tblAdvertisments { get; set; }
+        public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
     }
 }

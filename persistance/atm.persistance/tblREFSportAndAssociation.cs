@@ -7,16 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFSportAndAssociation
     {
         public tblREFSportAndAssociation()
         {
             this.tblApplicantSportAssocs = new HashSet<tblApplicantSportAssoc>();
+            this.tblApplicantSportAssocSubmitteds = new HashSet<tblApplicantSportAssocSubmitted>();
         }
     
         public int SportAssocId { get; set; }
@@ -24,10 +25,11 @@ namespace SevenH.MMCSB.Atm.Persistance
         public string SportAssociatName { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
         public virtual ICollection<tblApplicantSportAssoc> tblApplicantSportAssocs { get; set; }
+        public virtual ICollection<tblApplicantSportAssocSubmitted> tblApplicantSportAssocSubmitteds { get; set; }
     }
 }
