@@ -7,16 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFCity
     {
         public tblREFCity()
         {
             this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
+            this.tblApplicantSubmiteds1 = new HashSet<tblApplicantSubmited>();
+            this.tblRefLocations = new HashSet<tblRefLocation>();
         }
     
         public string CityCd { get; set; }
@@ -26,6 +29,9 @@ namespace SevenH.MMCSB.Atm.Persistance
         public Nullable<bool> MainCityInd { get; set; }
     
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds1 { get; set; }
         public virtual tblREFState tblREFState { get; set; }
+        public virtual ICollection<tblRefLocation> tblRefLocations { get; set; }
     }
 }

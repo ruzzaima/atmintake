@@ -224,16 +224,16 @@ namespace SevenH.MMCSB.Atm.Web.Models
                     {
                         // pegawai
                         if (acq.AcquisitionType.ServiceCd == "10")
-                            selectededucation = new string[] { "14", "13", "11", "08", "20" };
+                            selectededucation = new string[] { "14", "13", "25", "11", "08", "20" };
                         // td
                         if (acq.AcquisitionType.ServiceCd == "01")
-                            selectededucation = new string[] { "14", "13", "26", "11" };
+                            selectededucation = new string[] { "14", "13", "25", "26", "11" };
                         // tl
                         if (acq.AcquisitionType.ServiceCd == "02")
-                            selectededucation = new string[] { "14", "13", "15", "26", "11" };
+                            selectededucation = new string[] { "14", "13", "25", "15", "26", "11" };
                         // tu
                         if (acq.AcquisitionType.ServiceCd == "03")
-                            selectededucation = new string[] { "14", "13", "26", "11" };
+                            selectededucation = new string[] { "14", "13", "25", "26", "08", "11" };
 
                         var he = refrepos.GetHighEduLevels().Where(a => selectededucation.Contains(a.HighEduLevelCd));
                         if (he.Any())

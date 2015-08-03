@@ -42,14 +42,6 @@
     <Reference Include="antlr.runtime">
       <HintPath>..\..\library\antlr.runtime.dll</HintPath>
     </Reference>
-    <Reference Include="atm.domain, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\domain\atm.domain\bin\Debug\atm.domain.dll</HintPath>
-    </Reference>
-    <Reference Include="atm.nhibernate.persistance, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\persistance\atm.nhibernate.persistance\bin\Debug\atm.nhibernate.persistance.dll</HintPath>
-    </Reference>
     <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\library\Common.Logging.dll</HintPath>
@@ -194,6 +186,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Helper\ReferenceRepo.cs" />
@@ -670,6 +663,7 @@
     <Content Include="Scripts\Core\_references.js" />
     <Content Include="Scripts\Core\less-1.5.1.js" />
     <Content Include="Scripts\Core\less-1.5.1.min.js" />
+    <Content Include="Scripts\Main\debug.js" />
     <Content Include="Scripts\Main\default.after.js" />
     <Content Include="Scripts\Main\default.js" />
     <Content Include="Scripts\Main\home_checkstatus.js" />
@@ -737,11 +731,18 @@
     <Content Include="Views\Public\_PeribadiPhysical.cshtml" />
     <Content Include="Views\Public\_PeribadiMain.cshtml" />
     <Content Include="Views\Public\_PeribadiMainTL.cshtml" />
+    <Content Include="Views\Manage\ManageUser.cshtml" />
+    <Content Include="Views\Public\_PeribadiMainTD.cshtml" />
+    <Content Include="Views\Public\_AcademicPegawai.cshtml" />
+    <Content Include="Views\Public\_AcademicTLDM.cshtml" />
+    <Content Include="Views\Public\_AcademicTUDM.cshtml" />
+    <Content Include="Views\Public\_AcademicTD.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="SuppDoc\" />
+    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Common\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
@@ -756,6 +757,14 @@
     <ProjectReference Include="..\..\domain\atm.domain\atm.domain.csproj">
       <Project>{f703db7f-124f-48c7-b449-81cecaa4d6cb}</Project>
       <Name>atm.domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\domain\atm.domain\atm.domain.csproj">
+      <Project>{f703db7f-124f-48c7-b449-81cecaa4d6cb}</Project>
+      <Name>atm.domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\persistance\atm.nhibernate.persistance\atm.nhibernate.persistance.csproj">
+      <Project>{21b84ac3-08a8-49c8-926b-974accbca79d}</Project>
+      <Name>atm.nhibernate.persistance</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\services\atm.cryptor\atm.cryptor.csproj">
       <Project>{0858df2e-a28f-48ad-a93e-f1612a430171}</Project>

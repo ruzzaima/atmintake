@@ -5,6 +5,7 @@ $(function () {
 
     // validation
     $("#form_peribadi").validationEngine();
+    $("#form_akademik").validationEngine();
 
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
@@ -144,11 +145,23 @@ $(function () {
             viewModel.saveprofile();
         },
         saveacademics: function () {
-            viewModel.saveprofile();
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         saveacademicsandcontinue: function () {
-            viewModel.saveprofile();
-            $('#resume a[href="#sport"]').tab('show');
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+                $('#resume a[href="#sport"]').tab('show');
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         savecontract: function () {
             // get birth of date
@@ -225,6 +238,23 @@ $(function () {
 
                 $('#notification_dialog .btn-submit').unbind("click");
                 $('#notification_dialog .btn-submit').click(function () {
+                    
+                    var valid = $("#form_peribadi").validationEngine('validate');
+                    var vars = $("#form_peribadi").serialize();
+                    if (valid === false) {
+                        ShowMessage('Sila isikan maklumat yang mandatori!');
+                        $("#form_peribadi").validationEngine();
+                        $('#resume a[href="#confirmation"]').tab('show');
+                        return false;
+                    }
+                    var valida = $("#form_akademik").validationEngine('validate');
+                    var varsa = $("#form_akademik").serialize();
+                    if (valida === false) {
+                        ShowMessage('Sila isikan maklumat yang mandatori!');
+                        $("#form_akademik").validationEngine();
+                        $('#resume a[href="#sport"]').tab('show');
+                        return false;
+                    }
 
                     showLoading();
 

@@ -4,7 +4,8 @@ var oTable;
 $(function () {
     // validation
     $("#form_peribadi").validationEngine();
-    
+    $("#form_akademik").validationEngine();
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -197,7 +198,13 @@ $(function () {
             viewModel.saveprofile();
         },
         saveacademics: function () {
-            viewModel.saveprofile();
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         savecontract: function () {
             viewModel.saveprofile();
@@ -226,8 +233,14 @@ $(function () {
             }
         },
         saveacademicandcontinue: function (d) {
-            viewModel.saveacademics();
-            $('#resume a[href="#sponsorship"]').tab('show');
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveacademics();
+                $('#resume a[href="#sponsorship"]').tab('show');
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         saveskill: function (d) {
             viewModel.saveprofile();
@@ -245,6 +258,7 @@ $(function () {
         },
         submitapplication: function (d) {
             if (viewModel.ischecked) {
+
                 $("#notification_dialog .modal-body").html("Adakah anda pasti untuk menghantar permohonan ini?");
                 $("#notification_dialog").modal({
                     show: 'true',
@@ -254,7 +268,7 @@ $(function () {
 
                 $('#notification_dialog .btn-submit').unbind("click");
                 $('#notification_dialog .btn-submit').click(function () {
-
+                    
                     showLoading();
 
                     $.ajax({

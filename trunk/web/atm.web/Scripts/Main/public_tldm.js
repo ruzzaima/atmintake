@@ -5,6 +5,7 @@ $(function () {
 
     // validation
     $("#form_peribadi").validationEngine();
+    $("#form_akademik").validationEngine();
 
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
@@ -143,11 +144,23 @@ $(function () {
             viewModel.saveprofile();
         },
         saveacademics: function () {
-            viewModel.saveprofile();
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         saveacademicsandcontinue: function () {
-            viewModel.saveprofile();
-            $('#resume a[href="#sport"]').tab('show');
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+                $('#resume a[href="#sport"]').tab('show');
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         savecontract: function () {
             viewModel.saveprofile();

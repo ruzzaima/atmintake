@@ -7,26 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblAcqEducationCriteriaSubject
     {
         public int AcqEduCriteriaSubjectId { get; set; }
         public Nullable<int> AcqEduCriteriaId { get; set; }
-        public string SubjectCd { get; set; }
+        public Nullable<int> SubjectCd { get; set; }
         public string Subject { get; set; }
         public string MinimumGradeCd { get; set; }
         public string Grade { get; set; }
         public Nullable<bool> MainSubjectInd { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedDt { get; set; }
+        public System.DateTime CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public DateTime LastModifiedDt { get; set; }
+        public System.DateTime LastModifiedDt { get; set; }
     
         public virtual tblAcqEducationCriteria tblAcqEducationCriteria { get; set; }
-        public virtual tblREFSubject tblREFSubject { get; set; }
         public virtual tblREFSubjectGrade tblREFSubjectGrade { get; set; }
     }
 }

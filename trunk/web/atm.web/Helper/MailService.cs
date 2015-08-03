@@ -40,69 +40,114 @@ namespace SevenH.MMCSB.Atm.Web
         public void Send(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
         {
             var client = new SmtpClient();
-            try
-            {
 
-                var mailDefinition = new MailDefinition();
-                mailDefinition.Priority = MailPriority.High;
-                mailDefinition.From = "noreply@atm.gov.my";
-                mailDefinition.IsBodyHtml = true;
-                mailDefinition.Subject = "[ATM]Notifikasi Pendaftaran";
-                mailDefinition.BodyFileName = templatepath;
+            var mailDefinition = new MailDefinition();
+            mailDefinition.Priority = MailPriority.High;
+            mailDefinition.From = "noreply@atm.gov.my";
+            mailDefinition.IsBodyHtml = true;
+            mailDefinition.Subject = "[ATM]Notifikasi Pendaftaran";
+            mailDefinition.BodyFileName = templatepath;
 
-                var ldReplacement = new ListDictionary();
-                if (dateTime.HasValue)
-                    ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", dateTime.Value));
-                else
-                    ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
+            var ldReplacement = new ListDictionary();
+            if (dateTime.HasValue)
+                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", dateTime.Value));
+            else
+                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
 
-                ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
-                ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
-                ldReplacement.Add("<%Password%>", user.Password);
-                ldReplacement.Add("<%LoginUrl%>", loginurl);
-                var mail = new MailMessage();
-                mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
-                mail.From = new MailAddress(from, "No Reply");
-                if (null != tos)
-                    foreach (var recipient in tos.ToList().SelectMany(Spliter))
+            ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
+            ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
+            ldReplacement.Add("<%Password%>", user.Password);
+            ldReplacement.Add("<%LoginUrl%>", loginurl);
+            var mail = new MailMessage();
+            mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
+            mail.From = new MailAddress(from, "No Reply");
+
+            if (null != ccs)
+                foreach (var cc in ccs.ToList().SelectMany(Spliter))
+                {
+                    mail.CC.Add(new MailAddress(cc, ""));
+                }
+
+            if (null != bccs)
+                foreach (var bcc in bccs.ToList().SelectMany(Spliter))
+                {
+                    mail.Bcc.Add(new MailAddress(bcc, ""));
+                }
+
+            mail.Subject = "[ATM]Notifikasi Pendaftaran";
+            mail.IsBodyHtml = true;
+            AlternateView htmlView = null;
+            htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
+            mail.AlternateViews.Add(htmlView);
+
+            if (null != tos)
+                foreach (var recipient in tos.ToList().SelectMany(Spliter))
+                {
+                    mail.To.Add(new MailAddress(recipient));
+                    try
                     {
-                        mail.To.Add(new MailAddress(recipient));
+                        client.Send(mail);
                     }
-                if (null != ccs)
-                    foreach (var cc in ccs.ToList().SelectMany(Spliter))
+                    catch (Exception ex)
                     {
-                        mail.CC.Add(new MailAddress(cc, ""));
                     }
+                }
+        }
 
-                if (null != bccs)
-                    foreach (var bcc in bccs.ToList().SelectMany(Spliter))
+        public void SendForgotPassword(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
+        {
+            var client = new SmtpClient();
+            var mailDefinition = new MailDefinition();
+            mailDefinition.Priority = MailPriority.High;
+            mailDefinition.From = "noreply@atm.gov.my";
+            mailDefinition.IsBodyHtml = true;
+            mailDefinition.Subject = "[ATM]Notifikasi Lupa Kata Laluan";
+            mailDefinition.BodyFileName = templatepath;
+
+            var ldReplacement = new ListDictionary();
+            if (dateTime.HasValue)
+                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", dateTime.Value));
+            else
+                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
+
+            ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
+            ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
+            ldReplacement.Add("<%Password%>", user.Password);
+            ldReplacement.Add("<%LoginUrl%>", loginurl);
+            var mail = new MailMessage();
+            mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
+            mail.From = new MailAddress(from, "No Reply");
+
+            if (null != ccs)
+                foreach (var cc in ccs.ToList().SelectMany(Spliter))
+                {
+                    mail.CC.Add(new MailAddress(cc, ""));
+                }
+
+            if (null != bccs)
+                foreach (var bcc in bccs.ToList().SelectMany(Spliter))
+                {
+                    mail.Bcc.Add(new MailAddress(bcc, ""));
+                }
+            mail.Subject = "[ATM]Notifikasi Lupa Kata Laluan";
+            mail.IsBodyHtml = true;
+            AlternateView htmlView = null;
+            htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
+            mail.AlternateViews.Add(htmlView);
+
+            if (null != tos)
+                foreach (var recipient in tos.ToList().SelectMany(Spliter))
+                {
+                    mail.To.Add(new MailAddress(recipient));
+                    try
                     {
-                        mail.Bcc.Add(new MailAddress(bcc, ""));
+                        client.Send(mail);
                     }
-                mail.Subject = "[ATM]Notifikasi Pendaftaran";
-                mail.IsBodyHtml = true;
-                AlternateView htmlView = null;
-                htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
-                mail.AlternateViews.Add(htmlView);
+                    catch (Exception exm)
+                    {
 
-                //if (em.AttachmentList.Count > 0)
-                //{
-                //    foreach (var x in em.AttachmentList.Where(x => x.Attachment != null))
-                //    {
-                //        mail.Attachments.Add(new Attachment(ConvertByteArrayToStream(x.Attachment), x.FileName, x.ContentType));
-                //    }
-                //} 
-                //client.SendCompleted += (s, e) => client.Dispose();
-                //client.SendAsync(mail, null);
-                client.Send(mail);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-            }
+                    }
+                }
         }
     }
 }

@@ -7,20 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFLoginStatu
     {
-        public tblREFLoginStatu()
-        {
-            this.tblUserLogs = new HashSet<tblUserLog>();
-        }
-    
         public string LoginStatusCd { get; set; }
         public string LoginStatusNm { get; set; }
-    
-        public virtual ICollection<tblUserLog> tblUserLogs { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return RedirectToAction("Login", "Account");
 
             var vm = new HomeViewModel();
-            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true));
+            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true, null));
             return View(vm);
         }
 

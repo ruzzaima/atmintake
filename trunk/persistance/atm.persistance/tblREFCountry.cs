@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFCountry
     {
         public tblREFCountry()
@@ -20,21 +20,25 @@ namespace SevenH.MMCSB.Atm.Persistance
             this.tblApplicants1 = new HashSet<tblApplicant>();
             this.tblApplicants2 = new HashSet<tblApplicant>();
             this.tblApplicants3 = new HashSet<tblApplicant>();
-            this.tblREFStates = new HashSet<tblREFState>();
+            this.tblApplicantEduSubmitteds = new HashSet<tblApplicantEduSubmitted>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
+            this.tblApplicantSubmiteds1 = new HashSet<tblApplicantSubmited>();
         }
     
         public string CountryCd { get; set; }
         public string Country { get; set; }
         public Nullable<bool> ActiveInd { get; set; }
         public string CreatedBy { get; set; }
-        public Nullable<DateTime> CreatedDt { get; set; }
+        public Nullable<System.DateTime> CreatedDt { get; set; }
         public string LastModifiedBy { get; set; }
-        public Nullable<DateTime> LastModifiedDt { get; set; }
+        public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
         public virtual ICollection<tblApplicant> tblApplicants1 { get; set; }
         public virtual ICollection<tblApplicant> tblApplicants2 { get; set; }
         public virtual ICollection<tblApplicant> tblApplicants3 { get; set; }
-        public virtual ICollection<tblREFState> tblREFStates { get; set; }
+        public virtual ICollection<tblApplicantEduSubmitted> tblApplicantEduSubmitteds { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds1 { get; set; }
     }
 }

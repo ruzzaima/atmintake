@@ -49,6 +49,7 @@ namespace SevenH.MMCSB.Atm.Domain
                 HasMany<AcquisitionLocation>(x => x.AcquisitionLocationCollection).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
 
                 References(x => x.AcquisitionType, "AcquisitionTypeCd").Unique();
+                References(x => x.Advertisment, "AcquisitionId").Unique();
 
             }
 

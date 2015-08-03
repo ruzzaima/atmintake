@@ -7,34 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblUser
     {
-        public tblUser()
-        {
-            this.tblUserLogs = new HashSet<tblUserLog>();
-        }
-    
         public int UserId { get; set; }
         public Nullable<int> ApplicantId { get; set; }
         public string LoginId { get; set; }
+        public string FullName { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string AlternativeEmail { get; set; }
         public string ServiceCd { get; set; }
-        public string UserPassword { get; set; }
-        public Nullable<DateTime> LastLoginDt { get; set; }
-        public DateTime CreatedDt { get; set; }
+        public string Salt { get; set; }
+        public string Password { get; set; }
+        public Nullable<bool> IsLocked { get; set; }
+        public Nullable<bool> FirstTime { get; set; }
+        public Nullable<System.DateTime> LastLoginDt { get; set; }
+        public System.DateTime CreatedDt { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime ModifiedDt { get; set; }
+        public Nullable<System.DateTime> ModifiedDt { get; set; }
         public string ModifiedBy { get; set; }
-    
-        public virtual tblApplicant tblApplicant { get; set; }
-        public virtual tblREFService tblREFService { get; set; }
-        public virtual ICollection<tblUserLog> tblUserLogs { get; set; }
     }
 }

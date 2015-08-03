@@ -7,20 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFGender
     {
         public tblREFGender()
         {
+            this.tblAcqMeritScores = new HashSet<tblAcqMeritScore>();
             this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
         }
     
         public string GenderCd { get; set; }
         public string Gender { get; set; }
     
+        public virtual ICollection<tblAcqMeritScore> tblAcqMeritScores { get; set; }
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
     }
 }

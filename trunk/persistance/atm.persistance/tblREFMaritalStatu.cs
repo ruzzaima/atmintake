@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFMaritalStatu
     {
         public tblREFMaritalStatu()
         {
             this.tblApplicants = new HashSet<tblApplicant>();
+            this.tblApplicantSubmiteds = new HashSet<tblApplicantSubmited>();
         }
     
         public string MrtlStatusCd { get; set; }
         public string MrtlStatus { get; set; }
     
         public virtual ICollection<tblApplicant> tblApplicants { get; set; }
+        public virtual ICollection<tblApplicantSubmited> tblApplicantSubmiteds { get; set; }
     }
 }

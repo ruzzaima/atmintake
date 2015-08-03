@@ -7,22 +7,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
-namespace SevenH.MMCSB.Atm.Persistance
+namespace SevenH.MMCSB.Atm.Entity.Persistance
 {
+    using System;
+    using System.Collections.Generic;
+    
     public partial class tblREFAcqType
     {
-        public tblREFAcqType()
-        {
-            this.tblAcquisitions = new HashSet<tblAcquisition>();
-        }
-    
-        public string AcquisitionTypeCd { get; set; }
+        public int AcquisitionTypeCd { get; set; }
         public string AcquisitionTypeNm { get; set; }
         public string ServiceCd { get; set; }
-    
-        public virtual ICollection<tblAcquisition> tblAcquisitions { get; set; }
-        public virtual tblREFService tblREFService { get; set; }
     }
 }

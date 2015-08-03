@@ -15,3 +15,20 @@ F:\Project\Work\8. ATM Intake\services\atm.cryptor\bin\Release\Iesi.Collections.
 F:\Project\Work\8. ATM Intake\services\atm.cryptor\obj\Release\atm.cryptor.csprojResolveAssemblyReference.cache
 F:\Project\Work\8. ATM Intake\services\atm.cryptor\obj\Release\atm.cryptor.dll
 F:\Project\Work\8. ATM Intake\services\atm.cryptor\obj\Release\atm.cryptor.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\atm.cryptor.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\atm.cryptor.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\atm.domain.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\FluentNHibernate.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\NHibernate.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\Spring.Core.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\Iesi.Collections.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\Common.Logging.dll
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\atm.domain.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\FluentNHibernate.pdb
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\FluentNHibernate.xml
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\NHibernate.xml
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\Spring.Core.xml
+D:\Project\Work\atmintake\services\atm.cryptor\bin\Release\Iesi.Collections.xml
+D:\Project\Work\atmintake\services\atm.cryptor\obj\Release\atm.cryptor.csprojResolveAssemblyReference.cache
+D:\Project\Work\atmintake\services\atm.cryptor\obj\Release\atm.cryptor.dll
+D:\Project\Work\atmintake\services\atm.cryptor\obj\Release\atm.cryptor.pdb

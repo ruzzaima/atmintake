@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atm.nhibernate.persistance">
-      <HintPath>..\..\persistance\atm.nhibernate.persistance\bin\Debug\atm.nhibernate.persistance.dll</HintPath>
-    </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>

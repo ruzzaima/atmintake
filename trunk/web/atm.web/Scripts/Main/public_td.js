@@ -5,7 +5,8 @@ $(function () {
 
     // validation
     $("#form_peribadi").validationEngine();
-    
+    $("#form_akademik").validationEngine();
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -143,11 +144,23 @@ $(function () {
             viewModel.saveprofile();
         },
         saveacademics: function () {
-            viewModel.saveprofile();
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         saveacademicandcontinue: function () {
-            viewModel.saveprofile();
-            $('#resume a[href="#sport"]').tab('show');
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+                $('#resume a[href="#sport"]').tab('show');
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         savecontract: function () {
             viewModel.saveprofile();
@@ -205,7 +218,7 @@ $(function () {
 
                 $('#notification_dialog .btn-submit').unbind("click");
                 $('#notification_dialog .btn-submit').click(function () {
-                    
+
                     showLoading();
 
                     $.ajax({
@@ -594,10 +607,39 @@ $(function () {
     // gender
     $('input[name="gender"]').on('ifClicked', function (event) {
         var selectedval = this.value;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify({ gender: selectedval, acquisitionid: acquisitionid }),
+            url: server + '/Public/CheckingGender',
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+                if (!msg.OK) {
+                    ShowMessage(msg.message);
+                }
+            },
+            error: function (xhr) {
+            }
+        });
         viewModel.applicant.GenderCd(selectedval);
     });
 
     if (viewModel.applicant.GenderCd) {
+
+        if (viewModel.applicant.GenderCd() !== '') {
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ gender: ko.mapping.toJS(viewModel.applicant.GenderCd), acquisitionid: acquisitionid }),
+                url: server + '/Public/CheckingGender',
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.OK) {
+                        //location.href = msg.url;
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
         $('input[name="gender"]').each(function () {
             if (this.value === viewModel.applicant.GenderCd()) {
                 $(this).iCheck('check');

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
-namespace SevenH.MMCSB.Atm.Domain.Interface
+namespace SevenH.MMCSB.Atm.Domain
 {
     public interface IAcquisitionPersistence
     {
@@ -9,5 +9,6 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         int Save(Acquisition appl);
         Acquisition GetAcquisition(int id);
         IEnumerable<AcquisitionLocation> GetLocations(string zonecode);
+        IEnumerable<Acquisition> GetAllAcquisition(bool isactive, string servicecode);
     }
 }

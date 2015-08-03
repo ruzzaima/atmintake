@@ -576,33 +576,33 @@ new -  to call new at the field init
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+      <xs:element name="NewStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="OpenStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="CloseStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="CompleteStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="InviteFirstSelStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="FirstSelectionStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="InviteFinalSelStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="WrittenTestStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="FinalSelStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="AssignNoTenteraStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="SecurityCheckStatus" type="xs:boolean" nillable="true"/>
+      <xs:element name="Year" type="xs:int" nillable="true"/>
+      <xs:element name="Siri" type="xs:int" nillable="true"/>
+      <xs:element name="Target" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
       <xs:attribute name="AcquisitionTypeCd" type="xs:int" use="required"/>
-      <xs:attribute name="Year" type="xs:int" use="required"/>
-      <xs:attribute name="Siri" type="xs:int" use="required"/>
-      <xs:attribute name="Target" type="xs:int" use="required"/>
-      <xs:attribute name="NewStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="NewStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="OpenStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="OpenStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="CloseStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="CloseStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="InviteFirstSelStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="InviteFirstSelStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="SecurityCheckStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="SecurityCheckStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="FirstSelectionStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="FirstSelectionStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="InviteFinalSelStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="InviteFinalSelStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="WrittenTestStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="WrittenTestStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="FinalSelStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="FinalSelStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="AssignNoTenteraStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="AssignNoTenteraStatusBy" type="xs:string" use="required"/>
-      <xs:attribute name="CompleteStatus" type="xs:boolean" use="required"/>
       <xs:attribute name="CompleteStatusBy" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
