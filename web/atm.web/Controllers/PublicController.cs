@@ -348,9 +348,9 @@ namespace SevenH.MMCSB.Atm.Web
                 var app = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetById(id);
                 if (null != app)
                 {
-                    var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(app.ApplicantId);
+                    var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(app.ApplicantId, app.AcquisitionId);
                     var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(app.AcquisitionId);
-                    var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                    var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
                     vm.RegisteredDateTime = app.CreatedDt.Value;
                     vm.Name = applicant.FullName;
                     vm.IdNumber = applicant.NewICNo;
@@ -381,7 +381,7 @@ namespace SevenH.MMCSB.Atm.Web
                         var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
                         if (null != acq)
                         {
-                            var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                            var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
                             if (acqtype != null)
                             {
                                 // perempuan
@@ -969,7 +969,7 @@ namespace SevenH.MMCSB.Atm.Web
                             foreach (var app in list)
                             {
                                 var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(app.AcquisitionId);
-                                var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                                var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
                                 if (app.FirstSelectionInd.HasValue)
                                 {
                                     if (app.FirstSelectionInd.Value)
@@ -1038,7 +1038,7 @@ namespace SevenH.MMCSB.Atm.Web
             {
                 // get all acquisition which still on and service type is Tentera Darat
                 var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
-                var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
                 // TODO : Need to refine this
                 // grab all advertisment where service code for TD = 01
                 var ads = ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments("01", DateTime.Now);

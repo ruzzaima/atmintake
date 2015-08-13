@@ -1,0 +1,42 @@
+﻿@using SevenH.MMCSB.Atm.Domain
+@model SevenH.MMCSB.Atm.Web.Models.StatisticViewModel
+@{
+    ViewBag.Title = "Statistik mengikut negeri dan jantina";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+
+<div class="row">
+    <h5>Statistik Calon Mengikut Jantina dan Negeri Kelahiran - Pengambilan Siri @Model.Acquisition.Siri @Model.Acquisition.AcquisitionType.AcquisitionTypeNm</h5>
+    <div class="col-md-6">
+        <table class="table table-bordered tile">
+            <thead>
+            <tr>
+                <th>
+                    Negeri
+                </th>
+                <th class="center">
+                    Lelaki
+                </th>
+                <th class="center">
+                    Perempuan
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var ap in @Model.ListOfState.OrderBy(a => a.StateCd))
+            {
+                var bystate = Model.ListOfApplicant.Where(a => a.BirthStateCd == ap.StateCd);
+                var applicantSubmitteds = bystate as IList<ApplicantSubmitted> ?? bystate.ToList();
+                var lcount = applicantSubmitteds.Count(a => a.GenderCd == "L");
+                var pcount = applicantSubmitteds.Count(a => a.GenderCd == "P");
+                <tr>
+                    <td style="text-align: left">@ap.StateDesc</td>
+                    <td style="width: 80px">@lcount</td>
+                    <td style="width: 80px">@pcount</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

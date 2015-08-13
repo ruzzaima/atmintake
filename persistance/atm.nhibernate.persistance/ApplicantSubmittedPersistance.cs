@@ -184,6 +184,30 @@ namespace SevenH.MMCSB.Persistance
             var exist = Factory.OpenSession().QueryOver<ApplicantSubmitted>().Where(a => a.NewICNo == icno && a.AcquisitionId == acquisitionid).SingleOrDefault();
             return exist;
         }
+
+
+        public IEnumerable<ApplicantSubmitted> GetApplicants(int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public ApplicantSubmitted GetApplicant(int applicantid, int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public int UpdateSport(ApplicantSportSubmitted sport)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<ApplicantSubmitted> GetApplicants(int acquisitionid, string racecode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AtmIntakeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AtmIntakeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DB_996412_intake2.dbo.sysdiagrams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="sysdiagrams">
@@ -1319,20 +1319,11 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblREFQuestionnareType' does
           <Property Name="UserCatCd" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="UserCat" Type="nchar" MaxLength="10" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_996412_intake2.dbo.tblUser' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblUser">
           <Key>
             <PropertyRef Name="UserId" />
-            <PropertyRef Name="LoginId" />
-            <PropertyRef Name="FullName" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="AlternativeEmail" />
-            <PropertyRef Name="Salt" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="CreatedDt" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="LoginId" Type="char" MaxLength="12" Nullable="false" />
           <Property Name="FullName" Type="varchar" MaxLength="100" Nullable="false" />
@@ -1350,17 +1341,22 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUser' does not have a pri
           <Property Name="ModifiedDt" Type="smalldatetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblUserLog">
           <Key>
             <PropertyRef Name="UserLogId" />
           </Key>
-          <Property Name="UserLogId" Type="int" Nullable="false" />
+          <Property Name="UserLogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="LoginStatusCd" Type="char" MaxLength="2" />
           <Property Name="ModifiedDt" Type="smalldatetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tblUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Roles" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <Association Name="FK_tblAcqAnnouncement_tblAcquisition">
           <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="1" />
@@ -1635,6 +1631,18 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             </Principal>
             <Dependent Role="tblAcqQuestionnaireScale">
               <PropertyRef Name="QuestionnaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcquisition_tblREFAcqType">
+          <End Role="tblREFAcqType" Type="Self.tblREFAcqType" Multiplicity="0..1" />
+          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFAcqType">
+              <PropertyRef Name="AcquisitionTypeCd" />
+            </Principal>
+            <Dependent Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionTypeCd" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2742,6 +2750,18 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblUserLog_tblREFLoginStatus">
+          <End Role="tblREFLoginStatus" Type="Self.tblREFLoginStatus" Multiplicity="0..1" />
+          <End Role="tblUserLog" Type="Self.tblUserLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFLoginStatus">
+              <PropertyRef Name="LoginStatusCd" />
+            </Principal>
+            <Dependent Role="tblUserLog">
+              <PropertyRef Name="LoginStatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AtmIntakeModelStoreContainer">
           <EntitySet Name="tblAcqAnnouncement" EntityType="Self.tblAcqAnnouncement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAcqCriteria" EntityType="Self.tblAcqCriteria" Schema="dbo" store:Type="Tables" />
@@ -2817,6 +2837,9 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <EntitySet Name="tblREFSubjectGrade" EntityType="Self.tblREFSubjectGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFTalentCat" EntityType="Self.tblREFTalentCat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFUserCat" EntityType="Self.tblREFUserCat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserLog" EntityType="Self.tblUserLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUserRoles" EntityType="Self.tblUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [sysdiagrams].[name] AS [name], 
@@ -2881,36 +2904,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
     [tblREFQuestionnareType].[QuestionnaireTypeCd] AS [QuestionnaireTypeCd], 
     [tblREFQuestionnareType].[QuestionnaireType] AS [QuestionnaireType]
     FROM [dbo].[tblREFQuestionnareType] AS [tblREFQuestionnareType]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblUser" EntityType="Self.tblUser" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblUser].[UserId] AS [UserId], 
-    [tblUser].[ApplicantId] AS [ApplicantId], 
-    [tblUser].[LoginId] AS [LoginId], 
-    [tblUser].[FullName] AS [FullName], 
-    [tblUser].[UserName] AS [UserName], 
-    [tblUser].[Email] AS [Email], 
-    [tblUser].[AlternativeEmail] AS [AlternativeEmail], 
-    [tblUser].[ServiceCd] AS [ServiceCd], 
-    [tblUser].[Salt] AS [Salt], 
-    [tblUser].[Password] AS [Password], 
-    [tblUser].[IsLocked] AS [IsLocked], 
-    [tblUser].[FirstTime] AS [FirstTime], 
-    [tblUser].[LastLoginDt] AS [LastLoginDt], 
-    [tblUser].[CreatedDt] AS [CreatedDt], 
-    [tblUser].[CreatedBy] AS [CreatedBy], 
-    [tblUser].[ModifiedDt] AS [ModifiedDt], 
-    [tblUser].[ModifiedBy] AS [ModifiedBy]
-    FROM [dbo].[tblUser] AS [tblUser]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblUserLog" EntityType="Self.tblUserLog" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblUserLog].[UserLogId] AS [UserLogId], 
-    [tblUserLog].[UserId] AS [UserId], 
-    [tblUserLog].[LoginStatusCd] AS [LoginStatusCd], 
-    [tblUserLog].[ModifiedDt] AS [ModifiedDt], 
-    [tblUserLog].[ModifiedBy] AS [ModifiedBy]
-    FROM [dbo].[tblUserLog] AS [tblUserLog]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_tblAcqAnnouncement_tblAcquisition" Association="Self.FK_tblAcqAnnouncement_tblAcquisition">
             <End Role="tblAcquisition" EntitySet="tblAcquisition" />
@@ -3003,6 +2996,10 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <AssociationSet Name="FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire" Association="Self.FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire">
             <End Role="tblAcqQuestionnaire" EntitySet="tblAcqQuestionnaire" />
             <End Role="tblAcqQuestionnaireScale" EntitySet="tblAcqQuestionnaireScale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcquisition_tblREFAcqType" Association="Self.FK_tblAcquisition_tblREFAcqType">
+            <End Role="tblREFAcqType" EntitySet="tblREFAcqType" />
+            <End Role="tblAcquisition" EntitySet="tblAcquisition" />
           </AssociationSet>
           <AssociationSet Name="FK_tblAdvertisment_tblAcquisition" Association="Self.FK_tblAdvertisment_tblAcquisition">
             <End Role="tblAcquisition" EntitySet="tblAcquisition" />
@@ -3372,9 +3369,12 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             <End Role="tblREFHighEduLevel" EntitySet="tblREFHighEduLevel" />
             <End Role="tblREFSubject" EntitySet="tblREFSubject" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblUserLog_tblREFLoginStatus" Association="Self.FK_tblUserLog_tblREFLoginStatus">
+            <End Role="tblREFLoginStatus" EntitySet="tblREFLoginStatus" />
+            <End Role="tblUserLog" EntitySet="tblUserLog" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AtmIntakeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3395,7 +3395,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="CreatedDt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqAnnouncement_tblAcquisition" FromRole="tblAcqAnnouncement" ToRole="tblAcquisition" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqAnnouncement_tblAcquisition" FromRole="tblAcqAnnouncement" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAcqCriteria">
           <Key>
@@ -3427,7 +3427,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="CreatedDt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqCriteria_tblAcquisition" FromRole="tblAcqCriteria" ToRole="tblAcquisition" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqCriteria_tblAcquisition" FromRole="tblAcqCriteria" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAcqEducationCriteria">
           <Key>
@@ -3441,9 +3441,9 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LastModifiedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="MandatoriInd" Type="Boolean" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqEducationCriteria_tblAcquisition" FromRole="tblAcqEducationCriteria" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblAcqEducationCriteriaSubjects" Relationship="Self.FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria" FromRole="tblAcqEducationCriteria" ToRole="tblAcqEducationCriteriaSubject" />
           <NavigationProperty Name="tblAcqEduCriteriaFieldOfStudies" Relationship="Self.FK_tblAcqEduCriteriaFieldOfStudy_tblAcqEducationCriteria" FromRole="tblAcqEducationCriteria" ToRole="tblAcqEduCriteriaFieldOfStudy" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqEducationCriteria_tblAcquisition" FromRole="tblAcqEducationCriteria" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAcqEducationCriteriaSubject">
           <Key>
@@ -3490,11 +3490,11 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="CreatedDt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqLocation_tblAcquisition" FromRole="tblAcqLocation" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblRefLocation" Relationship="Self.FK_tblAcqLocation_tblRefLocation" FromRole="tblAcqLocation" ToRole="tblRefLocation" />
           <NavigationProperty Name="tblREFLocationZone" Relationship="Self.FK_tblAcqLocation_tblRefLocationZone" FromRole="tblAcqLocation" ToRole="tblREFLocationZone" />
           <NavigationProperty Name="tblApplications" Relationship="Self.FK_tblApplication_tblAcqLocation" FromRole="tblAcqLocation" ToRole="tblApplication" />
           <NavigationProperty Name="tblApplications1" Relationship="Self.FK_tblApplication_tblAcqLocation1" FromRole="tblAcqLocation" ToRole="tblApplication" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqLocation_tblAcquisition" FromRole="tblAcqLocation" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAcqMerit">
           <Key>
@@ -3504,9 +3504,9 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="AcquisitionId" Type="Int32" Nullable="false" />
           <Property Name="MeritTypeCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="MeritInd" Type="Boolean" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqMerit_tblAcquisition" FromRole="tblAcqMerit" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblREFMeritType" Relationship="Self.FK_tblAcqMerit_tblREFMeritType" FromRole="tblAcqMerit" ToRole="tblREFMeritType" />
           <NavigationProperty Name="tblAcqMeritScores" Relationship="Self.FK_tblAcqMeritScore_tblAcqMerit" FromRole="tblAcqMerit" ToRole="tblAcqMeritScore" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqMerit_tblAcquisition" FromRole="tblAcqMerit" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAcqMeritScore">
           <Key>
@@ -3563,12 +3563,12 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="QuestionnaireSubTypeCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="SequenceNo" Type="Int32" />
           <NavigationProperty Name="tblAcqQuestions" Relationship="Self.FK_tblAcqQuestion_tblAcqQuestionnaire" FromRole="tblAcqQuestionnaire" ToRole="tblAcqQuestion" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqQuestionnaire_tblAcquisition" FromRole="tblAcqQuestionnaire" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblREFPersonalityType" Relationship="Self.FK_tblAcqQuestionnaire_tblREFPersonalityType" FromRole="tblAcqQuestionnaire" ToRole="tblREFPersonalityType" />
           <NavigationProperty Name="tblREFQuestionnaireSubType" Relationship="Self.FK_tblAcqQuestionnaire_tblREFQuestionnaireSubType" FromRole="tblAcqQuestionnaire" ToRole="tblREFQuestionnaireSubType" />
           <NavigationProperty Name="tblREFQuestionnaireType" Relationship="Self.FK_tblAcqQuestionnaire_tblREQuestionnareType" FromRole="tblAcqQuestionnaire" ToRole="tblREFQuestionnaireType" />
           <NavigationProperty Name="tblAcqQuestionnaireScales" Relationship="Self.FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire" FromRole="tblAcqQuestionnaire" ToRole="tblAcqQuestionnaireScale" />
           <NavigationProperty Name="tblAppQuestionnaireScores" Relationship="Self.FK_tblAppQuestionnaireScore_tblAcqQuestionnaire" FromRole="tblAcqQuestionnaire" ToRole="tblAppQuestionnaireScore" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqQuestionnaire_tblAcquisition" FromRole="tblAcqQuestionnaire" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAcqQuestionnaireScale">
           <Key>
@@ -3581,66 +3581,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="MeritMark" Type="Int32" />
           <NavigationProperty Name="tblAcqQuestionnaire" Relationship="Self.FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire" FromRole="tblAcqQuestionnaireScale" ToRole="tblAcqQuestionnaire" />
           <NavigationProperty Name="tblAppQuestionFeedbacks" Relationship="Self.FK_tblAppQuestionFeedback_tblAcqQuestionnaireScale" FromRole="tblAcqQuestionnaireScale" ToRole="tblAppQuestionFeedback" />
-        </EntityType>
-        <EntityType Name="tblAcquisition">
-          <Key>
-            <PropertyRef Name="AcquisitionId" />
-          </Key>
-          <Property Name="AcquisitionId" Type="Int32" Nullable="false" />
-          <Property Name="AcquisitionTypeCd" Type="Int32" />
-          <Property Name="Year" Type="Int32" />
-          <Property Name="Siri" Type="Int32" />
-          <Property Name="ClosingDate" Type="DateTime" Precision="0" />
-          <Property Name="Target" Type="Int32" />
-          <Property Name="NewStatus" Type="Boolean" />
-          <Property Name="NewStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="OpenStatus" Type="Boolean" />
-          <Property Name="OpenStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CloseStatus" Type="Boolean" />
-          <Property Name="CloseStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="InviteFirstSelStatus" Type="Boolean" />
-          <Property Name="InviteFirstSelStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SecurityCheckStatus" Type="Boolean" />
-          <Property Name="SecurityCheckStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="DocumentStatus" Type="Boolean" />
-          <Property Name="DocumentStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FirstSelectionStatus" Type="Boolean" />
-          <Property Name="FirstSelectionStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="InviteFinalSelStatus" Type="Boolean" />
-          <Property Name="InviteFinalSelStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="WrittenTestStatus" Type="Boolean" />
-          <Property Name="WrittenTestStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FinalSelStatus" Type="Boolean" />
-          <Property Name="FinalSelStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AssignNoTenteraStatus" Type="Boolean" />
-          <Property Name="AssignNoTenteraStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CompleteStatus" Type="Boolean" />
-          <Property Name="CompleteStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <Property Name="InviteFirstSelNominated" Type="Boolean" />
-          <Property Name="InviteFirstSelNominatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="PhysicalHealthStatus" Type="Boolean" />
-          <Property Name="PhysicalHealthStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ToFinalSelNominated" Type="Boolean" />
-          <Property Name="ToFinalSelNominatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="FirstSelShortlisProcessInd" Type="Boolean" />
-          <Property Name="FinalSelShortlisProcessInd" Type="Boolean" />
-          <Property Name="ShortlistMeritInd" Type="Boolean" />
-          <Property Name="ArmyNumberFrom" Type="Int32" />
-          <Property Name="ArmyNumberTo" Type="Int32" />
-          <NavigationProperty Name="tblAcqAnnouncements" Relationship="Self.FK_tblAcqAnnouncement_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqAnnouncement" />
-          <NavigationProperty Name="tblAcqCriterias" Relationship="Self.FK_tblAcqCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqCriteria" />
-          <NavigationProperty Name="tblAcqEducationCriterias" Relationship="Self.FK_tblAcqEducationCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqEducationCriteria" />
-          <NavigationProperty Name="tblAcqLocations" Relationship="Self.FK_tblAcqLocation_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqLocation" />
-          <NavigationProperty Name="tblAcqMerits" Relationship="Self.FK_tblAcqMerit_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqMerit" />
-          <NavigationProperty Name="tblAcqQuestionnaires" Relationship="Self.FK_tblAcqQuestionnaire_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqQuestionnaire" />
-          <NavigationProperty Name="tblAcqFinalShorlistCriteria" Relationship="Self.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqFinalShorlistCriteria" />
-          <NavigationProperty Name="tblAdvertisments" Relationship="Self.FK_tblAdvertisment_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAdvertisment" />
-          <NavigationProperty Name="tblAppApplicantMeritScores" Relationship="Self.FK_tblAppApplicantMeritScore_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAppApplicantMeritScore" />
-          <NavigationProperty Name="tblApplications" Relationship="Self.FK_tblApplication_tblAcquisition" FromRole="tblAcquisition" ToRole="tblApplication" />
         </EntityType>
         <EntityType Name="tblAdvertisement_Xpakai">
           <Key>
@@ -3681,8 +3621,8 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="AcquisitionId" Type="Int32" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAdvertisment_tblAcquisition" FromRole="tblAdvertisment" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblREFService" Relationship="Self.FK_tblAdvertisment_tblREFService" FromRole="tblAdvertisment" ToRole="tblREFService" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAdvertisment_tblAcquisition" FromRole="tblAdvertisment" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAppApplicantDentalExamination">
           <Key>
@@ -3735,9 +3675,9 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="AchievementCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="SportAssocId" Type="Int32" />
           <Property Name="OverallMeritScore" Type="Decimal" Precision="5" Scale="2" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAppApplicantMeritScore_tblAcquisition" FromRole="tblAppApplicantMeritScore" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblApplication" Relationship="Self.FK_tblAppApplicantMeritScore_tblApplication" FromRole="tblAppApplicantMeritScore" ToRole="tblApplication" />
           <NavigationProperty Name="tblREFHighEduLevel" Relationship="Self.FK_tblAppApplicantMeritScore_tblREFHighEduLevel" FromRole="tblAppApplicantMeritScore" ToRole="tblREFHighEduLevel" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition" FromRole="tblAppApplicantMeritScore" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAppApplicantPhysicalExamIllness">
           <Key>
@@ -4357,7 +4297,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="ArmyNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblAcqLocation" Relationship="Self.FK_tblApplication_tblAcqLocation" FromRole="tblApplication" ToRole="tblAcqLocation" />
           <NavigationProperty Name="tblAcqLocation1" Relationship="Self.FK_tblApplication_tblAcqLocation1" FromRole="tblApplication" ToRole="tblAcqLocation" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblApplication_tblAcquisition" FromRole="tblApplication" ToRole="tblAcquisition" />
           <NavigationProperty Name="tblAppApplicantDentalExaminations" Relationship="Self.FK_tblAppApplicantDentalExamination_tblApplication" FromRole="tblApplication" ToRole="tblAppApplicantDentalExamination" />
           <NavigationProperty Name="tblAppApplicantMeritScores" Relationship="Self.FK_tblAppApplicantMeritScore_tblApplication" FromRole="tblApplication" ToRole="tblAppApplicantMeritScore" />
           <NavigationProperty Name="tblAppApplicantPhysicalExaminations" Relationship="Self.FK_tblAppApplicantPhysical_tblApplication" FromRole="tblApplication" ToRole="tblAppApplicantPhysicalExamination" />
@@ -4366,6 +4305,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <NavigationProperty Name="tblApplicationStatu" Relationship="Self.FK_tblApplicationStatus_tblApplication" FromRole="tblApplication" ToRole="tblApplicationStatus" />
           <NavigationProperty Name="tblAppQuestionFeedbacks" Relationship="Self.FK_tblAppQuestionFeedback_tblApplication" FromRole="tblApplication" ToRole="tblAppQuestionFeedback" />
           <NavigationProperty Name="tblAppQuestionnaireScores" Relationship="Self.FK_tblAppQuestionnaireScore_tblApplication" FromRole="tblApplication" ToRole="tblAppQuestionnaireScore" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblApplication_tblAcquisition" FromRole="tblApplication" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblAppQuestionFeedback">
           <Key>
@@ -4424,14 +4364,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <NavigationProperty Name="tblApplicantSkillSubmitteds" Relationship="Self.FK_tblAppApplicantSkill_tblREFAchievement" FromRole="tblREFAchievement" ToRole="tblApplicantSkillSubmitted" />
           <NavigationProperty Name="tblApplicantSportAssocs" Relationship="Self.FK_tblApplicantSportAssoc_tblREFAchievement" FromRole="tblREFAchievement" ToRole="tblApplicantSportAssoc" />
           <NavigationProperty Name="tblApplicantSportAssocSubmitteds" Relationship="Self.FK_tblApplicantSportAssocSubmitted_tblREFAchievement" FromRole="tblREFAchievement" ToRole="tblApplicantSportAssocSubmitted" />
-        </EntityType>
-        <EntityType Name="tblREFAcqType">
-          <Key>
-            <PropertyRef Name="AcquisitionTypeCd" />
-          </Key>
-          <Property Name="AcquisitionTypeCd" Type="Int32" Nullable="false" />
-          <Property Name="AcquisitionTypeNm" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblREFApplicationStatu">
           <Key>
@@ -4614,6 +4546,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           </Key>
           <Property Name="LoginStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="LoginStatusNm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblUserLogs" Relationship="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus" FromRole="tblREFLoginStatu" ToRole="tblUserLog" />
         </EntityType>
         <EntityType Name="tblREFMajorMinor">
           <Key>
@@ -4892,7 +4825,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="CreatedDt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblAcquisition" Relationship="Self.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcqFinalShorlistCriteria" ToRole="tblAcquisition" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcqFinalShorlistCriteria" ToRole="tblAcquisition" />
         </EntityType>
         <EntityType Name="tblApplicationStatu">
           <Key>
@@ -4914,81 +4847,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <Property Name="QuestionnaireTypeCd" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="QuestionnaireType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tblUser">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="LoginId" />
-            <PropertyRef Name="FullName" />
-            <PropertyRef Name="Email" />
-            <PropertyRef Name="AlternativeEmail" />
-            <PropertyRef Name="Salt" />
-            <PropertyRef Name="Password" />
-            <PropertyRef Name="CreatedDt" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ApplicantId" Type="Int32" />
-          <Property Name="LoginId" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="AlternativeEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Salt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IsLocked" Type="Boolean" />
-          <Property Name="FirstTime" Type="Boolean" />
-          <Property Name="LastLoginDt" Type="DateTime" Precision="0" />
-          <Property Name="CreatedDt" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tblUserLog">
-          <Key>
-            <PropertyRef Name="UserLogId" />
-          </Key>
-          <Property Name="UserLogId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="LoginStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="FK_tblAcqAnnouncement_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="1" />
-          <End Role="tblAcqAnnouncement" Type="Self.tblAcqAnnouncement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqAnnouncement">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAcqCriteria_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="0..1" />
-          <End Role="tblAcqCriteria" Type="Self.tblAcqCriteria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqCriteria">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAcqEducationCriteria_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="0..1" />
-          <End Role="tblAcqEducationCriteria" Type="Self.tblAcqEducationCriteria" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqEducationCriteria">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria">
           <End Role="tblAcqEducationCriteria" Type="Self.tblAcqEducationCriteria" Multiplicity="0..1" />
           <End Role="tblAcqEducationCriteriaSubject" Type="Self.tblAcqEducationCriteriaSubject" Multiplicity="*" />
@@ -5037,18 +4895,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblAcqLocation_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="0..1" />
-          <End Role="tblAcqLocation" Type="Self.tblAcqLocation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqLocation">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblAcqLocation_tblRefLocation">
           <End Role="tblRefLocation" Type="Self.tblRefLocation" Multiplicity="0..1" />
           <End Role="tblAcqLocation" Type="Self.tblAcqLocation" Multiplicity="*" />
@@ -5094,18 +4940,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             </Principal>
             <Dependent Role="tblApplication">
               <PropertyRef Name="FirstSelActualAcqLocationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAcqMerit_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="1" />
-          <End Role="tblAcqMerit" Type="Self.tblAcqMerit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqMerit">
-              <PropertyRef Name="AcquisitionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5193,18 +5027,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblAcqQuestionnaire_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="0..1" />
-          <End Role="tblAcqQuestionnaire" Type="Self.tblAcqQuestionnaire" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqQuestionnaire">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblAcqQuestionnaire_tblREFPersonalityType">
           <End Role="tblREFPersonalityType" Type="Self.tblREFPersonalityType" Multiplicity="0..1" />
           <End Role="tblAcqQuestionnaire" Type="Self.tblAcqQuestionnaire" Multiplicity="*" />
@@ -5274,54 +5096,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             </Principal>
             <Dependent Role="tblAppQuestionFeedback">
               <PropertyRef Name="QuestionnaireScaleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="1" />
-          <End Role="tblAcqFinalShorlistCriteria" Type="Self.tblAcqFinalShorlistCriteria" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqFinalShorlistCriteria">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAdvertisment_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="0..1" />
-          <End Role="tblAdvertisment" Type="Self.tblAdvertisment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAdvertisment">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAppApplicantMeritScore_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="1" />
-          <End Role="tblAppApplicantMeritScore" Type="Self.tblAppApplicantMeritScore" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAppApplicantMeritScore">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblApplication_tblAcquisition">
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="0..1" />
-          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblApplication">
-              <PropertyRef Name="AcquisitionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6345,7 +6119,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <EntitySet Name="tblAcqQuestions" EntityType="Self.tblAcqQuestion" />
           <EntitySet Name="tblAcqQuestionnaires" EntityType="Self.tblAcqQuestionnaire" />
           <EntitySet Name="tblAcqQuestionnaireScales" EntityType="Self.tblAcqQuestionnaireScale" />
-          <EntitySet Name="tblAcquisitions" EntityType="Self.tblAcquisition" />
           <EntitySet Name="tblAdvertisement_Xpakai" EntityType="Self.tblAdvertisement_Xpakai" />
           <EntitySet Name="tblAdvertisments" EntityType="Self.tblAdvertisment" />
           <EntitySet Name="tblAppApplicantDentalExaminations" EntityType="Self.tblAppApplicantDentalExamination" />
@@ -6373,7 +6146,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <EntitySet Name="tblAppQuestionnaireScores" EntityType="Self.tblAppQuestionnaireScore" />
           <EntitySet Name="tblExistingAtmMembers" EntityType="Self.tblExistingAtmMember" />
           <EntitySet Name="tblREFAchievements" EntityType="Self.tblREFAchievement" />
-          <EntitySet Name="tblREFAcqTypes" EntityType="Self.tblREFAcqType" />
           <EntitySet Name="tblREFApplicationStatus" EntityType="Self.tblREFApplicationStatu" />
           <EntitySet Name="tblRefBloodTypes" EntityType="Self.tblRefBloodType" />
           <EntitySet Name="tblREFCities" EntityType="Self.tblREFCity" />
@@ -6412,20 +6184,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <EntitySet Name="tblAcqFinalShorlistCriterias" EntityType="Self.tblAcqFinalShorlistCriteria" />
           <EntitySet Name="tblApplicationStatus" EntityType="Self.tblApplicationStatu" />
           <EntitySet Name="tblREFQuestionnareTypes" EntityType="Self.tblREFQuestionnareType" />
-          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
-          <EntitySet Name="tblUserLogs" EntityType="Self.tblUserLog" />
-          <AssociationSet Name="FK_tblAcqAnnouncement_tblAcquisition" Association="Self.FK_tblAcqAnnouncement_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqAnnouncement" EntitySet="tblAcqAnnouncements" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAcqCriteria_tblAcquisition" Association="Self.FK_tblAcqCriteria_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqCriteria" EntitySet="tblAcqCriterias" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAcqEducationCriteria_tblAcquisition" Association="Self.FK_tblAcqEducationCriteria_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqEducationCriteria" EntitySet="tblAcqEducationCriterias" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria" Association="Self.FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria">
             <End Role="tblAcqEducationCriteria" EntitySet="tblAcqEducationCriterias" />
             <End Role="tblAcqEducationCriteriaSubject" EntitySet="tblAcqEducationCriteriaSubjects" />
@@ -6442,10 +6200,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             <End Role="tblREFMajorMinor" EntitySet="tblREFMajorMinors" />
             <End Role="tblAcqEduCriteriaFieldOfStudy" EntitySet="tblAcqEduCriteriaFieldOfStudies" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblAcqLocation_tblAcquisition" Association="Self.FK_tblAcqLocation_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqLocation" EntitySet="tblAcqLocations" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblAcqLocation_tblRefLocation" Association="Self.FK_tblAcqLocation_tblRefLocation">
             <End Role="tblRefLocation" EntitySet="tblRefLocations" />
             <End Role="tblAcqLocation" EntitySet="tblAcqLocations" />
@@ -6461,10 +6215,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <AssociationSet Name="FK_tblApplication_tblAcqLocation1" Association="Self.FK_tblApplication_tblAcqLocation1">
             <End Role="tblAcqLocation" EntitySet="tblAcqLocations" />
             <End Role="tblApplication" EntitySet="tblApplications" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAcqMerit_tblAcquisition" Association="Self.FK_tblAcqMerit_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqMerit" EntitySet="tblAcqMerits" />
           </AssociationSet>
           <AssociationSet Name="FK_tblAcqMerit_tblREFMeritType" Association="Self.FK_tblAcqMerit_tblREFMeritType">
             <End Role="tblREFMeritType" EntitySet="tblREFMeritTypes" />
@@ -6494,10 +6244,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             <End Role="tblAcqQuestion" EntitySet="tblAcqQuestions" />
             <End Role="tblAppQuestionFeedback" EntitySet="tblAppQuestionFeedbacks" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblAcqQuestionnaire_tblAcquisition" Association="Self.FK_tblAcqQuestionnaire_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqQuestionnaire" EntitySet="tblAcqQuestionnaires" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblAcqQuestionnaire_tblREFPersonalityType" Association="Self.FK_tblAcqQuestionnaire_tblREFPersonalityType">
             <End Role="tblREFPersonalityType" EntitySet="tblREFPersonalityTypes" />
             <End Role="tblAcqQuestionnaire" EntitySet="tblAcqQuestionnaires" />
@@ -6521,22 +6267,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
           <AssociationSet Name="FK_tblAppQuestionFeedback_tblAcqQuestionnaireScale" Association="Self.FK_tblAppQuestionFeedback_tblAcqQuestionnaireScale">
             <End Role="tblAcqQuestionnaireScale" EntitySet="tblAcqQuestionnaireScales" />
             <End Role="tblAppQuestionFeedback" EntitySet="tblAppQuestionFeedbacks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition" Association="Self.FK_tblAcqFinalShorlistCriteria_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqFinalShorlistCriteria" EntitySet="tblAcqFinalShorlistCriterias" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAdvertisment_tblAcquisition" Association="Self.FK_tblAdvertisment_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAdvertisment" EntitySet="tblAdvertisments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAppApplicantMeritScore_tblAcquisition" Association="Self.FK_tblAppApplicantMeritScore_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAppApplicantMeritScore" EntitySet="tblAppApplicantMeritScores" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblApplication_tblAcquisition" Association="Self.FK_tblApplication_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblApplication" EntitySet="tblApplications" />
           </AssociationSet>
           <AssociationSet Name="FK_tblAdvertisment_tblREFService" Association="Self.FK_tblAdvertisment_tblREFService">
             <End Role="tblREFService" EntitySet="tblREFServices" />
@@ -6874,7 +6604,314 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
             <End Role="tblREFSkillCat" EntitySet="tblREFSkillCats" />
             <End Role="tblREFSkill" EntitySet="tblREFSkills" />
           </AssociationSet>
+          <EntitySet Name="tblUserRoles" EntityType="AtmIntakeModel.tblUserRole" />
+          <EntitySet Name="tblAcquisitions" EntityType="AtmIntakeModel.tblAcquisition" />
+          <EntitySet Name="tblREFAcqTypes" EntityType="AtmIntakeModel.tblREFAcqType" />
+          <EntitySet Name="tblUsers" EntityType="AtmIntakeModel.tblUser" />
+          <EntitySet Name="tblUserLogs" EntityType="AtmIntakeModel.tblUserLog" />
+          <AssociationSet Name="FK_tblAcqAnnouncement_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqAnnouncement_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqAnnouncement" EntitySet="tblAcqAnnouncements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcqCriteria_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqCriteria_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqCriteria" EntitySet="tblAcqCriterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcqEducationCriteria_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqEducationCriteria_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqEducationCriteria" EntitySet="tblAcqEducationCriterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcqLocation_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqLocation_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqLocation" EntitySet="tblAcqLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcqMerit_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqMerit_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqMerit" EntitySet="tblAcqMerits" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcqQuestionnaire_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqQuestionnaire_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqQuestionnaire" EntitySet="tblAcqQuestionnaires" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqFinalShorlistCriteria" EntitySet="tblAcqFinalShorlistCriterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAcquisition_tblREFAcqType" Association="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType">
+            <End Role="tblREFAcqType" EntitySet="tblREFAcqTypes" />
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAdvertisment_tblAcquisition" Association="AtmIntakeModel.FK_tblAdvertisment_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAdvertisment" EntitySet="tblAdvertisments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAppApplicantMeritScore_tblAcquisition" Association="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAppApplicantMeritScore" EntitySet="tblAppApplicantMeritScores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tblAcquisition" Association="AtmIntakeModel.FK_tblApplication_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblApplication" EntitySet="tblApplications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblUserLog_tblREFLoginStatus" Association="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus">
+            <End Role="tblREFLoginStatu" EntitySet="tblREFLoginStatus" />
+            <End Role="tblUserLog" EntitySet="tblUserLogs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="tblUserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Roles" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblAcquisition">
+          <Key>
+            <PropertyRef Name="AcquisitionId" />
+          </Key>
+          <Property Name="AcquisitionId" Type="Int32" Nullable="false" />
+          <Property Name="AcquisitionTypeCd" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Siri" Type="Int32" />
+          <Property Name="ClosingDate" Type="DateTime" Precision="0" />
+          <Property Name="Target" Type="Int32" />
+          <Property Name="NewStatus" Type="Boolean" />
+          <Property Name="NewStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OpenStatus" Type="Boolean" />
+          <Property Name="OpenStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CloseStatus" Type="Boolean" />
+          <Property Name="CloseStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InviteFirstSelStatus" Type="Boolean" />
+          <Property Name="InviteFirstSelStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SecurityCheckStatus" Type="Boolean" />
+          <Property Name="SecurityCheckStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DocumentStatus" Type="Boolean" />
+          <Property Name="DocumentStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstSelectionStatus" Type="Boolean" />
+          <Property Name="FirstSelectionStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InviteFinalSelStatus" Type="Boolean" />
+          <Property Name="InviteFinalSelStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="WrittenTestStatus" Type="Boolean" />
+          <Property Name="WrittenTestStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FinalSelStatus" Type="Boolean" />
+          <Property Name="FinalSelStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AssignNoTenteraStatus" Type="Boolean" />
+          <Property Name="AssignNoTenteraStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CompleteStatus" Type="Boolean" />
+          <Property Name="CompleteStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
+          <Property Name="InviteFirstSelNominated" Type="Boolean" />
+          <Property Name="InviteFirstSelNominatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PhysicalHealthStatus" Type="Boolean" />
+          <Property Name="PhysicalHealthStatusBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ToFinalSelNominated" Type="Boolean" />
+          <Property Name="ToFinalSelNominatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstSelShortlisProcessInd" Type="Boolean" />
+          <Property Name="FinalSelShortlisProcessInd" Type="Boolean" />
+          <Property Name="ShortlistMeritInd" Type="Boolean" />
+          <Property Name="ArmyNumberFrom" Type="Int32" />
+          <Property Name="ArmyNumberTo" Type="Int32" />
+          <NavigationProperty Name="tblAcqAnnouncements" Relationship="AtmIntakeModel.FK_tblAcqAnnouncement_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqAnnouncement" />
+          <NavigationProperty Name="tblAcqCriterias" Relationship="AtmIntakeModel.FK_tblAcqCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqCriteria" />
+          <NavigationProperty Name="tblAcqEducationCriterias" Relationship="AtmIntakeModel.FK_tblAcqEducationCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqEducationCriteria" />
+          <NavigationProperty Name="tblAcqLocations" Relationship="AtmIntakeModel.FK_tblAcqLocation_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqLocation" />
+          <NavigationProperty Name="tblAcqMerits" Relationship="AtmIntakeModel.FK_tblAcqMerit_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqMerit" />
+          <NavigationProperty Name="tblAcqQuestionnaires" Relationship="AtmIntakeModel.FK_tblAcqQuestionnaire_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqQuestionnaire" />
+          <NavigationProperty Name="tblAcqFinalShorlistCriteria" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqFinalShorlistCriteria" />
+          <NavigationProperty Name="tblREFAcqType" Relationship="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType" FromRole="tblAcquisition" ToRole="tblREFAcqType" />
+          <NavigationProperty Name="tblAdvertisments" Relationship="AtmIntakeModel.FK_tblAdvertisment_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAdvertisment" />
+          <NavigationProperty Name="tblAppApplicantMeritScores" Relationship="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAppApplicantMeritScore" />
+          <NavigationProperty Name="tblApplications" Relationship="AtmIntakeModel.FK_tblApplication_tblAcquisition" FromRole="tblAcquisition" ToRole="tblApplication" />
+        </EntityType>
+        <EntityType Name="tblREFAcqType">
+          <Key>
+            <PropertyRef Name="AcquisitionTypeCd" />
+          </Key>
+          <Property Name="AcquisitionTypeCd" Type="Int32" Nullable="false" />
+          <Property Name="AcquisitionTypeNm" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tblAcquisitions" Relationship="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType" FromRole="tblREFAcqType" ToRole="tblAcquisition" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicantId" Type="Int32" />
+          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AlternativeEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="FirstTime" Type="Boolean" />
+          <Property Name="LastLoginDt" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblUserLog">
+          <Key>
+            <PropertyRef Name="UserLogId" />
+          </Key>
+          <Property Name="UserLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="LoginStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblREFLoginStatu" Relationship="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus" FromRole="tblUserLog" ToRole="tblREFLoginStatu" />
+        </EntityType>
+        <Association Name="FK_tblAcqAnnouncement_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
+          <End Type="AtmIntakeModel.tblAcqAnnouncement" Role="tblAcqAnnouncement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqAnnouncement">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcqCriteria_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblAcqCriteria" Role="tblAcqCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqCriteria">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcqEducationCriteria_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblAcqEducationCriteria" Role="tblAcqEducationCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqEducationCriteria">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcqLocation_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblAcqLocation" Role="tblAcqLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqLocation">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcqMerit_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
+          <End Type="AtmIntakeModel.tblAcqMerit" Role="tblAcqMerit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqMerit">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcqQuestionnaire_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblAcqQuestionnaire" Role="tblAcqQuestionnaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqQuestionnaire">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
+          <End Type="AtmIntakeModel.tblAcqFinalShorlistCriteria" Role="tblAcqFinalShorlistCriteria" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqFinalShorlistCriteria">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAcquisition_tblREFAcqType">
+          <End Type="AtmIntakeModel.tblREFAcqType" Role="tblREFAcqType" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFAcqType">
+              <PropertyRef Name="AcquisitionTypeCd" />
+            </Principal>
+            <Dependent Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionTypeCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAdvertisment_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblAdvertisment" Role="tblAdvertisment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAdvertisment">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAppApplicantMeritScore_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
+          <End Type="AtmIntakeModel.tblAppApplicantMeritScore" Role="tblAppApplicantMeritScore" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAppApplicantMeritScore">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplication_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblApplication" Role="tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblUserLog_tblREFLoginStatus">
+          <End Type="AtmIntakeModel.tblREFLoginStatu" Role="tblREFLoginStatu" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblUserLog" Role="tblUserLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFLoginStatu">
+              <PropertyRef Name="LoginStatusCd" />
+            </Principal>
+            <Dependent Role="tblUserLog">
+              <PropertyRef Name="LoginStatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7061,57 +7098,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
                 <ScalarProperty Name="Scale" ColumnName="Scale" />
                 <ScalarProperty Name="ScaleRemark" ColumnName="ScaleRemark" />
                 <ScalarProperty Name="MeritMark" ColumnName="MeritMark" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblAcquisitions">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblAcquisition">
-              <MappingFragment StoreEntitySet="tblAcquisition">
-                <ScalarProperty Name="AcquisitionId" ColumnName="AcquisitionId" />
-                <ScalarProperty Name="AcquisitionTypeCd" ColumnName="AcquisitionTypeCd" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="Siri" ColumnName="Siri" />
-                <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
-                <ScalarProperty Name="Target" ColumnName="Target" />
-                <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
-                <ScalarProperty Name="NewStatusBy" ColumnName="NewStatusBy" />
-                <ScalarProperty Name="OpenStatus" ColumnName="OpenStatus" />
-                <ScalarProperty Name="OpenStatusBy" ColumnName="OpenStatusBy" />
-                <ScalarProperty Name="CloseStatus" ColumnName="CloseStatus" />
-                <ScalarProperty Name="CloseStatusBy" ColumnName="CloseStatusBy" />
-                <ScalarProperty Name="InviteFirstSelStatus" ColumnName="InviteFirstSelStatus" />
-                <ScalarProperty Name="InviteFirstSelStatusBy" ColumnName="InviteFirstSelStatusBy" />
-                <ScalarProperty Name="SecurityCheckStatus" ColumnName="SecurityCheckStatus" />
-                <ScalarProperty Name="SecurityCheckStatusBy" ColumnName="SecurityCheckStatusBy" />
-                <ScalarProperty Name="DocumentStatus" ColumnName="DocumentStatus" />
-                <ScalarProperty Name="DocumentStatusBy" ColumnName="DocumentStatusBy" />
-                <ScalarProperty Name="FirstSelectionStatus" ColumnName="FirstSelectionStatus" />
-                <ScalarProperty Name="FirstSelectionStatusBy" ColumnName="FirstSelectionStatusBy" />
-                <ScalarProperty Name="InviteFinalSelStatus" ColumnName="InviteFinalSelStatus" />
-                <ScalarProperty Name="InviteFinalSelStatusBy" ColumnName="InviteFinalSelStatusBy" />
-                <ScalarProperty Name="WrittenTestStatus" ColumnName="WrittenTestStatus" />
-                <ScalarProperty Name="WrittenTestStatusBy" ColumnName="WrittenTestStatusBy" />
-                <ScalarProperty Name="FinalSelStatus" ColumnName="FinalSelStatus" />
-                <ScalarProperty Name="FinalSelStatusBy" ColumnName="FinalSelStatusBy" />
-                <ScalarProperty Name="AssignNoTenteraStatus" ColumnName="AssignNoTenteraStatus" />
-                <ScalarProperty Name="AssignNoTenteraStatusBy" ColumnName="AssignNoTenteraStatusBy" />
-                <ScalarProperty Name="CompleteStatus" ColumnName="CompleteStatus" />
-                <ScalarProperty Name="CompleteStatusBy" ColumnName="CompleteStatusBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedDt" ColumnName="LastModifiedDt" />
-                <ScalarProperty Name="InviteFirstSelNominated" ColumnName="InviteFirstSelNominated" />
-                <ScalarProperty Name="InviteFirstSelNominatedBy" ColumnName="InviteFirstSelNominatedBy" />
-                <ScalarProperty Name="PhysicalHealthStatus" ColumnName="PhysicalHealthStatus" />
-                <ScalarProperty Name="PhysicalHealthStatusBy" ColumnName="PhysicalHealthStatusBy" />
-                <ScalarProperty Name="ToFinalSelNominated" ColumnName="ToFinalSelNominated" />
-                <ScalarProperty Name="ToFinalSelNominatedBy" ColumnName="ToFinalSelNominatedBy" />
-                <ScalarProperty Name="FirstSelShortlisProcessInd" ColumnName="FirstSelShortlisProcessInd" />
-                <ScalarProperty Name="FinalSelShortlisProcessInd" ColumnName="FinalSelShortlisProcessInd" />
-                <ScalarProperty Name="ShortlistMeritInd" ColumnName="ShortlistMeritInd" />
-                <ScalarProperty Name="ArmyNumberFrom" ColumnName="ArmyNumberFrom" />
-                <ScalarProperty Name="ArmyNumberTo" ColumnName="ArmyNumberTo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7819,15 +7805,6 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblREFAcqTypes">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFAcqType">
-              <MappingFragment StoreEntitySet="tblREFAcqType">
-                <ScalarProperty Name="AcquisitionTypeCd" ColumnName="AcquisitionTypeCd" />
-                <ScalarProperty Name="AcquisitionTypeNm" ColumnName="AcquisitionTypeNm" />
-                <ScalarProperty Name="ServiceCd" ColumnName="ServiceCd" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblREFApplicationStatus">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblREFApplicationStatu">
               <MappingFragment StoreEntitySet="tblREFApplicationStatus">
@@ -8263,37 +8240,105 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblUserLog' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblUserRoles">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblUserRole">
+              <MappingFragment StoreEntitySet="tblUserRoles">
+                <ScalarProperty Name="Roles" ColumnName="Roles" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAcquisitions">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblAcquisition">
+              <MappingFragment StoreEntitySet="tblAcquisition">
+                <ScalarProperty Name="ArmyNumberTo" ColumnName="ArmyNumberTo" />
+                <ScalarProperty Name="ArmyNumberFrom" ColumnName="ArmyNumberFrom" />
+                <ScalarProperty Name="ShortlistMeritInd" ColumnName="ShortlistMeritInd" />
+                <ScalarProperty Name="FinalSelShortlisProcessInd" ColumnName="FinalSelShortlisProcessInd" />
+                <ScalarProperty Name="FirstSelShortlisProcessInd" ColumnName="FirstSelShortlisProcessInd" />
+                <ScalarProperty Name="ToFinalSelNominatedBy" ColumnName="ToFinalSelNominatedBy" />
+                <ScalarProperty Name="ToFinalSelNominated" ColumnName="ToFinalSelNominated" />
+                <ScalarProperty Name="PhysicalHealthStatusBy" ColumnName="PhysicalHealthStatusBy" />
+                <ScalarProperty Name="PhysicalHealthStatus" ColumnName="PhysicalHealthStatus" />
+                <ScalarProperty Name="InviteFirstSelNominatedBy" ColumnName="InviteFirstSelNominatedBy" />
+                <ScalarProperty Name="InviteFirstSelNominated" ColumnName="InviteFirstSelNominated" />
+                <ScalarProperty Name="LastModifiedDt" ColumnName="LastModifiedDt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CompleteStatusBy" ColumnName="CompleteStatusBy" />
+                <ScalarProperty Name="CompleteStatus" ColumnName="CompleteStatus" />
+                <ScalarProperty Name="AssignNoTenteraStatusBy" ColumnName="AssignNoTenteraStatusBy" />
+                <ScalarProperty Name="AssignNoTenteraStatus" ColumnName="AssignNoTenteraStatus" />
+                <ScalarProperty Name="FinalSelStatusBy" ColumnName="FinalSelStatusBy" />
+                <ScalarProperty Name="FinalSelStatus" ColumnName="FinalSelStatus" />
+                <ScalarProperty Name="WrittenTestStatusBy" ColumnName="WrittenTestStatusBy" />
+                <ScalarProperty Name="WrittenTestStatus" ColumnName="WrittenTestStatus" />
+                <ScalarProperty Name="InviteFinalSelStatusBy" ColumnName="InviteFinalSelStatusBy" />
+                <ScalarProperty Name="InviteFinalSelStatus" ColumnName="InviteFinalSelStatus" />
+                <ScalarProperty Name="FirstSelectionStatusBy" ColumnName="FirstSelectionStatusBy" />
+                <ScalarProperty Name="FirstSelectionStatus" ColumnName="FirstSelectionStatus" />
+                <ScalarProperty Name="DocumentStatusBy" ColumnName="DocumentStatusBy" />
+                <ScalarProperty Name="DocumentStatus" ColumnName="DocumentStatus" />
+                <ScalarProperty Name="SecurityCheckStatusBy" ColumnName="SecurityCheckStatusBy" />
+                <ScalarProperty Name="SecurityCheckStatus" ColumnName="SecurityCheckStatus" />
+                <ScalarProperty Name="InviteFirstSelStatusBy" ColumnName="InviteFirstSelStatusBy" />
+                <ScalarProperty Name="InviteFirstSelStatus" ColumnName="InviteFirstSelStatus" />
+                <ScalarProperty Name="CloseStatusBy" ColumnName="CloseStatusBy" />
+                <ScalarProperty Name="CloseStatus" ColumnName="CloseStatus" />
+                <ScalarProperty Name="OpenStatusBy" ColumnName="OpenStatusBy" />
+                <ScalarProperty Name="OpenStatus" ColumnName="OpenStatus" />
+                <ScalarProperty Name="NewStatusBy" ColumnName="NewStatusBy" />
+                <ScalarProperty Name="NewStatus" ColumnName="NewStatus" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
+                <ScalarProperty Name="Siri" ColumnName="Siri" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="AcquisitionTypeCd" ColumnName="AcquisitionTypeCd" />
+                <ScalarProperty Name="AcquisitionId" ColumnName="AcquisitionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblREFAcqTypes">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFAcqType">
+              <MappingFragment StoreEntitySet="tblREFAcqType">
+                <ScalarProperty Name="ServiceCd" ColumnName="ServiceCd" />
+                <ScalarProperty Name="AcquisitionTypeNm" ColumnName="AcquisitionTypeNm" />
+                <ScalarProperty Name="AcquisitionTypeCd" ColumnName="AcquisitionTypeCd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
-                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="AlternativeEmail" ColumnName="AlternativeEmail" />
-                <ScalarProperty Name="ServiceCd" ColumnName="ServiceCd" />
-                <ScalarProperty Name="Salt" ColumnName="Salt" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
-                <ScalarProperty Name="FirstTime" ColumnName="FirstTime" />
-                <ScalarProperty Name="LastLoginDt" ColumnName="LastLoginDt" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="LastLoginDt" ColumnName="LastLoginDt" />
+                <ScalarProperty Name="FirstTime" ColumnName="FirstTime" />
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="ServiceCd" ColumnName="ServiceCd" />
+                <ScalarProperty Name="AlternativeEmail" ColumnName="AlternativeEmail" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+                <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tblUserLogs">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblUserLog">
               <MappingFragment StoreEntitySet="tblUserLog">
-                <ScalarProperty Name="UserLogId" ColumnName="UserLogId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="LoginStatusCd" ColumnName="LoginStatusCd" />
-                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
+                <ScalarProperty Name="LoginStatusCd" ColumnName="LoginStatusCd" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserLogId" ColumnName="UserLogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

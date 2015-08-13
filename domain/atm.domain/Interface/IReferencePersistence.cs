@@ -21,6 +21,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         IEnumerable<PersonalityType> GetPersonalityTypes();
         IEnumerable<QuestionnareType> GetQuestionnareTypes();
         IEnumerable<Race> GetRaces();
+        Race GetRace(string racecode);
         IEnumerable<Religion> GetReligions();
         IEnumerable<Service> GetServices();
         AcquisitionType GetAcquisitionType(int code);

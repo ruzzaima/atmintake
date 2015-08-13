@@ -14,8 +14,15 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
     
     public partial class tblREFAcqType
     {
+        public tblREFAcqType()
+        {
+            this.tblAcquisitions = new HashSet<tblAcquisition>();
+        }
+    
         public int AcquisitionTypeCd { get; set; }
         public string AcquisitionTypeNm { get; set; }
         public string ServiceCd { get; set; }
+    
+        public virtual ICollection<tblAcquisition> tblAcquisitions { get; set; }
     }
 }

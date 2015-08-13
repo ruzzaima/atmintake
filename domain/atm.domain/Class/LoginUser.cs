@@ -12,8 +12,16 @@ namespace SevenH.MMCSB.Atm.Domain
         public virtual int Save()
         {
             if (UserId == 0)
-                return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").AddNew(this);
-            return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Update(this);
+                UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").AddNew(this);
+            UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Update(this);
+
+            if (LoginRole != null && !string.IsNullOrWhiteSpace(LoginRole.Roles))
+            {
+                LoginRole.UserId = UserId;
+                LoginRole.Save();
+            }
+
+            return UserId;
         }
 
         public virtual bool ChangePasswordFirstTime(string newpassword)

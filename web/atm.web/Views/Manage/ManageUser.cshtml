@@ -2,29 +2,42 @@
     ViewBag.Title = "Pengurusan Pengguna";
     Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
 }
-
+@section styles
+{
+    <style type="text/css">
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+    </style>
+}
 
 <div class="row">
     <div class="col-md-12"></div>
     <div class="tile">
         <h2 class="tile-title">Profil Pengguna Sistem JOM MASUK TENTERA</h2>
         <div class="p-10">
-            <table class="table tile">
+            <table class="table table-bordered tile" id="user_table">
                 <thead>
                     <tr>
                         <th>Bil.</th>
                         <th>Nama</th>
                         <th>Id Pengguna</th>
                         <th>Perkhidmatan</th>
-                        <th>Status</th>
                         <th>Peranan</th>
-                        <th></th>
+                        <th>Status</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
-            <input type="button" value="Tambah"/>
+            <a class="btn btn-primary btn-sm" href="@Url.Action("UserProfile", "Manage")">Tambah</a>
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/manage_manageuser.js")"></script>
+}

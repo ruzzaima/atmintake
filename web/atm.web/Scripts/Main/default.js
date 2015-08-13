@@ -71,10 +71,21 @@ $(function () {
     });
 
     $('input[type=text]').val(function () {
+
+        var cap = $(this).attr("noncap");
+        if (cap) {
+            return this.value;
+        }
+
         return this.value.toUpperCase();
     });
 
     $("input[type=text]").keyup(function () {
+        var cap = $(this).attr("noncap");
+        if (cap) {
+            return this.value;
+        }
+
         $(this).val($(this).val().toUpperCase());
     });
 
@@ -180,22 +191,29 @@ function getQuerystring(key, defaultv) {
 }
 
 function FormatCurrency(num) {
-    var str = num.toString().replace("$", ""), parts = false, output = [], i = 1, formatted = null;
-    if (str.indexOf(".") > 0) {
-        parts = str.split(".");
-        str = parts[0];
-    }
-    str = str.split("").reverse();
-    for (var j = 0, len = str.length; j < len; j++) {
-        if (str[j] != ",") {
-            output.push(str[j]);
-            if (i % 3 == 0 && j < (len - 1)) {
-                output.push(",");
-            }
-            i++;
+    if (num) {
+        var str = num.toString().replace("$", ""), parts = false, output = [], i = 1, formatted = null;
+        if (str.indexOf(".") > 0) {
+            parts = str.split(".");
+            str = parts[0];
         }
-    }
+        str = str.split("").reverse();
+        for (var j = 0, len = str.length; j < len; j++) {
+            if (str[j] != ",") {
+                output.push(str[j]);
+                if (i % 3 == 0 && j < (len - 1)) {
+                    output.push(",");
+                }
+                i++;
+            }
+        }
 
-    formatted = output.reverse().join("");
-    return ("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ".00"));
+        formatted = output.reverse().join("");
+        return ("" + formatted + ((parts) ? "." + parts[1].substr(0, 2) : ".00"));
+    }
+    return num;
+}
+
+function openinwindow(url, name, overwrite) {
+    window.open(url, name, null, true);
 }

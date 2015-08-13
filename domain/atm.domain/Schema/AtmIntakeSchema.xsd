@@ -28,6 +28,7 @@ new -  to call new at the field init
       <xs:attribute name="Email" type="xs:string" use="required"/>
       <xs:attribute name="AlternativeEmail" type="xs:string" use="required"/>
       <xs:attribute name="ServiceCd" type="xs:string" use="required"/>
+      <xs:attribute name="ServiceName" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="ModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
@@ -74,6 +75,25 @@ new -  to call new at the field init
         <xs:element name="MomNotApplicable" type="xs:boolean" nillable="true"/>
         <xs:element name="DadNotApplicable" type="xs:boolean" nillable="true"/>
         <xs:element name="GuardianNotApplicable" type="xs:boolean" nillable="true"/>
+        <xs:element name="BMI" type="xs:decimal" nillable="true"/>
+        <xs:element name="ColorBlindInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="ChildNo" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionTD" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionTL" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionTU" type="xs:int" nillable="true"/>
+        <xs:element name="ComputerMSWord" type="xs:boolean" nillable="true"/>
+        <xs:element name="ComputerMSExcel" type="xs:boolean" nillable="true"/>
+        <xs:element name="ComputerMSPwrPoint" type="xs:boolean" nillable="true"/>
+        <xs:element name="ComputerICT" type="xs:boolean" nillable="true"/>
+        <xs:element name="NoOfSibling" type="xs:int" nillable="true"/>
+        <xs:element name="MomSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="DadSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="GuardianSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="CurrentSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="Height" type="xs:decimal" nillable="true"/>
+        <xs:element name="Weight" type="xs:decimal" nillable="true"/>
+        <xs:element name="SpectaclesUserInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="PalapesYear" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="NewICNo" type="xs:string" use="required"/>
@@ -81,22 +101,23 @@ new -  to call new at the field init
       <xs:attribute name="FullName" type="xs:string" use="required"/>
       <xs:attribute name="MrtlStatusCd" type="xs:string" use="required"/>
       <xs:attribute name="GenderCd" type="xs:string" use="required"/>
-      <xs:attribute name="Height" type="xs:decimal" use="required"/>
-      <xs:attribute name="Weight" type="xs:decimal" use="required"/>
-      <xs:attribute name="BMI" type="xs:decimal" use="required"/>
       <xs:attribute name="NationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="NationalityCertNo" type="xs:string" use="required"/>
       <xs:attribute name="BirthCertNo" type="xs:string" use="required"/>
       <xs:attribute name="ReligionCd" type="xs:string" use="required"/>
+      <xs:attribute name="ReligionName" type="xs:string" use="required"/>
       <xs:attribute name="RaceCd" type="xs:string" use="required"/>
+      <xs:attribute name="RaceName" type="xs:string" use="required"/>
       <xs:attribute name="EthnicCd" type="xs:string" use="required"/>
+      <xs:attribute name="EthnicName" type="xs:string" use="required"/>
       <xs:attribute name="BirthCountryCd" type="xs:string" use="required"/>
+      <xs:attribute name="BirthCountryName" type="xs:string" use="required"/>
       <xs:attribute name="BirthStateCd" type="xs:string" use="required"/>
+      <xs:attribute name="BirthStateName" type="xs:string" use="required"/>
       <xs:attribute name="BirthCityCd" type="xs:string" use="required"/>
+      <xs:attribute name="BirthCityName" type="xs:string" use="required"/>
       <xs:attribute name="BirthPlace" type="xs:string" use="required"/>
       <xs:attribute name="BloodTypeCd" type="xs:string" use="required"/>
-      <xs:attribute name="SpectaclesUserInd" type="xs:boolean" use="required"/>
-      <xs:attribute name="ColorBlindInd" type="xs:boolean" use="required"/>
       <xs:attribute name="ResidenceTypeInd" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddr1" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddr2" type="xs:string" use="required"/>
@@ -108,31 +129,24 @@ new -  to call new at the field init
       <xs:attribute name="MobilePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="HomePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="Email" type="xs:string" use="required"/>
-      <xs:attribute name="ChildNo" type="xs:int" use="required"/>
-      <xs:attribute name="NoOfSibling" type="xs:int" use="required"/>
       <xs:attribute name="MomName" type="xs:string" use="required"/>
       <xs:attribute name="MomICNo" type="xs:string" use="required"/>
       <xs:attribute name="MomPhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="MomNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="MomOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="MomSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="DadName" type="xs:string" use="required"/>
       <xs:attribute name="DadICNo" type="xs:string" use="required"/>
       <xs:attribute name="DadNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="DadOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="DadSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="DadPhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="GuardianName" type="xs:string" use="required"/>
       <xs:attribute name="GuardianICNo" type="xs:string" use="required"/>
       <xs:attribute name="GuardianPhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="GuardianNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="GuardianOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="GuardianSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="FamilyHighestEduLevel" type="xs:string" use="required"/>
       <xs:attribute name="CurrentOccupation" type="xs:string" use="required"/>
       <xs:attribute name="CurrentOrganisation" type="xs:string" use="required"/>
-      <xs:attribute name="CurrentSalary" type="xs:decimal" use="required"/>
-      <xs:attribute name="PalapesYear" type="xs:int" use="required"/>
       <xs:attribute name="PalapesServices" type="xs:string" use="required"/>
       <xs:attribute name="PalapesArmyNo" type="xs:string" use="required"/>
       <xs:attribute name="PalapesInstitution" type="xs:string" use="required"/>
@@ -143,14 +157,6 @@ new -  to call new at the field init
       <xs:attribute name="ArmySelectionVenue" type="xs:string" use="required"/>
       <xs:attribute name="ArmyServiceYrOfServ" type="xs:string" use="required"/>
       <xs:attribute name="ArmyServiceResignRemark" type="xs:string" use="required"/>
-      <xs:attribute name="SelectionTD" type="xs:int" use="required"/>
-      <xs:attribute name="SelectionTL" type="xs:int" use="required"/>
-      <xs:attribute name="SelectionTU" type="xs:int" use="required"/>
-      <xs:attribute name="ComputerMSWord" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerMSExcel" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerMSPwrPoint" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerICT" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerOthersInd" type="xs:boolean" use="required"/>
       <xs:attribute name="ComputerOthers" type="xs:string" use="required"/>
       <xs:attribute name="PelepasanDocument" type="xs:string" use="required"/>
       <xs:attribute name="OriginalPelepasanDocument" type="xs:string" use="required"/>
@@ -207,6 +213,25 @@ new -  to call new at the field init
         <xs:element name="MomNotApplicable" type="xs:boolean" nillable="true"/>
         <xs:element name="DadNotApplicable" type="xs:boolean" nillable="true"/>
         <xs:element name="GuardianNotApplicable" type="xs:boolean" nillable="true"/>
+        <xs:element name="BMI" type="xs:decimal" nillable="true"/>
+        <xs:element name="ColorBlindInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="ChildNo" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionTD" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionTL" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionTU" type="xs:int" nillable="true"/>
+        <xs:element name="ComputerMSWord" type="xs:boolean" nillable="true"/>
+        <xs:element name="ComputerMSExcel" type="xs:boolean" nillable="true"/>
+        <xs:element name="ComputerMSPwrPoint" type="xs:boolean" nillable="true"/>
+        <xs:element name="ComputerICT" type="xs:boolean" nillable="true"/>
+        <xs:element name="NoOfSibling" type="xs:int" nillable="true"/>
+        <xs:element name="MomSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="DadSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="GuardianSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="CurrentSalary" type="xs:decimal" nillable="true"/>
+        <xs:element name="Height" type="xs:decimal" nillable="true"/>
+        <xs:element name="Weight" type="xs:decimal" nillable="true"/>
+        <xs:element name="SpectaclesUserInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="PalapesYear" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicationId" type="xs:int" use="required"/>
@@ -216,22 +241,23 @@ new -  to call new at the field init
       <xs:attribute name="FullName" type="xs:string" use="required"/>
       <xs:attribute name="MrtlStatusCd" type="xs:string" use="required"/>
       <xs:attribute name="GenderCd" type="xs:string" use="required"/>
-      <xs:attribute name="Height" type="xs:decimal" use="required"/>
-      <xs:attribute name="Weight" type="xs:decimal" use="required"/>
-      <xs:attribute name="BMI" type="xs:decimal" use="required"/>
       <xs:attribute name="NationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="NationalityCertNo" type="xs:string" use="required"/>
       <xs:attribute name="BirthCertNo" type="xs:string" use="required"/>
       <xs:attribute name="ReligionCd" type="xs:string" use="required"/>
+      <xs:attribute name="ReligionName" type="xs:string" use="required"/>
       <xs:attribute name="RaceCd" type="xs:string" use="required"/>
+      <xs:attribute name="RaceName" type="xs:string" use="required"/>
       <xs:attribute name="EthnicCd" type="xs:string" use="required"/>
+      <xs:attribute name="EthnicName" type="xs:string" use="required"/>
       <xs:attribute name="BirthCountryCd" type="xs:string" use="required"/>
+      <xs:attribute name="BirthCountryName" type="xs:string" use="required"/>
       <xs:attribute name="BirthStateCd" type="xs:string" use="required"/>
+      <xs:attribute name="BirthStateName" type="xs:string" use="required"/>
       <xs:attribute name="BirthCityCd" type="xs:string" use="required"/>
+      <xs:attribute name="BirthCityName" type="xs:string" use="required"/>
       <xs:attribute name="BirthPlace" type="xs:string" use="required"/>
       <xs:attribute name="BloodTypeCd" type="xs:string" use="required"/>
-      <xs:attribute name="SpectaclesUserInd" type="xs:boolean" use="required"/>
-      <xs:attribute name="ColorBlindInd" type="xs:boolean" use="required"/>
       <xs:attribute name="ResidenceTypeInd" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddr1" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddr2" type="xs:string" use="required"/>
@@ -243,31 +269,24 @@ new -  to call new at the field init
       <xs:attribute name="MobilePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="HomePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="Email" type="xs:string" use="required"/>
-      <xs:attribute name="ChildNo" type="xs:int" use="required"/>
-      <xs:attribute name="NoOfSibling" type="xs:int" use="required"/>
       <xs:attribute name="MomName" type="xs:string" use="required"/>
       <xs:attribute name="MomICNo" type="xs:string" use="required"/>
       <xs:attribute name="MomPhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="MomNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="MomOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="MomSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="DadName" type="xs:string" use="required"/>
       <xs:attribute name="DadICNo" type="xs:string" use="required"/>
       <xs:attribute name="DadPhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="DadNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="DadOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="DadSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="GuardianName" type="xs:string" use="required"/>
       <xs:attribute name="GuardianICNo" type="xs:string" use="required"/>
       <xs:attribute name="GuardianPhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="GuardianNationalityCd" type="xs:string" use="required"/>
       <xs:attribute name="GuardianOccupation" type="xs:string" use="required"/>
-      <xs:attribute name="GuardianSalary" type="xs:decimal" use="required"/>
       <xs:attribute name="FamilyHighestEduLevel" type="xs:string" use="required"/>
       <xs:attribute name="CurrentOccupation" type="xs:string" use="required"/>
       <xs:attribute name="CurrentOrganisation" type="xs:string" use="required"/>
-      <xs:attribute name="CurrentSalary" type="xs:decimal" use="required"/>
-      <xs:attribute name="PalapesYear" type="xs:int" use="required"/>
       <xs:attribute name="PalapesServices" type="xs:string" use="required"/>
       <xs:attribute name="PalapesArmyNo" type="xs:string" use="required"/>
       <xs:attribute name="PalapesInstitution" type="xs:string" use="required"/>
@@ -278,17 +297,10 @@ new -  to call new at the field init
       <xs:attribute name="ArmySelectionVenue" type="xs:string" use="required"/>
       <xs:attribute name="ArmyServiceYrOfServ" type="xs:string" use="required"/>
       <xs:attribute name="ArmyServiceResignRemark" type="xs:string" use="required"/>
-      <xs:attribute name="SelectionTD" type="xs:int" use="required"/>
-      <xs:attribute name="SelectionTL" type="xs:int" use="required"/>
-      <xs:attribute name="SelectionTU" type="xs:int" use="required"/>
-      <xs:attribute name="ComputerMSWord" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerMSExcel" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerMSPwrPoint" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerICT" type="xs:boolean" use="required"/>
-      <xs:attribute name="ComputerOthers" type="xs:string" use="required"/>
       <xs:attribute name="PelepasanDocument" type="xs:string" use="required"/>
       <xs:attribute name="OriginalPelepasanDocument" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="ComputerOthers" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>
@@ -297,6 +309,10 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ApplicantId" type="xs:int" nillable="true"/>
+        <xs:element name="SKMLevel" type="xs:int" nillable="true"/>
+        <xs:element name="ConfermentYr" type="xs:int" nillable="true"/>
+        <xs:element name="OverSeaInd" type="xs:boolean" nillable="true"/>
         <xs:element name="ApplicantEduSubjects">
           <xs:complexType>
             <xs:sequence>
@@ -306,16 +322,12 @@ new -  to call new at the field init
         </xs:element>
       </xs:all>
       <xs:attribute name="ApplicantEduId" type="xs:int" use="required"/>
-      <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="HighEduLevelCd" type="xs:string" use="required"/>
       <xs:attribute name="HighEduLevel" type="xs:string" use="required"/>
       <xs:attribute name="EduCertTitle" type="xs:string" use="required"/>
       <xs:attribute name="OverallGrade" type="xs:string" use="required"/>
-      <xs:attribute name="SKMLevel" type="xs:int" use="required"/>
-      <xs:attribute name="ConfermentYr" type="xs:int" use="required"/>
       <xs:attribute name="InstCd" type="xs:string" use="required"/>
       <xs:attribute name="InstitutionName" type="xs:string" use="required"/>
-      <xs:attribute name="OverSeaInd" type="xs:boolean" use="required"/>
       <xs:attribute name="MajorMinorCd" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
@@ -326,6 +338,9 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="SKMLevel" type="xs:int" nillable="true"/>
+        <xs:element name="ConfermentYr" type="xs:int" nillable="true"/>
+        <xs:element name="OverSeaInd" type="xs:boolean" nillable="true"/>
         <xs:element name="ApplicantEduSubjectSubmitteds">
           <xs:complexType>
             <xs:sequence>
@@ -340,11 +355,8 @@ new -  to call new at the field init
       <xs:attribute name="HighEduLevel" type="xs:string" use="required"/>
       <xs:attribute name="EduCertTitle" type="xs:string" use="required"/>
       <xs:attribute name="OverallGrade" type="xs:string" use="required"/>
-      <xs:attribute name="SKMLevel" type="xs:int" use="required"/>
-      <xs:attribute name="ConfermentYr" type="xs:int" use="required"/>
       <xs:attribute name="InstCd" type="xs:string" use="required"/>
       <xs:attribute name="InstitutionName" type="xs:string" use="required"/>
-      <xs:attribute name="OverSeaInd" type="xs:boolean" use="required"/>
       <xs:attribute name="MajorMinorCd" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
@@ -355,10 +367,10 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ApplicantEduId" type="xs:int" nillable="true"/>
+        <xs:element name="SubjectCd" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="EduSubjectId" type="xs:int" use="required"/>
-      <xs:attribute name="ApplicantEduId" type="xs:int" use="required"/>
-      <xs:attribute name="SubjectCd" type="xs:string" use="required"/>
       <xs:attribute name="Subject" type="xs:string" use="required"/>
       <xs:attribute name="GradeCd" type="xs:string" use="required"/>
       <xs:attribute name="Grade" type="xs:string" use="required"/>
@@ -371,10 +383,10 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="SubjectCd" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="EduSubjectId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicantEduId" type="xs:int" use="required"/>
-      <xs:attribute name="SubjectCd" type="xs:string" use="required"/>
       <xs:attribute name="Subject" type="xs:string" use="required"/>
       <xs:attribute name="GradeCd" type="xs:string" use="required"/>
       <xs:attribute name="Grade" type="xs:string" use="required"/>
@@ -399,14 +411,14 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ApplicantId" type="xs:int" nillable="true"/>
+        <xs:element name="LanguageSkillSpeak" type="xs:boolean" nillable="true"/>
+        <xs:element name="LanguageSkillWrite" type="xs:boolean" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantSkillId" type="xs:int" use="required"/>
-      <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="Skill" type="xs:string" use="required"/>
       <xs:attribute name="SkillCd" type="xs:string" use="required"/>
       <xs:attribute name="SkillCatCd" type="xs:string" use="required"/>
-      <xs:attribute name="LanguageSkillSpeak" type="xs:boolean" use="required"/>
-      <xs:attribute name="LanguageSkillWrite" type="xs:boolean" use="required"/>
       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="Others" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
@@ -418,14 +430,14 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="LanguageSkillSpeak" type="xs:boolean" nillable="true"/>
+        <xs:element name="LanguageSkillWrite" type="xs:boolean" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantSkillId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="Skill" type="xs:string" use="required"/>
       <xs:attribute name="SkillCd" type="xs:string" use="required"/>
       <xs:attribute name="SkillCatCd" type="xs:string" use="required"/>
-      <xs:attribute name="LanguageSkillSpeak" type="xs:boolean" use="required"/>
-      <xs:attribute name="LanguageSkillWrite" type="xs:boolean" use="required"/>
       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="Others" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
@@ -438,10 +450,10 @@ new -  to call new at the field init
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
         <xs:element name="SportAssocId" type="xs:int" nillable="true"/>
+        <xs:element name="Year" type="xs:int" nillable="true"/>
+        <xs:element name="ApplicantId" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantSportAssocId" type="xs:int" use="required"/>
-      <xs:attribute name="Year" type="xs:int" use="required"/>
-      <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="Others" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
@@ -453,11 +465,11 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="Year" type="xs:int" nillable="true"/>
+        <xs:element name="SportAssocId" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="ApplicantSportAssocId" type="xs:int" use="required"/>
-      <xs:attribute name="SportAssocId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
-      <xs:attribute name="Year" type="xs:int" use="required"/>
       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="Others" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
@@ -576,23 +588,33 @@ new -  to call new at the field init
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-      <xs:element name="NewStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="OpenStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="CloseStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="CompleteStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="InviteFirstSelStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="FirstSelectionStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="InviteFinalSelStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="WrittenTestStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="FinalSelStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="AssignNoTenteraStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="SecurityCheckStatus" type="xs:boolean" nillable="true"/>
-      <xs:element name="Year" type="xs:int" nillable="true"/>
-      <xs:element name="Siri" type="xs:int" nillable="true"/>
-      <xs:element name="Target" type="xs:int" nillable="true"/>
+        <xs:element name="NewStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="OpenStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="CloseStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="CompleteStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="InviteFirstSelStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="FirstSelectionStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="InviteFinalSelStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="WrittenTestStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="FinalSelStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="AssignNoTenteraStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="SecurityCheckStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="Year" type="xs:int" nillable="true"/>
+        <xs:element name="Siri" type="xs:int" nillable="true"/>
+        <xs:element name="Target" type="xs:int" nillable="true"/>
+        <xs:element name="ArmyNumberFrom" type="xs:int" nillable="true"/>
+        <xs:element name="ArmyNumberTo" type="xs:int" nillable="true"/>
+        <xs:element name="PhysicalHealthStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="ShortlistMeritInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="ToFinalSelNominated" type="xs:boolean" nillable="true"/>
+        <xs:element name="FirstSelShortlisProcessInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="DocumentStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="FinalSelShortlisProcessInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="InviteFirstSelNominated" type="xs:boolean" nillable="true"/>
+        <xs:element name="AcquisitionTypeCd" type="xs:int" nillable="true"/>
+
       </xs:all>
       <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
-      <xs:attribute name="AcquisitionTypeCd" type="xs:int" use="required"/>
       <xs:attribute name="NewStatusBy" type="xs:string" use="required"/>
       <xs:attribute name="OpenStatusBy" type="xs:string" use="required"/>
       <xs:attribute name="CloseStatusBy" type="xs:string" use="required"/>
@@ -606,6 +628,11 @@ new -  to call new at the field init
       <xs:attribute name="CompleteStatusBy" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
+      <xs:attribute name="PhysicalHealthStatusBy" type="xs:string" use="required"/>
+      <xs:attribute name="ToFinalSelNominatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="DocumentStatusBy" type="xs:string" use="required"/>
+      <xs:attribute name="InviteFirstSelNominatedBy" type="xs:string" use="required"/>
+
     </xs:complexType>
   </xs:element>
   <xs:element name="AcquisitionCriteria">
@@ -682,10 +709,10 @@ new -  to call new at the field init
         <xs:element name="LocationId" type="xs:int" nillable="true"/>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="AcquisitionId" type="xs:int" nillable="true"/>
         <xs:element ref="Acquisition" />
       </xs:all>
       <xs:attribute name="AcqLocationId" type="xs:int" use="required"/>
-      <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
       <xs:attribute name="ZoneCd" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
@@ -949,13 +976,13 @@ new -  to call new at the field init
         </xs:element>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ActiveInd" type="xs:boolean" nillable="true"/>
       </xs:all>
       <xs:attribute name="LocationId" type="xs:int" use="required"/>
       <xs:attribute name="LocationNm" type="xs:string" use="required"/>
       <xs:attribute name="CityCd" type="xs:string" use="required"/>
       <xs:attribute name="StateCd" type="xs:string" use="required"/>
       <xs:attribute name="ZoneCd" type="xs:string" use="required"/>
-      <xs:attribute name="ActiveInd" type="xs:boolean" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
@@ -966,7 +993,7 @@ new -  to call new at the field init
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
       </xs:all>
-      <xs:attribute name="SubjectCd" type="xs:string" use="required"/>
+      <xs:attribute name="SubjectCd" type="xs:int" use="required"/>
       <xs:attribute name="HighEduLevelCd" type="xs:string" use="required"/>
       <xs:attribute name="SubjectDescription" type="xs:string" use="required"/>
       <xs:attribute name="ActiveInd" type="xs:boolean" use="required"/>
@@ -1058,9 +1085,9 @@ new -  to call new at the field init
         <xs:element name="Photo" type="xs:byte"/>
         <xs:element name="CreatedDate" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDate" type="xs:date" nillable="true"/>
+        <xs:element name="ApplicantId" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="Id" type="xs:int" use="required"/>
-      <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="PhotoExt" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>

@@ -68,6 +68,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -184,10 +185,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
+    <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Helper\ReferenceRepo.cs" />
     <Compile Include="Global.asax.cs">
@@ -197,9 +200,13 @@
     <Compile Include="Helper\MailService.cs" />
     <Compile Include="Helper\NHibernateContractResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddUserViewModel.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\ApplicationViewModel.cs" />
+    <Compile Include="Models\DashboardViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\JQueryDataTableParamModel.cs" />
+    <Compile Include="Models\StatisticViewModel.cs" />
     <Compile Include="Models\SubmissionNotificationViewModel.cs" />
     <Compile Include="Models\UserAccountViewModel.cs" />
     <Compile Include="Models\ResumeViewModel.cs" />
@@ -642,6 +649,11 @@
     <Content Include="Scripts\Core\jquery-1.10.2.js" />
     <Content Include="Scripts\Core\jquery-1.10.2.min.js" />
     <None Include="Scripts\Core\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Core\jquery-dataTable-bootstrap-extender.js" />
+    <Content Include="Scripts\Core\jQuery.dataTable.fnReloadAjax.Extension.js" />
+    <Content Include="Scripts\Core\jquery.dataTables-1.9.4.js" />
+    <Content Include="Scripts\Core\jquery.dataTables-1.9.4.min.js" />
+    <Content Include="Scripts\Core\jquery.dataTables.js" />
     <Content Include="Scripts\Core\jquery.fileupload-ui.js" />
     <Content Include="Scripts\Core\jquery.fileupload.js" />
     <Content Include="Scripts\Core\jquery.form.js" />
@@ -652,6 +664,8 @@
     <Content Include="Scripts\Core\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\Core\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Core\knockout-3.3.0.js" />
+    <Content Include="Scripts\Core\knockout.bindingHandlers.dataTable.js" />
+    <Content Include="Scripts\Core\knockout.iradio.handler.js" />
     <Content Include="Scripts\Core\knockout.icheck.handler.js" />
     <Content Include="Scripts\Core\knockout.jqueryui.autocomplete.js" />
     <Content Include="Scripts\Core\knockout.mapping-latest.debug.js" />
@@ -663,11 +677,15 @@
     <Content Include="Scripts\Core\_references.js" />
     <Content Include="Scripts\Core\less-1.5.1.js" />
     <Content Include="Scripts\Core\less-1.5.1.min.js" />
+    <Content Include="Scripts\Main\admin_intakes.js" />
     <Content Include="Scripts\Main\debug.js" />
     <Content Include="Scripts\Main\default.after.js" />
     <Content Include="Scripts\Main\default.js" />
     <Content Include="Scripts\Main\home_checkstatus.js" />
     <Content Include="Scripts\Main\jquery.custom.validation.message.js" />
+    <Content Include="Scripts\Main\admin_index.js" />
+    <Content Include="Scripts\Main\manage_manageuser.js" />
+    <Content Include="Scripts\Main\manage_adduser.js" />
     <Content Include="Scripts\Main\public_common.load.js" />
     <Content Include="Scripts\Main\public_tudm.js" />
     <Content Include="Scripts\Main\public_td.js" />
@@ -737,13 +755,20 @@
     <Content Include="Views\Public\_AcademicTLDM.cshtml" />
     <Content Include="Views\Public\_AcademicTUDM.cshtml" />
     <Content Include="Views\Public\_AcademicTD.cshtml" />
+    <Content Include="Views\Manage\UserProfile.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Statistic\ByStateAndGender.cshtml" />
+    <Content Include="Views\Statistic\ByStateAndGenderAcademic.cshtml" />
+    <Content Include="Views\Statistic\ByStateAndGenderRace.cshtml" />
+    <Content Include="Views\Statistic\ByStateAndGenderRaceEthnic.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\Admin\Intakes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="SuppDoc\" />
-    <Folder Include="Views\Admin\" />
-    <Folder Include="Views\Common\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
@@ -765,6 +790,10 @@
     <ProjectReference Include="..\..\persistance\atm.nhibernate.persistance\atm.nhibernate.persistance.csproj">
       <Project>{21b84ac3-08a8-49c8-926b-974accbca79d}</Project>
       <Name>atm.nhibernate.persistance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\persistance\atm.persistance\atm.entity.persistance.csproj">
+      <Project>{4bc025b8-6498-4bd1-a55d-1d8dd4e2d6c9}</Project>
+      <Name>atm.entity.persistance</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\services\atm.cryptor\atm.cryptor.csproj">
       <Project>{0858df2e-a28f-48ad-a93e-f1612a430171}</Project>
