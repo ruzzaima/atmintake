@@ -236,5 +236,12 @@ namespace SevenH.MMCSB.Persistance
             var returnList = Factory.OpenSession().QueryOver<CodeItem.Institution>().Where(a => a.InstCatCd == category).List();
             return returnList;
         }
+
+
+        public CodeItem.Race GetRace(string racecode)
+        {
+            var race = Factory.OpenSession().QueryOver<CodeItem.Race>().Where(a => a.RaceCd == racecode).SingleOrDefault();
+            return race;
+        }
     }
 }

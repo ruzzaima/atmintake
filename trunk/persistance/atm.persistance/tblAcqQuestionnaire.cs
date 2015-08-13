@@ -36,11 +36,11 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<int> SequenceNo { get; set; }
     
         public virtual ICollection<tblAcqQuestion> tblAcqQuestions { get; set; }
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblREFPersonalityType tblREFPersonalityType { get; set; }
         public virtual tblREFQuestionnaireSubType tblREFQuestionnaireSubType { get; set; }
         public virtual tblREFQuestionnaireType tblREFQuestionnaireType { get; set; }
         public virtual ICollection<tblAcqQuestionnaireScale> tblAcqQuestionnaireScales { get; set; }
         public virtual ICollection<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

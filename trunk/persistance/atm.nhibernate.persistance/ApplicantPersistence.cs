@@ -52,14 +52,14 @@ namespace SevenH.MMCSB.Persistance
         {
             Factory.OpenSession().SaveOrUpdate(photo);
             Factory.OpenSession().Flush();
-            return photo.ApplicantId;
+            return photo.ApplicantId.Value;
         }
 
         public int UpdateApplicantPhoto(ApplicantPhoto photo)
         {
             Factory.OpenSession().SaveOrUpdate(photo);
             Factory.OpenSession().Flush();
-            return photo.ApplicantId;
+            return photo.ApplicantId.Value;
         }
 
 
@@ -110,7 +110,7 @@ namespace SevenH.MMCSB.Persistance
             return Factory.OpenSession().QueryOver<ApplicantEduSubject>().Where(a => a.ApplicantEduId == appeduid).TransformUsing(Transformers.DistinctRootEntity).List();
         }
 
-        public ApplicantEduSubject GetSubject(int appeduid, string subjectcode)
+        public ApplicantEduSubject GetSubject(int appeduid, int subjectcode)
         {
             return Enumerable.LastOrDefault(Factory.OpenSession().QueryOver<ApplicantEduSubject>().Where(a => a.ApplicantEduId == appeduid && a.SubjectCd == subjectcode).List());
         }
@@ -170,6 +170,11 @@ namespace SevenH.MMCSB.Persistance
         }
 
 
+        public int UpdateSport(ApplicantSport sport)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<ApplicantSport> GetSport(int applicantid)
         {
             var sports = Factory.OpenSession().QueryOver<ApplicantSport>().Where(a => a.ApplicantId == applicantid).List();
@@ -200,6 +205,21 @@ namespace SevenH.MMCSB.Persistance
         public ExistingMember ExistingAtmMember(string idnumber)
         {
             var exist = Factory.OpenSession().QueryOver<ExistingMember>().Where(a => a.IdNumber == idnumber).SingleOrDefault();
+            Factory.OpenSession().Flush();
+            return exist;
+        }
+
+
+        public bool CheckingExistingAtmMemberByArmyNo(int armyno)
+        {
+            var exist = Factory.OpenSession().QueryOver<ExistingMember>().Where(a => a.ArmyNo == armyno).SingleOrDefault();
+            Factory.OpenSession().Flush();
+            return exist != null;
+        }
+
+        public ExistingMember ExistingAtmMemberByArmyNo(int armyno)
+        {
+            var exist = Factory.OpenSession().QueryOver<ExistingMember>().Where(a => a.ArmyNo == armyno).SingleOrDefault();
             Factory.OpenSession().Flush();
             return exist;
         }

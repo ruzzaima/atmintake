@@ -36,7 +36,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblAcqQuestion> tblAcqQuestions { get; set; }
         public virtual DbSet<tblAcqQuestionnaire> tblAcqQuestionnaires { get; set; }
         public virtual DbSet<tblAcqQuestionnaireScale> tblAcqQuestionnaireScales { get; set; }
-        public virtual DbSet<tblAcquisition> tblAcquisitions { get; set; }
         public virtual DbSet<tblAdvertisement_Xpakai> tblAdvertisement_Xpakai { get; set; }
         public virtual DbSet<tblAdvertisment> tblAdvertisments { get; set; }
         public virtual DbSet<tblAppApplicantDentalExamination> tblAppApplicantDentalExaminations { get; set; }
@@ -64,7 +63,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
         public virtual DbSet<tblExistingAtmMember> tblExistingAtmMembers { get; set; }
         public virtual DbSet<tblREFAchievement> tblREFAchievements { get; set; }
-        public virtual DbSet<tblREFAcqType> tblREFAcqTypes { get; set; }
         public virtual DbSet<tblREFApplicationStatu> tblREFApplicationStatus { get; set; }
         public virtual DbSet<tblRefBloodType> tblRefBloodTypes { get; set; }
         public virtual DbSet<tblREFCity> tblREFCities { get; set; }
@@ -103,6 +101,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblAcqFinalShorlistCriteria> tblAcqFinalShorlistCriterias { get; set; }
         public virtual DbSet<tblApplicationStatu> tblApplicationStatus { get; set; }
         public virtual DbSet<tblREFQuestionnareType> tblREFQuestionnareTypes { get; set; }
+        public virtual DbSet<tblUserRole> tblUserRoles { get; set; }
+        public virtual DbSet<tblAcquisition> tblAcquisitions { get; set; }
+        public virtual DbSet<tblREFAcqType> tblREFAcqTypes { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserLog> tblUserLogs { get; set; }
     }

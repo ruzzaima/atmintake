@@ -24,8 +24,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public string MeritTypeCd { get; set; }
         public Nullable<bool> MeritInd { get; set; }
     
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblREFMeritType tblREFMeritType { get; set; }
         public virtual ICollection<tblAcqMeritScore> tblAcqMeritScores { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

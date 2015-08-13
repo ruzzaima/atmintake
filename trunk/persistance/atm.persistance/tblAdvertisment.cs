@@ -30,7 +30,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> AcquisitionId { get; set; }
     
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblREFService tblREFService { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

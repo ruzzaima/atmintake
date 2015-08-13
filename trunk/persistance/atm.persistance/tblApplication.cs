@@ -70,7 +70,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
     
         public virtual tblAcqLocation tblAcqLocation { get; set; }
         public virtual tblAcqLocation tblAcqLocation1 { get; set; }
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual ICollection<tblAppApplicantDentalExamination> tblAppApplicantDentalExaminations { get; set; }
         public virtual ICollection<tblAppApplicantMeritScore> tblAppApplicantMeritScores { get; set; }
         public virtual ICollection<tblAppApplicantPhysicalExamination> tblAppApplicantPhysicalExaminations { get; set; }
@@ -79,5 +78,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual tblApplicationStatu tblApplicationStatu { get; set; }
         public virtual ICollection<tblAppQuestionFeedback> tblAppQuestionFeedbacks { get; set; }
         public virtual ICollection<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

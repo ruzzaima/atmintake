@@ -1,0 +1,877 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using SevenH.MMCSB.Atm.Domain;
+using SevenH.MMCSB.Atm.Domain.Interface;
+
+namespace SevenH.MMCSB.Atm.Entity.Persistance
+{
+    class ApplicantSubmittedPersistance : IApplicantSubmittedPersistence
+    {
+        public void Delete(int id)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSubmiteds where a.ApplicantId == id select a);
+                if (exist.Any())
+                    entities.tblApplicantSubmiteds.RemoveRange(exist);
+            }
+        }
+
+        public int Save(ApplicantSubmitted appl)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == appl.NewICNo && a.AcquisitionId == appl.AcquisitionId select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    appl.ApplicantId = exist.ApplicantId;
+                    return Update(appl);
+                }
+                var usr = BindindToTable(appl);
+                entities.tblApplicantSubmiteds.Add(usr);
+                if (entities.SaveChanges() > 0)
+                    return usr.ApplicantId;
+            }
+            return 0;
+        }
+
+        public int Update(ApplicantSubmitted appl)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSubmiteds where a.ApplicantId == appl.ApplicantId select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    exist.AcquisitionId = appl.AcquisitionId;
+                    exist.Email = appl.Email;
+                    exist.FullName = appl.FullName;
+                    exist.ArmySelectionDt = appl.ArmySelectionDt;
+                    exist.ArmySelectionInd = appl.ArmySelectionInd;
+                    exist.ArmySelectionVenue = appl.ArmySelectionVenue;
+                    exist.ArmyServiceInd = appl.ArmyServiceInd;
+                    exist.ArmyServiceResignRemark = appl.ArmyServiceResignRemark;
+                    exist.ArmyServiceYrOfServ = appl.ArmyServiceYrOfServ;
+                    exist.BMI = appl.BMI;
+                    exist.BirthCertNo = appl.BirthCertNo;
+                    exist.BirthCityCd = appl.BirthCityCd;
+                    exist.BirthCountryCd = appl.BirthCountryCd;
+                    exist.BirthDt = appl.BirthDt.Value;
+                    exist.BirthPlace = appl.BirthPlace;
+                    exist.BirthStateCd = appl.BirthStateCd;
+                    exist.BloodTypeCd = appl.BloodTypeCd;
+                    exist.ChildNo = appl.ChildNo;
+                    exist.ColorBlindInd = appl.ColorBlindInd;
+                    exist.ComputerICT = appl.ComputerICT;
+                    exist.ComputerMSExcel = appl.ComputerMSExcel;
+                    exist.ComputerMSPwrPoint = appl.ComputerMSPwrPoint;
+                    exist.ComputerMSWord = appl.ComputerMSWord;
+                    exist.ComputerOthers = appl.ComputerOthers;
+                    exist.CorresponAddr1 = appl.CorresponAddr1;
+                    exist.CorresponAddr2 = appl.CorresponAddr2;
+                    exist.CorresponAddr3 = appl.CorresponAddr3;
+                    exist.CorresponAddrCityCd = appl.CorresponAddrCityCd;
+                    exist.CorresponAddrCountryCd = appl.CorresponAddrCountryCd;
+                    exist.CorresponAddrPostCd = appl.CorresponAddrPostCd;
+                    exist.CorresponAddrStateCd = appl.CorresponAddrStateCd;
+                    exist.CrimeInvolvement = appl.CrimeInvolvement;
+                    exist.CronicIlnessInd = appl.CronicIlnessInd;
+                    exist.CurrentOccupation = appl.CurrentOccupation;
+                    exist.CurrentOrganisation = appl.CurrentOrganisation;
+                    exist.CurrentSalary = appl.CurrentSalary;
+                    exist.DadICNo = appl.DadICNo;
+                    exist.DadName = appl.DadName;
+                    exist.DadNationalityCd = appl.DadNationalityCd;
+                    exist.DadNotApplicable = appl.DadNotApplicable;
+                    exist.DadNotApplicableInd = appl.DadNotApplicable;
+                    exist.DadOccupation = appl.DadOccupation;
+                    exist.DadPhoneNo = appl.DadPhoneNo;
+                    exist.DadSalary = appl.DadSalary;
+                    exist.DrugCaseInvolvement = appl.DrugCaseInvolvement;
+                    exist.EmployeeAggreeInd = appl.EmployeeAggreeInd;
+                    exist.EthnicCd = appl.EthnicCd;
+                    exist.FamilyHighestEduLevel = appl.FamilyHighestEduLevel;
+                    exist.GenderCd = appl.GenderCd;
+                    exist.GuardianICNo = appl.GuardianICNo;
+                    exist.GuardianName = appl.GuardianName;
+                    exist.GuardianNationalityCd = appl.GuardianNationalityCd;
+                    exist.GuardianNotApplicable = appl.GuardianNotApplicable;
+                    exist.GuardianNotApplicableInd = appl.GuardianNotApplicable;
+                    exist.GuardianOccupation = appl.GuardianOccupation;
+                    exist.GuardianPhoneNo = appl.GuardianPhoneNo;
+                    exist.GuardianSalary = appl.GuardianSalary;
+                    exist.Height = appl.Height;
+                    exist.HomePhoneNo = appl.HomePhoneNo;
+                    exist.LastModifiedBy = appl.LastModifiedBy;
+                    exist.LastModifiedDt = appl.LastModifiedDt;
+                    exist.MobilePhoneNo = appl.MobilePhoneNo;
+                    exist.MomICNo = appl.MomICNo;
+                    exist.MomName = appl.MomName;
+                    exist.MomNationalityCd = appl.MomNationalityCd;
+                    exist.MomNotApplicable = appl.MomNotApplicable;
+                    exist.MomNotApplicableInd = appl.MomNotApplicable;
+                    exist.MomOccupation = appl.MomOccupation;
+                    exist.MomPhoneNo = appl.MomPhoneNo;
+                    exist.MomSalary = appl.MomSalary;
+                    exist.MrtlStatusCd = appl.MrtlStatusCd;
+                    exist.NationalityCd = appl.NationalityCd;
+                    exist.NationalityCertNo = appl.NationalityCertNo;
+                    exist.NewICNo = appl.NewICNo;
+                    exist.NoOfSibling = appl.NoOfSibling;
+                    exist.NoTentera = appl.NoTentera;
+                    exist.OriginalPelepasanDocument = appl.OriginalPelepasanDocument;
+                    exist.PalapesArmyNo = appl.PalapesArmyNo;
+                    exist.PalapesInd = appl.PalapesInd;
+                    exist.PalapesInstitution = appl.PalapesInstitution;
+                    exist.PalapesRemark = appl.PalapesRemark;
+                    exist.PalapesServices = appl.PalapesServices;
+                    exist.PalapesTauliahEndDt = appl.PalapesTauliahEndDt;
+                    exist.PalapesYear = appl.PalapesYear;
+                    exist.PelepasanDocument = appl.PelepasanDocument;
+                    exist.RaceCd = appl.RaceCd;
+                    exist.ReligionCd = appl.ReligionCd;
+                    exist.ResidenceTypeInd = appl.ResidenceTypeInd;
+                    exist.ScholarshipBody = appl.ScholarshipBody;
+                    exist.ScholarshipBodyAddr = appl.ScholarshipBodyAddr;
+                    exist.ScholarshipContractStDate = appl.ScholarshipContractStDate;
+                    exist.ScholarshipInd = appl.ScholarshipInd;
+                    exist.ScholarshipNoOfYrContract = appl.ScholarshipNoOfYrContract;
+                    exist.SelectionTD = appl.SelectionTD;
+                    exist.SelectionTL = appl.SelectionTL;
+                    exist.SelectionTU = appl.SelectionTU;
+                    exist.SpectaclesUserInd = appl.SpectaclesUserInd;
+                    exist.Weight = appl.Weight;
+
+                    entities.SaveChanges();
+
+                    return exist.ApplicantId;
+                }
+            }
+            return 0;
+        }
+
+        public ApplicantSubmitted GetApplicant(string icno, int acquisitionid)
+        {
+            if (!string.IsNullOrWhiteSpace(icno) && acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == icno && a.AcquisitionId == acquisitionid select a).SingleOrDefault();
+                    if (null != exist)
+                        return BindingToClass(exist);
+                }
+            }
+            return null;
+        }
+        public ApplicantSubmitted GetApplicant(int applicantid, int acquisitionid)
+        {
+            if (applicantid != 0 && acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblApplicantSubmiteds where a.ApplicantId == applicantid && a.AcquisitionId == acquisitionid select a).SingleOrDefault();
+                    if (null != exist)
+                        return BindingToClass(exist);
+                }
+            }
+            return null;
+        }
+
+        public IEnumerable<ApplicantSubmitted> GetApplicants(string icno)
+        {
+            var list = new List<ApplicantSubmitted>();
+
+            if (!string.IsNullOrWhiteSpace(icno))
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = from a in entities.tblApplicantSubmiteds where a.NewICNo == icno select a;
+                    if (exist.Any())
+                        foreach (var u in exist)
+                            list.Add(BindingToClass(u));
+
+
+                }
+            }
+            return list;
+        }
+
+        public IEnumerable<ApplicantSubmitted> GetApplicants(int acquisitionid)
+        {
+            var list = new List<ApplicantSubmitted>();
+
+            if (acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
+                    if (exist.Any())
+                        foreach (var u in exist)
+                            list.Add(BindingToClass(u));
+
+
+                }
+            }
+            return list;
+        }
+
+        public int SaveEducation(ApplicantEducationSubmitted education)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantEduSubmitteds where a.ApplicantId == education.ApplicantId && a.HighEduLevelCd == education.HighEduLevelCd select a).SingleOrDefault();
+                if (exist != null)
+                {
+                    education.ApplicantEduId = exist.ApplicantEduId;
+                    return UpdateEducation(education);
+                }
+                var ed = new tblApplicantEduSubmitted()
+                {
+                    ApplicantId = education.ApplicantId,
+                    ConfermentYr = education.ConfermentYr,
+                    CreatedBy = education.CreatedBy,
+                    CreatedDt = education.CreatedDt,
+                    EduCertTitle = education.EduCertTitle,
+                    HighEduLevelCd = education.HighEduLevelCd,
+                    InstCd = education.InstCd,
+                    InstitutionName = education.InstitutionName,
+                    MajorMinorCd = education.MajorMinorCd,
+                    OverSeaInd = education.OverSeaInd,
+                    OverallGrade = education.OverallGrade,
+                    SKMLevel = education.SKMLevel,
+                };
+                entities.tblApplicantEduSubmitteds.Add(ed);
+
+                if (entities.SaveChanges() > 0)
+                {
+                    // save submitted subject
+                    return ed.ApplicantEduId;
+                }
+            }
+            return 0;
+        }
+
+        public int UpdateEducation(ApplicantEducationSubmitted education)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantEduSubmitteds where a.ApplicantEduId == education.ApplicantEduId select a).SingleOrDefault();
+                if (exist != null)
+                {
+                    exist.ApplicantId = education.ApplicantId;
+                    exist.ConfermentYr = education.ConfermentYr;
+                    exist.EduCertTitle = education.EduCertTitle;
+                    exist.HighEduLevelCd = education.HighEduLevelCd;
+                    exist.InstCd = education.InstCd;
+                    exist.InstitutionName = education.InstitutionName;
+                    exist.LastModifiedBy = education.LastModifiedBy;
+                    exist.LastModifiedDt = DateTime.Now;
+                    exist.MajorMinorCd = education.MajorMinorCd;
+                    exist.OverSeaInd = education.OverSeaInd;
+                    exist.OverallGrade = education.OverallGrade;
+                    exist.SKMLevel = education.SKMLevel;
+
+                    entities.SaveChanges();
+
+                    return exist.ApplicantEduId;
+                }
+            }
+            return 0;
+        }
+
+        public IEnumerable<ApplicantEducationSubmitted> GetEducation(int applicantid)
+        {
+            var list = new List<ApplicantEducationSubmitted>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblApplicantEduSubmitteds where a.ApplicantId == applicantid select a;
+                if (l.Any())
+                {
+                    foreach (var aes in l)
+                    {
+                        var ed = new ApplicantEducationSubmitted()
+                        {
+                            ApplicantEduId = aes.ApplicantEduId,
+                            ApplicantId = aes.ApplicantId,
+                            ConfermentYr = aes.ConfermentYr,
+                            CreatedBy = aes.CreatedBy,
+                            CreatedDt = aes.CreatedDt,
+                            EduCertTitle = aes.EduCertTitle,
+                            HighEduLevelCd = aes.HighEduLevelCd,
+                            InstCd = aes.InstCd,
+                            InstitutionName = aes.InstitutionName,
+                            LastModifiedBy = aes.LastModifiedBy,
+                            LastModifiedDt = aes.LastModifiedDt,
+                            MajorMinorCd = aes.MajorMinorCd,
+                            OverSeaInd = aes.OverSeaInd,
+                            OverallGrade = aes.OverallGrade,
+                            SKMLevel = aes.SKMLevel
+                        };
+                        list.Add(ed);
+                    }
+                }
+            }
+            return list;
+        }
+
+        public int SaveEducationSubject(ApplicantEduSubjectSubmitted subject)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantEduSubjectSubmitteds where a.ApplicantEduId == subject.ApplicantEduId && a.SubjectCd == subject.SubjectCd select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    subject.EduSubjectId = exist.EduSubjectId;
+                    return UpdateEducationSubject(subject);
+                }
+                var s = new tblApplicantEduSubjectSubmitted()
+                {
+                    ApplicantEduId = subject.ApplicantEduId,
+                    CreatedBy = subject.CreatedBy,
+                    CreatedDt = subject.CreatedDt,
+                    Grade = subject.Grade,
+                    GradeCd = subject.GradeCd,
+                    SubjectCd = subject.SubjectCd,
+                    LastModifiedBy = subject.LastModifiedBy,
+                    LastModifiedDt = subject.LastModifiedDt
+                };
+                entities.tblApplicantEduSubjectSubmitteds.Add(s);
+                if (entities.SaveChanges() > 0)
+                    return s.ApplicantEduId;
+            }
+            return 0;
+        }
+
+        public int UpdateEducationSubject(ApplicantEduSubjectSubmitted subject)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantEduSubjectSubmitteds where a.EduSubjectId == subject.EduSubjectId select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    exist.ApplicantEduId = subject.ApplicantEduId;
+                    exist.CreatedBy = subject.CreatedBy;
+                    exist.CreatedDt = subject.CreatedDt;
+                    exist.Grade = subject.Grade;
+                    exist.GradeCd = subject.GradeCd;
+                    exist.SubjectCd = subject.SubjectCd;
+                    exist.LastModifiedBy = subject.LastModifiedBy;
+                    exist.LastModifiedDt = DateTime.Now;
+
+                    entities.SaveChanges();
+
+                    return exist.EduSubjectId;
+                }
+            }
+            return 0;
+        }
+
+        public IEnumerable<ApplicantEduSubjectSubmitted> GetEducationSubject(int appeduid)
+        {
+            var list = new List<ApplicantEduSubjectSubmitted>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblApplicantEduSubjectSubmitteds where a.ApplicantEduId == appeduid select a;
+                if (l.Any())
+                {
+                    foreach (var s in l)
+                    {
+                        list.Add(new ApplicantEduSubjectSubmitted()
+                        {
+                            ApplicantEduId = s.ApplicantEduId,
+                            CreatedBy = s.CreatedBy,
+                            CreatedDt = s.CreatedDt,
+                            EduSubjectId = s.EduSubjectId,
+                            Grade = s.Grade,
+                            GradeCd = s.GradeCd,
+                            LastModifiedBy = s.LastModifiedBy,
+                            LastModifiedDt = s.LastModifiedDt,
+                            SubjectCd = s.SubjectCd,
+                            Subject = s.tblREFSubject.Subject
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public int SaveSkill(ApplicantSkillSubmitted skill)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSkillSubmitteds where a.ApplicantId == skill.ApplicantId && a.SkillCd == skill.SkillCd select a).SingleOrDefault();
+                if (exist != null)
+                {
+                    skill.ApplicantSkillId = exist.ApplicantSkillId;
+                    return UpdateSkill(skill);
+                }
+
+                var s = new tblApplicantSkillSubmitted()
+                {
+                    AchievementCd = skill.AchievementCd,
+                    ApplicantId = skill.ApplicantId,
+                    CreatedBy = skill.CreatedBy,
+                    CreatedDt = skill.CreatedDt,
+                    LanguageSkillSpeak = skill.LanguageSkillSpeak,
+                    LanguageSkillWrite = skill.LanguageSkillWrite,
+                    Others = skill.Others,
+                    SkillCatCd = skill.SkillCatCd,
+                    SkillCd = skill.SkillCd,
+                };
+                entities.tblApplicantSkillSubmitteds.Add(s);
+
+                if (entities.SaveChanges() > 0)
+                    return s.ApplicantSkillId;
+
+            }
+            return 0;
+        }
+
+        public int UpdateSkill(ApplicantSkillSubmitted skill)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSkillSubmitteds where a.ApplicantSkillId == skill.ApplicantSkillId select a).SingleOrDefault();
+                if (exist != null)
+                {
+                    exist.AchievementCd = skill.AchievementCd;
+                    exist.ApplicantId = skill.ApplicantId;
+                    exist.LastModifiedBy = skill.LastModifiedBy;
+                    exist.LastModifiedDt = skill.LastModifiedDt;
+                    exist.LanguageSkillSpeak = skill.LanguageSkillSpeak;
+                    exist.LanguageSkillWrite = skill.LanguageSkillWrite;
+                    exist.Others = skill.Others;
+                    exist.SkillCatCd = skill.SkillCatCd;
+                    exist.SkillCd = skill.SkillCd;
+
+                    entities.SaveChanges();
+                    return exist.ApplicantSkillId;
+                }
+            }
+            return 0;
+        }
+
+        public IEnumerable<ApplicantSkillSubmitted> GetSkill(int applicantid)
+        {
+            var list = new List<ApplicantSkillSubmitted>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblApplicantSkillSubmitteds where a.ApplicantId == applicantid select a;
+                if (l.Any())
+                {
+                    foreach (var s in l)
+                    {
+                        list.Add(new ApplicantSkillSubmitted()
+                        {
+                            AchievementCd = s.AchievementCd,
+                            CreatedBy = s.CreatedBy,
+                            CreatedDt = s.CreatedDt,
+                            LastModifiedBy = s.LastModifiedBy,
+                            LastModifiedDt = s.LastModifiedDt,
+                            ApplicantId = s.ApplicantId,
+                            ApplicantSkillId = s.ApplicantSkillId,
+                            LanguageSkillSpeak = s.LanguageSkillSpeak,
+                            LanguageSkillWrite = s.LanguageSkillWrite,
+                            Others = s.Others,
+                            Skill = s.tblREFSkill.Skill,
+                            SkillCatCd = s.SkillCatCd,
+                            SkillCd = s.SkillCd
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public int SaveSport(ApplicantSportSubmitted sport)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSportAssocSubmitteds where a.ApplicantId == sport.ApplicantId && a.ApplicantSportAssocId == sport.SportAssocId select a).SingleOrDefault();
+                if (exist != null)
+                {
+                    sport.ApplicantSportAssocId = exist.ApplicantSportAssocId;
+                    return UpdateSport(sport);
+                }
+
+                var s = new tblApplicantSportAssocSubmitted()
+                {
+                    AchievementCd = sport.AchievementCd,
+                    ApplicantId = sport.ApplicantId,
+                    CreatedBy = sport.CreatedBy,
+                    CreatedDt = sport.CreatedDt,
+                    Others = sport.Others,
+                    SportAssocId = sport.SportAssocId,
+                    Year = sport.Year,
+                };
+                entities.tblApplicantSportAssocSubmitteds.Add(s);
+
+                if (entities.SaveChanges() > 0)
+                    return s.ApplicantSportAssocId;
+            }
+            return 0;
+        }
+
+        public int UpdateSport(ApplicantSportSubmitted sport)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSportAssocSubmitteds where a.ApplicantSportAssocId == sport.ApplicantSportAssocId select a).SingleOrDefault();
+                if (exist != null)
+                {
+                    exist.AchievementCd = sport.AchievementCd;
+                    exist.ApplicantId = sport.ApplicantId;
+                    exist.Others = sport.Others;
+                    exist.Year = sport.Year;
+                    exist.LastModifiedBy = sport.LastModifiedBy;
+                    exist.LastModifiedDt = sport.LastModifiedDt;
+
+                    entities.SaveChanges();
+                    return exist.ApplicantSportAssocId;
+                }
+            }
+            return 0;
+        }
+
+        public IEnumerable<ApplicantSportSubmitted> GetSport(int applicantid)
+        {
+            var list = new List<ApplicantSportSubmitted>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblApplicantSportAssocSubmitteds where a.ApplicantId == applicantid select a;
+                if (l.Any())
+                {
+                    foreach (var s in l)
+                    {
+                        list.Add(new ApplicantSportSubmitted()
+                        {
+                            AchievementCd = s.AchievementCd,
+                            ApplicantId = s.ApplicantId,
+                            ApplicantSportAssocId = s.ApplicantSportAssocId,
+                            CreatedBy = s.CreatedBy,
+                            CreatedDt = s.CreatedDt,
+                            LastModifiedBy = s.LastModifiedBy,
+                            LastModifiedDt = s.LastModifiedDt,
+                            Others = s.Others,
+                            SportAssocId = s.SportAssocId,
+                            Year = s.Year
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public ApplicantSubmittedPhoto GetPhoto(int applicantid)
+        {
+            if (applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblApplicantSubmittedPhotoes where a.ApplicantId == applicantid select a).SingleOrDefault();
+                    if (null != exist)
+                    {
+                        var p = new ApplicantSubmittedPhoto()
+                        {
+                            ApplicantId = exist.ApplicantId,
+                            CreatedBy = exist.CreatedBy,
+                            CreatedDate = exist.CreatedDt,
+                            Id = exist.Id,
+                            LastModifiedBy = exist.LastModifiedBy,
+                            LastModifiedDate = exist.LastModifiedDt,
+                            Photo = exist.Photo,
+                            PhotoExt = exist.PhotoExt
+                        };
+                        return p;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public int SaveApplicantPhoto(ApplicantSubmittedPhoto photo)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSubmittedPhotoes where a.ApplicantId == photo.ApplicantId select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    photo.Id = exist.Id;
+                    UpdateApplicantPhoto(photo);
+                }
+                else
+                {
+                    var p = new tblApplicantSubmittedPhoto()
+                    {
+                        ApplicantId = photo.ApplicantId,
+                        CreatedBy = photo.CreatedBy,
+                        CreatedDt = photo.CreatedDate,
+                        Photo = photo.Photo,
+                        PhotoExt = photo.PhotoExt
+                    };
+                    entities.tblApplicantSubmittedPhotoes.Add(p);
+                    if (entities.SaveChanges() > 0)
+                        return p.Id;
+                }
+            }
+            return 0;
+        }
+
+        public int UpdateApplicantPhoto(ApplicantSubmittedPhoto photo)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblApplicantSubmittedPhotoes where a.Id == photo.Id select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    exist.ApplicantId = photo.ApplicantId;
+                    exist.LastModifiedBy = photo.LastModifiedBy;
+                    exist.LastModifiedDt = photo.LastModifiedDate;
+                    exist.Photo = photo.Photo;
+                    exist.PhotoExt = photo.PhotoExt;
+                    entities.SaveChanges();
+                    return exist.Id;
+                }
+            }
+            return 0;
+        }
+
+        private static tblApplicantSubmited BindindToTable(ApplicantSubmitted appl)
+        {
+            var usr = new tblApplicantSubmited()
+            {
+                AcquisitionId = appl.AcquisitionId,
+                Email = appl.Email,
+                FullName = appl.FullName,
+                CreatedDt = appl.CreatedDt,
+                ArmySelectionDt = appl.ArmySelectionDt,
+                ArmySelectionInd = appl.ArmySelectionInd,
+                ArmySelectionVenue = appl.ArmySelectionVenue,
+                ArmyServiceInd = appl.ArmyServiceInd,
+                ArmyServiceResignRemark = appl.ArmyServiceResignRemark,
+                ArmyServiceYrOfServ = appl.ArmyServiceYrOfServ,
+                BMI = appl.BMI,
+                BirthCertNo = appl.BirthCertNo,
+                BirthCityCd = appl.BirthCityCd,
+                BirthCountryCd = appl.BirthCountryCd,
+                BirthDt = appl.BirthDt.Value,
+                BirthPlace = appl.BirthPlace,
+                BirthStateCd = appl.BirthStateCd,
+                BloodTypeCd = appl.BloodTypeCd,
+                ChildNo = appl.ChildNo,
+                ColorBlindInd = appl.ColorBlindInd,
+                ComputerICT = appl.ComputerICT,
+                ComputerMSExcel = appl.ComputerMSExcel,
+                ComputerMSPwrPoint = appl.ComputerMSPwrPoint,
+                ComputerMSWord = appl.ComputerMSWord,
+                ComputerOthers = appl.ComputerOthers,
+                CorresponAddr1 = appl.CorresponAddr1,
+                CorresponAddr2 = appl.CorresponAddr2,
+                CorresponAddr3 = appl.CorresponAddr3,
+                CorresponAddrCityCd = appl.CorresponAddrCityCd,
+                CorresponAddrCountryCd = appl.CorresponAddrCountryCd,
+                CorresponAddrPostCd = appl.CorresponAddrPostCd,
+                CorresponAddrStateCd = appl.CorresponAddrStateCd,
+                CreatedBy = appl.CreatedBy,
+                CrimeInvolvement = appl.CrimeInvolvement,
+                CronicIlnessInd = appl.CronicIlnessInd,
+                CurrentOccupation = appl.CurrentOccupation,
+                CurrentOrganisation = appl.CurrentOrganisation,
+                CurrentSalary = appl.CurrentSalary,
+                DadICNo = appl.DadICNo,
+                DadName = appl.DadName,
+                DadNationalityCd = appl.DadNationalityCd,
+                DadNotApplicable = appl.DadNotApplicable,
+                DadNotApplicableInd = appl.DadNotApplicable,
+                DadOccupation = appl.DadOccupation,
+                DadPhoneNo = appl.DadPhoneNo,
+                DadSalary = appl.DadSalary,
+                DrugCaseInvolvement = appl.DrugCaseInvolvement,
+                EmployeeAggreeInd = appl.EmployeeAggreeInd,
+                EthnicCd = appl.EthnicCd,
+                FamilyHighestEduLevel = appl.FamilyHighestEduLevel,
+                GenderCd = appl.GenderCd,
+                GuardianICNo = appl.GuardianICNo,
+                GuardianName = appl.GuardianName,
+                GuardianNationalityCd = appl.GuardianNationalityCd,
+                GuardianNotApplicable = appl.GuardianNotApplicable,
+                GuardianNotApplicableInd = appl.GuardianNotApplicable,
+                GuardianOccupation = appl.GuardianOccupation,
+                GuardianPhoneNo = appl.GuardianPhoneNo,
+                GuardianSalary = appl.GuardianSalary,
+                Height = appl.Height,
+                HomePhoneNo = appl.HomePhoneNo,
+                LastModifiedBy = appl.LastModifiedBy,
+                LastModifiedDt = appl.LastModifiedDt,
+                MobilePhoneNo = appl.MobilePhoneNo,
+                MomICNo = appl.MomICNo,
+                MomName = appl.MomName,
+                MomNationalityCd = appl.MomNationalityCd,
+                MomNotApplicable = appl.MomNotApplicable,
+                MomNotApplicableInd = appl.MomNotApplicable,
+                MomOccupation = appl.MomOccupation,
+                MomPhoneNo = appl.MomPhoneNo,
+                MomSalary = appl.MomSalary,
+                MrtlStatusCd = appl.MrtlStatusCd,
+                NationalityCd = appl.NationalityCd,
+                NationalityCertNo = appl.NationalityCertNo,
+                NewICNo = appl.NewICNo,
+                NoOfSibling = appl.NoOfSibling,
+                NoTentera = appl.NoTentera,
+                OriginalPelepasanDocument = appl.OriginalPelepasanDocument,
+                PalapesArmyNo = appl.PalapesArmyNo,
+                PalapesInd = appl.PalapesInd,
+                PalapesInstitution = appl.PalapesInstitution,
+                PalapesRemark = appl.PalapesRemark,
+                PalapesServices = appl.PalapesServices,
+                PalapesTauliahEndDt = appl.PalapesTauliahEndDt,
+                PalapesYear = appl.PalapesYear,
+                PelepasanDocument = appl.PelepasanDocument,
+                RaceCd = appl.RaceCd,
+                ReligionCd = appl.ReligionCd,
+                ResidenceTypeInd = appl.ResidenceTypeInd,
+                ScholarshipBody = appl.ScholarshipBody,
+                ScholarshipBodyAddr = appl.ScholarshipBodyAddr,
+                ScholarshipContractStDate = appl.ScholarshipContractStDate,
+                ScholarshipInd = appl.ScholarshipInd,
+                ScholarshipNoOfYrContract = appl.ScholarshipNoOfYrContract,
+                SelectionTD = appl.SelectionTD,
+                SelectionTL = appl.SelectionTL,
+                SelectionTU = appl.SelectionTU,
+                SpectaclesUserInd = appl.SpectaclesUserInd,
+                Weight = appl.Weight,
+            };
+            return usr;
+        }
+
+        private static ApplicantSubmitted BindingToClass(tblApplicantSubmited appl)
+        {
+            var usr = new ApplicantSubmitted()
+            {
+                ApplicantId = appl.ApplicantId,
+                AcquisitionId = appl.AcquisitionId,
+                Email = appl.Email,
+                FullName = appl.FullName,
+                CreatedDt = appl.CreatedDt,
+                ArmySelectionDt = appl.ArmySelectionDt,
+                ArmySelectionInd = appl.ArmySelectionInd,
+                ArmySelectionVenue = appl.ArmySelectionVenue,
+                ArmyServiceInd = appl.ArmyServiceInd,
+                ArmyServiceResignRemark = appl.ArmyServiceResignRemark,
+                ArmyServiceYrOfServ = appl.ArmyServiceYrOfServ,
+                BMI = appl.BMI,
+                BirthCertNo = appl.BirthCertNo,
+                BirthCityCd = appl.BirthCityCd,
+                BirthCountryCd = appl.BirthCountryCd,
+                BirthDt = appl.BirthDt,
+                BirthPlace = appl.BirthPlace,
+                BirthStateCd = appl.BirthStateCd,
+                BirthStateName = appl.tblREFState.State,
+                BloodTypeCd = appl.BloodTypeCd,
+                ChildNo = appl.ChildNo,
+                ColorBlindInd = appl.ColorBlindInd,
+                ComputerICT = appl.ComputerICT,
+                ComputerMSExcel = appl.ComputerMSExcel,
+                ComputerMSPwrPoint = appl.ComputerMSPwrPoint,
+                ComputerMSWord = appl.ComputerMSWord,
+                ComputerOthers = appl.ComputerOthers,
+                CorresponAddr1 = appl.CorresponAddr1,
+                CorresponAddr2 = appl.CorresponAddr2,
+                CorresponAddr3 = appl.CorresponAddr3,
+                CorresponAddrCityCd = appl.CorresponAddrCityCd,
+                CorresponAddrCountryCd = appl.CorresponAddrCountryCd,
+                CorresponAddrPostCd = appl.CorresponAddrPostCd,
+                CorresponAddrStateCd = appl.CorresponAddrStateCd,
+                CreatedBy = appl.CreatedBy,
+                CrimeInvolvement = appl.CrimeInvolvement,
+                CronicIlnessInd = appl.CronicIlnessInd,
+                CurrentOccupation = appl.CurrentOccupation,
+                CurrentOrganisation = appl.CurrentOrganisation,
+                CurrentSalary = appl.CurrentSalary,
+                DadICNo = appl.DadICNo,
+                DadName = appl.DadName,
+                DadNationalityCd = appl.DadNationalityCd,
+                DadNotApplicable = appl.DadNotApplicable,
+                DadOccupation = appl.DadOccupation,
+                DadPhoneNo = appl.DadPhoneNo,
+                DadSalary = appl.DadSalary,
+                DrugCaseInvolvement = appl.DrugCaseInvolvement,
+                EmployeeAggreeInd = appl.EmployeeAggreeInd,
+                EthnicCd = appl.EthnicCd,
+                FamilyHighestEduLevel = appl.FamilyHighestEduLevel,
+                GenderCd = appl.GenderCd,
+                GuardianICNo = appl.GuardianICNo,
+                GuardianName = appl.GuardianName,
+                GuardianNationalityCd = appl.GuardianNationalityCd,
+                GuardianNotApplicable = appl.GuardianNotApplicable,
+                GuardianOccupation = appl.GuardianOccupation,
+                GuardianPhoneNo = appl.GuardianPhoneNo,
+                GuardianSalary = appl.GuardianSalary,
+                Height = appl.Height,
+                HomePhoneNo = appl.HomePhoneNo,
+                LastModifiedBy = appl.LastModifiedBy,
+                LastModifiedDt = appl.LastModifiedDt,
+                MobilePhoneNo = appl.MobilePhoneNo,
+                MomICNo = appl.MomICNo,
+                MomName = appl.MomName,
+                MomNationalityCd = appl.MomNationalityCd,
+                MomNotApplicable = appl.MomNotApplicable,
+                MomOccupation = appl.MomOccupation,
+                MomPhoneNo = appl.MomPhoneNo,
+                MomSalary = appl.MomSalary,
+                MrtlStatusCd = appl.MrtlStatusCd,
+                NationalityCd = appl.NationalityCd,
+                NationalityCertNo = appl.NationalityCertNo,
+                NewICNo = appl.NewICNo,
+                NoOfSibling = appl.NoOfSibling,
+                NoTentera = appl.NoTentera,
+                OriginalPelepasanDocument = appl.OriginalPelepasanDocument,
+                PalapesArmyNo = appl.PalapesArmyNo,
+                PalapesInd = appl.PalapesInd,
+                PalapesInstitution = appl.PalapesInstitution,
+                PalapesRemark = appl.PalapesRemark,
+                PalapesServices = appl.PalapesServices,
+                PalapesTauliahEndDt = appl.PalapesTauliahEndDt,
+                PalapesYear = appl.PalapesYear,
+                PelepasanDocument = appl.PelepasanDocument,
+                RaceCd = appl.RaceCd,
+                ReligionCd = appl.ReligionCd,
+                ResidenceTypeInd = appl.ResidenceTypeInd,
+                ScholarshipBody = appl.ScholarshipBody,
+                ScholarshipBodyAddr = appl.ScholarshipBodyAddr,
+                ScholarshipContractStDate = appl.ScholarshipContractStDate,
+                ScholarshipInd = appl.ScholarshipInd,
+                ScholarshipNoOfYrContract = appl.ScholarshipNoOfYrContract,
+                SelectionTD = appl.SelectionTD,
+                SelectionTL = appl.SelectionTL,
+                SelectionTU = appl.SelectionTU,
+                SpectaclesUserInd = appl.SpectaclesUserInd,
+                Weight = appl.Weight,
+            };
+            return usr;
+        }
+
+
+        public IEnumerable<ApplicantSubmitted> GetApplicants(int acquisitionid, string racecode)
+        {
+            var list = new List<ApplicantSubmitted>();
+
+            if (acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid && a.RaceCd == racecode select a;
+                    if (exist.Any())
+                        foreach (var u in exist)
+                            list.Add(BindingToClass(u));
+                }
+            }
+            return list;
+        }
+    }
+}

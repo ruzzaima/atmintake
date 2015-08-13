@@ -80,8 +80,10 @@
     <Compile Include="Class\IntakeLocation.cs" />
     <Compile Include="Class\InterviewLocation.cs" />
     <Compile Include="Class\Location.cs" />
+    <Compile Include="Class\LogStatusCodeString.cs" />
     <Compile Include="Class\Occupation.cs" />
     <Compile Include="Class\LoginStatus.cs" />
+    <Compile Include="Class\RolesString.cs" />
     <Compile Include="Class\SportAndAssociation.cs" />
     <Compile Include="Class\SubjectGrade.cs" />
     <Compile Include="Class\Subject.cs" />
@@ -104,7 +106,6 @@
     <Compile Include="Class\Country.cs" />
     <Compile Include="Class\Zone.cs" />
     <Compile Include="Helper\IntCharType.cs" />
-    <Compile Include="Helper\RoleString.cs" />
     <Compile Include="Interface\IAcquisitionPersistence.cs" />
     <Compile Include="Interface\IAdvertismentPersistance.cs" />
     <Compile Include="Interface\IApplicantSportSubmittedPersistence.cs" />
@@ -115,7 +116,9 @@
     <Compile Include="Interface\ICodeItemPersistence.cs" />
     <Compile Include="Interface\ICryptorService.cs" />
     <Compile Include="Interface\ILoginUserPersistance.cs" />
+    <Compile Include="Interface\IMembershipProvider.cs" />
     <Compile Include="Interface\IReferencePersistence.cs" />
+    <Compile Include="Interface\IRoleProvider.cs" />
     <Compile Include="Mapping\Acquisition.mapping.cs" />
     <Compile Include="Mapping\ApplicantSubmitted.mapping.cs" />
     <Compile Include="Mapping\ExistingMember.mapping.cs" />

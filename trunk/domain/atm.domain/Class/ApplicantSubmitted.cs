@@ -16,10 +16,6 @@ namespace SevenH.MMCSB.Atm.Domain
             return ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Update(this);
         }
 
-        public virtual ApplicantSubmitted GetApplicant(int id)
-        {
-            return ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(id);
-        }
     }
 
 }

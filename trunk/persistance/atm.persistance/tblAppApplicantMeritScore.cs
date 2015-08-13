@@ -41,8 +41,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<int> SportAssocId { get; set; }
         public Nullable<decimal> OverallMeritScore { get; set; }
     
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblApplication tblApplication { get; set; }
         public virtual tblREFHighEduLevel tblREFHighEduLevel { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

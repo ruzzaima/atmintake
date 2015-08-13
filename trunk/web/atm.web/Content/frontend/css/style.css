@@ -83,9 +83,9 @@ body, button, input, textarea, select, .btn {
     -webkit-font-smoothing: antialiased;
 }
 
-input[type="text"] {
-    text-transform: uppercase;
-}
+    input[type="text"] {
+        text-transform: uppercase;
+    }
 
 body, a, input, .help-block {
     color: #000;
@@ -462,7 +462,7 @@ ul.menu-item a.active {
 
 /* Shortcuts */
 .shortcut {
-    width: 73px;
+    width: Auto;
     height: 85px;
     display: inline-block;
     margin: 0 10px 0 0;
@@ -471,14 +471,13 @@ ul.menu-item a.active {
     position: relative;
     vertical-align: top;
 }
-
     .shortcut > i {
         font-size: 40px;
-        color: #fff;
+        /*color: #fff;*/
     }
 
     .shortcut:hover {
-        background: rgba(0,0,0,0.4);
+        background: rgba(0,0,0,0.05);
     }
 
     .shortcut img {
@@ -1041,7 +1040,7 @@ hr {
 }
 
 .table td, .table th {
-    border-color: rgba(255,255,255,0.05) !important;
+    border-color: rgba(5,5,5,0.5) !important;
 }
 
 .table-condensed > thead > tr > th {
@@ -1052,18 +1051,14 @@ hr {
     border: 0;
 }
 
+.table-bordered > tbody > tr > td, .table-bordered > thead > tr > th {
+    border-bottom: 0;
+    border-left: 0;
+}
 
-
-    .table-bordered > tbody > tr > td,
-    .table-bordered > thead > tr > th {
-        border-bottom: 0;
-        border-left: 0;
-    }
-
-        .table-bordered > tbody > tr > td:last-child,
-        .table-bordered > thead > tr > th:last-child {
-            border-right: 0;
-        }
+.table-bordered > tbody > tr > td:last-child, .table-bordered > thead > tr > th:last-child {
+    border-right: 0;
+}
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th,

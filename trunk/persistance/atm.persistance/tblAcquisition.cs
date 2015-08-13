@@ -80,6 +80,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual ICollection<tblAcqMerit> tblAcqMerits { get; set; }
         public virtual ICollection<tblAcqQuestionnaire> tblAcqQuestionnaires { get; set; }
         public virtual tblAcqFinalShorlistCriteria tblAcqFinalShorlistCriteria { get; set; }
+        public virtual tblREFAcqType tblREFAcqType { get; set; }
         public virtual ICollection<tblAdvertisment> tblAdvertisments { get; set; }
         public virtual ICollection<tblAppApplicantMeritScore> tblAppApplicantMeritScores { get; set; }
         public virtual ICollection<tblApplication> tblApplications { get; set; }

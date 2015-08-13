@@ -7,8 +7,9 @@ namespace SevenH.MMCSB.Atm.Domain
     {
         void Delete(int id);
         int Save(Acquisition appl);
+        int Update(Acquisition appl);
         Acquisition GetAcquisition(int id);
         IEnumerable<AcquisitionLocation> GetLocations(string zonecode);
-        IEnumerable<Acquisition> GetAllAcquisition(bool isactive, string servicecode);
+        IEnumerable<Acquisition> GetAllAcquisition(bool? isactive, string servicecode);
     }
 }

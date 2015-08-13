@@ -1,0 +1,83 @@
+﻿@model SevenH.MMCSB.Atm.Web.Models.DashboardViewModel
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section styles{
+    <style>
+        a:hover {
+            color: #0000ff;
+        }
+
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="tile">
+        <h2 class="tile-title">Menu @Model.Acquisition.AcquisitionType.AcquisitionTypeNm @Model.Acquisition.Siri / @Model.Acquisition.Year</h2>
+        <div class="p-10">
+
+            <div class="shortcut-area">
+                <a class="shortcut tile" href="">
+                    <span>
+                        Selenggara Siri Pengambilan
+                    </span>
+                </a>
+                <a class="shortcut tile" href="@Url.Action("Index", "Statistic")">
+                    <span>
+                        Senarai Permohonan
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Membuat Panggilan Pemilihan Awal
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Merekodkan Status &amp; Markah Ujian Bertulis
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Merekodkan Tapisan Keselamatan
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Merekodkan Semakan Dokumen
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Merekodkan Keputusan Pemeriksaan Fizikal, <br/>Pemeriksaan Kesihatan dan Ujian Kecergasan
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Mengemaskini Pemilihan Awal &amp; Membuat Panggilan Pemilihan Akhir
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Mengemaskini Status Temuduga/Pemilihan Akhir
+                    </span>
+                </a>
+                <a class="shortcut tile" href="">
+                    <span>
+                        Penetapan No Tentera &amp; Hantar ke HRMIS
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_index.js")"></script>
+}

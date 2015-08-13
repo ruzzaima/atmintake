@@ -53,7 +53,7 @@ namespace SevenH.MMCSB.Atm.Web
                 var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
                 if (null != acq)
                 {
-                    var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                    var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
                     if (null != acqtype)
                     {
                         // TD
@@ -290,7 +290,7 @@ namespace SevenH.MMCSB.Atm.Web
             var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
             if (null == applicant || null == acq) return;
 
-            var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+            var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
             if (null == acqtype) return;
 
             var total = 0.0;

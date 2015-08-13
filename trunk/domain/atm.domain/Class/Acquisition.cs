@@ -14,7 +14,7 @@ namespace SevenH.MMCSB.Atm.Domain
 
         public virtual Advertisment Advertisment { get; set; }
 
-        public virtual AcquisitionType AcquisitionType  { get; set; }   
+        public virtual AcquisitionType AcquisitionType { get; set; }
 
         private IAcquisitionPersistence _mPersistence;
 
@@ -27,7 +27,7 @@ namespace SevenH.MMCSB.Atm.Domain
                 {
                     var ctx = ContextRegistry.GetContext();
                     _mPersistence =
-                        ((IObjectFactory) ctx).GetObject("AcquisitionPersistence") as IAcquisitionPersistence;
+                        ((IObjectFactory)ctx).GetObject("AcquisitionPersistence") as IAcquisitionPersistence;
                 }
                 return _mPersistence;
             }
@@ -36,13 +36,15 @@ namespace SevenH.MMCSB.Atm.Domain
 
         public virtual int Save()
         {
-            return (int) PersistanceLayer.Save(this);
+            if (AcquisitionId == 0)
+                return PersistanceLayer.Save(this);
+            return PersistanceLayer.Update(this);
         }
 
 
         public virtual Acquisition GetAcquisition(int id)
         {
-            return (Acquisition) PersistanceLayer.GetAcquisition(id);
+            return (Acquisition)PersistanceLayer.GetAcquisition(id);
 
         }
     }

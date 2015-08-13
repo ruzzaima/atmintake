@@ -396,9 +396,9 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public string FullName { get; set; }
         public string MrtlStatusCd { get; set; }
         public string GenderCd { get; set; }
-        public decimal Height { get; set; }
-        public decimal Weight { get; set; }
-        public decimal Bmi { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Weight { get; set; }
+        public decimal? Bmi { get; set; }
         public string NationalityCd { get; set; }
         public string NationalityCertNo { get; set; }
         public string BirthCertNo { get; set; }
@@ -410,8 +410,8 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public string BirthCityCd { get; set; }
         public string BirthPlace { get; set; }
         public string BloodTypeCd { get; set; }
-        public bool SpectaclesUserInd { get; set; }
-        public bool ColorBlindInd { get; set; }
+        public bool? SpectaclesUserInd { get; set; }
+        public bool? ColorBlindInd { get; set; }
         public string ResidenceTypeInd { get; set; }
         public string CorresponAddr1 { get; set; }
         public string CorresponAddr2 { get; set; }
@@ -423,32 +423,32 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public string MobilePhoneNo { get; set; }
         public string HomePhoneNo { get; set; }
         public string Email { get; set; }
-        public int ChildNo { get; set; }
-        public int NoOfSibling { get; set; }
+        public int? ChildNo { get; set; }
+        public int? NoOfSibling { get; set; }
         public string MomName { get; set; }
         public string MomIcNo { get; set; }
         public string MomNationalityCd { get; set; }
         public string MomOccupation { get; set; }
-        public decimal MomSalary { get; set; }
+        public decimal? MomSalary { get; set; }
         public string MomPhoneNo { get; set; }
         public string DadName { get; set; }
         public string DadIcNo { get; set; }
         public string DadNationalityCd { get; set; }
         public string DadOccupation { get; set; }
-        public decimal DadSalary { get; set; }
+        public decimal? DadSalary { get; set; }
         public string DadPhoneNo { get; set; }
         public string GuardianName { get; set; }
         public string GuardianIcNo { get; set; }
         public string GuardianNationalityCd { get; set; }
         public string GuardianOccupation { get; set; }
-        public decimal GuardianSalary { get; set; }
+        public decimal? GuardianSalary { get; set; }
         public string GuardianPhoneNo { get; set; }
         public string FamilyHighestEduLevel { get; set; }
         public string CurrentOccupation { get; set; }
         public string CurrentOrganisation { get; set; }
-        public decimal CurrentSalary { get; set; }
-        public bool PalapesInd { get; set; }
-        public int PalapesYear { get; set; }
+        public decimal? CurrentSalary { get; set; }
+        public bool? PalapesInd { get; set; }
+        public int? PalapesYear { get; set; }
         public string PalapesArmyNo { get; set; }
         public string PalapesInstitution { get; set; }
         public string PalapesRemark { get; set; }
@@ -463,14 +463,14 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public bool ArmyServiceInd { get; set; }
         public string ArmyServiceYrOfServ { get; set; }
         public string ArmyServiceResignRemark { get; set; }
-        public int SelectionTD { get; set; }
-        public int SelectionTL { get; set; }
-        public int SelectionTU { get; set; }
-        public bool ComputerMSWord { get; set; }
-        public bool ComputerMSExcel { get; set; }
-        public bool ComputerMSPwrPoint { get; set; }
-        public bool ComputerICT { get; set; }
-        public bool ComputerOthersInd { get; set; }
+        public int? SelectionTD { get; set; }
+        public int? SelectionTL { get; set; }
+        public int? SelectionTU { get; set; }
+        public bool? ComputerMSWord { get; set; }
+        public bool? ComputerMSExcel { get; set; }
+        public bool? ComputerMSPwrPoint { get; set; }
+        public bool? ComputerICT { get; set; }
+        public bool? ComputerOthersInd { get; set; }
         public string ComputerOthers { get; set; }
         public bool CrimeInvolvement { get; set; }
         public bool DrugCaseInvolvement { get; set; }

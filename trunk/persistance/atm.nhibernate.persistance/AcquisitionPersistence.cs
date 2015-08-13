@@ -156,9 +156,15 @@ namespace SevenH.MMCSB.Persistance
         }
 
 
-        public IEnumerable<Acquisition> GetAllAcquisition(bool isactive, string servicecode)
+        public IEnumerable<Acquisition> GetAllAcquisition(bool? isactive, string servicecode)
         {
             return Factory.OpenSession().QueryOver<Acquisition>().Where(a => a.AcquisitionType.ServiceCd == servicecode && a.OpenStatus == isactive).List();
+        }
+
+
+        public int Update(Acquisition appl)
+        {
+            throw new System.NotImplementedException();
         }
     }
 

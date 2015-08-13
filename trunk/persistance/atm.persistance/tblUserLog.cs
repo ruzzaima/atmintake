@@ -19,5 +19,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public string LoginStatusCd { get; set; }
         public Nullable<System.DateTime> ModifiedDt { get; set; }
         public string ModifiedBy { get; set; }
+    
+        public virtual tblREFLoginStatu tblREFLoginStatu { get; set; }
     }
 }

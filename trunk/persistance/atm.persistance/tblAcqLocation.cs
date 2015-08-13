@@ -29,10 +29,10 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public string LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDt { get; set; }
     
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblRefLocation tblRefLocation { get; set; }
         public virtual tblREFLocationZone tblREFLocationZone { get; set; }
         public virtual ICollection<tblApplication> tblApplications { get; set; }
         public virtual ICollection<tblApplication> tblApplications1 { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using NHibernate;
 using NHibernate.Engine;
 using SevenH.MMCSB.Atm.Domain;
@@ -70,6 +72,25 @@ namespace SevenH.MMCSB.Persistance
         public LoginUser GetByIdNumber(string idnumber)
         {
             var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.LoginId == idnumber).SingleOrDefault();
+            Factory.OpenSession().Flush();
+            return exist;
+        }
+
+        public IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public int LoggingUser(int userid, string statuscode, string by, DateTime bydate)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public LoginUser GetById(int id)
+        {
+            var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.UserId == id).SingleOrDefault();
             Factory.OpenSession().Flush();
             return exist;
         }

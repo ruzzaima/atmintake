@@ -29,8 +29,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public System.DateTime LastModifiedDt { get; set; }
         public Nullable<bool> MandatoriInd { get; set; }
     
-        public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual ICollection<tblAcqEducationCriteriaSubject> tblAcqEducationCriteriaSubjects { get; set; }
         public virtual ICollection<tblAcqEduCriteriaFieldOfStudy> tblAcqEduCriteriaFieldOfStudies { get; set; }
+        public virtual tblAcquisition tblAcquisition { get; set; }
     }
 }

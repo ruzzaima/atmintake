@@ -19,6 +19,37 @@ namespace SevenH.MMCSB.Atm.Web
     public class AccountController : Controller
     {
         [AllowAnonymous]
+        public ActionResult CreateSuperAdmin(string username, string password, string email)
+        {
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(email))
+            {
+                var log = new LoginUser()
+                {
+                    LoginId = username,
+                    UserName = username,
+                    FullName = "Administrator" + " " + username,
+                    Password = password,
+                    Salt = Guid.NewGuid().ToString(),
+                    FirstTime = false,
+                    IsLocked = false,
+                    CreatedDt = DateTime.Now,
+                    CreatedBy = "System",
+                    Email = email,
+                    AlternativeEmail = email,
+                    ServiceCd = "00",
+                    LoginRole = new LoginRole()
+                    {
+                        Roles = RolesString.SUPER_ADMIN
+                    }
+                };
+
+                var id = log.Save();
+                return Json(new { OK = true, message = "Berjaya" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { OK = false, message = "Tidak Berjaya" });
+        }
+
+        [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -27,7 +58,6 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -81,7 +111,6 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -92,6 +121,8 @@ namespace SevenH.MMCSB.Atm.Web
                     if (ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Validate(User.Identity.Name, model.Password))
                     {
                         ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").ChangePassword(login.UserId, model.NewPassword);
+                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Change_Password, User.Identity.Name, DateTime.Now);
+
                         FormsAuthentication.SignOut();
                         TempData["Message"] = "Kata laluan telah ditukar. Sila log masuk semula.";
                         return RedirectToAction("Login", "Account");
@@ -118,7 +149,6 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -133,8 +163,18 @@ namespace SevenH.MMCSB.Atm.Web
                             return RedirectToAction("FirstTimeLogin", "Account");
                         login.LastLoginDt = DateTime.Now;
                         login.Save();
+                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);
                         if (login.ApplicantId.HasValue) Session["IsRegistered"] = "Yes"; else Session["IsRegistered"] = "No";
-                        return RedirectToAction("Application", "Public");
+                        if (User.IsInRole(RolesString.AWAM))
+                            return RedirectToAction("Application", "Public");
+                        if (User.IsInRole(RolesString.SUPER_ADMIN))
+                            return RedirectToAction("ManageUser", "Manage");
+                        if (User.IsInRole(RolesString.PEGAWAI_PENGAMBILAN) || User.IsInRole(RolesString.KERANI_PENGAMBILAN) || User.IsInRole(RolesString.STATISTIC))
+                            return RedirectToAction("Intakes", "Admin");
+                    }
+                    else
+                    {
+                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Invalid_Password, User.Identity.Name, DateTime.Now);
                     }
                     ModelState.AddModelError("", "Kata laluan tidak tepat.");
                 }
@@ -152,7 +192,6 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> LoginFromMain(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
@@ -182,9 +221,12 @@ namespace SevenH.MMCSB.Atm.Web
         //
         // POST: /Account/LogOff
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            var user = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            if (null != user)
+                ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(user.UserId, LogStatusCodeString.User_Logged_Out, User.Identity.Name, DateTime.Now);
+
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
@@ -194,6 +236,10 @@ namespace SevenH.MMCSB.Atm.Web
         [HttpPost]
         public ActionResult SignOut()
         {
+            var user = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            if (null != user)
+                ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(user.UserId, LogStatusCodeString.User_Logged_Out, User.Identity.Name, DateTime.Now);
+
             FormsAuthentication.SignOut();
             return Json(new { OK = true, message = "Log Keluar" });
         }
@@ -205,7 +251,6 @@ namespace SevenH.MMCSB.Atm.Web
 
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> FirstTimeLogin(FirstTimeViewModel model)
         {
             if (ModelState.IsValid)
@@ -223,6 +268,13 @@ namespace SevenH.MMCSB.Atm.Web
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        public ActionResult GenerateTempPassword()
+        {
+            var rand = new Random();
+            var temppass = "TEMP" + rand.Next(1, 9999).ToString().PadLeft(4, '0');
+            return Json(new { OK = true, message = "Kata Laluan Sementara.", pass = temppass });
         }
     }
 }
