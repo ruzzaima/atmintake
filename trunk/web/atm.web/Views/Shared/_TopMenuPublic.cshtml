@@ -2,18 +2,13 @@
 <ol class="breadcrumb">
     @if (User.Identity.IsAuthenticated)
     {
-        if (User.IsInRole(RolesString.AWAM))
+        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.AWAM))
         {
             <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Application", "Public")">Permohonan</a></li>
             <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Account", "Public")">Profil Saya</a></li>
             <li class="hidden-print"><a class="hidden-print" href="@Url.Action("ResetPassword", "Account")">Tukar Kata Laluan</a></li>
         }
 
-        if (User.IsInRole(RolesString.SUPER_ADMIN))
-        {
-  
-        }
-        
         <li class="hidden-print"><a class="hidden-print logout" href="">Log Keluar</a></li>
     }
     else

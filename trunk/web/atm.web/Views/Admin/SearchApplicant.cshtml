@@ -1,0 +1,123 @@
+﻿@using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
+@{
+    ViewBag.Title = "Carian Pemohon";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var listacquisition = new List<Acquisition>();
+    var selectedacq = 0;
+    if (User.Identity.IsAuthenticated)
+    {
+        var loguser = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+        if (null != loguser)
+        {
+            // get user's list of domain
+            listacquisition.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAllAcquisition(true, "01"));
+        }
+
+        if (null != Session["SelectedAcquisition"])
+        {
+            var acqid = Session["SelectedAcquisition"].ToString();
+            if (!string.IsNullOrWhiteSpace(acqid))
+            {
+                var did = 0;
+                int.TryParse(acqid, out did);
+                selectedacq = did;
+            }
+        }
+    }
+}
+@section styles{
+    <style>
+        a:hover {
+            color: #0000ff;
+        }
+
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="tile">
+        <h2 class="tile-title">Senarai Permohonan Pengambilan @Model.Acquisition.AcquisitionType.AcquisitionTypeNm @Model.Acquisition.Siri / @Model.Acquisition.Year</h2>
+        <div class="p-10">
+            <div class="row">
+                <div class="form-group p-5">
+                    <label class="radio-inline">
+                        <input type="radio" name="search" value="00" /> Semua Permohonan
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group p-5">
+                    <label class="radio-inline">
+                        <input type="radio" name="search" value="01" /> Hadir Pemilihan Awal Sahaja
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group p-5">
+                    <label class="radio-inline">
+                        <input type="radio" name="search" value="02" /> Berjaya Pemilihan Awal (Dipanggil ke Pemilihan Akhir)
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group p-5">
+                    <label class="radio-inline">
+                        <input type="radio" name="search" value="03" /> Berjaya Pemilihan Akhir Sahaja
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Nama</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.name" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">No. Kad Pengenalan</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.icno" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-sm" value="Carian Calon" data-bind="click: search" />
+            </div>
+            <div class="form-group">
+                <table id="applicant_table" class="table table-bordered tile">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1">Bil</th>
+                            <th>Nama</th>
+                            <th class="col-md-2">No Kad Pengenalan</th>
+                            <th class="col-md-2">Status Permohonan</th>
+                            <th class="col-md-2">Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <a class="btn btn-sm" href="@Url.Action("Index", "Admin")">Kembali</a>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var selectedid = @selectedacq;
+    </script>
+
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_searchapplicant.js")"></script>
+}

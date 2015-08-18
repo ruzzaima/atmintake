@@ -208,6 +208,18 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new NotImplementedException();
         }
+
+
+        public IEnumerable<ApplicantSubmitted> Search(string category, string name, string icno, string searchcriteria)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

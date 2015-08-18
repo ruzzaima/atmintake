@@ -172,7 +172,9 @@ namespace SevenH.MMCSB.Persistance
 
         public int UpdateSport(ApplicantSport sport)
         {
-            throw new System.NotImplementedException();
+            Factory.OpenSession().SaveOrUpdate(sport);
+            Factory.OpenSession().Flush();
+            return sport.ApplicantSportAssocId;
         }
 
         public IEnumerable<ApplicantSport> GetSport(int applicantid)
@@ -222,6 +224,12 @@ namespace SevenH.MMCSB.Persistance
             var exist = Factory.OpenSession().QueryOver<ExistingMember>().Where(a => a.ArmyNo == armyno).SingleOrDefault();
             Factory.OpenSession().Flush();
             return exist;
+        }
+
+
+        public IEnumerable<Applicant> Search(string category, string name, string icno, string searchcriteria)
+        {
+            throw new System.NotImplementedException();
         }
     }
 

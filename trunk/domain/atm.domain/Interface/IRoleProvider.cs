@@ -11,5 +11,6 @@ namespace SevenH.MMCSB.Atm.Domain
         int AddRoles(int userid, string roles);
         void DeleteRoles(LoginUser user, List<string> roles);
         bool CheckUserIsInRole(string username, string role);
+        string GetRoles(int userid);
     }
 }

@@ -85,7 +85,7 @@ namespace SevenH.MMCSB.Atm.Web
                             var loginurl = ConfigurationManager.AppSettings["server"] + "/Account/Login";
                             var templatepath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Templates"), "ForgotPassword.html");
                             var mail = new MailService();
-                            mail.SendForgotPassword(from, new List<string> { login.Email, login.AlternativeEmail }, null, null, login, loginurl, templatepath, DateTime.Now);
+                            mail.SendMail("[ATM]Notifikasi Lupa Kata Laluan", from, new List<string> { login.Email, login.AlternativeEmail }, null, null, login, loginurl, templatepath, DateTime.Now);
                         }
 
                         TempData["Message"] = "Kata laluan sementara telah dihantar ke emel yang didaftarkan. Sila semak emel anda.";
@@ -165,11 +165,11 @@ namespace SevenH.MMCSB.Atm.Web
                         login.Save();
                         ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);
                         if (login.ApplicantId.HasValue) Session["IsRegistered"] = "Yes"; else Session["IsRegistered"] = "No";
-                        if (User.IsInRole(RolesString.AWAM))
+                        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.AWAM))
                             return RedirectToAction("Application", "Public");
-                        if (User.IsInRole(RolesString.SUPER_ADMIN))
+                        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.SUPER_ADMIN))
                             return RedirectToAction("ManageUser", "Manage");
-                        if (User.IsInRole(RolesString.PEGAWAI_PENGAMBILAN) || User.IsInRole(RolesString.KERANI_PENGAMBILAN) || User.IsInRole(RolesString.STATISTIC))
+                        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             return RedirectToAction("Intakes", "Admin");
                     }
                     else

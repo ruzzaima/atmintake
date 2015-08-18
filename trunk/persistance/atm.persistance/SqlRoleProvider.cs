@@ -37,6 +37,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         if (!string.IsNullOrWhiteSpace(r.Roles))
                             return r.Roles.Contains(role);
                     }
+                    if (r == null && role == RolesString.AWAM)
+                        return true;
                 }
             }
             return false;
@@ -153,6 +155,23 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     return r.UserId;
             }
             return 0;
+        }
+
+
+        public string GetRoles(int userid)
+        {
+            if (userid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var roles = (from a in entities.tblUserRoles where a.UserId == userid select a).SingleOrDefault();
+                    if (null != roles)
+                    {
+                        return roles.Roles;
+                    }
+                }
+            }
+            return RolesString.AWAM;
         }
     }
 }

@@ -37,6 +37,67 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View();
         }
 
+        public ActionResult AddApplicant()
+        {
+            return View();
+        }
+
+        public ActionResult SearchApplicant()
+        {
+            var vm = new AdminViewModel();
+            var did = 0;
+            if (Session["SelectedAcquisition"] == null)
+                return RedirectToAction("Intakes", "Admin");
+            if (Session["SelectedAcquisition"] != null)
+            {
+                var acqid = Session["SelectedAcquisition"].ToString();
+                if (!string.IsNullOrWhiteSpace(acqid))
+                {
+                    int.TryParse(acqid, out did);
+                    if (did == 0)
+                        return RedirectToAction("Intakes", "Admin");
+
+                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    if (null != acq)
+                        vm.Acquisition = acq;
+                }
+            }
+            return View(vm);
+        }
+
+        public ActionResult SearchingApplicant(JQueryDataTableParamModel param, int acquisitionid, string category, string name, string icno)
+        {
+            var applicants = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch);
+
+            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
+            Func<ApplicantSubmitted, string> orderingFunction = (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.NewICNo);
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                applicants = applicants.OrderBy(orderingFunction);
+            else
+                applicants = applicants.OrderByDescending(orderingFunction);
+
+            var applicantSubmitteds = applicants as IList<ApplicantSubmitted> ?? applicants.ToList();
+            var aadata = applicantSubmitteds.Select(a => new string[]
+            {
+                a.ApplicantId.ToString(),
+                a.FullName,
+                a.NewICNo, 
+                a.Application == null ? "Belum Hantar" : "Hantar",
+                a.ApplicantId.ToString()
+            }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
+
+            return Json(new
+            {
+                OK = true,
+                message = "Succeed",
+                sEcho = param.sEcho,
+                iTotalRecords = applicantSubmitteds.Count(),
+                iTotalDisplayRecords = applicantSubmitteds.Count(),
+                aaData = aadata,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult SetSelectedAcquisition(int acqid)
         {
             if (acqid != 0)
@@ -73,7 +134,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 a.AcquisitionId.ToString(),
                 a.AcquisitionType.AcquisitionTypeNm,
                 a.Siri.HasValue && a.Year.HasValue ? a.Siri.Value.ToString() + "/" + a.Year.Value.ToString() : "NA", 
-                a.CloseStatus.HasValue ?  a.CloseStatus.Value ? "Buka" : "Tutup" : "NA",
+                a.CloseStatus.HasValue ?  a.CloseStatus.Value ? "Tutup" : "Buka" : "NA",
                 a.AcquisitionId.ToString()
             });
 

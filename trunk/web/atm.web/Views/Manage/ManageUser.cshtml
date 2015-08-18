@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Pengurusan Pengguna";
-    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 @section styles
 {
@@ -17,6 +17,16 @@
     <div class="tile">
         <h2 class="tile-title">Profil Pengguna Sistem JOM MASUK TENTERA</h2>
         <div class="p-10">
+            <div class="form-group">
+                <label class="control-label">Kategori : </label>
+                <label class="radio-inline">
+                    <input type="radio" name="category" value="SP" /> Kakitangan Pengambilan
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="category" value="AW" /> Awam/Pemohon
+                </label>
+                <input type="button" class="btn btn-sm" value="Teruskan" data-bind="click: searchuser" />
+            </div>
             <table class="table table-bordered tile" id="user_table">
                 <thead>
                     <tr>

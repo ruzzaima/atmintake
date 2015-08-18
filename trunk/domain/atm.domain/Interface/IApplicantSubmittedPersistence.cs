@@ -32,5 +32,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         ApplicantSubmittedPhoto GetPhoto(int applicantid);
         int SaveApplicantPhoto(ApplicantSubmittedPhoto photo);
         int UpdateApplicantPhoto(ApplicantSubmittedPhoto photo);
+
+        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria);
     }
 }

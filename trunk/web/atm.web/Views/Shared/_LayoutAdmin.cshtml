@@ -91,16 +91,14 @@
                 </div>
 
                 <!-- Calendar -->
-                <div class="s-widget m-b-25">
+                <div class="s-widget m-b-25 m-r-5 m-l-5">
                     <div id="sidebar-calendar"></div>
                 </div>
-
-
             </div>
 
             <!-- Side Menu -->
             <ul class="list-unstyled side-menu">
-                @if (User.IsInRole(RolesString.SUPER_ADMIN) || User.IsInRole(RolesString.PEGAWAI_PENGAMBILAN) || User.IsInRole(RolesString.KERANI_PENGAMBILAN) || User.IsInRole(RolesString.STATISTIC))
+                @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                 {
                     <li>
                         <a class="sa-side-home" href="@Url.Action("Index", "Admin")">
@@ -108,7 +106,7 @@
                         </a>
                     </li>
                 }
-                @if (User.IsInRole(RolesString.SUPER_ADMIN))
+                @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN))
                 {
                     <li>
                         <a class="sa-side-photos" href="@Url.Action("ManageUser", "Manage")">
@@ -179,7 +177,7 @@
     <script type="text/javascript">
         $(function () {
             $('.projectdomain').click(function () {
-                
+
                 var id = $(this).attr('domainid');
                 var intid = parseInt(id);
                 $.ajax({
@@ -190,7 +188,7 @@
                     error: function (xhr) { ShowErrorMessage("Error : " + xhr.statusText); },
                     success: function (msg) {
                         if (msg.OK) {
-                            $("#message_dialog .modal-body").html('Domain ' + msg.name + ' have been selected');
+                            $("#message_dialog .modal-body").html('Pemilihan ' + msg.name + ' dipilih.');
                             $("#message_dialog").modal({
                                 show: 'true',
                                 backdrop: 'true',

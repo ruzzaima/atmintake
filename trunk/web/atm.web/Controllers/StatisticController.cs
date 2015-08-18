@@ -9,12 +9,13 @@ using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
-    [Authorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN + "," + RolesString.STATISTIC)]
+    [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN + "," + RolesString.STATISTIC)]
     public class StatisticController : Controller
     {
 
         public ActionResult Index()
         {
+            var vm = new StatisticViewModel();
             var did = 0;
             if (Session["SelectedAcquisition"] == null)
                 return RedirectToAction("Intakes", "Admin");
@@ -26,9 +27,15 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     int.TryParse(acqid, out did);
                     if (did == 0)
                         return RedirectToAction("Intakes", "Admin");
+
+                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    if (null != acq)
+                    {
+                        vm.Acquisition = acq;
+                    }
                 }
             }
-            return View();
+            return View(vm);
         }
 
         /// <summary>

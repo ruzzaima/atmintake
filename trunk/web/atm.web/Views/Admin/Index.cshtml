@@ -18,18 +18,22 @@
 
 <div class="row">
     <div class="tile">
-        <h2 class="tile-title">Menu @Model.Acquisition.AcquisitionType.AcquisitionTypeNm @Model.Acquisition.Siri / @Model.Acquisition.Year</h2>
+        <h2 class="tile-title">Menu Bagi Pengambilan @Model.Acquisition.AcquisitionType.AcquisitionTypeNm @Model.Acquisition.Siri / @Model.Acquisition.Year</h2>
         <div class="p-10">
-
             <div class="shortcut-area">
                 <a class="shortcut tile" href="">
                     <span>
                         Selenggara Siri Pengambilan
                     </span>
                 </a>
-                <a class="shortcut tile" href="@Url.Action("Index", "Statistic")">
+                <a class="shortcut tile" href="@Url.Action("SearchApplicant", "Admin")">
                     <span>
                         Senarai Permohonan
+                    </span>
+                </a>
+                <a class="shortcut tile" href="@Url.Action("Index", "Statistic")">
+                    <span>
+                        Statistik Permohonan
                     </span>
                 </a>
                 <a class="shortcut tile" href="">
@@ -59,7 +63,7 @@
                 </a>
                 <a class="shortcut tile" href="">
                     <span>
-                        Mengemaskini Pemilihan Awal &amp; Membuat Panggilan Pemilihan Akhir
+                        Mengemaskini Pemilihan Awal &amp; <br/> Membuat Panggilan Pemilihan Akhir
                     </span>
                 </a>
                 <a class="shortcut tile" href="">
@@ -72,6 +76,9 @@
                         Penetapan No Tentera &amp; Hantar ke HRMIS
                     </span>
                 </a>
+            </div>
+            <div>
+                <a class="btn btn-sm" href="@Url.Action("Intakes","Admin")">Kembali</a>
             </div>
         </div>
     </div>

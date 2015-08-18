@@ -192,6 +192,7 @@
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
+    <Compile Include="Helper\AtmAuthorization.cs" />
     <Compile Include="Helper\ReferenceRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -201,6 +202,7 @@
     <Compile Include="Helper\NHibernateContractResolver.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AddUserViewModel.cs" />
+    <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\ApplicationViewModel.cs" />
     <Compile Include="Models\DashboardViewModel.cs" />
@@ -678,6 +680,7 @@
     <Content Include="Scripts\Core\less-1.5.1.js" />
     <Content Include="Scripts\Core\less-1.5.1.min.js" />
     <Content Include="Scripts\Main\admin_intakes.js" />
+    <Content Include="Scripts\Main\admin_searchapplicant.js" />
     <Content Include="Scripts\Main\debug.js" />
     <Content Include="Scripts\Main\default.after.js" />
     <Content Include="Scripts\Main\default.js" />
@@ -698,6 +701,7 @@
     <Content Include="Scripts\Core\moment-with-locales.min.js" />
     <Content Include="Scripts\Core\moment.js" />
     <Content Include="Scripts\Core\moment.min.js" />
+    <Content Include="Templates\TempPassword.html" />
     <Content Include="Templates\ForgotPassword.html" />
     <Content Include="Templates\Registration.html" />
     <Content Include="Web.config">
@@ -764,6 +768,10 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\Admin\Intakes.cshtml" />
+    <Content Include="Views\Shared\_TopMenuPublicLogoutOnly.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogOutOnly.cshtml" />
+    <Content Include="Views\Admin\AddApplicant.cshtml" />
+    <Content Include="Views\Admin\SearchApplicant.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,6 +12,11 @@ namespace SevenH.MMCSB.Persistance
 {
     class ApplicationPersistance : IApplicationPersistance
     {
+        public Application GetByApplicantIdAndAcquisitionId(int applicantid, int acquisitionid)
+        {
+            var exist = Factory.OpenSession().QueryOver<Application>().Where(a => a.ApplicantId == applicantid && a.AcquisitionId == acquisitionid).SingleOrDefault();
+            return exist;
+        }
 
         public IEnumerable<Application> GetAllByApplicantId(int applicantid)
         {
