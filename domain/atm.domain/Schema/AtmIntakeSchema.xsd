@@ -12,7 +12,6 @@ new -  to call new at the field init
     <xs:complexType>
       <xs:all>
         <xs:element name="ApplicantId" type="xs:int" nillable="true"/>
-        <xs:element name="CreatedDt" type="xs:dateTime" nillable="true"/>
         <xs:element name="LastLoginDt" type="xs:dateTime" nillable="true"/>
         <xs:element name="ModifiedDt" type="xs:dateTime" nillable="true"/>
       </xs:all>
@@ -31,6 +30,7 @@ new -  to call new at the field init
       <xs:attribute name="ServiceName" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="ModifiedBy" type="xs:string" use="required"/>
+      <xs:attribute name="CreatedDt" type="xs:dateTime" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="Applicant">

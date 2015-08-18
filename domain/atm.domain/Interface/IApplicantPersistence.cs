@@ -52,5 +52,7 @@ namespace SevenH.MMCSB.Atm.Domain
         /// <param name="armyno"></param>
         /// <returns></returns>
         ExistingMember ExistingAtmMemberByArmyNo(int armyno);
+
+        IEnumerable<Applicant> Search(string category, string name, string icno, string searchcriteria);
     }
 }

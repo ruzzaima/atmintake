@@ -77,14 +77,13 @@
             public const string PropertyNameModifiedBy = "ModifiedBy";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-
-            private int?  m_ApplicantId;
-            public const string PropertyNameApplicantId = "ApplicantId";
+            private  DateTime  m_CreatedDt;
+            public const string PropertyNameCreatedDt = "CreatedDt";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
-            private DateTime?  m_CreatedDt;
-            public const string PropertyNameCreatedDt = "CreatedDt";
+            private int?  m_ApplicantId;
+            public const string PropertyNameApplicantId = "ApplicantId";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
@@ -456,6 +455,30 @@
             return m_ModifiedBy;}
             }
           
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual DateTime CreatedDt
+            {
+            set
+            {
+            if( m_CreatedDt == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameCreatedDt, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_CreatedDt= value;
+            OnPropertyChanged(PropertyNameCreatedDt);
+            }
+            }
+            get
+            {
+            return m_CreatedDt;}
+            }
+          
 
             ///<summary>
             /// 
@@ -476,28 +499,6 @@
             }
             }
             get { return m_ApplicantId;}
-            }
-          
-
-            ///<summary>
-            /// 
-            ///</summary>
-            [DebuggerHidden]
-
-            public virtual DateTime? CreatedDt
-            {
-            set
-            {
-            if(m_CreatedDt == value) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameCreatedDt, value);
-            OnPropertyChanging(arg);
-            if(! arg.Cancel)
-            {
-            m_CreatedDt= value;
-            OnPropertyChanged(PropertyNameCreatedDt);
-            }
-            }
-            get { return m_CreatedDt;}
             }
           
 

@@ -94,14 +94,14 @@ namespace SevenH.MMCSB.Atm.Web
                 }
         }
 
-        public void SendForgotPassword(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
+        public void SendMail(string subject, string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
         {
             var client = new SmtpClient();
             var mailDefinition = new MailDefinition();
             mailDefinition.Priority = MailPriority.High;
-            mailDefinition.From = "noreply@atm.gov.my";
+            mailDefinition.From = from;
             mailDefinition.IsBodyHtml = true;
-            mailDefinition.Subject = "[ATM]Notifikasi Lupa Kata Laluan";
+            mailDefinition.Subject = subject;
             mailDefinition.BodyFileName = templatepath;
 
             var ldReplacement = new ListDictionary();
@@ -129,7 +129,7 @@ namespace SevenH.MMCSB.Atm.Web
                 {
                     mail.Bcc.Add(new MailAddress(bcc, ""));
                 }
-            mail.Subject = "[ATM]Notifikasi Lupa Kata Laluan";
+            mail.Subject = subject;
             mail.IsBodyHtml = true;
             AlternateView htmlView = null;
             htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");

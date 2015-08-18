@@ -53,9 +53,11 @@ $(function () {
             if (viewModel.applicant.CurrentSalary) {
                 if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
                     var formated = viewModel.applicant.CurrentSalary();
-                    if (formated.toString().indexOf(',') !== -1) {
-                        formated = formated.replace(',', '');
-                        viewModel.applicant.CurrentSalary(formated);
+                    if (formated !== null) {
+                        if (formated.toString().indexOf(',') !== -1) {
+                            formated = formated.replace(',', '');
+                            viewModel.applicant.CurrentSalary(formated);
+                        }
                     }
                 }
             }

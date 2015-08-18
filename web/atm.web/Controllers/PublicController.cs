@@ -121,9 +121,10 @@ namespace SevenH.MMCSB.Atm.Web
             if (ModelState.IsValid)
             {
                 var login = LoginPersistance.GetByIdNumber(model.IdNumber);
+                login.FullName = model.FullName;
                 login.AlternativeEmail = model.AlternateEmail;
                 login.Email = model.Email;
-                var id = login.Save();
+                var id = login.Save();                
                 return View(model);
             }
             return View(model);
@@ -717,7 +718,7 @@ namespace SevenH.MMCSB.Atm.Web
                     DadPhoneNo = applicant.DadPhoneNo,
                     DadSalary = applicant.DadSalary,
                     MomName = applicant.MomName,
-                    MomNationalityCd = applicant.NationalityCd,
+                    MomNationalityCd = applicant.MomNationalityCd,
                     MomICNo = applicant.MomIcNo,
                     MomOccupation = applicant.MomOccupation,
                     MomSalary = applicant.MomSalary,
@@ -789,11 +790,26 @@ namespace SevenH.MMCSB.Atm.Web
                     {
                         foreach (var edu in applicant.ApplicantEducations)
                         {
-                            if (!string.IsNullOrWhiteSpace(edu.OverallGrade) || edu.SKMLevel != 0 || edu.ConfermentYr != 0)
+                            if (!string.IsNullOrWhiteSpace(edu.OverallGrade) || (edu.SKMLevel != null && edu.SKMLevel != 0) || (edu.ConfermentYr != null && edu.ConfermentYr != 0))
                             {
                                 edu.ApplicantId = applicant.ApplicantId;
                                 edu.CreatedBy = User.Identity.Name;
                                 edu.CreatedDt = DateTime.Now;
+
+                                if (edu.HighEduLevelCd == "08" || edu.HighEduLevelCd == "20")
+                                {
+                                    if (!string.IsNullOrWhiteSpace(edu.InstitutionName))
+                                    {
+                                        edu.OverSeaInd = true;
+                                        edu.InstCd = null;
+                                    }
+                                    else
+                                    {
+                                        edu.OverSeaInd = false;
+                                        edu.InstitutionName = null;
+                                    }
+                                }
+
                                 var apeduid = edu.Save();
                                 foreach (var subject in edu.ApplicantEduSubjectCollection.ToList())
                                 {

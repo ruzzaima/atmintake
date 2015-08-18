@@ -53,9 +53,11 @@ $(function () {
             if (viewModel.applicant.CurrentSalary) {
                 if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
                     var formated = viewModel.applicant.CurrentSalary();
-                    if (formated.toString().indexOf(',') !== -1) {
-                        formated = formated.replace(',', '');
-                        viewModel.applicant.CurrentSalary(formated);
+                    if (formated !== null) {
+                        if (formated.toString().indexOf(',') !== -1) {
+                            formated = formated.replace(',', '');
+                            viewModel.applicant.CurrentSalary(formated);
+                        }
                     }
                 }
             }
@@ -292,15 +294,18 @@ $(function () {
     });
     viewModel.applicant.Weight.subscribe(function (d) {
         if (d) {
-            if (viewModel.applicant.Height) {
-                var bmi = d / (viewModel.applicant.Height() * viewModel.applicant.Height());
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
+            var height = ko.mapping.toJS(viewModel.applicant.Height);
+            if (height) {
+                if (height !== null) {
+                    var bmi = d / (height * height);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
             }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -316,10 +321,18 @@ $(function () {
 
     viewModel.applicant.Height.subscribe(function (d) {
         if (d) {
+            var weight = ko.mapping.toJS(viewModel.applicant.Weight);
+            if (weight) {
+                if (weight != null) {
+                    var bmi = weight / (d * d);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
+            }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -330,12 +343,6 @@ $(function () {
                 error: function (xhr) {
                 }
             });
-
-            if (viewModel.applicant.Weight) {
-                var bmi = viewModel.applicant.Weight() / (d * d);
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
-            }
         }
     });
 

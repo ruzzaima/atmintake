@@ -76,7 +76,7 @@ namespace SevenH.MMCSB.Persistance
             return exist;
         }
 
-        public IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search)
+        public IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search, int? take, int? skip)
         {
             throw new System.NotImplementedException();
         }
@@ -93,6 +93,33 @@ namespace SevenH.MMCSB.Persistance
             var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.UserId == id).SingleOrDefault();
             Factory.OpenSession().Flush();
             return exist;
+        }
+
+
+        public bool ChangePasswordFirstTime(int loginid, bool firsttime, string newpassword)
+        {
+            var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.UserId == loginid).SingleOrDefault();
+            if (null != exist)
+            {
+                exist.Password = newpassword;
+                exist.FirstTime = firsttime;
+                Factory.OpenSession().SaveOrUpdate(exist);
+                Factory.OpenSession().Flush();
+                return true;
+            }
+            Factory.OpenSession().Flush();
+            return false;
+        }
+
+
+        public bool Delete(int userid)
+        {
+            var exist = Factory.OpenSession().QueryOver<LoginUser>().Where(a => a.UserId == userid).SingleOrDefault();
+            if (exist != null)
+                Factory.OpenSession().Delete(exist);
+
+            Factory.OpenSession().Flush();
+            return true;
         }
     }
 }

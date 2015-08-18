@@ -873,5 +873,37 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             return list;
         }
+
+
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria)
+        {
+            var list = new List<ApplicantSubmitted>();
+            if (acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
+                    if (!string.IsNullOrWhiteSpace(name))
+                        l = l.Where(a => a.FullName.Contains(name));
+                    if (!string.IsNullOrWhiteSpace(icno))
+                        l = l.Where(a => a.NewICNo.Contains(icno));
+                    if (!string.IsNullOrWhiteSpace(searchcriteria))
+                        l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
+                    if (l.Any())
+                    {
+                        foreach (var app in l)
+                        {
+                            var aps = BindingToClass(app);
+                            if (aps.AcquisitionId != 0)
+                                aps.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(aps.AcquisitionId);
+                            aps.Application = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetByApplicantIdAndAcquisitionId(aps.ApplicantId, aps.AcquisitionId);
+
+                            list.Add(aps);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

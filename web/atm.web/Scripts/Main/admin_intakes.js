@@ -15,7 +15,7 @@ $(function () {
     function loadintakes() {
         oTable = $('#intakes_table').dataTable({
             "sDom": "<'row table-top-control'<'col-md-6 hidden-xs per-page-selector'l><'col-md-6 text-right'f>r>t<'row table-bottom-control'<'col-md-6'i><'col-md-6 text-right'p>>",
-            "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": '<div class="col-md-12 text-center">Sedang Diproses...</div>', "sSearch": "Carian" },
+            "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": 'Sedang Diproses...', "sSearch": "Carian", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
             "bJQueryUI": false,
             "bPaginate": true,
             "sPaginationType": "bootstrap",
@@ -26,11 +26,11 @@ $(function () {
             "sAjaxSource": server + '/Admin/LoadIntakes',
             "fnDrawCallback": function (oSettings) {
                 /* Need to redo the counters if filtered or sorted */
-                if (oSettings.bSorted || oSettings.bFiltered) {
+                //if (oSettings.bSorted || oSettings.bFiltered) {
                     for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
                         $('td:eq(0)', oSettings.aoData[oSettings.aiDisplay[i]].nTr).html(i + 1);
                     }
-                }
+                //}
             },
             "aoColumns": [
                             { "bSortable": false },
@@ -59,28 +59,30 @@ $(function () {
             event.preventDefault();
             var id = $(this).attr('domainid');
             var intid = parseInt(id);
-            $.ajax({
-                type: "POST",
-                url: server + "/Admin/SetSelectedAcquisition",
-                data: JSON.stringify({ acqid: intid }),
-                contentType: "application/json; charset=utf-8",
-                error: function (xhr) { ShowErrorMessage("Error : " + xhr.statusText); },
-                success: function (msg) {
-                    if (msg.OK) {
-                        $("#message_dialog .modal-body").html('Domain ' + msg.name + ' have been selected');
-                        $("#message_dialog").modal({
-                            show: 'true',
-                            backdrop: 'true',
-                            keyboard: 'true'
-                        });
+            if (id !== 0) {
+                $.ajax({
+                    type: "POST",
+                    url: server + "/Admin/SetSelectedAcquisition",
+                    data: JSON.stringify({ acqid: intid }),
+                    contentType: "application/json; charset=utf-8",
+                    error: function (xhr) { ShowErrorMessage("Error : " + xhr.statusText); },
+                    success: function (msg) {
+                        if (msg.OK) {
+                            $("#message_dialog .modal-body").html('Pemilihan ' + msg.name + ' dipilih.');
+                            $("#message_dialog").modal({
+                                show: 'true',
+                                backdrop: 'true',
+                                keyboard: 'true'
+                            });
 
-                        $('#message_dialog .btn-cancel').click(function () {
-                            $('#message_dialog').modal('hide');
-                            location.href = server + "/Admin/";
-                        });
+                            $('#message_dialog .btn-cancel').click(function () {
+                                $('#message_dialog').modal('hide');
+                                location.href = server + "/Admin/";
+                            });
+                        }
                     }
-                }
-            });
+                });
+            }
         });
     }
 
@@ -96,7 +98,7 @@ $(function () {
             error: function (xhr) { ShowErrorMessage("Error : " + xhr.statusText); },
             success: function (msg) {
                 if (msg.OK) {
-                    $("#message_dialog .modal-body").html('Domain ' + msg.name + ' have been selected');
+                    $("#message_dialog .modal-body").html('Pemilihan ' + msg.name + ' dipilih.');
                     $("#message_dialog").modal({
                         show: 'true',
                         backdrop: 'true',

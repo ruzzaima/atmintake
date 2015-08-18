@@ -17,8 +17,11 @@ namespace SevenH.MMCSB.Atm.Domain
 
             if (LoginRole != null && !string.IsNullOrWhiteSpace(LoginRole.Roles))
             {
-                LoginRole.UserId = UserId;
-                LoginRole.Save();
+                if (LoginRole.Roles != RolesString.AWAM)
+                {
+                    LoginRole.UserId = UserId;
+                    LoginRole.Save();
+                }
             }
 
             return UserId;
@@ -27,7 +30,7 @@ namespace SevenH.MMCSB.Atm.Domain
         public virtual bool ChangePasswordFirstTime(string newpassword)
         {
             if (!string.IsNullOrWhiteSpace(newpassword))
-                return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").ChangePassword(UserId, newpassword);
+                return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").ChangePasswordFirstTime(UserId, false, newpassword);
 
             return false;
         }

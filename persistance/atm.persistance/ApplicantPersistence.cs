@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -173,6 +174,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     education.ApplicantEduId = exist.ApplicantEduId;
                     return UpdateEducation(education);
                 }
+
+                if (education.ApplicantEduId != 0) { return UpdateEducation(education); }
+
                 var ed = new tblApplicantEdu()
                 {
                     ApplicantId = education.ApplicantId,
@@ -180,20 +184,17 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     CreatedBy = education.CreatedBy,
                     CreatedDt = education.CreatedDt,
                     EduCertTitle = education.EduCertTitle,
-                    HighEduLevelCd = education.HighEduLevelCd,
-                    InstCd = education.InstCd,
+                    HighEduLevelCd = !string.IsNullOrWhiteSpace(education.HighEduLevelCd) ? education.HighEduLevelCd.Trim() : education.HighEduLevelCd,
+                    InstCd = !string.IsNullOrWhiteSpace(education.InstCd) ? education.InstCd.Trim() : education.InstCd,
                     InstitutionName = education.InstitutionName,
-                    MajorMinorCd = education.MajorMinorCd,
+                    MajorMinorCd = !string.IsNullOrWhiteSpace(education.MajorMinorCd) ? education.MajorMinorCd.Trim() : education.MajorMinorCd,
                     OverSeaInd = education.OverSeaInd,
                     OverallGrade = education.OverallGrade,
                     SKMLevel = education.SKMLevel,
                 };
                 entities.tblApplicantEdus.Add(ed);
                 if (entities.SaveChanges() > 0)
-                {
-                    // save submitted subject
                     return ed.ApplicantEduId;
-                }
             }
             return 0;
         }
@@ -208,12 +209,12 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.ApplicantId = education.ApplicantId;
                     exist.ConfermentYr = education.ConfermentYr;
                     exist.EduCertTitle = education.EduCertTitle;
-                    exist.HighEduLevelCd = education.HighEduLevelCd;
-                    exist.InstCd = education.InstCd;
+                    exist.HighEduLevelCd = !string.IsNullOrWhiteSpace(education.HighEduLevelCd) ? education.HighEduLevelCd.Trim() : education.HighEduLevelCd;
+                    exist.InstCd = !string.IsNullOrWhiteSpace(education.InstCd) ? education.InstCd.Trim() : education.InstCd;
                     exist.InstitutionName = education.InstitutionName;
                     exist.LastModifiedBy = education.LastModifiedBy;
                     exist.LastModifiedDt = DateTime.Now;
-                    exist.MajorMinorCd = education.MajorMinorCd;
+                    exist.MajorMinorCd = !string.IsNullOrWhiteSpace(education.MajorMinorCd) ? education.MajorMinorCd.Trim() : education.MajorMinorCd;
                     exist.OverSeaInd = education.OverSeaInd;
                     exist.OverallGrade = education.OverallGrade;
                     exist.SKMLevel = education.SKMLevel;
@@ -243,16 +244,37 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             CreatedBy = aes.CreatedBy,
                             CreatedDt = aes.CreatedDt,
                             EduCertTitle = aes.EduCertTitle,
-                            HighEduLevelCd = aes.HighEduLevelCd,
-                            InstCd = aes.InstCd,
+                            HighEduLevelCd = !string.IsNullOrWhiteSpace(aes.HighEduLevelCd) ? aes.HighEduLevelCd.Trim() : aes.HighEduLevelCd,
+                            InstCd = !string.IsNullOrWhiteSpace(aes.InstCd) ? aes.InstCd.Trim() : aes.InstCd,
                             InstitutionName = aes.InstitutionName,
                             LastModifiedBy = aes.LastModifiedBy,
                             LastModifiedDt = aes.LastModifiedDt,
-                            MajorMinorCd = aes.MajorMinorCd,
+                            MajorMinorCd = !string.IsNullOrWhiteSpace(aes.MajorMinorCd) ? aes.MajorMinorCd.Trim() : aes.MajorMinorCd,
                             OverSeaInd = aes.OverSeaInd,
                             OverallGrade = aes.OverallGrade,
                             SKMLevel = aes.SKMLevel
                         };
+
+                        if (aes.tblApplicantEduSubjects.Any())
+                        {
+                            foreach (var s in aes.tblApplicantEduSubjects)
+                            {
+                                ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject()
+                                {
+                                    ApplicantEduId = s.ApplicantEduId,
+                                    CreatedBy = s.CreatedBy,
+                                    CreatedDt = s.CreatedDt,
+                                    EduSubjectId = s.EduSubjectId,
+                                    Grade = s.tblREFSubjectGrade.Grade,
+                                    GradeCd = !string.IsNullOrWhiteSpace(s.GradeCd) ? s.GradeCd.Trim() : s.GradeCd,
+                                    LastModifiedBy = s.LastModifiedBy,
+                                    LastModifiedDt = s.LastModifiedDt,
+                                    Subject = s.tblREFSubject.Subject,
+                                    SubjectCd = s.SubjectCd,
+                                });
+                            }
+                        }
+
                         list.Add(ed);
                     }
                 }
@@ -270,13 +292,16 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     subject.EduSubjectId = exist.EduSubjectId;
                     return UpdateEducationSubject(subject);
                 }
+
+                if (subject.EduSubjectId != 0) { return UpdateEducationSubject(subject); }
+
                 var s = new tblApplicantEduSubject()
                 {
                     ApplicantEduId = subject.ApplicantEduId,
                     CreatedBy = subject.CreatedBy,
                     CreatedDt = subject.CreatedDt,
                     Grade = subject.Grade,
-                    GradeCd = subject.GradeCd,
+                    GradeCd = !string.IsNullOrWhiteSpace(subject.GradeCd) ? subject.GradeCd.Trim() : subject.GradeCd,
                     SubjectCd = subject.SubjectCd,
                     LastModifiedBy = subject.LastModifiedBy,
                     LastModifiedDt = subject.LastModifiedDt
@@ -299,7 +324,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.CreatedBy = subject.CreatedBy;
                     exist.CreatedDt = subject.CreatedDt;
                     exist.Grade = subject.Grade;
-                    exist.GradeCd = subject.GradeCd;
+                    exist.GradeCd = !string.IsNullOrWhiteSpace(subject.GradeCd) ? subject.GradeCd.Trim() : subject.GradeCd;
                     exist.SubjectCd = subject.SubjectCd;
                     exist.LastModifiedBy = subject.LastModifiedBy;
                     exist.LastModifiedDt = DateTime.Now;
@@ -328,7 +353,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             CreatedDt = s.CreatedDt,
                             EduSubjectId = s.EduSubjectId,
                             Grade = s.Grade,
-                            GradeCd = s.GradeCd,
+                            GradeCd = !string.IsNullOrWhiteSpace(s.GradeCd) ? s.GradeCd.Trim() : s.GradeCd,
                             LastModifiedBy = s.LastModifiedBy,
                             LastModifiedDt = s.LastModifiedDt,
                             SubjectCd = s.SubjectCd,
@@ -356,7 +381,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             CreatedDt = exist.CreatedDt,
                             EduSubjectId = exist.EduSubjectId,
                             Grade = exist.Grade,
-                            GradeCd = exist.GradeCd,
+                            GradeCd = !string.IsNullOrWhiteSpace(exist.GradeCd) ? exist.GradeCd.Trim() : exist.GradeCd,
                             LastModifiedBy = exist.LastModifiedBy,
                             LastModifiedDt = exist.LastModifiedDt,
                             SubjectCd = exist.SubjectCd,
@@ -379,6 +404,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     return UpdateSkill(skill);
                 }
 
+                if (skill.ApplicantSkillId != 0) { return UpdateSkill(skill); }
+
                 var s = new tblApplicantSkill()
                 {
                     AchievementCd = skill.AchievementCd,
@@ -388,8 +415,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     LanguageSkillSpeak = skill.LanguageSkillSpeak,
                     LanguageSkillWrite = skill.LanguageSkillWrite,
                     Others = skill.Others,
-                    SkillCatCd = skill.SkillCatCd,
-                    SkillCd = skill.SkillCd,
+                    SkillCatCd = !string.IsNullOrWhiteSpace(skill.SkillCatCd) ? skill.SkillCatCd.Trim() : skill.SkillCatCd,
+                    SkillCd = !string.IsNullOrWhiteSpace(skill.SkillCd) ? skill.SkillCd.Trim() : skill.SkillCd,
                 };
                 entities.tblApplicantSkills.Add(s);
                 if (entities.SaveChanges() > 0)
@@ -413,8 +440,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.LanguageSkillSpeak = skill.LanguageSkillSpeak;
                     exist.LanguageSkillWrite = skill.LanguageSkillWrite;
                     exist.Others = skill.Others;
-                    exist.SkillCatCd = skill.SkillCatCd;
-                    exist.SkillCd = skill.SkillCd;
+                    exist.SkillCatCd = !string.IsNullOrWhiteSpace(skill.SkillCatCd) ? skill.SkillCatCd.Trim() : skill.SkillCatCd;
+                    exist.SkillCd = !string.IsNullOrWhiteSpace(skill.SkillCd) ? skill.SkillCd.Trim() : skill.SkillCd;
 
                     entities.SaveChanges();
                     return exist.ApplicantSkillId;
@@ -446,8 +473,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             LanguageSkillWrite = s.LanguageSkillWrite,
                             Others = s.Others,
                             Skill = s.tblREFSkill.Skill,
-                            SkillCatCd = s.SkillCatCd,
-                            SkillCd = s.SkillCd
+                            SkillCatCd = !string.IsNullOrWhiteSpace(s.SkillCatCd) ? s.SkillCatCd.Trim() : s.SkillCatCd,
+                            SkillCd = !string.IsNullOrWhiteSpace(s.SkillCd) ? s.SkillCd.Trim() : s.SkillCd
                         });
                     }
                 }
@@ -459,12 +486,18 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             using (var entities = new atmEntities())
             {
-                var exist = (from a in entities.tblApplicantSportAssocs where a.ApplicantId == sport.ApplicantId && a.ApplicantSportAssocId == sport.SportAssocId select a).SingleOrDefault();
-                if (exist != null)
+                // to cater Other category
+                if (sport.SportAssocId != 99)
                 {
-                    sport.ApplicantSportAssocId = exist.ApplicantSportAssocId;
-                    return UpdateSport(sport);
+                    var exist = (from a in entities.tblApplicantSportAssocs where a.ApplicantId == sport.ApplicantId && a.SportAssocId == sport.SportAssocId select a).SingleOrDefault();
+                    if (exist != null)
+                    {
+                        sport.ApplicantSportAssocId = exist.ApplicantSportAssocId;
+                        return UpdateSport(sport);
+                    }
                 }
+
+                if (sport.ApplicantSportAssocId != 0) { return UpdateSport(sport); }
 
                 var s = new tblApplicantSportAssoc()
                 {
@@ -901,6 +934,30 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
             }
             return null;
+        }
+
+
+        public IEnumerable<Applicant> Search(string category, string name, string icno, string searchcriteria)
+        {
+            var list = new List<Applicant>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblApplicants select a;
+                if (!string.IsNullOrWhiteSpace(name))
+                    l = l.Where(a => a.FullName.Contains(name));
+                if (!string.IsNullOrWhiteSpace(icno))
+                    l = l.Where(a => a.NewICNo.Contains(icno));
+                if (!string.IsNullOrWhiteSpace(searchcriteria))
+                    l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
+                if (l.Any())
+                {
+                    foreach (var app in l)
+                    {
+                        list.Add(BindingToClass(app));
+                    }
+                }
+            }
+            return list;
         }
     }
 }

@@ -81,73 +81,42 @@
             <!-- Sidbar Widgets -->
             <div class="side-widgets overflow">
                 <!-- Profile Menu -->
-                <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
-                    @if (User.IsInRole(RolesString.AWAM))
-                    {
+                <div class="text-center s-widget m-b-25 m-l-5 m-r-5 dropdown" id="profile-menu">
 
-                        <a href="" data-toggle="dropdown">
-                            <img class="profile-pic img-rounded" id="profilephoto" src="@Url.Content("~/Images/noimage.jpg")" alt="">
-                        </a>
-                        <p>
-                            <i>Ukuran passport</i>
-                        </p>
-                    }
+                    <a href="" data-toggle="dropdown">
+                        <img class="profile-pic img-rounded" id="profilephoto" src="@Url.Content("~/Images/noimage.jpg")" alt="">
+                    </a>
+                    <p>
+                        <i>Ukuran passport</i>
+                    </p>
                     <h5 class="m-0">@fullname</h5>
                     <h6>Log masuk terakhir adalah pada : @lastlogout</h6>
-                    @if (User.IsInRole(RolesString.AWAM))
-                    {
-                        <input type="button" class="btn btn-default btn-xs m-t-5 m-b-5" value="Pilih Gambar" id="profile_img_button" />
-                    }
+                    <input type="button" class="btn btn-default btn-xs m-t-5 m-b-5" value="Pilih Gambar" id="profile_img_button" />
                     <ul class="dropdown-menu profile-menu">
-                        @if (User.IsInRole(RolesString.AWAM))
-                        {
-                            <li><a href="@Url.Action("Application", "Public")">Permohonan</a></li>
-                            <li><a href="@Url.Action("Account", "Public")">Profil Saya</a></li>
-                        }
+                        <li><a href="@Url.Action("Application", "Public")">Permohonan</a></li>
+                        <li><a href="@Url.Action("Account", "Public")">Profil Saya</a></li>
                         <li><a href="@Url.Action("ResetPassword", "Account")">Tukar Katalaluan</a></li>
                         <li><a href="" class="logout">Log Keluar</a></li>
                     </ul>
                 </div>
 
                 <!-- Calendar -->
-                <div class="s-widget m-b-25">
+                <div class="s-widget m-b-25 m-l-5">
                     <div id="sidebar-calendar"></div>
                 </div>
 
                 <!-- Projects -->
-                @if (User.IsInRole(RolesString.AWAM))
-                {
-                    @Html.Partial("_CheckList")
-                }
+                @Html.Partial("_CheckList")
 
             </div>
 
             <!-- Side Menu -->
             <ul class="list-unstyled side-menu">
-                @if (User.IsInRole(RolesString.AWAM))
-                {
-                    <li>
-                        <a class="sa-side-home" href="@Url.Action("Application", "Public")">
-                            <span class="menu-item">Utama</span>
-                        </a>
-                    </li>
-                }
-                @if (User.IsInRole(RolesString.SUPER_ADMIN) || User.IsInRole(RolesString.PEGAWAI_PENGAMBILAN) || User.IsInRole(RolesString.KERANI_PENGAMBILAN))
-                {
-                    <li>
-                        <a class="sa-side-home" href="@Url.Action("Index", "Admin")">
-                            <span class="menu-item">Dashboard</span>
-                        </a>
-                    </li>
-                }
-                @if (User.IsInRole(RolesString.SUPER_ADMIN))
-                {
-                    <li>
-                        <a class="sa-side-photos" href="@Url.Action("ManageUser", "Manage")">
-                            <span class="menu-item">Pengurusan Pengguna</span>
-                        </a>
-                    </li>
-                }
+                <li>
+                    <a class="sa-side-home" href="@Url.Action("Application", "Public")">
+                        <span class="menu-item">Utama</span>
+                    </a>
+                </li>
             </ul>
 
         </aside>

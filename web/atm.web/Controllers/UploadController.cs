@@ -56,7 +56,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                         if (uploadtype == "PROFILE")
                         {
                             if (hpf.ContentLength > 500000)
-                                return Json(new { Ok = false, message = "Muat naik tidak berjaya. Saiz fail melebihi saiz yang dibenarkan (300KB)", item = new object() }, JsonRequestBehavior.AllowGet);
+                                return Json(new { Ok = false, message = "Muat naik tidak berjaya. Saiz fail melebihi saiz yang dibenarkan (500KB)", item = new object() }, JsonRequestBehavior.AllowGet);
 
                             if (ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".gif" || ext == ".bmp")
                             {
@@ -70,20 +70,34 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                                     var applicant = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetApplicant(appid);
                                     if (applicant != null)
                                     {
-                                        var appphoto = new ApplicantPhoto()
-                                        {
-                                            Photo = fileBytes,
-                                            PhotoExt = ext,
-                                            ApplicantId = applicant.ApplicantId,
-                                            CreatedBy = applicant.CreatedBy,
-                                            CreatedDate = DateTime.Now
-                                        };
                                         // check where there already exist the photo or not
                                         var existphoto = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetPhoto(applicant.ApplicantId);
                                         if (null != existphoto && existphoto.Id != 0)
-                                            appphoto.Id = existphoto.Id;
+                                        {
+                                            var appphoto = new ApplicantPhoto
+                                            {
+                                                Photo = fileBytes,
+                                                PhotoExt = ext,
+                                                ApplicantId = applicant.ApplicantId,
+                                                CreatedBy = applicant.CreatedBy,
+                                                CreatedDate = DateTime.Now,
+                                                Id = existphoto.Id
+                                            };
+                                            appphoto.Save();
+                                        }
+                                        else
+                                        {
+                                            var appphoto = new ApplicantPhoto
+                                            {
+                                                Photo = fileBytes,
+                                                PhotoExt = ext,
+                                                ApplicantId = applicant.ApplicantId,
+                                                CreatedBy = applicant.CreatedBy,
+                                                CreatedDate = DateTime.Now
+                                            };
+                                            appphoto.Save();
+                                        }
 
-                                        appphoto.Save();
                                     }
                                 }
                             }
@@ -101,7 +115,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 }
             }
             // Return JSON
-            return Json(new { OK = false, message = "Not Succeed", item = new object() }, JsonRequestBehavior.AllowGet);
+            return Json(new { OK = false, message = "Tidak Berjaya", item = new object() }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Download(string id, string fileName)

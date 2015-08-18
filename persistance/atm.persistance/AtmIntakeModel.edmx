@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="AtmIntakeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_996412_intake2.dbo.sysdiagrams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="name" />
@@ -111,7 +111,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.sysdiagrams' does not have a
           <Property Name="MajorMinor" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblAcqFinalShorlistCriteria">
           <Key>
             <PropertyRef Name="AcquisitionId" />
@@ -471,7 +471,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="ApplicantId" />
           </Key>
-          <Property Name="ApplicantId" Type="int" Nullable="false" />
+          <Property Name="ApplicantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NewICNo" Type="char" MaxLength="12" />
           <Property Name="NoTentera" Type="char" MaxLength="12" />
           <Property Name="BirthDt" Type="date" Nullable="false" />
@@ -603,7 +603,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="ApplicantEduId" />
           </Key>
-          <Property Name="ApplicantEduId" Type="int" Nullable="false" />
+          <Property Name="ApplicantEduId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="HighEduLevelCd" Type="char" MaxLength="2" />
           <Property Name="EduCertTitle" Type="varchar" MaxLength="100" />
@@ -623,7 +623,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="EduSubjectId" />
           </Key>
-          <Property Name="EduSubjectId" Type="int" Nullable="false" />
+          <Property Name="EduSubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantEduId" Type="int" />
           <Property Name="SubjectCd" Type="int" />
           <Property Name="GradeCd" Type="char" MaxLength="2" />
@@ -672,7 +672,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="Photo" Type="image" />
           <Property Name="PhotoExt" Type="varchar" MaxLength="10" />
@@ -685,7 +685,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="ApplicantSkillId" />
           </Key>
-          <Property Name="ApplicantSkillId" Type="int" Nullable="false" />
+          <Property Name="ApplicantSkillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="SkillCd" Type="char" MaxLength="5" />
           <Property Name="SkillCatCd" Type="char" MaxLength="1" />
@@ -719,7 +719,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="ApplicantSportAssocId" />
           </Key>
-          <Property Name="ApplicantSportAssocId" Type="int" Nullable="false" />
+          <Property Name="ApplicantSportAssocId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="SportAssocId" Type="int" />
           <Property Name="AchievementCd" Type="char" MaxLength="2" />
@@ -858,7 +858,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" Nullable="false" />
           <Property Name="Photo" Type="image" />
           <Property Name="PhotoExt" Type="varchar" MaxLength="10" />
@@ -915,7 +915,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblAcqFinalShorlistCriteria'
           <Property Name="ArmyNo" Type="varchar" MaxLength="12" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_996412_intake2.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblApplicationStatus">
           <Key>
             <PropertyRef Name="AppId" />
@@ -1197,7 +1197,7 @@ warning 6002: The table/view 'DB_996412_intake2.dbo.tblApplicationStatus' does n
           <Property Name="QuestionnaireType" Type="varchar" MaxLength="30" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_996412_intake2.dbo.tblREFQuestionnareType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblREFQuestionnareType">
           <Key>
             <PropertyRef Name="QuestionnaireTypeCd" />

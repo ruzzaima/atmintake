@@ -23,31 +23,40 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="control-label">Keputusan<span class="red">*</span></label>
-                                <input type="text" class="form-control validate[required]" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" /><i>Contoh : (4A 3B 2C)</i>
+                                <input type="text" class="form-control validate[required]" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i>Contoh : (4A 3B 2C)</i>
                         </div>
                     </div>
                     <div data-bind="foreach: $data.ApplicantEduSubjectCollection">
                         <div class="row">
-                            <div class="m-t-10 form-inline">
-                                <!-- ko if : $index() + 1 <= 10 -->
-                                <!-- ko if : $data.SubjectCd() === '1' || $data.SubjectCd() === '2' || $data.SubjectCd() === '3' -->
-                                <label class="control-label" data-bind="text: $data.Subject"></label><span class="red">*</span>
-                                <!--/ko-->
-                                <!-- ko ifnot : $data.SubjectCd() === '1' || $data.SubjectCd() === '2' || $data.SubjectCd() === '3' -->
-                                <label class="control-label" data-bind="text: $data.Subject"></label>
-                                <!--/ko-->
-                                <!--/ko-->
-                                <!-- ko if : $index() + 1 >= 11-->
-                                <select class="form-control atm-select " data-bind="options: $root.subjects, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset: true, value: $data.SubjectCd"></select>
-                                <!--/ko-->
-                                <input type="hidden" data-bind="attr : {id: $data.SubjectCd() + '_' + ($index() + 1)}, value: $data.SubjectCd" />
-                                <!-- ko if : $data.SubjectCd() === '1' || $data.SubjectCd() === '2' || $data.SubjectCd() === '3' -->
-                                <select class="form-control atm-select input-sm pull-right validate[required]" data-bind="options: $root.grades, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset: true, value: $data.GradeCd"></select>
-                                <!--/ko-->
-                                <!-- ko ifnot : $data.SubjectCd() === '1' || $data.SubjectCd() === '2' || $data.SubjectCd() === '3' -->
-                                <select class="form-control atm-select input-sm pull-right" data-bind="options: $root.grades, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset: true, value: $data.GradeCd"></select>
-                                <!--/ko-->
+                            <div class="m-t-10">
+                                <div class="col-md-8">
+                                    <!-- ko if : $index() + 1 <= 10 -->
+                                    <!-- ko if : $data.SubjectCd() === 1 || $data.SubjectCd() === 2 || $data.SubjectCd() === 3 -->
+                                    <label class="control-label" data-bind="text: $data.Subject"></label><span class="red">*</span>
+                                    <!--/ko-->
+                                    <!-- ko ifnot : $data.SubjectCd() === 1 || $data.SubjectCd() === 2 || $data.SubjectCd() === 3 -->
+                                    <label class="control-label" data-bind="text: $data.Subject"></label>
+                                    <!--/ko-->
+                                    <!--/ko-->
+                                    <!-- ko if : $index() + 1 >= 11 -->
+                                    <select class="form-control atm-select col-md-6 " data-bind="options: $root.subjects, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset: true, value: $data.SubjectCd"></select>
+                                    <!--/ko-->
+                                    <input type="hidden" data-bind="attr : {id: $data.SubjectCd() + '_' + ($index() + 1)}, value: $data.SubjectCd"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- ko if : $data.SubjectCd() === 1 || $data.SubjectCd() === 2 || $data.SubjectCd() === 3 -->
+                                    <select class="form-control atm-select input-sm pull-right validate[required]" data-bind="options: $root.grades, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset: true, value: $data.GradeCd"></select>
+                                    <!--/ko-->
+                                    <!-- ko ifnot : $data.SubjectCd() === 1 || $data.SubjectCd() === 2 || $data.SubjectCd() === 3 -->
+                                    <select class="form-control atm-select input-sm pull-right" data-bind="options: $root.grades, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset: true, value: $data.GradeCd"></select>
+                                    <!--/ko-->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -77,14 +86,18 @@
                             <div class="form-group">
                                 <label class="control-label">Keputusan</label>
                                 <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
-                                <i>Contoh : 3.67, 3 prinsipal</i>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i>Contoh : 3.67, 3 prinsipal</i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ko-->        
+        <!--/ko-->
         <!-- ko if : $data.HighEduLevelCd() === '25'-->
         <div class="col-md-4">
             <div class="panel panel-default tile">
@@ -107,8 +120,12 @@
                             <div class="form-group">
                                 <label class="control-label">Keputusan</label>
                                 <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
-                                <i>Contoh : Mumtaz, Jayyid Jiddan, Maqbul</i>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <i>Contoh : Mumtaz, Jayyid Jiddan, Maqbul</i>
                         </div>
                     </div>
                 </div>
@@ -148,42 +165,8 @@
                         <label class="control-label">Pusat Pengajian</label>
                         <select class="form-control atm-select" data-bind="options: $root.institutions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.InstCd"></select>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!--/ko-->
-        <!-- ko if : $data.HighEduLevelCd() === '20'-->
-        <div class="col-md-4">
-            <div class="panel panel-default tile">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <span data-bind="text: $data.HighEduLevel"></span>
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">Tahun</label>
-                                <input type="text" class="form-control eduyear" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="control-label">Keputusan (CGPA)</label>
-                                <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Bidang</label>
-                        <select class="form-control atm-select " data-bind="options: $root.bidang, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.EduCertTitle"></select>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Pusat Pengajian</label>
-                        <select class="form-control atm-select" data-bind="options: $root.institutions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.InstitutionName"></select>
+                    <div class="form-group" style="padding-bottom: 1px">
+                        <label class="control-label"></label>
                     </div>
                 </div>
             </div>
@@ -219,9 +202,78 @@
                         <select class="form-control atm-select validate[required] " data-bind="options: $root.bidang, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.EduCertTitle"></select>
                     </div>
                     <div class="form-group">
+                        <label class="radio-inline">
+                            <input type="radio" class="radio" name="08InstCd" value="D"/>Dalam Negeri
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="radio" name="08InstCd" value="O"/>Luar Negeri
+                        </label>
+                    </div>
+                    <!-- ko ifnot : $root.overseas08() -->
+                    <div class="form-group">
                         <label class="control-label">Pusat Pengajian<span class="red">*</span></label>
                         <select class="form-control atm-select validate[required]" data-bind="options: $root.institutions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.InstCd"></select>
                     </div>
+                    <!--/ko--> 
+                    <!-- ko if : $root.overseas08() -->
+                    <div class="form-group">
+                        <label class="control-label">Pusat Pengajian<span class="red">*</span></label>
+                        <input type="text" class="form-control" data-bind="value: $data.InstitutionName, valueUpdate: 'afterkeydown'" />
+                    </div>
+                    <!--/ko--> 
+                </div>
+            </div>
+        </div>
+        <!--/ko-->
+        <!-- ko if : $data.HighEduLevelCd() === '20'-->
+        <div class="col-md-4">
+            <div class="panel panel-default tile">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span data-bind="text: $data.HighEduLevel"></span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Tahun</label>
+                                <input type="text" class="form-control eduyear" data-bind="value: $data.ConfermentYr, valueUpdate: 'afterkeydown'" maxlength="4" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Keputusan (CGPA)</label>
+                                <input type="text" class="form-control" data-bind="value: $data.OverallGrade, valueUpdate: 'afterkeydown'" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Bidang</label>
+                        <select class="form-control atm-select " data-bind="options: $root.bidang, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.EduCertTitle"></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="radio-inline">
+                            <input type="radio" class="radio" name="20InstCd" value="D" />Dalam Negeri
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="radio" name="20InstCd" value="O" />Luar Negeri
+                        </label>
+                    </div> 
+                    <!-- ko ifnot : $root.overseas20() -->
+                    <div class="form-group">
+                        <label class="control-label">Pusat Pengajian<span class="red">*</span></label>
+                        <select class="form-control atm-select" data-bind="options: $root.institutions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: $data.InstCd"></select>
+                    </div>
+                    <!--/ko-->
+                    <!-- ko if : $root.overseas20() -->
+                    <div class="form-group">
+                        <label class="control-label">Pusat Pengajian<span class="red">*</span></label>
+                        <input type="text" class="form-control" data-bind="value: $data.InstitutionName, valueUpdate: 'afterkeydown'"/>
+                    </div>
+                    <!--/ko--> 
                 </div>
             </div>
         </div>
