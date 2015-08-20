@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Configuration;
 using System.Web.Security;
 using SevenH.MMCSB.Atm.Domain;
 
@@ -82,7 +76,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             {
                 var exist = (from a in entities.tblUsers where a.LoginId == user.LoginId select a).SingleOrDefault();
                 if (null != exist) return 0;
-                var usr = new tblUser()
+                var usr = new tblUser
                 {
                     AlternativeEmail = user.AlternativeEmail,
                     ApplicantId = user.ApplicantId,
@@ -105,8 +99,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     messages.Add("Berjaya");
                     return usr.UserId;
                 }
-                else
-                    messages.Add("Tidak Berjaya");
+                messages.Add("Tidak Berjaya");
             }
             return 0;
         }
@@ -117,7 +110,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             {
                 var exist = (from a in entities.tblUsers where a.LoginId == user.LoginId select a).SingleOrDefault();
                 if (null != exist) return 0;
-                var usr = new tblUser()
+                var usr = new tblUser
                 {
                     AlternativeEmail = user.AlternativeEmail,
                     ApplicantId = user.ApplicantId,
@@ -140,8 +133,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     messages.Add("Berjaya");
                     return usr.UserId;
                 }
-                else
-                    messages.Add("Tidak Berjaya");
+                messages.Add("Tidak Berjaya");
             }
             return 0;
         }
@@ -208,7 +200,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var user in l)
                     {
-                        var usr = new LoginUser()
+                        var usr = new LoginUser
                         {
                             AlternativeEmail = user.AlternativeEmail,
                             ApplicantId = user.ApplicantId,
@@ -226,7 +218,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             FirstTime = user.FirstTime ?? false,
                             FullName = user.FullName,
                             IsLocked = user.IsLocked ?? false,
-                            LastLoginDt = user.LastLoginDt,
+                            LastLoginDt = user.LastLoginDt
                         };
 
                         if (!string.IsNullOrWhiteSpace(user.ServiceCd))
@@ -239,7 +231,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var role = (from a in entities.tblUserRoles where a.UserId == user.UserId select a).SingleOrDefault();
                         if (null != role)
                         {
-                            usr.LoginRole = new LoginRole()
+                            usr.LoginRole = new LoginRole
                             {
                                 UserId = usr.UserId,
                                 Roles = role.Roles
@@ -263,7 +255,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var user = (from a in entities.tblUsers where a.LoginId == username select a).SingleOrDefault();
                     if (null != user)
                     {
-                        var usr = new LoginUser()
+                        var usr = new LoginUser
                         {
                             AlternativeEmail = user.AlternativeEmail,
                             ApplicantId = user.ApplicantId,
@@ -281,7 +273,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             FirstTime = user.FirstTime ?? false,
                             FullName = user.FullName,
                             IsLocked = user.IsLocked ?? false,
-                            LastLoginDt = user.LastLoginDt,
+                            LastLoginDt = user.LastLoginDt
                         };
 
                         if (!string.IsNullOrWhiteSpace(user.ServiceCd))
@@ -294,7 +286,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var role = (from a in entities.tblUserRoles where a.UserId == user.UserId select a).SingleOrDefault();
                         if (null != role)
                         {
-                            usr.LoginRole = new LoginRole()
+                            usr.LoginRole = new LoginRole
                             {
                                 UserId = usr.UserId,
                                 Roles = role.Roles
@@ -316,7 +308,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var user = (from a in entities.tblUsers where a.UserId == id select a).SingleOrDefault();
                     if (null != user)
                     {
-                        var usr = new LoginUser()
+                        var usr = new LoginUser
                         {
                             AlternativeEmail = user.AlternativeEmail,
                             ApplicantId = user.ApplicantId,
@@ -334,7 +326,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             FirstTime = user.FirstTime ?? false,
                             FullName = user.FullName,
                             IsLocked = user.IsLocked ?? false,
-                            LastLoginDt = user.LastLoginDt,
+                            LastLoginDt = user.LastLoginDt
                         };
 
                         if (!string.IsNullOrWhiteSpace(user.ServiceCd))
@@ -347,7 +339,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var role = (from a in entities.tblUserRoles where a.UserId == user.UserId select a).SingleOrDefault();
                         if (null != role)
                         {
-                            usr.LoginRole = new LoginRole()
+                            usr.LoginRole = new LoginRole
                             {
                                 UserId = usr.UserId,
                                 Roles = role.Roles
@@ -371,7 +363,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var user in l)
                     {
-                        var usr = new LoginUser()
+                        var usr = new LoginUser
                         {
                             AlternativeEmail = user.AlternativeEmail,
                             ApplicantId = user.ApplicantId,
@@ -389,7 +381,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             FirstTime = user.FirstTime ?? false,
                             FullName = user.FullName,
                             IsLocked = user.IsLocked ?? false,
-                            LastLoginDt = user.LastLoginDt,
+                            LastLoginDt = user.LastLoginDt
                         };
 
                         if (!string.IsNullOrWhiteSpace(user.ServiceCd))
@@ -402,7 +394,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var role = (from a in entities.tblUserRoles where a.UserId == user.UserId select a).SingleOrDefault();
                         if (null != role)
                         {
-                            usr.LoginRole = new LoginRole()
+                            usr.LoginRole = new LoginRole
                             {
                                 UserId = usr.UserId,
                                 Roles = role.Roles

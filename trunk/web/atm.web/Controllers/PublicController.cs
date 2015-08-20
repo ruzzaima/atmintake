@@ -124,7 +124,7 @@ namespace SevenH.MMCSB.Atm.Web
                 login.FullName = model.FullName;
                 login.AlternativeEmail = model.AlternateEmail;
                 login.Email = model.Email;
-                var id = login.Save();                
+                var id = login.Save();
                 return View(model);
             }
             return View(model);
@@ -357,6 +357,8 @@ namespace SevenH.MMCSB.Atm.Web
                     vm.IdNumber = applicant.NewICNo;
                     vm.Service = acqtype.AcquisitionTypeNm;
                     vm.Siri = acq.Siri + "/" + acq.Year;
+                    vm.Year = acq.Year.HasValue ? acq.Year.Value.ToString() : "";
+                    vm.Acquisition = acq;
                 }
             }
             return View(vm);
@@ -1073,6 +1075,20 @@ namespace SevenH.MMCSB.Atm.Web
                 }
             }
             return Json(new { OK = false, message = "Jantina diperlukan." });
+        }
+
+        public ActionResult RemoveSportAndKokos(int appsid)
+        {
+            if (appsid != 0)
+            {
+                var appsport = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetApplicantSportAndKokos(appsid);
+                if (null != appsport)
+                {
+                    if (appsport.Delete())
+                        return Json(new { OK = true, message = "Berjaya" });
+                }
+            }
+            return Json(new { OK = false, message = "Tidak Berjaya" });
         }
     }
 }

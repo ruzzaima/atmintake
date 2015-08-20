@@ -52,8 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AcquisitionPersistence.cs" />
+    <Compile Include="AdvertismentPersistance.cs" />
     <Compile Include="ApplicantPersistence.cs" />
     <Compile Include="ApplicantSubmittedPersistance.cs" />
+    <Compile Include="ApplicationPersistance.cs" />
     <Compile Include="AtmIntakeModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -71,6 +73,7 @@
     </Compile>
     <Compile Include="LoginUserPersistance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReferencePersistence.cs" />
     <Compile Include="SqlMembershipProvider.cs" />
     <Compile Include="SqlRoleProvider.cs" />
     <Compile Include="sysdiagram.cs">
@@ -278,6 +281,9 @@
       <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFReligion.cs">
+      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tblREFReportDutyLoc.cs">
       <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tblREFService.cs">

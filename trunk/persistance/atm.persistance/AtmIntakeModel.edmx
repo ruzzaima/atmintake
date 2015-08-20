@@ -283,6 +283,8 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="ShortlistMeritInd" Type="bit" />
           <Property Name="ArmyNumberFrom" Type="int" />
           <Property Name="ArmyNumberTo" Type="int" />
+          <Property Name="FinalSupportingDocument" Type="varchar" MaxLength="255" />
+          <Property Name="ReportDutySupportingDocument" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblAdvertisement_Xpakai">
           <Key>
@@ -637,7 +639,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="EduSubjectId" />
           </Key>
-          <Property Name="EduSubjectId" Type="int" Nullable="false" />
+          <Property Name="EduSubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantEduId" Type="int" Nullable="false" />
           <Property Name="SubjectCd" Type="int" />
           <Property Name="GradeCd" Type="char" MaxLength="2" />
@@ -651,7 +653,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="ApplicantEduId" />
           </Key>
-          <Property Name="ApplicantEduId" Type="int" Nullable="false" />
+          <Property Name="ApplicantEduId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" Nullable="false" />
           <Property Name="HighEduLevelCd" Type="char" MaxLength="2" />
           <Property Name="EduCertTitle" Type="varchar" MaxLength="100" />
@@ -702,7 +704,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="ApplicantSkillId" />
           </Key>
-          <Property Name="ApplicantSkillId" Type="int" Nullable="false" />
+          <Property Name="ApplicantSkillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" Nullable="false" />
           <Property Name="SkillCd" Type="char" MaxLength="5" />
           <Property Name="SkillCatCd" Type="char" MaxLength="1" />
@@ -734,7 +736,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="ApplicantSportAssocId" />
           </Key>
-          <Property Name="ApplicantSportAssocId" Type="int" Nullable="false" />
+          <Property Name="ApplicantSportAssocId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" Nullable="false" />
           <Property Name="SportAssocId" Type="int" />
           <Property Name="AchievementCd" Type="char" MaxLength="2" />
@@ -749,7 +751,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="ApplicantId" />
           </Key>
-          <Property Name="ApplicantId" Type="int" Nullable="false" />
+          <Property Name="ApplicantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" Nullable="false" />
           <Property Name="NewICNo" Type="char" MaxLength="12" Nullable="false" />
           <Property Name="NoTentera" Type="char" MaxLength="12" />
@@ -871,7 +873,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AppId" />
           </Key>
-          <Property Name="AppId" Type="int" Nullable="false" />
+          <Property Name="AppId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="AcquisitionId" Type="int" />
           <Property Name="SelectionCenterId" Type="int" />
@@ -886,7 +888,10 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="InvitationFirstSel" Type="bit" />
           <Property Name="FirstSelectionAttdnInd" Type="bit" />
           <Property Name="FirstSelActualAcqLocationId" Type="int" />
-          <Property Name="FirstSelectionDate" Type="date" />
+          <Property Name="FinalSelActualAcqLocationId" Type="int" />
+          <Property Name="FirstSelectionDate" Type="datetime" />
+          <Property Name="FinalSelectionStartDate" Type="datetime" />
+          <Property Name="FinalSelectionEndDate" Type="datetime" />
           <Property Name="WrittenTest" Type="bit" />
           <Property Name="SecurityStatus" Type="bit" />
           <Property Name="SecurityPDRM" Type="bit" />
@@ -906,6 +911,8 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="PhysicalTest" Type="bit" />
           <Property Name="FinalSelectionRemark" Type="varchar" MaxLength="1000" />
           <Property Name="ReportDuty" Type="int" />
+          <Property Name="ReportDutyDate" Type="datetime" />
+          <Property Name="ReportDutyLocId" Type="int" />
           <Property Name="Urine" Type="bit" />
           <Property Name="FirstShortlistedInd" Type="int" />
           <Property Name="FinalShortlistedInd" Type="int" />
@@ -1229,6 +1236,14 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="CreatedDt" Type="datetime" />
           <Property Name="LastModifiedBy" Type="varchar" MaxLength="100" />
           <Property Name="LastModifiedDt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblREFReportDutyLoc">
+          <Key>
+            <PropertyRef Name="ReportDutyLocId" />
+          </Key>
+          <Property Name="ReportDutyLocId" Type="int" Nullable="false" />
+          <Property Name="ReportDutyLoc" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BUID" Type="int" />
         </EntityType>
         <EntityType Name="tblREFService">
           <Key>
@@ -2546,6 +2561,18 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblApplication_tblREFReportDutyLoc">
+          <End Role="tblREFReportDutyLoc" Type="Self.tblREFReportDutyLoc" Multiplicity="0..1" />
+          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFReportDutyLoc">
+              <PropertyRef Name="ReportDutyLocId" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="ReportDutyLocId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblApplicationStatus_tblApplication">
           <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="1" />
           <End Role="tblApplicationStatus" Type="Self.tblApplicationStatus" Multiplicity="0..1" />
@@ -2828,6 +2855,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySet Name="tblREFQuestionnaireType" EntityType="Self.tblREFQuestionnaireType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFRace" EntityType="Self.tblREFRace" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFReligion" EntityType="Self.tblREFReligion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblREFReportDutyLoc" EntityType="Self.tblREFReportDutyLoc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFService" EntityType="Self.tblREFService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFSkill" EntityType="Self.tblREFSkill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblREFSkillCat" EntityType="Self.tblREFSkillCat" Schema="dbo" store:Type="Tables" />
@@ -3299,6 +3327,10 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           </AssociationSet>
           <AssociationSet Name="FK_tblApplication_tblAcquisition" Association="Self.FK_tblApplication_tblAcquisition">
             <End Role="tblAcquisition" EntitySet="tblAcquisition" />
+            <End Role="tblApplication" EntitySet="tblApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplication_tblREFReportDutyLoc" Association="Self.FK_tblApplication_tblREFReportDutyLoc">
+            <End Role="tblREFReportDutyLoc" EntitySet="tblREFReportDutyLoc" />
             <End Role="tblApplication" EntitySet="tblApplication" />
           </AssociationSet>
           <AssociationSet Name="FK_tblApplicationStatus_tblApplication" Association="Self.FK_tblApplicationStatus_tblApplication">
@@ -4268,7 +4300,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="InvitationFirstSel" Type="Boolean" />
           <Property Name="FirstSelectionAttdnInd" Type="Boolean" />
           <Property Name="FirstSelActualAcqLocationId" Type="Int32" />
-          <Property Name="FirstSelectionDate" Type="DateTime" Precision="0" />
+          <Property Name="FirstSelectionDate" Type="DateTime" Precision="3" />
           <Property Name="WrittenTest" Type="Boolean" />
           <Property Name="SecurityStatus" Type="Boolean" />
           <Property Name="SecurityPDRM" Type="Boolean" />
@@ -4306,6 +4338,12 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <NavigationProperty Name="tblAppQuestionFeedbacks" Relationship="Self.FK_tblAppQuestionFeedback_tblApplication" FromRole="tblApplication" ToRole="tblAppQuestionFeedback" />
           <NavigationProperty Name="tblAppQuestionnaireScores" Relationship="Self.FK_tblAppQuestionnaireScore_tblApplication" FromRole="tblApplication" ToRole="tblAppQuestionnaireScore" />
           <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblApplication_tblAcquisition" FromRole="tblApplication" ToRole="tblAcquisition" />
+          <Property Name="FinalSelActualAcqLocationId" Type="Int32" />
+          <Property Name="FinalSelectionStartDate" Type="DateTime" Precision="3" />
+          <Property Name="FinalSelectionEndDate" Type="DateTime" Precision="3" />
+          <Property Name="ReportDutyDate" Type="DateTime" Precision="3" />
+          <Property Name="ReportDutyLocId" Type="Int32" />
+          <NavigationProperty Name="tblREFReportDutyLoc" Relationship="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" FromRole="tblApplication" ToRole="tblREFReportDutyLoc" />
         </EntityType>
         <EntityType Name="tblAppQuestionFeedback">
           <Key>
@@ -6657,6 +6695,11 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             <End Role="tblREFLoginStatu" EntitySet="tblREFLoginStatus" />
             <End Role="tblUserLog" EntitySet="tblUserLogs" />
           </AssociationSet>
+          <EntitySet Name="tblREFReportDutyLocs" EntityType="AtmIntakeModel.tblREFReportDutyLoc" />
+          <AssociationSet Name="FK_tblApplication_tblREFReportDutyLoc" Association="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc">
+            <End Role="tblREFReportDutyLoc" EntitySet="tblREFReportDutyLocs" />
+            <End Role="tblApplication" EntitySet="tblApplications" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tblUserRole">
           <Key>
@@ -6725,6 +6768,8 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <NavigationProperty Name="tblAdvertisments" Relationship="AtmIntakeModel.FK_tblAdvertisment_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAdvertisment" />
           <NavigationProperty Name="tblAppApplicantMeritScores" Relationship="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAppApplicantMeritScore" />
           <NavigationProperty Name="tblApplications" Relationship="AtmIntakeModel.FK_tblApplication_tblAcquisition" FromRole="tblAcquisition" ToRole="tblApplication" />
+          <Property Name="FinalSupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ReportDutySupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblREFAcqType">
           <Key>
@@ -6909,6 +6954,27 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Principal>
             <Dependent Role="tblUserLog">
               <PropertyRef Name="LoginStatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblREFReportDutyLoc">
+          <Key>
+            <PropertyRef Name="ReportDutyLocId" />
+          </Key>
+          <Property Name="ReportDutyLocId" Type="Int32" Nullable="false" />
+          <Property Name="ReportDutyLoc" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="BUID" Type="Int32" />
+          <NavigationProperty Name="tblApplications" Relationship="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" FromRole="tblREFReportDutyLoc" ToRole="tblApplication" />
+        </EntityType>
+        <Association Name="FK_tblApplication_tblREFReportDutyLoc">
+          <End Type="AtmIntakeModel.tblREFReportDutyLoc" Role="tblREFReportDutyLoc" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblApplication" Role="tblApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFReportDutyLoc">
+              <PropertyRef Name="ReportDutyLocId" />
+            </Principal>
+            <Dependent Role="tblApplication">
+              <PropertyRef Name="ReportDutyLocId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7709,6 +7775,11 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySetMapping Name="tblApplications">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblApplication">
               <MappingFragment StoreEntitySet="tblApplication">
+                <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
+                <ScalarProperty Name="ReportDutyDate" ColumnName="ReportDutyDate" />
+                <ScalarProperty Name="FinalSelectionEndDate" ColumnName="FinalSelectionEndDate" />
+                <ScalarProperty Name="FinalSelectionStartDate" ColumnName="FinalSelectionStartDate" />
+                <ScalarProperty Name="FinalSelActualAcqLocationId" ColumnName="FinalSelActualAcqLocationId" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="AcquisitionId" ColumnName="AcquisitionId" />
@@ -8251,6 +8322,8 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySetMapping Name="tblAcquisitions">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblAcquisition">
               <MappingFragment StoreEntitySet="tblAcquisition">
+                <ScalarProperty Name="ReportDutySupportingDocument" ColumnName="ReportDutySupportingDocument" />
+                <ScalarProperty Name="FinalSupportingDocument" ColumnName="FinalSupportingDocument" />
                 <ScalarProperty Name="ArmyNumberTo" ColumnName="ArmyNumberTo" />
                 <ScalarProperty Name="ArmyNumberFrom" ColumnName="ArmyNumberFrom" />
                 <ScalarProperty Name="ShortlistMeritInd" ColumnName="ShortlistMeritInd" />
@@ -8339,6 +8412,15 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
                 <ScalarProperty Name="LoginStatusCd" ColumnName="LoginStatusCd" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserLogId" ColumnName="UserLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblREFReportDutyLocs">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFReportDutyLoc">
+              <MappingFragment StoreEntitySet="tblREFReportDutyLoc">
+                <ScalarProperty Name="BUID" ColumnName="BUID" />
+                <ScalarProperty Name="ReportDutyLoc" ColumnName="ReportDutyLoc" />
+                <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

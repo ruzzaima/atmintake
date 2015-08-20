@@ -72,6 +72,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<bool> ShortlistMeritInd { get; set; }
         public Nullable<int> ArmyNumberFrom { get; set; }
         public Nullable<int> ArmyNumberTo { get; set; }
+        public string FinalSupportingDocument { get; set; }
+        public string ReportDutySupportingDocument { get; set; }
     
         public virtual ICollection<tblAcqAnnouncement> tblAcqAnnouncements { get; set; }
         public virtual ICollection<tblAcqCriteria> tblAcqCriterias { get; set; }

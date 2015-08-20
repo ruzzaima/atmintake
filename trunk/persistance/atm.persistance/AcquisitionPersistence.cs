@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using SevenH.MMCSB.Atm.Domain;
 
 namespace SevenH.MMCSB.Atm.Entity.Persistance
@@ -27,7 +23,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             using (var entities = new atmEntities())
             {
-                var acq = new tblAcquisition()
+                var acq = new tblAcquisition
                 {
                     AcquisitionTypeCd = appl.AcquisitionTypeCd,
                     CreatedBy = appl.CreatedBy,
@@ -70,7 +66,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     InviteFirstSelNominated = appl.InviteFirstSelNominated,
                     InviteFirstSelNominatedBy = appl.InviteFirstSelNominatedBy,
                     InviteFirstSelStatus = appl.InviteFirstSelStatus,
-                    InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy,
+                    InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy
                 };
                 entities.tblAcquisitions.Add(acq);
                 if (entities.SaveChanges() > 0)
@@ -86,8 +82,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 var acq = (from a in entities.tblAcquisitions where a.AcquisitionId == id select a).SingleOrDefault();
                 if (null != acq)
                 {
-                    var a = new Acquisition()
-                           {
+                    var a = new Acquisition
+                    {
                                AcquisitionId = acq.AcquisitionId,
                                AcquisitionTypeCd = acq.AcquisitionTypeCd,
                                CreatedBy = acq.CreatedBy,
@@ -130,7 +126,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                                InviteFirstSelNominated = acq.InviteFirstSelNominated,
                                InviteFirstSelNominatedBy = acq.InviteFirstSelNominatedBy,
                                InviteFirstSelStatus = acq.InviteFirstSelStatus,
-                               InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy,
+                               InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy
                            };
 
                     if (a.AcquisitionTypeCd != 0)
@@ -138,11 +134,11 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var aty = (from b in entities.tblREFAcqTypes where b.AcquisitionTypeCd == a.AcquisitionTypeCd select b).SingleOrDefault();
                         if (null != aty)
                         {
-                            a.AcquisitionType = new AcquisitionType()
+                            a.AcquisitionType = new AcquisitionType
                             {
                                 AcquisitionTypeCd = aty.AcquisitionTypeCd,
                                 AcquisitionTypeNm = aty.AcquisitionTypeNm,
-                                ServiceCd = aty.ServiceCd,
+                                ServiceCd = aty.ServiceCd
                             };
                         }
                     }
@@ -165,7 +161,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     {
                         if (al.AcquisitionId.HasValue)
                         {
-                            var loc = new AcquisitionLocation()
+                            var loc = new AcquisitionLocation
                             {
                                 AcqLocationId = al.AcqLocationId,
                                 AcquisitionId = al.AcquisitionId,
@@ -177,7 +173,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             };
                             if (al.tblRefLocation != null)
                             {
-                                loc.Location = new Location()
+                                loc.Location = new Location
                                 {
                                     LocationId = al.tblRefLocation.LocationId,
                                     LocationNm = al.tblRefLocation.LocationNm,
@@ -214,7 +210,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var acq in l)
                     {
-                        var a = new Acquisition()
+                        var a = new Acquisition
                         {
                             AcquisitionId = acq.AcquisitionId,
                             AcquisitionTypeCd = acq.AcquisitionTypeCd,
@@ -258,7 +254,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             InviteFirstSelNominated = acq.InviteFirstSelNominated,
                             InviteFirstSelNominatedBy = acq.InviteFirstSelNominatedBy,
                             InviteFirstSelStatus = acq.InviteFirstSelStatus,
-                            InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy,
+                            InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy
                         };
 
                         if (a.AcquisitionTypeCd != 0)
@@ -266,11 +262,11 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             var aty = (from b in entities.tblREFAcqTypes where b.AcquisitionTypeCd == a.AcquisitionTypeCd select b).SingleOrDefault();
                             if (null != aty)
                             {
-                                a.AcquisitionType = new AcquisitionType()
+                                a.AcquisitionType = new AcquisitionType
                                 {
                                     AcquisitionTypeCd = aty.AcquisitionTypeCd,
                                     AcquisitionTypeNm = aty.AcquisitionTypeNm,
-                                    ServiceCd = aty.ServiceCd,
+                                    ServiceCd = aty.ServiceCd
                                 };
                             }
                         }

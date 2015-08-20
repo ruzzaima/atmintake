@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Configuration;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 
@@ -19,7 +14,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             {
                 using (var entities = new atmEntities())
                 {
-                    var u = new tblUser()
+                    var u = new tblUser
                     {
                         UserName = loginUser.UserName,
                         AlternativeEmail = loginUser.AlternativeEmail,
@@ -126,7 +121,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblUsers where a.LoginId == username select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        var log = new LoginUser()
+                        var log = new LoginUser
                         {
                             UserId = exist.UserId,
                             Email = exist.Email,
@@ -155,7 +150,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var rol = (from a in entities.tblUserRoles where a.UserId == exist.UserId select a).SingleOrDefault();
                         if (null != rol)
                         {
-                            log.LoginRole = new LoginRole()
+                            log.LoginRole = new LoginRole
                             {
                                 UserId = rol.UserId,
                                 Roles = rol.Roles
@@ -178,7 +173,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblUsers where a.LoginId == username select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        var log = new LoginUser()
+                        var log = new LoginUser
                         {
                             UserId = exist.UserId,
                             Email = exist.Email,
@@ -207,7 +202,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var rol = (from a in entities.tblUserRoles where a.UserId == exist.UserId select a).SingleOrDefault();
                         if (null != rol)
                         {
-                            log.LoginRole = new LoginRole()
+                            log.LoginRole = new LoginRole
                             {
                                 UserId = rol.UserId,
                                 Roles = rol.Roles
@@ -254,7 +249,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 if (l.Any())
                     foreach (var exist in l.ToList())
                     {
-                        var log = new LoginUser()
+                        var log = new LoginUser
                         {
                             UserId = exist.UserId,
                             Email = exist.Email,
@@ -285,7 +280,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             var role = (from a in entities.tblUserRoles where a.UserId == exist.UserId select a).SingleOrDefault();
                             if (null != role)
                             {
-                                log.LoginRole = new LoginRole()
+                                log.LoginRole = new LoginRole
                                 {
                                     UserId = role.UserId,
                                     Roles = role.Roles
@@ -294,7 +289,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         }
                         else
                         {
-                            log.LoginRole = new LoginRole()
+                            log.LoginRole = new LoginRole
                             {
                                 Roles = RolesString.AWAM
                             };
@@ -315,7 +310,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             {
                 using (var entities = new atmEntities())
                 {
-                    var log = new tblUserLog()
+                    var log = new tblUserLog
                     {
                         UserId = userid,
                         LoginStatusCd = statuscode,
@@ -341,7 +336,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblUsers where a.UserId == id select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        var log = new LoginUser()
+                        var log = new LoginUser
                         {
                             UserId = exist.UserId,
                             Email = exist.Email,
@@ -371,7 +366,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         var rol = (from a in entities.tblUserRoles where a.UserId == exist.UserId select a).SingleOrDefault();
                         if (null != rol)
                         {
-                            log.LoginRole = new LoginRole()
+                            log.LoginRole = new LoginRole
                             {
                                 UserId = rol.UserId,
                                 Roles = rol.Roles
@@ -379,7 +374,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         }
                         else
                         {
-                            log.LoginRole = new LoginRole()
+                            log.LoginRole = new LoginRole
                             {
                                 Roles = RolesString.AWAM
                             };

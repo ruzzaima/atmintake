@@ -9934,8 +9934,32 @@
             public const string PropertyNameAcquisitionId = "AcquisitionId";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  int  m_SelectionCenterId;
-            public const string PropertyNameSelectionCenterId = "SelectionCenterId";
+            private  string  m_ArmyNo;
+            public const string PropertyNameArmyNo = "ArmyNo";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_FinalSelectionRemark;
+            public const string PropertyNameFinalSelectionRemark = "FinalSelectionRemark";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_SecurityAADKRemark;
+            public const string PropertyNameSecurityAADKRemark = "SecurityAADKRemark";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_SecurityBSPPRemark;
+            public const string PropertyNameSecurityBSPPRemark = "SecurityBSPPRemark";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_SecurityJPNRemark;
+            public const string PropertyNameSecurityJPNRemark = "SecurityJPNRemark";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_SecurityKPMRemark;
+            public const string PropertyNameSecurityKPMRemark = "SecurityKPMRemark";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_SecurityPDRMRemark;
+            public const string PropertyNameSecurityPDRMRemark = "SecurityPDRMRemark";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_CreatedBy;
@@ -9970,6 +9994,148 @@
             private bool?  m_ApplicationStatus;
             public const string PropertyNameApplicationStatus = "ApplicationStatus";
           
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_DentalExamine;
+            public const string PropertyNameDentalExamine = "DentalExamine";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_FinalShortlistedInd;
+            public const string PropertyNameFinalShortlistedInd = "FinalShortlistedInd";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_FirstSelActualAcqLocationId;
+            public const string PropertyNameFirstSelActualAcqLocationId = "FirstSelActualAcqLocationId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_FirstSelectionAttdnInd;
+            public const string PropertyNameFirstSelectionAttdnInd = "FirstSelectionAttdnInd";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private DateTime?  m_FirstSelectionDate;
+            public const string PropertyNameFirstSelectionDate = "FirstSelectionDate";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_FirstShortlistedInd;
+            public const string PropertyNameFirstShortlistedInd = "FirstShortlistedInd";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_InvitationFirstSel;
+            public const string PropertyNameInvitationFirstSel = "InvitationFirstSel";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_MedicalExamine;
+            public const string PropertyNameMedicalExamine = "MedicalExamine";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_Panel1Score;
+            public const string PropertyNamePanel1Score = "Panel1Score";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_Panel2Score;
+            public const string PropertyNamePanel2Score = "Panel2Score";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_Panel3Score;
+            public const string PropertyNamePanel3Score = "Panel3Score";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_PhysicalExamination;
+            public const string PropertyNamePhysicalExamination = "PhysicalExamination";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_PhysicalTest;
+            public const string PropertyNamePhysicalTest = "PhysicalTest";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_ReportDuty;
+            public const string PropertyNameReportDuty = "ReportDuty";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SecurityAADK;
+            public const string PropertyNameSecurityAADK = "SecurityAADK";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SecurityBSPP;
+            public const string PropertyNameSecurityBSPP = "SecurityBSPP";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SecurityJPN;
+            public const string PropertyNameSecurityJPN = "SecurityJPN";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SecurityKPM;
+            public const string PropertyNameSecurityKPM = "SecurityKPM";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SecurityPDRM;
+            public const string PropertyNameSecurityPDRM = "SecurityPDRM";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SecurityStatus;
+            public const string PropertyNameSecurityStatus = "SecurityStatus";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_SelectedAcqLocationId;
+            public const string PropertyNameSelectedAcqLocationId = "SelectedAcqLocationId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_SelectionCenterId;
+            public const string PropertyNameSelectionCenterId = "SelectionCenterId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_SuppDocumentReview;
+            public const string PropertyNameSuppDocumentReview = "SuppDocumentReview";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_Urine;
+            public const string PropertyNameUrine = "Urine";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_WrittenTest;
+            public const string PropertyNameWrittenTest = "WrittenTest";
+          
+      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+      private ApplicantSubmitted m_ApplicantSubmitted
+          =  new ApplicantSubmitted();
+        
+      public const string PropertyNameApplicantSubmitted = "ApplicantSubmitted";
+      [DebuggerHidden]
+
+      public virtual ApplicantSubmitted ApplicantSubmitted
+      {
+      get{ return m_ApplicantSubmitted;}
+      set
+      {
+      m_ApplicantSubmitted = value;
+      OnPropertyChanged(PropertyNameApplicantSubmitted);
+      }
+      }
+    
             ///<summary>
             /// 
             ///</summary>
@@ -10048,22 +10214,166 @@
             [XmlAttribute]
             [DebuggerHidden]
 
-            public virtual int SelectionCenterId
+            public virtual string ArmyNo
             {
             set
             {
-            if( m_SelectionCenterId == value) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameSelectionCenterId, value);
+            if( String.Equals( m_ArmyNo, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameArmyNo, value);
             OnPropertyChanging(arg);
             if( !arg.Cancel)
             {
-            m_SelectionCenterId= value;
-            OnPropertyChanged(PropertyNameSelectionCenterId);
+            m_ArmyNo= value;
+            OnPropertyChanged(PropertyNameArmyNo);
             }
             }
             get
             {
-            return m_SelectionCenterId;}
+            return m_ArmyNo;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string FinalSelectionRemark
+            {
+            set
+            {
+            if( String.Equals( m_FinalSelectionRemark, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalSelectionRemark, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_FinalSelectionRemark= value;
+            OnPropertyChanged(PropertyNameFinalSelectionRemark);
+            }
+            }
+            get
+            {
+            return m_FinalSelectionRemark;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string SecurityAADKRemark
+            {
+            set
+            {
+            if( String.Equals( m_SecurityAADKRemark, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityAADKRemark, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_SecurityAADKRemark= value;
+            OnPropertyChanged(PropertyNameSecurityAADKRemark);
+            }
+            }
+            get
+            {
+            return m_SecurityAADKRemark;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string SecurityBSPPRemark
+            {
+            set
+            {
+            if( String.Equals( m_SecurityBSPPRemark, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityBSPPRemark, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_SecurityBSPPRemark= value;
+            OnPropertyChanged(PropertyNameSecurityBSPPRemark);
+            }
+            }
+            get
+            {
+            return m_SecurityBSPPRemark;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string SecurityJPNRemark
+            {
+            set
+            {
+            if( String.Equals( m_SecurityJPNRemark, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityJPNRemark, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_SecurityJPNRemark= value;
+            OnPropertyChanged(PropertyNameSecurityJPNRemark);
+            }
+            }
+            get
+            {
+            return m_SecurityJPNRemark;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string SecurityKPMRemark
+            {
+            set
+            {
+            if( String.Equals( m_SecurityKPMRemark, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityKPMRemark, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_SecurityKPMRemark= value;
+            OnPropertyChanged(PropertyNameSecurityKPMRemark);
+            }
+            }
+            get
+            {
+            return m_SecurityKPMRemark;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string SecurityPDRMRemark
+            {
+            set
+            {
+            if( String.Equals( m_SecurityPDRMRemark, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityPDRMRemark, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_SecurityPDRMRemark= value;
+            OnPropertyChanged(PropertyNameSecurityPDRMRemark);
+            }
+            }
+            get
+            {
+            return m_SecurityPDRMRemark;}
             }
           
             ///<summary>
@@ -10222,6 +10532,556 @@
             }
             }
             get { return m_ApplicationStatus;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? DentalExamine
+            {
+            set
+            {
+            if(m_DentalExamine == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameDentalExamine, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_DentalExamine= value;
+            OnPropertyChanged(PropertyNameDentalExamine);
+            }
+            }
+            get { return m_DentalExamine;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? FinalShortlistedInd
+            {
+            set
+            {
+            if(m_FinalShortlistedInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalShortlistedInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FinalShortlistedInd= value;
+            OnPropertyChanged(PropertyNameFinalShortlistedInd);
+            }
+            }
+            get { return m_FinalShortlistedInd;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? FirstSelActualAcqLocationId
+            {
+            set
+            {
+            if(m_FirstSelActualAcqLocationId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFirstSelActualAcqLocationId, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FirstSelActualAcqLocationId= value;
+            OnPropertyChanged(PropertyNameFirstSelActualAcqLocationId);
+            }
+            }
+            get { return m_FirstSelActualAcqLocationId;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? FirstSelectionAttdnInd
+            {
+            set
+            {
+            if(m_FirstSelectionAttdnInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFirstSelectionAttdnInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FirstSelectionAttdnInd= value;
+            OnPropertyChanged(PropertyNameFirstSelectionAttdnInd);
+            }
+            }
+            get { return m_FirstSelectionAttdnInd;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? FirstSelectionDate
+            {
+            set
+            {
+            if(m_FirstSelectionDate == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFirstSelectionDate, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FirstSelectionDate= value;
+            OnPropertyChanged(PropertyNameFirstSelectionDate);
+            }
+            }
+            get { return m_FirstSelectionDate;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? FirstShortlistedInd
+            {
+            set
+            {
+            if(m_FirstShortlistedInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFirstShortlistedInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FirstShortlistedInd= value;
+            OnPropertyChanged(PropertyNameFirstShortlistedInd);
+            }
+            }
+            get { return m_FirstShortlistedInd;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? InvitationFirstSel
+            {
+            set
+            {
+            if(m_InvitationFirstSel == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameInvitationFirstSel, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_InvitationFirstSel= value;
+            OnPropertyChanged(PropertyNameInvitationFirstSel);
+            }
+            }
+            get { return m_InvitationFirstSel;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? MedicalExamine
+            {
+            set
+            {
+            if(m_MedicalExamine == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameMedicalExamine, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_MedicalExamine= value;
+            OnPropertyChanged(PropertyNameMedicalExamine);
+            }
+            }
+            get { return m_MedicalExamine;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? Panel1Score
+            {
+            set
+            {
+            if(m_Panel1Score == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNamePanel1Score, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_Panel1Score= value;
+            OnPropertyChanged(PropertyNamePanel1Score);
+            }
+            }
+            get { return m_Panel1Score;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? Panel2Score
+            {
+            set
+            {
+            if(m_Panel2Score == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNamePanel2Score, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_Panel2Score= value;
+            OnPropertyChanged(PropertyNamePanel2Score);
+            }
+            }
+            get { return m_Panel2Score;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? Panel3Score
+            {
+            set
+            {
+            if(m_Panel3Score == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNamePanel3Score, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_Panel3Score= value;
+            OnPropertyChanged(PropertyNamePanel3Score);
+            }
+            }
+            get { return m_Panel3Score;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? PhysicalExamination
+            {
+            set
+            {
+            if(m_PhysicalExamination == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNamePhysicalExamination, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_PhysicalExamination= value;
+            OnPropertyChanged(PropertyNamePhysicalExamination);
+            }
+            }
+            get { return m_PhysicalExamination;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? PhysicalTest
+            {
+            set
+            {
+            if(m_PhysicalTest == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNamePhysicalTest, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_PhysicalTest= value;
+            OnPropertyChanged(PropertyNamePhysicalTest);
+            }
+            }
+            get { return m_PhysicalTest;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? ReportDuty
+            {
+            set
+            {
+            if(m_ReportDuty == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDuty, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_ReportDuty= value;
+            OnPropertyChanged(PropertyNameReportDuty);
+            }
+            }
+            get { return m_ReportDuty;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SecurityAADK
+            {
+            set
+            {
+            if(m_SecurityAADK == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityAADK, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SecurityAADK= value;
+            OnPropertyChanged(PropertyNameSecurityAADK);
+            }
+            }
+            get { return m_SecurityAADK;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SecurityBSPP
+            {
+            set
+            {
+            if(m_SecurityBSPP == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityBSPP, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SecurityBSPP= value;
+            OnPropertyChanged(PropertyNameSecurityBSPP);
+            }
+            }
+            get { return m_SecurityBSPP;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SecurityJPN
+            {
+            set
+            {
+            if(m_SecurityJPN == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityJPN, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SecurityJPN= value;
+            OnPropertyChanged(PropertyNameSecurityJPN);
+            }
+            }
+            get { return m_SecurityJPN;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SecurityKPM
+            {
+            set
+            {
+            if(m_SecurityKPM == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityKPM, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SecurityKPM= value;
+            OnPropertyChanged(PropertyNameSecurityKPM);
+            }
+            }
+            get { return m_SecurityKPM;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SecurityPDRM
+            {
+            set
+            {
+            if(m_SecurityPDRM == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityPDRM, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SecurityPDRM= value;
+            OnPropertyChanged(PropertyNameSecurityPDRM);
+            }
+            }
+            get { return m_SecurityPDRM;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SecurityStatus
+            {
+            set
+            {
+            if(m_SecurityStatus == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSecurityStatus, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SecurityStatus= value;
+            OnPropertyChanged(PropertyNameSecurityStatus);
+            }
+            }
+            get { return m_SecurityStatus;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? SelectedAcqLocationId
+            {
+            set
+            {
+            if(m_SelectedAcqLocationId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSelectedAcqLocationId, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SelectedAcqLocationId= value;
+            OnPropertyChanged(PropertyNameSelectedAcqLocationId);
+            }
+            }
+            get { return m_SelectedAcqLocationId;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? SelectionCenterId
+            {
+            set
+            {
+            if(m_SelectionCenterId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSelectionCenterId, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SelectionCenterId= value;
+            OnPropertyChanged(PropertyNameSelectionCenterId);
+            }
+            }
+            get { return m_SelectionCenterId;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? SuppDocumentReview
+            {
+            set
+            {
+            if(m_SuppDocumentReview == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameSuppDocumentReview, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_SuppDocumentReview= value;
+            OnPropertyChanged(PropertyNameSuppDocumentReview);
+            }
+            }
+            get { return m_SuppDocumentReview;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? Urine
+            {
+            set
+            {
+            if(m_Urine == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameUrine, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_Urine= value;
+            OnPropertyChanged(PropertyNameUrine);
+            }
+            }
+            get { return m_Urine;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? WrittenTest
+            {
+            set
+            {
+            if(m_WrittenTest == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameWrittenTest, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_WrittenTest= value;
+            OnPropertyChanged(PropertyNameWrittenTest);
+            }
+            }
+            get { return m_WrittenTest;}
             }
           
 
@@ -14392,10 +15252,6 @@
             public const string PropertyNameAchievementDescription = "AchievementDescription";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  bool  m_ActiveInd;
-            public const string PropertyNameActiveInd = "ActiveInd";
-          
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_CreatedBy;
             public const string PropertyNameCreatedBy = "CreatedBy";
           
@@ -14412,6 +15268,11 @@
 
             private DateTime?  m_LastModifiedDt;
             public const string PropertyNameLastModifiedDt = "LastModifiedDt";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_ActiveInd;
+            public const string PropertyNameActiveInd = "ActiveInd";
           
             ///<summary>
             /// 
@@ -14459,30 +15320,6 @@
             get
             {
             return m_AchievementDescription;}
-            }
-          
-            ///<summary>
-            /// 
-            ///</summary>
-            [XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual bool ActiveInd
-            {
-            set
-            {
-            if( m_ActiveInd == value) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameActiveInd, value);
-            OnPropertyChanging(arg);
-            if( !arg.Cancel)
-            {
-            m_ActiveInd= value;
-            OnPropertyChanged(PropertyNameActiveInd);
-            }
-            }
-            get
-            {
-            return m_ActiveInd;}
             }
           
             ///<summary>
@@ -14575,6 +15412,28 @@
             }
             }
             get { return m_LastModifiedDt;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? ActiveInd
+            {
+            set
+            {
+            if(m_ActiveInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameActiveInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_ActiveInd= value;
+            OnPropertyChanged(PropertyNameActiveInd);
+            }
+            }
+            get { return m_ActiveInd;}
             }
           
 
@@ -15377,10 +16236,6 @@
             public const string PropertyNameSportAssociatName = "SportAssociatName";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  bool  m_ActiveInd;
-            public const string PropertyNameActiveInd = "ActiveInd";
-          
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_CreatedBy;
             public const string PropertyNameCreatedBy = "CreatedBy";
           
@@ -15397,6 +16252,11 @@
 
             private DateTime?  m_LastModifiedDt;
             public const string PropertyNameLastModifiedDt = "LastModifiedDt";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_ActiveInd;
+            public const string PropertyNameActiveInd = "ActiveInd";
           
             ///<summary>
             /// 
@@ -15468,30 +16328,6 @@
             get
             {
             return m_SportAssociatName;}
-            }
-          
-            ///<summary>
-            /// 
-            ///</summary>
-            [XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual bool ActiveInd
-            {
-            set
-            {
-            if( m_ActiveInd == value) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameActiveInd, value);
-            OnPropertyChanging(arg);
-            if( !arg.Cancel)
-            {
-            m_ActiveInd= value;
-            OnPropertyChanged(PropertyNameActiveInd);
-            }
-            }
-            get
-            {
-            return m_ActiveInd;}
             }
           
             ///<summary>
@@ -15584,6 +16420,28 @@
             }
             }
             get { return m_LastModifiedDt;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? ActiveInd
+            {
+            set
+            {
+            if(m_ActiveInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameActiveInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_ActiveInd= value;
+            OnPropertyChanged(PropertyNameActiveInd);
+            }
+            }
+            get { return m_ActiveInd;}
             }
           
 

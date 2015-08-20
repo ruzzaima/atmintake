@@ -125,7 +125,27 @@ $(function () {
         },
         removesport: function (d) {
             if (d) {
-                viewModel.applicant.Sports.remove(d);
+                if (d.ApplicantSportAssocId() === null && d.ApplicantSportAssocId() === 0) {
+                    viewModel.applicant.Sports.remove(d);
+                } else {
+                    //remove from db
+                    showLoading();
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify({ appsid: ko.mapping.toJS(d.ApplicantSportAssocId) }),
+                        url: server + '/Public/RemoveSportAndKokos',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (msg) {
+                            if (msg.OK) {
+                                viewModel.applicant.Sports.remove(d);
+                            }
+                            hideLoading();
+                        },
+                        error: function (xhr) {
+                            hideLoading();
+                        }
+                    });
+                }
             }
         },
         addkoko: function () {
@@ -133,7 +153,27 @@ $(function () {
         },
         removekoko: function (d) {
             if (d) {
-                viewModel.applicant.Kokos.remove(d);
+                if (d.ApplicantSportAssocId() === null && d.ApplicantSportAssocId() === 0) {
+                    viewModel.applicant.Kokos.remove(d);
+                } else {
+                    //remove from db
+                    showLoading();
+                    $.ajax({
+                        type: 'POST',
+                        data: JSON.stringify({ appsid: ko.mapping.toJS(d.ApplicantSportAssocId) }),
+                        url: server + '/Public/RemoveSportAndKokos',
+                        contentType: "application/json; charset=utf-8",
+                        success: function (msg) {
+                            if (msg.OK) {
+                                viewModel.applicant.Kokos.remove(d);
+                            }
+                            hideLoading();
+                        },
+                        error: function (xhr) {
+                            hideLoading();
+                        }
+                    });
+                }
             }
         },
         addothersportnkoko: function () {

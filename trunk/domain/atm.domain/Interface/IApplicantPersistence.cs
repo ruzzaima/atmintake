@@ -24,6 +24,8 @@ namespace SevenH.MMCSB.Atm.Domain
         int SaveSport(ApplicantSport sport);
         int UpdateSport(ApplicantSport sport);
         IEnumerable<ApplicantSport> GetSport(int applicantid);
+        ApplicantSport GetApplicantSportAndKokos(int applicantsportid);
+        bool DeleteApplicantSport(int applicantsportid);
 
         ApplicantPhoto GetPhoto(int applicantid);
         int SaveApplicantPhoto(ApplicantPhoto photo);
@@ -54,5 +56,6 @@ namespace SevenH.MMCSB.Atm.Domain
         ExistingMember ExistingAtmMemberByArmyNo(int armyno);
 
         IEnumerable<Applicant> Search(string category, string name, string icno, string searchcriteria);
+
     }
 }

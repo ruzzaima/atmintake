@@ -22,7 +22,14 @@
 
             <br />
             <br />
-            Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi @Model.Siri .
+            @if (Model.Acquisition.AcquisitionType.ServiceCd == "10")
+            {
+                <text> Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi @Model.Year .</text>
+            }
+            else
+            {
+                <text> Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi @Model.Siri .</text>
+            }
             <br />
             <br />
             Permohonan anda akan diproses secepat mungkin.
@@ -43,8 +50,8 @@
             </p>
             <div class="row">
                 <div class="col-md-12">
-                    <input type="button" class="btn btn-primary input-sm m-t-10 hidden-print" value="Cetak" id="print_button" />
-                    <a href="@Url.Action("Application", "Public")" class="btn btn-primary input-sm m-t-10 hidden-print" id="cancel_button">Kembali</a>
+                    <input type="button" class="btn btn-primary btn-sm m-t-10 hidden-print" value="Cetak" id="print_button" />
+                    <a href="@Url.Action("Application", "Public")" class="btn btn-primary btn-sm m-t-10 hidden-print" id="cancel_button">Kembali</a>
                 </div>
             </div>
         </div>

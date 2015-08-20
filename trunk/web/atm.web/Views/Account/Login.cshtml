@@ -5,38 +5,84 @@
     Layout = "~/Views/Shared/_EmptyLayout.cshtml";
 }
 <div class="row">
-    <div class="col-md-4"></div>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group p-15">
+                    <h5><span class="red">Makluman:</span></h5>
+                    <p>
+                        <span class="red">
+                            Penyelenggaraan berjadual bagi sistem JOM MASUK TENTERA akan dibuat  pada 21 Ogos 2015 dari jam 5 petang hingga 8 malam.
+                            Pengguna akan mengalami gangguan disebabkan aktiviti ini.
+                            Adalah dinasihatkan agar pengguna tidak log masuk ke sistem sehingga penyelenggaraan selesai.
+                            <br />
+                            Sekian.
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        @*<div class="p-5 text-left">
+            <h6>
+                <span class="red">
+                    Perhatian:
+                </span>
+            </h6>
+            <p>
+                Untuk pengguna kali pertama, sila <a href="@Url.Action("Register", "Public")"><u>daftar</u></a> terlebih dahulu sebelum log masuk ke sistem JOM MASUK TENTERA. Pastikan anda memasukkan alamat emel yang masih aktif kerana Id Pengguna dan Kata Laluan akan dihantar ke emel ini.
+            </p>
+            <p>Sebarang pertanyaan berkaitan sistem sila emel ke jommasuktentera@model.gov.my atau hubungi helpdesk JOM MASUK TENTERA seperti berikut:</p>
+            <p>
+                <u><b>Pengambilan Pegawai Kadet Graduan</b></u>
+                <br />
+                Isnin - Jumaat 9.00am - 5pm : (03) xxxx xxxx
+            </p>
+            <p>
+                <u><b>Pengambilan Perajurit Muda Tentera Darat</b></u>
+                <br />
+                Isnin - Jumaat 9.00am - 5pm : (03) 2071 4518
+                <br />
+                Sabtu, Ahad &amp; Cuti Am (9.00am - 5pm) : 012 399 7513
+            </p>
+        </div>*@
+    </div>
     <div class="col-md-4">
         <div class="tile" id="loginForm">
             <div class="tile-title">Log Masuk - JOM MASUK TENTERA</div>
             <div class="row">
                 <div class="col-md-2 text-center">
-                    <img height="60" src="@Url.Content("~/Images/logoatm.png")" alt="Angkatan Tentera Malaysia"/>
-                    <img height="60" src="@Url.Content("~/Images/logotdm.png")" alt="Tentera Darat Malaysia"/>
-                    <img height="60" src="@Url.Content("~/Images/logotldm.png")" alt="Tentera Laut DiRaja Malaysia"/>
-                    <img height="65" src="@Url.Content("~/Images/logotudm.png")" alt="Tentera Udara DiRaja Malaysia"/>
+                    <img height="60" src="@Url.Content("~/Images/logoatm.png")" alt="Angkatan Tentera Malaysia" />
+                    <img height="60" src="@Url.Content("~/Images/logotdm.png")" alt="Tentera Darat Malaysia" />
+                    <img height="60" src="@Url.Content("~/Images/logotldm.png")" alt="Tentera Laut DiRaja Malaysia" />
+                    <img height="65" src="@Url.Content("~/Images/logotudm.png")" alt="Tentera Udara DiRaja Malaysia" />
                 </div>
                 <div class="col-md-10">
-                    @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "p-15", role = "form"}))
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "p-15", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
-                        
+
                         <div class="row">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.UserName, new {@class = "control-label pull-left"})
-                                @Html.TextBoxFor(m => m.UserName, new {@class = "form-control pull-left", @style = "text-transform: none", @noncap = "true"})
+                                @Html.LabelFor(m => m.UserName, new { @class = "control-label pull-left" })
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control pull-left", @style = "text-transform: none", @noncap = "true" })
                                 @Html.ValidationMessageFor(m => m.UserName)
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Password, new {@class = "control-label pull-left"})
-                                @Html.PasswordFor(m => m.Password, new {@class = "form-control pull-left"})
+                                @Html.LabelFor(m => m.Password, new { @class = "control-label pull-left" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control pull-left" })
                                 @Html.ValidationMessageFor(m => m.Password)
                             </div>
                             <div class="col-md-12 text-left">
-                                @Html.ValidationSummary(true, "", new {@class = "text-danger pull-left col-md-12 text-left"})
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger pull-left col-md-12 text-left" })
                             </div>
                             <div class="form-group">
-                                <input type="submit" value="Log Masuk" class="btn btn-sm m-t-10 pull-left"/>
+                                <input type="submit" value="Log Masuk" class="btn btn-sm m-t-10 pull-left" />
                             </div>
                         </div>
                         <div class="row">
@@ -69,7 +115,7 @@
                     <div class="form-group p-15">
                         <p>
                             <span class="red">
-                                Nota Penting : Sebelum log masuk, pastikan anda mempunyai keputusan akademik dan gambar discan berukuran pasport (saiz tidak melebihi 500KB, berformat JPG, JPEG, BMP atau GIF).
+                                Nota Penting : Sebelum log masuk, pastikan anda mempunyai keputusan akademik dan gambar diimbas berukuran pasport (saiz tidak melebihi 500KB, berformat JPG, JPEG, BMP atau GIF).
                             </span>
                         </p>
                         <p>
@@ -86,7 +132,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         Sebarang pertanyaan berkaitan sistem sila emel ke jommasuktentera@mod.gov.my atau hubungi helpdesk JOM MASUK TENTERA di (03) 2071 4518.
-        <br/>
+        <br />
         (Sabtu, Ahad &amp; Cuti Am, hubungi 012-399 7513)
     </div>
     <div class="col-md-4"></div>
