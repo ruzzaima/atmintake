@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SevenH.MMCSB.Atm.Domain;
 
 namespace SevenH.MMCSB.Atm.Entity.Persistance
@@ -177,7 +175,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
                 if (education.ApplicantEduId != 0) { return UpdateEducation(education); }
 
-                var ed = new tblApplicantEdu()
+                var ed = new tblApplicantEdu
                 {
                     ApplicantId = education.ApplicantId,
                     ConfermentYr = education.ConfermentYr,
@@ -190,7 +188,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     MajorMinorCd = !string.IsNullOrWhiteSpace(education.MajorMinorCd) ? education.MajorMinorCd.Trim() : education.MajorMinorCd,
                     OverSeaInd = education.OverSeaInd,
                     OverallGrade = education.OverallGrade,
-                    SKMLevel = education.SKMLevel,
+                    SKMLevel = education.SKMLevel
                 };
                 entities.tblApplicantEdus.Add(ed);
                 if (entities.SaveChanges() > 0)
@@ -236,7 +234,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var aes in l)
                     {
-                        var ed = new ApplicantEducation()
+                        var ed = new ApplicantEducation
                         {
                             ApplicantEduId = aes.ApplicantEduId,
                             ApplicantId = aes.ApplicantId,
@@ -259,7 +257,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         {
                             foreach (var s in aes.tblApplicantEduSubjects)
                             {
-                                ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject()
+                                ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject
                                 {
                                     ApplicantEduId = s.ApplicantEduId,
                                     CreatedBy = s.CreatedBy,
@@ -270,7 +268,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                                     LastModifiedBy = s.LastModifiedBy,
                                     LastModifiedDt = s.LastModifiedDt,
                                     Subject = s.tblREFSubject.Subject,
-                                    SubjectCd = s.SubjectCd,
+                                    SubjectCd = s.SubjectCd
                                 });
                             }
                         }
@@ -295,7 +293,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
                 if (subject.EduSubjectId != 0) { return UpdateEducationSubject(subject); }
 
-                var s = new tblApplicantEduSubject()
+                var s = new tblApplicantEduSubject
                 {
                     ApplicantEduId = subject.ApplicantEduId,
                     CreatedBy = subject.CreatedBy,
@@ -346,7 +344,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantEduSubject()
+                        list.Add(new ApplicantEduSubject
                         {
                             ApplicantEduId = s.ApplicantEduId,
                             CreatedBy = s.CreatedBy,
@@ -374,7 +372,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblApplicantEduSubjects where a.ApplicantEduId == appeduid && a.SubjectCd == subjectcode select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        return new ApplicantEduSubject()
+                        return new ApplicantEduSubject
                         {
                             ApplicantEduId = exist.ApplicantEduId,
                             CreatedBy = exist.CreatedBy,
@@ -406,7 +404,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
                 if (skill.ApplicantSkillId != 0) { return UpdateSkill(skill); }
 
-                var s = new tblApplicantSkill()
+                var s = new tblApplicantSkill
                 {
                     AchievementCd = skill.AchievementCd,
                     ApplicantId = skill.ApplicantId,
@@ -416,7 +414,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     LanguageSkillWrite = skill.LanguageSkillWrite,
                     Others = skill.Others,
                     SkillCatCd = !string.IsNullOrWhiteSpace(skill.SkillCatCd) ? skill.SkillCatCd.Trim() : skill.SkillCatCd,
-                    SkillCd = !string.IsNullOrWhiteSpace(skill.SkillCd) ? skill.SkillCd.Trim() : skill.SkillCd,
+                    SkillCd = !string.IsNullOrWhiteSpace(skill.SkillCd) ? skill.SkillCd.Trim() : skill.SkillCd
                 };
                 entities.tblApplicantSkills.Add(s);
                 if (entities.SaveChanges() > 0)
@@ -460,7 +458,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantSkill()
+                        var apps = new ApplicantSkill
                         {
                             AchievementCd = s.AchievementCd,
                             CreatedBy = s.CreatedBy,
@@ -475,7 +473,12 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             Skill = s.tblREFSkill.Skill,
                             SkillCatCd = !string.IsNullOrWhiteSpace(s.SkillCatCd) ? s.SkillCatCd.Trim() : s.SkillCatCd,
                             SkillCd = !string.IsNullOrWhiteSpace(s.SkillCd) ? s.SkillCd.Trim() : s.SkillCd
-                        });
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(apps.SkillCd) && s.tblREFSkill != null)
+                            apps.Skill = s.tblREFSkill.Skill;
+
+                        list.Add(apps);
                     }
                 }
             }
@@ -499,7 +502,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
                 if (sport.ApplicantSportAssocId != 0) { return UpdateSport(sport); }
 
-                var s = new tblApplicantSportAssoc()
+                var s = new tblApplicantSportAssoc
                 {
                     AchievementCd = sport.AchievementCd,
                     ApplicantId = sport.ApplicantId,
@@ -507,7 +510,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     CreatedDt = sport.CreatedDt,
                     Others = sport.Others,
                     SportAssocId = sport.SportAssocId,
-                    Year = sport.Year,
+                    Year = sport.Year
                 };
                 entities.tblApplicantSportAssocs.Add(s);
                 if (entities.SaveChanges() > 0)
@@ -548,9 +551,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantSport()
+                        var appsa = new ApplicantSport
                         {
-                            AchievementCd = s.AchievementCd,
+                            AchievementCd = !string.IsNullOrWhiteSpace(s.AchievementCd) ? s.AchievementCd.Trim() : s.AchievementCd,
                             ApplicantId = s.ApplicantId,
                             ApplicantSportAssocId = s.ApplicantSportAssocId,
                             CreatedBy = s.CreatedBy,
@@ -560,7 +563,19 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             Others = s.Others,
                             SportAssocId = s.SportAssocId,
                             Year = s.Year
-                        });
+                        };
+                        if (s.SportAssocId.HasValue && s.tblREFSportAndAssociation != null)
+                        {
+                            appsa.SportAndAssociation = new SportAndAssociation()
+                            {
+                                SportAssocId = s.tblREFSportAndAssociation.SportAssocId,
+                                SportAssociatName = s.tblREFSportAndAssociation.SportAssociatName,
+                                SportAssociatType = s.tblREFSportAndAssociation.SportAssociatType,
+                                ActiveInd = s.tblREFSportAndAssociation.ActiveInd,
+                            };
+                        }
+
+                        list.Add(appsa);
                     }
                 }
             }
@@ -576,7 +591,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblApplicantPhotoes where a.ApplicantId == applicantid select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        var p = new ApplicantPhoto()
+                        var p = new ApplicantPhoto
                         {
                             ApplicantId = exist.ApplicantId,
                             CreatedBy = exist.CreatedBy,
@@ -606,7 +621,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
                 else
                 {
-                    var p = new tblApplicantPhoto()
+                    var p = new tblApplicantPhoto
                     {
                         ApplicantId = photo.ApplicantId,
                         CreatedBy = photo.CreatedBy,
@@ -663,13 +678,13 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblExistingAtmMembers where a.ICNOBaru.ToLower() == idnumber.ToLower() select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        return new ExistingMember()
+                        return new ExistingMember
                         {
                             CoId = exist.COID,
                             Name = exist.CONm,
                             ArmyNo = exist.NoTentera,
                             IdNumber = exist.ICNOBaru,
-                            ExistingMemberStatus = new ExistingMemberStatus()
+                            ExistingMemberStatus = new ExistingMemberStatus
                             {
                                 Code = exist.tblREFExistingMemberStatu.ExistingMemberStatusCD,
                                 Status = exist.tblREFExistingMemberStatu.ExistingMemberStatus
@@ -684,7 +699,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
         private static tblApplicant BindindToTable(Applicant appl)
         {
-            var usr = new tblApplicant()
+            var usr = new tblApplicant
             {
                 Email = appl.Email,
                 FullName = appl.FullName,
@@ -784,14 +799,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 SelectionTL = appl.SelectionTL,
                 SelectionTU = appl.SelectionTU,
                 SpectaclesUserInd = appl.SpectaclesUserInd,
-                Weight = appl.Weight,
+                Weight = appl.Weight
             };
             return usr;
         }
 
         private static Applicant BindingToClass(tblApplicant appl)
         {
-            var usr = new Applicant()
+            var usr = new Applicant
             {
                 ApplicantId = appl.ApplicantId,
                 Email = appl.Email,
@@ -890,7 +905,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 SelectionTL = appl.SelectionTL,
                 SelectionTU = appl.SelectionTU,
                 SpectaclesUserInd = appl.SpectaclesUserInd,
-                Weight = appl.Weight,
+                Weight = appl.Weight
             };
             return usr;
         }
@@ -918,13 +933,13 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblExistingAtmMembers where a.NoTentera == armyno select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        return new ExistingMember()
+                        return new ExistingMember
                         {
                             CoId = exist.COID,
                             Name = exist.CONm,
                             ArmyNo = exist.NoTentera,
                             IdNumber = exist.ICNOBaru,
-                            ExistingMemberStatus = new ExistingMemberStatus()
+                            ExistingMemberStatus = new ExistingMemberStatus
                             {
                                 Code = exist.tblREFExistingMemberStatu.ExistingMemberStatusCD,
                                 Status = exist.tblREFExistingMemberStatu.ExistingMemberStatus
@@ -958,6 +973,69 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
             }
             return list;
+        }
+
+
+        public ApplicantSport GetApplicantSportAndKokos(int applicantsportid)
+        {
+            if (applicantsportid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblApplicantSportAssocs where a.ApplicantSportAssocId == applicantsportid select a).SingleOrDefault();
+                    if (null != exist)
+                    {
+                        var apps = new ApplicantSport()
+                        {
+                            AchievementCd = !string.IsNullOrWhiteSpace(exist.AchievementCd) ? exist.AchievementCd.Trim() : exist.AchievementCd,
+                            ApplicantId = exist.ApplicantId,
+                            ApplicantSportAssocId = exist.ApplicantSportAssocId,
+                            CreatedBy = exist.CreatedBy,
+                            CreatedDt = exist.CreatedDt,
+                            LastModifiedBy = exist.LastModifiedBy,
+                            LastModifiedDt = exist.LastModifiedDt,
+                            Others = exist.Others,
+                            Year = exist.Year,
+                            SportAssocId = exist.SportAssocId,
+                        };
+
+                        if (exist.SportAssocId.HasValue && exist.tblREFSportAndAssociation != null)
+                        {
+                            apps.SportAndAssociation = new SportAndAssociation()
+                            {
+                                ActiveInd = exist.tblREFSportAndAssociation.ActiveInd,
+                                CreatedBy = exist.tblREFSportAndAssociation.CreatedBy,
+                                CreatedDt = exist.tblREFSportAndAssociation.CreatedDt,
+                                LastModifiedBy = exist.tblREFSportAndAssociation.LastModifiedBy,
+                                LastModifiedDt = exist.tblREFSportAndAssociation.LastModifiedDt,
+                                SportAssocId = exist.tblREFSportAndAssociation.SportAssocId,
+                                SportAssociatName = exist.tblREFSportAndAssociation.SportAssociatName,
+                                SportAssociatType = exist.tblREFSportAndAssociation.SportAssociatType
+                            };
+                        }
+
+                        return apps;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public bool DeleteApplicantSport(int applicantsportid)
+        {
+            if (applicantsportid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblApplicantSportAssocs where a.ApplicantSportAssocId == applicantsportid select a).SingleOrDefault();
+                    if (null != exist)
+                    {
+                        entities.tblApplicantSportAssocs.Remove(exist);
+                        return entities.SaveChanges() > 0;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

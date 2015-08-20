@@ -106,5 +106,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblREFAcqType> tblREFAcqTypes { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblUserLog> tblUserLogs { get; set; }
+        public virtual DbSet<tblREFReportDutyLoc> tblREFReportDutyLocs { get; set; }
     }
 }

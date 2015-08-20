@@ -203,6 +203,8 @@
         <AssociationConnector Association="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplication_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblREFReportDutyLoc" Width="1.5" PointX="11.375" PointY="9.875" />
+        <AssociationConnector Association="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

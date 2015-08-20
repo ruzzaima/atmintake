@@ -231,6 +231,17 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new System.NotImplementedException();
         }
+
+
+        public ApplicantSport GetApplicantSportAndKokos(int applicantsportid)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool DeleteApplicantSport(int applicantsportid)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 

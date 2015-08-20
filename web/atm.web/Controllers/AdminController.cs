@@ -149,5 +149,28 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult FirstIntakeSelection()
+        {
+            var vm = new AdminViewModel();
+            var did = 0;
+            if (Session["SelectedAcquisition"] == null)
+                return RedirectToAction("Intakes", "Admin");
+            if (Session["SelectedAcquisition"] != null)
+            {
+                var acqid = Session["SelectedAcquisition"].ToString();
+                if (!string.IsNullOrWhiteSpace(acqid))
+                {
+                    int.TryParse(acqid, out did);
+                    if (did == 0)
+                        return RedirectToAction("Intakes", "Admin");
+
+                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    if (null != acq)
+                        vm.Acquisition = acq;
+                }
+            }
+            return View(vm);
+        }
+
     }
 }

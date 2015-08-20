@@ -9,7 +9,12 @@ namespace SevenH.MMCSB.Atm.Domain
 
         public virtual int Save()
         {
-                return ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").SaveSport(this);
+            return ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").SaveSport(this);
+        }
+
+        public virtual bool Delete()
+        {
+            return ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").DeleteApplicantSport(this.ApplicantSportAssocId);
         }
     }
 }

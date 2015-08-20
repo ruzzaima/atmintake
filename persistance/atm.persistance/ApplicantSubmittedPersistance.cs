@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 
@@ -230,7 +225,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     education.ApplicantEduId = exist.ApplicantEduId;
                     return UpdateEducation(education);
                 }
-                var ed = new tblApplicantEduSubmitted()
+                var ed = new tblApplicantEduSubmitted
                 {
                     ApplicantId = education.ApplicantId,
                     ConfermentYr = education.ConfermentYr,
@@ -243,7 +238,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     MajorMinorCd = education.MajorMinorCd,
                     OverSeaInd = education.OverSeaInd,
                     OverallGrade = education.OverallGrade,
-                    SKMLevel = education.SKMLevel,
+                    SKMLevel = education.SKMLevel
                 };
                 entities.tblApplicantEduSubmitteds.Add(ed);
 
@@ -294,7 +289,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var aes in l)
                     {
-                        var ed = new ApplicantEducationSubmitted()
+                        var ed = new ApplicantEducationSubmitted
                         {
                             ApplicantEduId = aes.ApplicantEduId,
                             ApplicantId = aes.ApplicantId,
@@ -329,7 +324,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     subject.EduSubjectId = exist.EduSubjectId;
                     return UpdateEducationSubject(subject);
                 }
-                var s = new tblApplicantEduSubjectSubmitted()
+                var s = new tblApplicantEduSubjectSubmitted
                 {
                     ApplicantEduId = subject.ApplicantEduId,
                     CreatedBy = subject.CreatedBy,
@@ -381,7 +376,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantEduSubjectSubmitted()
+                        list.Add(new ApplicantEduSubjectSubmitted
                         {
                             ApplicantEduId = s.ApplicantEduId,
                             CreatedBy = s.CreatedBy,
@@ -411,7 +406,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     return UpdateSkill(skill);
                 }
 
-                var s = new tblApplicantSkillSubmitted()
+                var s = new tblApplicantSkillSubmitted
                 {
                     AchievementCd = skill.AchievementCd,
                     ApplicantId = skill.ApplicantId,
@@ -421,7 +416,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     LanguageSkillWrite = skill.LanguageSkillWrite,
                     Others = skill.Others,
                     SkillCatCd = skill.SkillCatCd,
-                    SkillCd = skill.SkillCd,
+                    SkillCd = skill.SkillCd
                 };
                 entities.tblApplicantSkillSubmitteds.Add(s);
 
@@ -466,7 +461,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantSkillSubmitted()
+                        list.Add(new ApplicantSkillSubmitted
                         {
                             AchievementCd = s.AchievementCd,
                             CreatedBy = s.CreatedBy,
@@ -499,7 +494,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     return UpdateSport(sport);
                 }
 
-                var s = new tblApplicantSportAssocSubmitted()
+                var s = new tblApplicantSportAssocSubmitted
                 {
                     AchievementCd = sport.AchievementCd,
                     ApplicantId = sport.ApplicantId,
@@ -507,7 +502,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     CreatedDt = sport.CreatedDt,
                     Others = sport.Others,
                     SportAssocId = sport.SportAssocId,
-                    Year = sport.Year,
+                    Year = sport.Year
                 };
                 entities.tblApplicantSportAssocSubmitteds.Add(s);
 
@@ -548,7 +543,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantSportSubmitted()
+                        list.Add(new ApplicantSportSubmitted
                         {
                             AchievementCd = s.AchievementCd,
                             ApplicantId = s.ApplicantId,
@@ -576,7 +571,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblApplicantSubmittedPhotoes where a.ApplicantId == applicantid select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        var p = new ApplicantSubmittedPhoto()
+                        var p = new ApplicantSubmittedPhoto
                         {
                             ApplicantId = exist.ApplicantId,
                             CreatedBy = exist.CreatedBy,
@@ -606,7 +601,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
                 else
                 {
-                    var p = new tblApplicantSubmittedPhoto()
+                    var p = new tblApplicantSubmittedPhoto
                     {
                         ApplicantId = photo.ApplicantId,
                         CreatedBy = photo.CreatedBy,
@@ -643,7 +638,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
         private static tblApplicantSubmited BindindToTable(ApplicantSubmitted appl)
         {
-            var usr = new tblApplicantSubmited()
+            var usr = new tblApplicantSubmited
             {
                 AcquisitionId = appl.AcquisitionId,
                 Email = appl.Email,
@@ -744,14 +739,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 SelectionTL = appl.SelectionTL,
                 SelectionTU = appl.SelectionTU,
                 SpectaclesUserInd = appl.SpectaclesUserInd,
-                Weight = appl.Weight,
+                Weight = appl.Weight
             };
             return usr;
         }
 
         private static ApplicantSubmitted BindingToClass(tblApplicantSubmited appl)
         {
-            var usr = new ApplicantSubmitted()
+            var usr = new ApplicantSubmitted
             {
                 ApplicantId = appl.ApplicantId,
                 AcquisitionId = appl.AcquisitionId,
@@ -851,7 +846,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 SelectionTL = appl.SelectionTL,
                 SelectionTU = appl.SelectionTU,
                 SpectaclesUserInd = appl.SpectaclesUserInd,
-                Weight = appl.Weight,
+                Weight = appl.Weight
             };
             return usr;
         }

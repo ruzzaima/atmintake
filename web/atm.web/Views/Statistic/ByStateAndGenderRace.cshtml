@@ -14,69 +14,71 @@
 
 <div class="row">
     <h5>Statistik Calon Mengikut Bangsa,Jantina dan Negeri Kelahiran - Pengambilan Siri @Model.Acquisition.Siri @Model.Acquisition.AcquisitionType.AcquisitionTypeNm</h5>
+    <div class="col-md-3"></div>
     <div class="col-md-8">
         <table class="table table-bordered tile">
             <thead>
-                <tr>
-                    <th rowspan="2">Bangsa</th>
-                    <th colspan="2">
-                        Semenanjung
-                    </th>
-                    <th colspan="2">
-                        Sabah
-                    </th>
-                    <th colspan="2">
-                        Sarawak
-                    </th>
-                    <th rowspan="2">
-                        Jumlah
-                    </th>
-                </tr>
-                <tr>
-                    <th class="center">
-                        Lelaki
-                    </th>
-                    <th class="center">
-                        Perempuan
-                    </th>
+            <tr>
+                <th rowspan="2">Bangsa</th>
+                <th colspan="2">
+                    Semenanjung
+                </th>
+                <th colspan="2">
+                    Sabah
+                </th>
+                <th colspan="2">
+                    Sarawak
+                </th>
+                <th rowspan="2">
+                    Jumlah
+                </th>
+            </tr>
+            <tr>
+                <th class="center">
+                    Lelaki
+                </th>
+                <th class="center">
+                    Perempuan
+                </th>
 
-                    <th class="center">
-                        Lelaki
-                    </th>
-                    <th class="center">
-                        Perempuan
-                    </th>
-                    <th class="center">
-                        Lelaki
-                    </th>
-                    <th class="center">
-                        Perempuan
-                    </th>
-                </tr>
+                <th class="center">
+                    Lelaki
+                </th>
+                <th class="center">
+                    Perempuan
+                </th>
+                <th class="center">
+                    Lelaki
+                </th>
+                <th class="center">
+                    Perempuan
+                </th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var ap in @Model.ListOfRace.OrderBy(a => a.RaceCd))
-                {
-                    var bygender = Model.ListOfApplicant.Where(a => a.RaceCd == ap.RaceCd);
-                    var applicantSubmitteds = bygender as IList<ApplicantSubmitted> ?? bygender.ToList();
-                    var semenanjunglcount = applicantSubmitteds.Count(a => a.GenderCd == "L" && !a.BirthStateName.ToLower().Contains("sabah") && !a.BirthStateName.ToLower().Contains("sarawak"));
-                    var semenanjungpcount = applicantSubmitteds.Count(a => a.GenderCd == "P" && !a.BirthStateName.ToLower().Contains("sabah") && !a.BirthStateName.ToLower().Contains("sarawak"));
-                    var sablcount = applicantSubmitteds.Count(a => a.GenderCd == "L" && a.BirthStateName.ToLower().Contains("sabah"));
-                    var sabpcount = applicantSubmitteds.Count(a => a.GenderCd == "P" && a.BirthStateName.ToLower().Contains("sabah"));
-                    var sarlcount = applicantSubmitteds.Count(a => a.GenderCd == "L" && a.BirthStateName.ToLower().Contains("sabah"));
-                    var sarpcount = applicantSubmitteds.Count(a => a.GenderCd == "P" && a.BirthStateName.ToLower().Contains("sabah"));
-                    <tr>
-                        <td style="text-align: left">@ap.RaceDescription <a href="#" onclick="javascript: openinwindow('@Url.Action("ByStateAndGenderRaceEthnic", "Statistic", new { id = Model.Acquisition.AcquisitionId, race = ap.RaceCd })', 'statistic5', false);">[Statistik mengikut Etnik]</a></td>
-                        <td style="width: 80px">@semenanjunglcount</td>
-                        <td style="width: 80px">@semenanjungpcount</td>
-                        <td style="width: 80px">@sablcount</td>
-                        <td style="width: 80px">@sabpcount</td>
-                        <td style="width: 80px">@sarlcount</td>
-                        <td style="width: 80px">@sarpcount</td>
-                        <td style="width: 80px">@bygender.Count()</td>
-                    </tr>
-                }
+            @foreach (var ap in @Model.ListOfRace.OrderBy(a => a.RaceCd))
+            {
+                var bygender = Model.ListOfApplicant.Where(a => a.RaceCd == ap.RaceCd);
+                var applicantSubmitteds = bygender as IList<ApplicantSubmitted> ?? bygender.ToList();
+                var semenanjunglcount = applicantSubmitteds.Count(a => a.GenderCd == "L" && !a.BirthStateName.ToLower().Contains("sabah") && !a.BirthStateName.ToLower().Contains("sarawak"));
+                var semenanjungpcount = applicantSubmitteds.Count(a => a.GenderCd == "P" && !a.BirthStateName.ToLower().Contains("sabah") && !a.BirthStateName.ToLower().Contains("sarawak"));
+                var sablcount = applicantSubmitteds.Count(a => a.GenderCd == "L" && a.BirthStateName.ToLower().Contains("sabah"));
+                var sabpcount = applicantSubmitteds.Count(a => a.GenderCd == "P" && a.BirthStateName.ToLower().Contains("sabah"));
+                var sarlcount = applicantSubmitteds.Count(a => a.GenderCd == "L" && a.BirthStateName.ToLower().Contains("sabah"));
+                var sarpcount = applicantSubmitteds.Count(a => a.GenderCd == "P" && a.BirthStateName.ToLower().Contains("sabah"));
+                <tr>
+                    <td style="text-align: left">@ap.RaceDescription <a href="#" onclick=" javascript: openinwindow('@Url.Action("ByStateAndGenderRaceEthnic", "Statistic", new {id = Model.Acquisition.AcquisitionId, race = ap.RaceCd})', 'statistic5', false); ">[Statistik mengikut Etnik]</a></td>
+                    <td style="width: 80px">@semenanjunglcount</td>
+                    <td style="width: 80px">@semenanjungpcount</td>
+                    <td style="width: 80px">@sablcount</td>
+                    <td style="width: 80px">@sabpcount</td>
+                    <td style="width: 80px">@sarlcount</td>
+                    <td style="width: 80px">@sarpcount</td>
+                    <td style="width: 80px">@bygender.Count()</td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>
+    <div class="col-md-3"></div>
 </div>

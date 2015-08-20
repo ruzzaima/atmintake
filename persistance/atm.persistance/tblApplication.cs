@@ -67,6 +67,11 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<int> Panel2Score { get; set; }
         public Nullable<int> Panel3Score { get; set; }
         public string ArmyNo { get; set; }
+        public Nullable<int> FinalSelActualAcqLocationId { get; set; }
+        public Nullable<System.DateTime> FinalSelectionStartDate { get; set; }
+        public Nullable<System.DateTime> FinalSelectionEndDate { get; set; }
+        public Nullable<System.DateTime> ReportDutyDate { get; set; }
+        public Nullable<int> ReportDutyLocId { get; set; }
     
         public virtual tblAcqLocation tblAcqLocation { get; set; }
         public virtual tblAcqLocation tblAcqLocation1 { get; set; }
@@ -79,5 +84,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual ICollection<tblAppQuestionFeedback> tblAppQuestionFeedbacks { get; set; }
         public virtual ICollection<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
         public virtual tblAcquisition tblAcquisition { get; set; }
+        public virtual tblREFReportDutyLoc tblREFReportDutyLoc { get; set; }
     }
 }

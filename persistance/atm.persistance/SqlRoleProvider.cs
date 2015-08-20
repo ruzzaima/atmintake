@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Objects.DataClasses;
 using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Security;
 using SevenH.MMCSB.Atm.Domain;
 
@@ -145,7 +141,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     return 1;
                 }
                 // new record
-                var r = new tblUserRole()
+                var r = new tblUserRole
                 {
                     UserId = userid,
                     Roles = roles

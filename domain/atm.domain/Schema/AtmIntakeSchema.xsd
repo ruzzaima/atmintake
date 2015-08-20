@@ -505,16 +505,48 @@ new -  to call new at the field init
   <xs:element name="Application">
     <xs:complexType>
       <xs:all>
+        <xs:element ref="ApplicantSubmitted"/>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
         <xs:element name="FirstSelectionInd" type="xs:boolean" nillable="true"/>
         <xs:element name="FinalSelectionInd" type="xs:boolean" nillable="true"/>
         <xs:element name="ApplicationStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="DentalExamine" type="xs:boolean" nillable="true"/>
+        <xs:element name="FinalShortlistedInd" type="xs:int" nillable="true"/>
+        <xs:element name="FirstSelActualAcqLocationId" type="xs:int" nillable="true"/>
+        <xs:element name="FirstSelectionAttdnInd" type="xs:boolean" nillable="true"/>
+        <xs:element name="FirstSelectionDate" type="xs:date" nillable="true"/>
+        <xs:element name="FirstShortlistedInd" type="xs:int" nillable="true"/>
+        <xs:element name="InvitationFirstSel" type="xs:boolean" nillable="true"/>
+        <xs:element name="MedicalExamine" type="xs:boolean" nillable="true"/>
+        <xs:element name="Panel1Score" type="xs:int" nillable="true"/>
+        <xs:element name="Panel2Score" type="xs:int" nillable="true"/>
+        <xs:element name="Panel3Score" type="xs:int" nillable="true"/>
+        <xs:element name="PhysicalExamination" type="xs:boolean" nillable="true"/>
+        <xs:element name="PhysicalTest" type="xs:boolean" nillable="true"/>
+        <xs:element name="ReportDuty" type="xs:int" nillable="true"/>
+        <xs:element name="SecurityAADK" type="xs:boolean" nillable="true"/>
+        <xs:element name="SecurityBSPP" type="xs:boolean" nillable="true"/>
+        <xs:element name="SecurityJPN" type="xs:boolean" nillable="true"/>
+        <xs:element name="SecurityKPM" type="xs:boolean" nillable="true"/>
+        <xs:element name="SecurityPDRM" type="xs:boolean" nillable="true"/>
+        <xs:element name="SecurityStatus" type="xs:boolean" nillable="true"/>
+        <xs:element name="SelectedAcqLocationId" type="xs:int" nillable="true"/>
+        <xs:element name="SelectionCenterId" type="xs:int" nillable="true"/>
+        <xs:element name="SuppDocumentReview" type="xs:boolean" nillable="true"/>
+        <xs:element name="Urine" type="xs:boolean" nillable="true"/>
+        <xs:element name="WrittenTest" type="xs:boolean" nillable="true"/>
       </xs:all>
       <xs:attribute name="AppId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
-      <xs:attribute name="SelectionCenterId" type="xs:int" use="required"/>
+      <xs:attribute name="ArmyNo" type="xs:string" use="required"/>
+      <xs:attribute name="FinalSelectionRemark" type="xs:string" use="required"/>
+      <xs:attribute name="SecurityAADKRemark" type="xs:string" use="required"/>
+      <xs:attribute name="SecurityBSPPRemark" type="xs:string" use="required"/>
+      <xs:attribute name="SecurityJPNRemark" type="xs:string" use="required"/>
+      <xs:attribute name="SecurityKPMRemark" type="xs:string" use="required"/>
+      <xs:attribute name="SecurityPDRMRemark" type="xs:string" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
@@ -764,10 +796,10 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ActiveInd" type="xs:boolean" nillable="true"/>
       </xs:all>
       <xs:attribute name="AchievementCd" type="xs:string" use="required"/>
       <xs:attribute name="AchievementDescription" type="xs:string" use="required"/>
-      <xs:attribute name="ActiveInd" type="xs:boolean" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
@@ -825,11 +857,11 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ActiveInd" type="xs:boolean" nillable="true"/>
       </xs:all>
       <xs:attribute name="SportAssocId" type="xs:int" use="required"/>
       <xs:attribute name="SportAssociatType" type="xs:string" use="required"/>
       <xs:attribute name="SportAssociatName" type="xs:string" use="required"/>
-      <xs:attribute name="ActiveInd" type="xs:boolean" use="required"/>
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
