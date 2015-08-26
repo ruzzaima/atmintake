@@ -1351,6 +1351,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="IsLocked" Type="bit" />
           <Property Name="FirstTime" Type="bit" />
           <Property Name="LastLoginDt" Type="smalldatetime" />
+          <Property Name="LastLoginDt2" Type="smalldatetime" />
           <Property Name="CreatedDt" Type="smalldatetime" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
           <Property Name="ModifiedDt" Type="smalldatetime" />
@@ -6801,6 +6802,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
           <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginDt2" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="tblUserLog">
           <Key>
@@ -8384,6 +8386,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
+                <ScalarProperty Name="LastLoginDt2" ColumnName="LastLoginDt2" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

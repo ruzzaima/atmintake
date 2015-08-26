@@ -28,7 +28,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }
 
             var vm = new DashboardViewModel();
-            vm.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+            vm.Acquisition =
+                ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
             return View(vm);
         }
 
@@ -57,7 +58,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (did == 0)
                         return RedirectToAction("Intakes", "Admin");
 
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    var acq =
+                        ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
                     if (null != acq)
                         vm.Acquisition = acq;
                 }
@@ -65,12 +67,16 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult SearchingApplicant(JQueryDataTableParamModel param, int acquisitionid, string category, string name, string icno)
+        public ActionResult SearchingApplicant(JQueryDataTableParamModel param, int acquisitionid, string category,
+            string name, string icno)
         {
-            var applicants = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch);
+            var applicants =
+                ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence")
+                    .Search(acquisitionid, category, name, icno, param.sSearch);
 
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            Func<ApplicantSubmitted, string> orderingFunction = (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.NewICNo);
+            Func<ApplicantSubmitted, string> orderingFunction =
+                (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.NewICNo);
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             if (sortDirection == "asc")
                 applicants = applicants.OrderBy(orderingFunction);
@@ -82,7 +88,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             {
                 a.ApplicantId.ToString(),
                 a.FullName,
-                a.NewICNo, 
+                a.NewICNo,
                 a.Application == null ? "Belum Hantar" : "Hantar",
                 a.ApplicantId.ToString()
             }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
@@ -102,11 +108,19 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (acqid != 0)
             {
-                var pd = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acqid);
+                var pd = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence")
+                    .GetAcquisition(acqid);
                 if (null != pd)
                 {
                     Session["SelectedAcquisition"] = pd.AcquisitionId;
-                    return Json(new { OK = true, message = "Berjaya", name = "Siri " + pd.Siri + "/" + pd.Year + " " + pd.AcquisitionType.AcquisitionTypeNm });
+                    return
+                        Json(
+                            new
+                            {
+                                OK = true,
+                                message = "Berjaya",
+                                name = "Siri " + pd.Siri + "/" + pd.Year + " " + pd.AcquisitionType.AcquisitionTypeNm
+                            });
                 }
             }
             return Json(new { OK = false, message = "Tidak Berjaya", name = "" });
@@ -119,13 +133,21 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                var usr = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+                var usr =
+                    ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance")
+                        .GetByUserName(User.Identity.Name);
                 if (null != usr)
                 {
                     if (!string.IsNullOrWhiteSpace(usr.ServiceCd))
-                        intakes.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAllAcquisition(null, usr.ServiceCd).ToList());
+                        intakes.AddRange(
+                            ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence")
+                                .GetAllAcquisition(null, usr.ServiceCd)
+                                .ToList());
                     else
-                        intakes.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAllAcquisition(null, string.Empty).ToList());
+                        intakes.AddRange(
+                            ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence")
+                                .GetAllAcquisition(null, string.Empty)
+                                .ToList());
                 }
             }
 
@@ -133,8 +155,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             {
                 a.AcquisitionId.ToString(),
                 a.AcquisitionType.AcquisitionTypeNm,
-                a.Siri.HasValue && a.Year.HasValue ? a.Siri.Value.ToString() + "/" + a.Year.Value.ToString() : "NA", 
-                a.CloseStatus.HasValue ?  a.CloseStatus.Value ? "Tutup" : "Buka" : "NA",
+                a.Siri.HasValue && a.Year.HasValue ? a.Siri.Value.ToString() + "/" + a.Year.Value.ToString() : "NA",
+                a.CloseStatus.HasValue ? a.CloseStatus.Value ? "Tutup" : "Buka" : "NA",
                 a.AcquisitionId.ToString()
             });
 
@@ -164,7 +186,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (did == 0)
                         return RedirectToAction("Intakes", "Admin");
 
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    var acq =
+                        ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
                     if (null != acq)
                         vm.Acquisition = acq;
                 }
@@ -172,5 +195,42 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
+        public ActionResult RunSQL(string sql, string op)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(sql) && !string.IsNullOrEmpty(op))
+                {
+                    if (op == "SELECT")
+                    {
+                        var nquery = ObjectBuilder.GetObject<IHibernateSqlExecution>("HibernateSqlExecution").SelectQuery(sql).List();
+                        ViewBag.Results = nquery;
+                        ViewBag.ExeType = "SELECT";
+                    }
+                    else if (op == "COUNT")
+                    {
+                        var nquery = ObjectBuilder.GetObject<IHibernateSqlExecution>("HibernateSqlExecution").SelectQuery(sql).List();
+                        ViewBag.Results = nquery;
+                        ViewBag.ExeType = "COUNT";
+                    }
+                    else if (op == "OTHER")
+                    {
+                        ViewBag.ExeType = "OTHER";
+                        return Content("Under Construction.");
+                    }
+
+                    return View();
+                }
+                else
+                {
+                    return View();
+                }
+
+            }
+            catch (Exception err)
+            {
+                return Content(err.Message);
+            }
+        }
     }
 }

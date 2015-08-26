@@ -31,5 +31,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDt { get; set; }
         public string ModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastLoginDt2 { get; set; }
     }
 }

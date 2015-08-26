@@ -14,6 +14,14 @@ namespace SevenH.MMCSB.Atm.Web.Models
         private List<Race> m_listOfRace = new List<Race>();
         private List<Ethnic> m_listOfEthnic = new List<Ethnic>();
         private Race m_race = new Race();
+        private List<HighEduLevel> m_highEduLevel = new List<HighEduLevel>();
+
+        public List<HighEduLevel> ListOfHighEduLevel
+        {
+            get { return m_highEduLevel; }
+            set { m_highEduLevel = value; }
+        }
+
 
         public Race Race
         {

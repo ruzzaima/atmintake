@@ -211,7 +211,7 @@ namespace SevenH.MMCSB.Atm.Web
                             }
                         }
 
-                        // TUDM
+                        // Pegawai
                         if (acqtype.ServiceCd == "10")
                         {
                             if (gendercode == "L")
@@ -221,18 +221,13 @@ namespace SevenH.MMCSB.Atm.Web
                                     message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.62m.";
                                     return false;
                                 }
-                                if (weight.HasValue && weight != 0 && weight < 47.5)
-                                {
-                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 47.5kg.";
-                                    return false;
-                                }
-
+                                
                                 if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
                                 {
                                     var bmi = weight / (height * height);
-                                    if (bmi < 18 || bmi > 23)
+                                    if (bmi < 10 || bmi > 26.9)
                                     {
-                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 23.";
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah tidak melebihi 26.9.";
                                         return false;
                                     }
                                 }
@@ -244,18 +239,13 @@ namespace SevenH.MMCSB.Atm.Web
                                     message = "Tinggi anda tidak melayakkan anda memohon. Tinggi yang layak adalah sekurang-kurangnya 1.57m.";
                                     return false;
                                 }
-                                if (weight.HasValue && weight != 0 && weight < 45)
-                                {
-                                    message = "Berat anda tidak melayakkan anda memohon. Berat yang layak adalah melebihi 45kg.";
-                                    return false;
-                                }
 
                                 if ((weight.HasValue && weight != 0) && (height.HasValue && height != 0))
                                 {
                                     var bmi = weight / (height * height);
-                                    if (bmi < 18 || bmi > 23)
+                                    if (bmi < 10 || bmi > 26.9)
                                     {
-                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah diantara 18 dan 23.";
+                                        message = "BMI anda tidak melayakkan anda memohon. BMI yang layak adalah tidak melebihi 26.9.";
                                         return false;
                                     }
                                 }
@@ -347,9 +337,9 @@ namespace SevenH.MMCSB.Atm.Web
                 total = total + 1;
             if (!string.IsNullOrWhiteSpace(applicant.BirthCountryCd))
                 total = total + 1;
-            if (applicant.Height != 0)
+            if (applicant.Height.HasValue && applicant.Height != 0)
                 total = total + 1;
-            if (applicant.Weight != 0)
+            if (applicant.Weight.HasValue && applicant.Weight != 0)
                 total = total + 1;
 
             if (acqtype.ServiceCd != "01")

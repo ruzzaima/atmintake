@@ -14,19 +14,28 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             {
                 using (var entities = new atmEntities())
                 {
+                    // check existing
+                    var exist = (from a in entities.tblUsers where a.LoginId == loginUser.LoginId select a).SingleOrDefault();
+                    if (null != exist)
+                    {
+                        loginUser.UserId = exist.UserId;
+                        return Update(loginUser);
+                    }
+
                     var u = new tblUser
                     {
                         UserName = loginUser.UserName,
                         AlternativeEmail = loginUser.AlternativeEmail,
                         ApplicantId = loginUser.ApplicantId,
                         Email = loginUser.Email,
-                        FullName = loginUser.FullName,
+                        FullName = loginUser.FullName.ToUpper(),
                         Password = loginUser.Password,
                         Salt = loginUser.Salt,
                         LoginId = loginUser.LoginId,
                         FirstTime = loginUser.FirstTime,
                         IsLocked = loginUser.IsLocked,
                         LastLoginDt = loginUser.LastLoginDt,
+                        LastLoginDt2 = loginUser.LastLoginDt2,
                         ServiceCd = loginUser.ServiceCd,
                         CreatedBy = loginUser.CreatedBy,
                         CreatedDt = DateTime.Now,
@@ -57,7 +66,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         exist.ModifiedDt = DateTime.Now;
                         exist.IsLocked = loginUser.IsLocked;
                         exist.LastLoginDt = loginUser.LastLoginDt;
-                        exist.FullName = loginUser.FullName;
+                        exist.LastLoginDt2 = loginUser.LastLoginDt2;
+                        exist.FullName = loginUser.FullName.ToUpper();
                         exist.Email = loginUser.Email;
                         exist.AlternativeEmail = loginUser.AlternativeEmail;
                         exist.FirstTime = loginUser.FirstTime;
@@ -135,6 +145,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             AlternativeEmail = exist.AlternativeEmail,
                             IsLocked = exist.IsLocked ?? false,
                             LastLoginDt = exist.LastLoginDt,
+                            LastLoginDt2 = exist.LastLoginDt2,
                             ModifiedDt = exist.ModifiedDt,
                             ServiceCd = exist.ServiceCd,
                             UserName = exist.UserName
@@ -187,6 +198,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             AlternativeEmail = exist.AlternativeEmail,
                             IsLocked = exist.IsLocked ?? false,
                             LastLoginDt = exist.LastLoginDt,
+                            LastLoginDt2 = exist.LastLoginDt2,
                             ModifiedDt = exist.ModifiedDt,
                             ServiceCd = exist.ServiceCd,
                             UserName = exist.UserName
@@ -263,6 +275,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             AlternativeEmail = exist.AlternativeEmail,
                             IsLocked = exist.IsLocked ?? false,
                             LastLoginDt = exist.LastLoginDt,
+                            LastLoginDt2 = exist.LastLoginDt2,
                             ModifiedDt = exist.ModifiedDt,
                             ServiceCd = exist.ServiceCd,
                             UserName = exist.UserName
@@ -350,6 +363,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             AlternativeEmail = exist.AlternativeEmail,
                             IsLocked = exist.IsLocked ?? false,
                             LastLoginDt = exist.LastLoginDt,
+                            LastLoginDt2 = exist.LastLoginDt2,
                             ModifiedDt = exist.ModifiedDt,
                             ServiceCd = exist.ServiceCd,
                             UserName = exist.UserName,

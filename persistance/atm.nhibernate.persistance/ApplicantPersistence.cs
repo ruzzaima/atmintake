@@ -242,6 +242,12 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new System.NotImplementedException();
         }
+
+
+        public IEnumerable<Applicant> ExecuteQuery(string sql)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 

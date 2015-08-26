@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net.Mail;
 using SevenH.MMCSB.Atm.Domain;
 
 namespace SevenH.MMCSB.Atm.Entity.Persistance
@@ -44,7 +45,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 if (null != exist)
                 {
                     exist.Email = appl.Email;
-                    exist.FullName = appl.FullName;
+                    exist.FullName = appl.FullName.ToUpper();
                     exist.ArmySelectionDt = appl.ArmySelectionDt;
                     exist.ArmySelectionInd = appl.ArmySelectionInd;
                     exist.ArmySelectionVenue = appl.ArmySelectionVenue;
@@ -242,6 +243,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             CreatedBy = aes.CreatedBy,
                             CreatedDt = aes.CreatedDt,
                             EduCertTitle = aes.EduCertTitle,
+                            HighEduLevel = aes.tblREFHighEduLevel != null ? aes.tblREFHighEduLevel.HighestEduLevel : string.Empty,
                             HighEduLevelCd = !string.IsNullOrWhiteSpace(aes.HighEduLevelCd) ? aes.HighEduLevelCd.Trim() : aes.HighEduLevelCd,
                             InstCd = !string.IsNullOrWhiteSpace(aes.InstCd) ? aes.InstCd.Trim() : aes.InstCd,
                             InstitutionName = aes.InstitutionName,
@@ -492,7 +494,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 // to cater Other category
                 if (sport.SportAssocId != 99)
                 {
-                    var exist = (from a in entities.tblApplicantSportAssocs where a.ApplicantId == sport.ApplicantId && a.SportAssocId == sport.SportAssocId select a).SingleOrDefault();
+                    var exist = (from a in entities.tblApplicantSportAssocs where a.ApplicantId == sport.ApplicantId && a.SportAssocId != null && a.SportAssocId == sport.SportAssocId select a).SingleOrDefault();
                     if (exist != null)
                     {
                         sport.ApplicantSportAssocId = exist.ApplicantSportAssocId;
@@ -702,7 +704,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             var usr = new tblApplicant
             {
                 Email = appl.Email,
-                FullName = appl.FullName,
+                FullName = appl.FullName.ToUpper(),
                 CreatedDt = appl.CreatedDt,
                 ArmySelectionDt = appl.ArmySelectionDt,
                 ArmySelectionInd = appl.ArmySelectionInd,
@@ -1036,6 +1038,24 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
             }
             return false;
+        }
+
+
+        public IEnumerable<Applicant> ExecuteQuery(string sql)
+        {
+            var list = new List<Applicant>();
+            if (!string.IsNullOrWhiteSpace(sql))
+            {
+                using (var entities = new atmEntities())
+                {
+                    var l = entities.tblApplicants.SqlQuery(sql).ToList();
+                    if (l.Any())
+                    {
+                        list.AddRange(l.Select(app => BindingToClass(app)));
+                    }
+                }
+            }
+            return list;
         }
     }
 }

@@ -193,6 +193,7 @@
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Helper\AtmAuthorization.cs" />
+    <Compile Include="Helper\CaptchaImage.cs" />
     <Compile Include="Helper\ReferenceRepo.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -773,6 +774,8 @@
     <Content Include="Views\Admin\AddApplicant.cshtml" />
     <Content Include="Views\Admin\SearchApplicant.cshtml" />
     <Content Include="Views\Admin\FirstIntakeSelection.cshtml" />
+    <Content Include="Views\Admin\RunSQL.cshtml" />
+    <Content Include="Views\Statistic\ByStateAndGenderAcademics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

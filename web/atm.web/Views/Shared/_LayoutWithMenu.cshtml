@@ -27,9 +27,13 @@
             {
                 fullname = login.FullName;
             }
-            if (null != login.LastLoginDt)
+            if (login.LastLoginDt.HasValue)
             {
                 lastlogout = string.Format("{0: dd MMM yyyy hh:mm tt}", login.LastLoginDt);
+            }
+            if (login.LastLoginDt2.HasValue)
+            {
+                lastlogout = string.Format("{0: dd MMM yyyy hh:mm tt}", login.LastLoginDt2);
             }
             if (login.ApplicantId.HasValue)
             {

@@ -91,5 +91,23 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }
             return View(vm);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">AcquisitionId</param>
+        /// <returns></returns>
+        public ActionResult ByStateAndGenderAcademics(int id)
+        {
+            var vm = new StatisticViewModel();
+            if (id != 0)
+            {
+                vm.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
+                vm.ListOfState.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStates("MYS"));
+                vm.ListOfHighEduLevel.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetHighEduLevels());
+                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicants(id));
+            }
+            return View(vm);
+        }
     }
 }
