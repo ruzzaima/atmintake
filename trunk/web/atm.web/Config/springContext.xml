@@ -15,6 +15,7 @@
   </object>
 
   <object id="ReferencePersistence" type="SevenH.MMCSB.Persistance.ReferencePersistence, atm.nhibernate.persistance" />
+  <object id="HibernateSqlExecution" type="SevenH.MMCSB.Persistance.HibernateSqlExecution, atm.nhibernate.persistance" />
   
   <!--Entity Framework Persistance-->
   <!--Membership and Roles-->

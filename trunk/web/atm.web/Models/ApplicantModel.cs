@@ -98,15 +98,15 @@ namespace SevenH.MMCSB.Atm.Web.Models
             ComputerMSPwrPoint = app.ComputerMSPwrPoint;
             ComputerICT = app.ComputerICT;
             ComputerOthers = app.ComputerOthers;
-            CrimeInvolvement = app.CrimeInvolvement ?? false;
-            DrugCaseInvolvement = app.DrugCaseInvolvement ?? false;
+            CrimeInvolvement = app.CrimeInvolvement;
+            DrugCaseInvolvement = app.DrugCaseInvolvement;
             CreatedBy = app.CreatedBy;
             LastModifiedBy = app.LastModifiedBy;
             CreatedDateTime = app.CreatedDt;
             LastModifiedDatetTime = app.LastModifiedDt;
             BirthDate = app.BirthDt;
             EmployeeAggreeInd = app.EmployeeAggreeInd ?? false;
-            CronicIlnessInd = app.CronicIlnessInd ?? false;
+            CronicIlnessInd = app.CronicIlnessInd;
             ScholarshipContractStDate = app.ScholarshipContractStDate;
             OriginalPelepasanDocument = app.OriginalPelepasanDocument;
             PelepasanDocument = app.PelepasanDocument;
@@ -472,8 +472,8 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public bool? ComputerICT { get; set; }
         public bool? ComputerOthersInd { get; set; }
         public string ComputerOthers { get; set; }
-        public bool CrimeInvolvement { get; set; }
-        public bool DrugCaseInvolvement { get; set; }
+        public bool? CrimeInvolvement { get; set; }
+        public bool? DrugCaseInvolvement { get; set; }
         public string CreatedBy { get; set; }
         public string LastModifiedBy { get; set; }
         public DateTime? CreatedDateTime { get; set; }
@@ -482,7 +482,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public int Age { get; set; }
         public int Month { get; set; }
         public bool EmployeeAggreeInd { get; set; }
-        public bool CronicIlnessInd { get; set; }
+        public bool? CronicIlnessInd { get; set; }
         public DateTime? ScholarshipContractStDate { get; set; }
         public DateTime? ArmySelectionDt { get; set; }
         public string PelepasanDocument { get; set; }

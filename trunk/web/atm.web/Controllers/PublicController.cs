@@ -201,8 +201,10 @@ namespace SevenH.MMCSB.Atm.Web
 
                 var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
                 if (null != acq)
+                {
+                    vm.Acquisition = acq;
                     vm.ServiceCode = acq.AcquisitionType.ServiceCd;
-
+                }
             }
             return View(vm);
         }
@@ -244,7 +246,8 @@ namespace SevenH.MMCSB.Atm.Web
                         vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
                     }
                     vm.AcquisitionSiri = acq.Siri.Value;
-                    vm.AcquisitionYear = acq.Year.Value;
+                    vm.AcquisitionYear = acq.Year.Value; 
+                    vm.Acquisition = acq;
                 }
             }
             var repos = new ReferenceRepo();
@@ -289,6 +292,7 @@ namespace SevenH.MMCSB.Atm.Web
                     }
                     vm.AcquisitionSiri = acq.Siri.Value;
                     vm.AcquisitionYear = acq.Year.Value;
+                    vm.Acquisition = acq;
                 }
             }
             var repos = new ReferenceRepo();
@@ -333,7 +337,7 @@ namespace SevenH.MMCSB.Atm.Web
                     }
                     vm.AcquisitionSiri = acq.Siri.Value;
                     vm.AcquisitionYear = acq.Year.Value;
-
+                    vm.Acquisition = acq;
                 }
             }
             vm.MaritalStatuses.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetMaritalStatus());
@@ -418,6 +422,8 @@ namespace SevenH.MMCSB.Atm.Web
                             return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Maklumat peribadi tidak lengkap." });
                         if (edupoint != 100m)
                             return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Maklumat akademik tidak lengkap." });
+                        if (chpoint != 100m)
+                            return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Maklumat pengakuan tidak lengkap." });
 
                         // copy applicant to applicant submitted
                         var app = new ApplicantSubmitted()
@@ -575,7 +581,7 @@ namespace SevenH.MMCSB.Atm.Web
                             {
                                 foreach (var sp in sports)
                                 {
-                                    if (sp.SportAssocId.HasValue && sp.SportAssocId != 0)
+                                    if ((sp.SportAssocId.HasValue && sp.SportAssocId != 0) || !string.IsNullOrWhiteSpace(sp.Others))
                                     {
                                         var ssp = new ApplicantSportSubmitted
                                                   {
@@ -584,7 +590,8 @@ namespace SevenH.MMCSB.Atm.Web
                                                       CreatedDt = DateTime.Now,
                                                       AchievementCd = sp.AchievementCd,
                                                       Year = sp.Year,
-                                                      SportAssocId = sp.SportAssocId.Value
+                                                      Others = sp.Others,
+                                                      SportAssocId = sp.SportAssocId
                                                   };
                                         ssp.Save();
                                     }
@@ -597,9 +604,7 @@ namespace SevenH.MMCSB.Atm.Web
                             {
                                 foreach (var sp in skills)
                                 {
-                                    if (!string.IsNullOrWhiteSpace(sp.Skill) || !string.IsNullOrWhiteSpace(sp.Others))
-                                    {
-                                        var ssp = new ApplicantSkillSubmitted
+                                    var ssp = new ApplicantSkillSubmitted
                                                   {
                                                       ApplicantId = app.ApplicantId,
                                                       CreatedBy = User.Identity.Name,
@@ -612,8 +617,7 @@ namespace SevenH.MMCSB.Atm.Web
                                                       SkillCatCd = sp.SkillCatCd,
                                                       SkillCd = sp.SkillCd,
                                                   };
-                                        ssp.Save();
-                                    }
+                                    ssp.Save();
                                 }
                             }
 
@@ -867,7 +871,7 @@ namespace SevenH.MMCSB.Atm.Web
                         {
                             if (!string.IsNullOrWhiteSpace(sp.Others))
                             {
-                                sp.SportAssocId = 99;
+                                sp.SportAssocId = null;
                                 sp.ApplicantId = applicant.ApplicantId;
                                 sp.CreatedBy = User.Identity.Name;
                                 sp.CreatedDt = DateTime.Now;
@@ -969,10 +973,26 @@ namespace SevenH.MMCSB.Atm.Web
             return Json(new { OK = false, message });
         }
 
-        public ActionResult CheckStatus(string idnumber)
+        public ActionResult CheckStatus(string idnumber, string captcha)
         {
-            if (!string.IsNullOrWhiteSpace(idnumber))
+            if (string.IsNullOrWhiteSpace(captcha))
+                return Json(new { OK = false, message = "Sila masukkan perkataan yang tertera di dalam gambar." });
+            if (Session["captchaText"] != null)
             {
+                var sessioncaptcha = Session["captchaText"].ToString().Trim().ToLower();
+                sessioncaptcha = sessioncaptcha.Trim();
+                sessioncaptcha = sessioncaptcha.Replace(" ", string.Empty);
+                captcha = captcha.ToLower().Trim();
+                if (sessioncaptcha != captcha)
+                    return Json(new { OK = false, message = "Perkataan yang dimasukkan tidak sama seperti di dalam gambar." });
+            }
+
+            if (!string.IsNullOrWhiteSpace(idnumber) && !string.IsNullOrWhiteSpace(captcha))
+            {
+                // delete generated image
+                string imageFilePath = Server.MapPath("~/Images/") + Session.SessionID + ".png";
+                System.IO.File.Delete(imageFilePath);
+
                 var sb = new StringBuilder();
                 var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicants(idnumber);
                 if (null != applicant && applicant.Any())
@@ -1089,6 +1109,20 @@ namespace SevenH.MMCSB.Atm.Web
                 }
             }
             return Json(new { OK = false, message = "Tidak Berjaya" });
+        }
+
+        public ActionResult generateCaptcha()
+        {
+            System.Drawing.FontFamily family = new System.Drawing.FontFamily("Arial");
+            CaptchaImage img = new CaptchaImage(150, 50, family);
+            string text = img.CreateRandomText(4) + " " + img.CreateRandomText(3);
+            img.SetText(text);
+            img.GenerateImage();
+            img.Image.Save(Server.MapPath("~/Images/") +
+            Session.SessionID + ".png",
+            System.Drawing.Imaging.ImageFormat.Png);
+            Session["captchaText"] = text;
+            return Json(Session.SessionID + ".png?t=" + DateTime.Now.Ticks, JsonRequestBehavior.AllowGet);
         }
     }
 }

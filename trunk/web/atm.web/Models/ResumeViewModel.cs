@@ -10,6 +10,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
         private List<MaritalStatus> m_listOfMaritalStatus = new List<MaritalStatus>();
         private ApplicantEducation m_applicantEducation = new ApplicantEducation();
         private List<Zone> m_zones = new List<Zone>();
+        
         public string GenderReadonly { get; set; }
         public int Peribadi { get; set; }
         public int Akademik { get; set; }
@@ -27,6 +28,14 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public int AcquisitionSiri { get; set; }
         public int AcquisitionYear { get; set; }
         public string ServiceCode { get; set; }
+        private Acquisition m_aquisition = new Acquisition();
+
+        public Acquisition Acquisition
+        {
+            get { return m_aquisition; }
+            set { m_aquisition = value; }
+        }
+
 
         public ApplicantEducation ApplicantEducation
         {

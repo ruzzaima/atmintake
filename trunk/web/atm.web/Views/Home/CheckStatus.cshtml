@@ -11,9 +11,28 @@
                 <div class="col-md-12">
                     <form role="form" class="p-15">
                         <div>
-                            <div class="form-group">
-                                <label for="idnumber" class="control-label pull-left">Sila Isikan No. Kad Pengenalan / My Kad Anda <br /> <i>(Contoh: 900101011234)</i></label>
-                                <input type="text" class="form-control input-sm pull-left" id="idnumber" data-bind="value: idnumber">
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="idnumber" class="control-label pull-left">Sila Isikan No. Kad Pengenalan / My Kad Anda <br /> <i>(Contoh: 900101011234)</i></label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control input-sm pull-left" id="idnumber" data-bind="value: idnumber">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <img class="m-t-5" id="m_imgCaptcha" alt="Gambar Pengesahan"/> <input type="button" class="btn btn-primary btn-sm" value="Set Semula Gambar" data-bind="click: refresh" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label for="idnumber" class="control-label pull-left">Sila isikan perkataan yang tertera di dalam gambar di atas.</label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control input-sm pull-left" id="captcha" data-bind="value: captcha" noncap="true" style="text-transform: none;">
+                                    </div>
+                                </div>
                             </div>
                             <button type="button" class="btn btn-primary btn-sm pull-left m-t-10 m-b-10" id="checkstatus_button" data-bind="click: checkstatus">
                                 Semak

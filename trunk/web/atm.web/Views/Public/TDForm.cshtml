@@ -22,7 +22,7 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="peribadi">
-                <form id="form_peribadi" action="#" role="form">
+                <form id="form_peribadi" action="#" role="form" class="form-validation-1">
                     <div class="row">
                         <div class="col-md-5">
                             @Html.Partial("_PeribadiMainTD")
@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveprofile">
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveperibadi">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
                                 </button>
                                 <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveprofileandcontinue">
@@ -142,7 +142,7 @@
                                     </label>
                                     <div class="row">
                                         <h6><span class="red"><u>Peringatan :</u></span></h6>
-                                        <p>Borang yang telah dihantar tidak boleh dikemaskini. Oleh itu mohon pastikan semua maklumat adalah lengkap dan tepat.</p>
+                                        <p><span class="red">Borang yang telah dihantar tidak boleh dikemaskini. Oleh itu mohon pastikan semua maklumat adalah lengkap dan tepat.</span></p>
                                     </div>
                                 </div>
                                 <div class="panel-footer">

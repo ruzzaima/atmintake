@@ -161,6 +161,8 @@ namespace SevenH.MMCSB.Atm.Web
                         FormsAuthentication.SetAuthCookie(model.UserName, true);
                         if (login.FirstTime)
                             return RedirectToAction("FirstTimeLogin", "Account");
+                        if (login.LastLoginDt.HasValue)
+                            login.LastLoginDt2 = login.LastLoginDt;
                         login.LastLoginDt = DateTime.Now;
                         login.Save();
                         ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);

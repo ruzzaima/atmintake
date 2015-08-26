@@ -13,6 +13,7 @@ new -  to call new at the field init
       <xs:all>
         <xs:element name="ApplicantId" type="xs:int" nillable="true"/>
         <xs:element name="LastLoginDt" type="xs:dateTime" nillable="true"/>
+        <xs:element name="LastLoginDt2" type="xs:dateTime" nillable="true"/>
         <xs:element name="ModifiedDt" type="xs:dateTime" nillable="true"/>
       </xs:all>
       <xs:attribute name="UserId" type="xs:int" use="required"/>
@@ -599,13 +600,7 @@ new -  to call new at the field init
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
         <xs:element name="ClosingDate" type="xs:date" nillable="true"/>
-        <xs:element name="AcquisitionCriterias">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element ref="AcquisitionCriteria" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
+        <xs:element ref="AcquisitionCriteria"/>
         <xs:element name="AcquisitionEducationCriterias">
           <xs:complexType>
             <xs:sequence>

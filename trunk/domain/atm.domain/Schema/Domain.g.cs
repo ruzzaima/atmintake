@@ -92,6 +92,11 @@
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
+            private DateTime?  m_LastLoginDt2;
+            public const string PropertyNameLastLoginDt2 = "LastLoginDt2";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
             private DateTime?  m_ModifiedDt;
             public const string PropertyNameModifiedDt = "ModifiedDt";
           
@@ -521,6 +526,28 @@
             }
             }
             get { return m_LastLoginDt;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? LastLoginDt2
+            {
+            set
+            {
+            if(m_LastLoginDt2 == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameLastLoginDt2, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_LastLoginDt2= value;
+            OnPropertyChanged(PropertyNameLastLoginDt2);
+            }
+            }
+            get { return m_LastLoginDt2;}
             }
           
 
@@ -12068,17 +12095,20 @@
             public const string PropertyNameAcquisitionTypeCd = "AcquisitionTypeCd";
           
       [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private IList<AcquisitionCriteria> m_AcquisitionCriteriaCollection = new List<AcquisitionCriteria>();
-
-      ///<summary>
-      /// 
-      ///</summary>
-      [XmlArrayItem("AcquisitionCriteria", IsNullable = false)]
+      private AcquisitionCriteria m_AcquisitionCriteria
+          =  new AcquisitionCriteria();
+        
+      public const string PropertyNameAcquisitionCriteria = "AcquisitionCriteria";
       [DebuggerHidden]
 
-      public virtual IList<AcquisitionCriteria>AcquisitionCriteriaCollection
+      public virtual AcquisitionCriteria AcquisitionCriteria
       {
-      get{ return m_AcquisitionCriteriaCollection;}
+      get{ return m_AcquisitionCriteria;}
+      set
+      {
+      m_AcquisitionCriteria = value;
+      OnPropertyChanged(PropertyNameAcquisitionCriteria);
+      }
       }
     
       [DebuggerBrowsable(DebuggerBrowsableState.Never)]

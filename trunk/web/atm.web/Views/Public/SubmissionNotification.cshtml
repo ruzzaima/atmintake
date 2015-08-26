@@ -24,11 +24,11 @@
             <br />
             @if (Model.Acquisition.AcquisitionType.ServiceCd == "10")
             {
-                <text> Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi @Model.Year .</text>
+                <text> Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service @Model.Year .</text>
             }
             else
             {
-                <text> Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi @Model.Siri .</text>
+                <text> Anda telah berjaya menghantar permohonan untuk menyertai pemilihan @Model.Service bagi Siri @Model.Siri .</text>
             }
             <br />
             <br />
@@ -36,10 +36,6 @@
             <br />
             <br />
             Sila semak status permohonan anda di dalam sistem.
-            <br />
-            <br />
-            Sekiranya anda tidak mendapat sebarang jawapan dari kami dalam masa 2 minggu, ia bermaksud anda tidak terpilih untuk menyertai pemilihan awal @Model.Service.
-
             <br />
             <br />
             <p>

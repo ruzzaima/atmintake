@@ -57,7 +57,7 @@
             </div>
             <div class="tab-pane fade" id="akademik">
                 <form id="form_akademik">
-                    @Html.Partial("_AcademicPegawai")
+                    @Html.Partial("_AcademicPegawai", @Model)
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -185,7 +185,7 @@
                                     </label>
                                     <div class="row">
                                         <h6><span class="red"><u>Peringatan :</u></span></h6>
-                                        <p>Borang yang telah dihantar tidak boleh dikemaskini. Oleh itu mohon pastikan semua maklumat adalah lengkap dan tepat.</p>
+                                        <p><span class="red">Borang yang telah dihantar tidak boleh dikemaskini. Oleh itu mohon pastikan semua maklumat adalah lengkap dan tepat.</span></p>
                                     </div>
                                 </div>
                                 <div class="panel-footer">

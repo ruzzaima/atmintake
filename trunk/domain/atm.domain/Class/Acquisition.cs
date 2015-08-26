@@ -7,7 +7,6 @@ namespace SevenH.MMCSB.Atm.Domain
 {
     public partial class Acquisition : DomainObject
     {
-        public virtual ICollection<AcquisitionCriteria> AcquisitionCriterias { get; set; }
         public virtual ICollection<AcquisitionEducationCriteria> AcquisitionEducationCriterias { get; set; }
 
         public virtual ICollection<AcqQuestionnaire> AcqQuestionnaires { get; set; }

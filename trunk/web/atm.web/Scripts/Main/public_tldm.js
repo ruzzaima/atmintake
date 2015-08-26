@@ -629,28 +629,6 @@ $(function () {
     });
 
 
-    // cronic_illness
-    $('input[name="cronic_illness"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.CronicIlnessInd(true);
-        } else {
-            viewModel.applicant.CronicIlnessInd(false);
-        }
-    });
-
-    $('input[name="cronic_illness"]').each(function () {
-        if (viewModel.applicant.CronicIlnessInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
     // gender
     $('input[name="gender"]').on('ifClicked', function (event) {
         var selectedval = this.value;
@@ -666,8 +644,32 @@ $(function () {
     }
 
 
+    // cronic_illness
+    $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function (event) {
+        var selectedval = this.value;
+        if (selectedval === 'Y') {
+            viewModel.applicant.CronicIlnessInd(true);
+        } else {
+            viewModel.applicant.CronicIlnessInd(false);
+        }
+    });
+
+    $('input[name="cronic_illness[cronic_illness]"]').each(function () {
+        if (viewModel.applicant.CronicIlnessInd() !== null) {
+            if (viewModel.applicant.CronicIlnessInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        }
+    });
+
     // crime_involve
-    $('input[name="crime_involve"]').on('ifClicked', function (event) {
+    $('input[name="crime_involve[crime_involve]"]').on('ifClicked', function (event) {
         var selectedval = this.value;
         if (selectedval === 'Y') {
             viewModel.applicant.CrimeInvolvement(true);
@@ -676,21 +678,23 @@ $(function () {
         }
     });
 
-    $('input[name="crime_involve"]').each(function () {
-        if (viewModel.applicant.CrimeInvolvement()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
+    $('input[name="crime_involve[crime_involve]"]').each(function () {
+        if (viewModel.applicant.CrimeInvolvement() !== null) {
+            if (viewModel.applicant.CrimeInvolvement()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
             }
         }
     });
 
 
     // crime_drug
-    $('input[name="crime_drug"]').on('ifClicked', function (event) {
+    $('input[name="crime_drug[crime_drug]"]').on('ifClicked', function (event) {
         var selectedval = this.value;
         if (selectedval === 'Y') {
             viewModel.applicant.DrugCaseInvolvement(true);
@@ -699,14 +703,16 @@ $(function () {
         }
     });
 
-    $('input[name="crime_drug"]').each(function () {
-        if (viewModel.applicant.DrugCaseInvolvement()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
+    $('input[name="crime_drug[crime_drug]"]').each(function () {
+        if (viewModel.applicant.DrugCaseInvolvement() !== null) {
+            if (viewModel.applicant.DrugCaseInvolvement()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
             }
         }
     });

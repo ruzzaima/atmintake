@@ -34,23 +34,23 @@ namespace SevenH.MMCSB.Persistance
         private Acquisition SetParent(Acquisition acq)
         {
             //toto set child parent
-            foreach (var a in acq.AcquisitionCriterias)
-            {
-                if (a.AcqCriteriaId == 0)
-                {
-                    a.CreatedDt = acq.CreatedDt;
-                    a.CreatedBy = acq.CreatedBy;
-                    a.LastModifiedDt = acq.LastModifiedDt;
-                    a.LastModifiedBy = acq.LastModifiedBy;
-                }
-                else
-                {
-                    a.LastModifiedDt = acq.LastModifiedDt;
-                    a.LastModifiedBy = acq.LastModifiedBy;
-                }
+            //foreach (var a in acq.AcquisitionCriterias)
+            //{
+            //    if (a.AcqCriteriaId == 0)
+            //    {
+            //        a.CreatedDt = acq.CreatedDt;
+            //        a.CreatedBy = acq.CreatedBy;
+            //        a.LastModifiedDt = acq.LastModifiedDt;
+            //        a.LastModifiedBy = acq.LastModifiedBy;
+            //    }
+            //    else
+            //    {
+            //        a.LastModifiedDt = acq.LastModifiedDt;
+            //        a.LastModifiedBy = acq.LastModifiedBy;
+            //    }
 
-                a.Parent = acq;
-            }
+            //    a.Parent = acq;
+            //}
 
             foreach (var a in acq.AcqQuestionnaires)
             {

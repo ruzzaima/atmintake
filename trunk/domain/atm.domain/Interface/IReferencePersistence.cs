@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NHibernate;
 
 namespace SevenH.MMCSB.Atm.Domain.Interface
 {
@@ -39,6 +40,5 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         IEnumerable<Location> GetLocations();
         IEnumerable<Location> GetLocations(string zonecode);
         IEnumerable<AcquisitionLocation> GetAcquisitionLocations(string zonecode);
-        
     }
 }

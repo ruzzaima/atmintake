@@ -43,7 +43,7 @@ namespace SevenH.MMCSB.Atm.Domain
                 Map(x => x.CreatedDt);
                 Map(x => x.LastModifiedDt);
 
-                HasMany<AcquisitionCriteria>(x => x.AcquisitionCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
+                //HasMany<AcquisitionCriteria>(x => x.AcquisitionCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
                 HasMany<AcquisitionEducationCriteria>(x => x.AcquisitionEducationCriterias).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
                 HasMany<AcqQuestionnaire>(x => x.AcqQuestionnaires).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
                 HasMany<AcquisitionLocation>(x => x.AcquisitionLocationCollection).KeyColumn("AcquisitionId").Inverse().Cascade.All().LazyLoad();
