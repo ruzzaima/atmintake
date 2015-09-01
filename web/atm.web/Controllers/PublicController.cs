@@ -246,7 +246,7 @@ namespace SevenH.MMCSB.Atm.Web
                         vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
                     }
                     vm.AcquisitionSiri = acq.Siri.Value;
-                    vm.AcquisitionYear = acq.Year.Value; 
+                    vm.AcquisitionYear = acq.Year.Value;
                     vm.Acquisition = acq;
                 }
             }
@@ -804,16 +804,10 @@ namespace SevenH.MMCSB.Atm.Web
 
                                 if (edu.HighEduLevelCd == "08" || edu.HighEduLevelCd == "20")
                                 {
-                                    if (!string.IsNullOrWhiteSpace(edu.InstitutionName))
-                                    {
-                                        edu.OverSeaInd = true;
+                                    if (edu.OverSeaInd.HasValue && edu.OverSeaInd.Value)
                                         edu.InstCd = null;
-                                    }
                                     else
-                                    {
-                                        edu.OverSeaInd = false;
                                         edu.InstitutionName = null;
-                                    }
                                 }
 
                                 var apeduid = edu.Save();

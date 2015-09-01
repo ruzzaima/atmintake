@@ -67,12 +67,66 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult SearchingApplicant(JQueryDataTableParamModel param, int acquisitionid, string category,
-            string name, string icno)
+        public ActionResult ExistingAtmMember()
         {
-            var applicants =
-                ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence")
-                    .Search(acquisitionid, category, name, icno, param.sSearch);
+            return View();
+        }
+
+        public ActionResult AddExistingAtm()
+        {
+            return View();
+        }
+
+        public ActionResult SearchingAtmMember(JQueryDataTableParamModel param, string statuscode, string name, string icno, int armyno)
+        {
+            var applicants = ObjectBuilder.GetObject<IExistingAtmPersistance>("ExistingAtmPersistance").Search(statuscode, param.sSearch, armyno).ToList();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                applicants.Clear();
+                applicants.AddRange(ObjectBuilder.GetObject<IExistingAtmPersistance>("ExistingAtmPersistance").Search(statuscode, name, armyno).ToList());
+            }
+            if (!string.IsNullOrWhiteSpace(icno))
+            {
+                applicants.Clear();
+                applicants.AddRange(ObjectBuilder.GetObject<IExistingAtmPersistance>("ExistingAtmPersistance").Search(statuscode, icno, armyno).ToList());
+            }
+
+            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                applicants = sortColumnIndex == 0 ? new List<ExistingMember>(applicants.OrderBy(a => a.Name)) : new List<ExistingMember>(applicants.OrderBy(a => a.IdNumber));
+            else
+                if (sortColumnIndex == 1)
+                    applicants = new List<ExistingMember>(applicants.OrderByDescending(a => a.Name));
+                else
+                    applicants = new List<ExistingMember>(applicants.OrderByDescending(a => a.IdNumber));
+
+            var applicantSubmitteds = applicants as IList<ExistingMember> ?? applicants.ToList();
+            var aadata = applicantSubmitteds.Select(a => new string[]
+            {
+                a.CoId.ToString(),
+                a.Name,
+                a.IdNumber,
+                a.ArmyNo.ToString(),
+                a.CoId.ToString(),
+                a.Status,
+                a.CoId.ToString()
+            }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
+
+            return Json(new
+            {
+                OK = true,
+                message = "Succeed",
+                sEcho = param.sEcho,
+                iTotalRecords = applicantSubmitteds.Count(),
+                iTotalDisplayRecords = applicantSubmitteds.Count(),
+                aaData = aadata,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SearchingApplicant(JQueryDataTableParamModel param, int acquisitionid, string category, string name, string icno)
+        {
+            var applicants = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch);
 
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
             Func<ApplicantSubmitted, string> orderingFunction =
@@ -133,21 +187,13 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                var usr =
-                    ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance")
-                        .GetByUserName(User.Identity.Name);
+                var usr = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
                 if (null != usr)
                 {
                     if (!string.IsNullOrWhiteSpace(usr.ServiceCd))
-                        intakes.AddRange(
-                            ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence")
-                                .GetAllAcquisition(null, usr.ServiceCd)
-                                .ToList());
+                        intakes.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAllAcquisition(null, usr.ServiceCd).ToList());
                     else
-                        intakes.AddRange(
-                            ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence")
-                                .GetAllAcquisition(null, string.Empty)
-                                .ToList());
+                        intakes.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAllAcquisition(null, string.Empty).ToList());
                 }
             }
 
@@ -186,8 +232,30 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (did == 0)
                         return RedirectToAction("Intakes", "Admin");
 
-                    var acq =
-                        ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                    if (null != acq)
+                        vm.Acquisition = acq;
+                }
+            }
+            return View(vm);
+        }
+
+        public ActionResult FirstIntakeUpdateAndFinalSelection()
+        {
+            var vm = new AdminViewModel();
+            var did = 0;
+            if (Session["SelectedAcquisition"] == null)
+                return RedirectToAction("Intakes", "Admin");
+            if (Session["SelectedAcquisition"] != null)
+            {
+                var acqid = Session["SelectedAcquisition"].ToString();
+                if (!string.IsNullOrWhiteSpace(acqid))
+                {
+                    int.TryParse(acqid, out did);
+                    if (did == 0)
+                        return RedirectToAction("Intakes", "Admin");
+
+                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
                     if (null != acq)
                         vm.Acquisition = acq;
                 }
@@ -215,8 +283,9 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     }
                     else if (op == "OTHER")
                     {
+                        var nquery = ObjectBuilder.GetObject<IHibernateSqlExecution>("HibernateSqlExecution").ExecuteQuery(sql);
+                        ViewBag.Results = nquery;
                         ViewBag.ExeType = "OTHER";
-                        return Content("Under Construction.");
                     }
 
                     return View();

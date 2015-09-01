@@ -140,16 +140,19 @@ function hideLoading() {
 }
 
 function signout() {
+    showLoading();
     $.ajax({
         type: 'POST',
         url: server + '/Account/SignOut',
         contentType: "application/json; charset=utf-8",
         success: function (msg) {
             if (msg.OK) {
+                hideLoading();
                 location.href = server + "/Home/";
             }
         },
         error: function (xhr) {
+            hideLoading();
         }
     });
 }

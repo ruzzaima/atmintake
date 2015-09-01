@@ -24,6 +24,20 @@
                         </span>
                     </a>
                 </li>
+                <li>
+                    <a href="#" onclick="javascript:openinwindow('@Url.Action("ByStateAndGenderAcademics", "Statistic", new { id = Model.Acquisition.AcquisitionId })', 'bystateandrace' , true); ">
+                        <span>
+                            Statistik Mengikut Negeri, Jantina dan Pendidikan
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="javascript:openinwindow('@Url.Action("ByStateAndGenderReligion", "Statistic", new { id = Model.Acquisition.AcquisitionId })', 'bystateandrace' , true); ">
+                        <span>
+                            Statistik Mengikut Negeri, Jantina dan Agama
+                        </span>
+                    </a>
+                </li>
             </ol>
         </div>
     </div>
@@ -31,7 +45,6 @@
 
 <div class="row">
     <a class="btn btn-sm" href="@Url.Action("Index", "Admin" )">Kembali</a>
-    <a class="btn btn-sm" href="@Url.Action("AddApplicant", "Admin" )">Tambah Calon</a>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

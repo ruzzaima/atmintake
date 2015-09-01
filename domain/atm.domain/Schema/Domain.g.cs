@@ -3520,10 +3520,6 @@
             public const string PropertyNameApplicantId = "ApplicantId";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  int  m_ApplicationId;
-            public const string PropertyNameApplicationId = "ApplicationId";
-          
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  int  m_AcquisitionId;
             public const string PropertyNameAcquisitionId = "AcquisitionId";
           
@@ -3688,16 +3684,16 @@
             public const string PropertyNameDadICNo = "DadICNo";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  string  m_DadPhoneNo;
-            public const string PropertyNameDadPhoneNo = "DadPhoneNo";
-          
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_DadNationalityCd;
             public const string PropertyNameDadNationalityCd = "DadNationalityCd";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_DadOccupation;
             public const string PropertyNameDadOccupation = "DadOccupation";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_DadPhoneNo;
+            public const string PropertyNameDadPhoneNo = "DadPhoneNo";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_GuardianName;
@@ -3772,6 +3768,10 @@
             public const string PropertyNameArmyServiceResignRemark = "ArmyServiceResignRemark";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_ComputerOthers;
+            public const string PropertyNameComputerOthers = "ComputerOthers";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_PelepasanDocument;
             public const string PropertyNamePelepasanDocument = "PelepasanDocument";
           
@@ -3782,10 +3782,6 @@
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_CreatedBy;
             public const string PropertyNameCreatedBy = "CreatedBy";
-          
-            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  string  m_ComputerOthers;
-            public const string PropertyNameComputerOthers = "ComputerOthers";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_LastModifiedBy;
@@ -4005,20 +4001,6 @@
       }
     
       [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-      private IList<ApplicantSkillSubmitted> m_ApplicantSkillSubmittedCollection = new List<ApplicantSkillSubmitted>();
-
-      ///<summary>
-      /// 
-      ///</summary>
-      [XmlArrayItem("ApplicantSkillSubmitted", IsNullable = false)]
-      [DebuggerHidden]
-
-      public virtual IList<ApplicantSkillSubmitted>ApplicantSkillSubmittedCollection
-      {
-      get{ return m_ApplicantSkillSubmittedCollection;}
-      }
-    
-      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
       private IList<ApplicantDispStatusSubmitted> m_ApplicantDispStatusSubmittedCollection = new List<ApplicantDispStatusSubmitted>();
 
       ///<summary>
@@ -4054,30 +4036,6 @@
             get
             {
             return m_ApplicantId;}
-            }
-          
-            ///<summary>
-            /// 
-            ///</summary>
-            [XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual int ApplicationId
-            {
-            set
-            {
-            if( m_ApplicationId == value) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameApplicationId, value);
-            OnPropertyChanging(arg);
-            if( !arg.Cancel)
-            {
-            m_ApplicationId= value;
-            OnPropertyChanged(PropertyNameApplicationId);
-            }
-            }
-            get
-            {
-            return m_ApplicationId;}
             }
           
             ///<summary>
@@ -5070,30 +5028,6 @@
             [XmlAttribute]
             [DebuggerHidden]
 
-            public virtual string DadPhoneNo
-            {
-            set
-            {
-            if( String.Equals( m_DadPhoneNo, value, StringComparison.Ordinal)) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameDadPhoneNo, value);
-            OnPropertyChanging(arg);
-            if( !arg.Cancel)
-            {
-            m_DadPhoneNo= value;
-            OnPropertyChanged(PropertyNameDadPhoneNo);
-            }
-            }
-            get
-            {
-            return m_DadPhoneNo;}
-            }
-          
-            ///<summary>
-            /// 
-            ///</summary>
-            [XmlAttribute]
-            [DebuggerHidden]
-
             public virtual string DadNationalityCd
             {
             set
@@ -5134,6 +5068,30 @@
             get
             {
             return m_DadOccupation;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string DadPhoneNo
+            {
+            set
+            {
+            if( String.Equals( m_DadPhoneNo, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameDadPhoneNo, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_DadPhoneNo= value;
+            OnPropertyChanged(PropertyNameDadPhoneNo);
+            }
+            }
+            get
+            {
+            return m_DadPhoneNo;}
             }
           
             ///<summary>
@@ -5574,6 +5532,30 @@
             [XmlAttribute]
             [DebuggerHidden]
 
+            public virtual string ComputerOthers
+            {
+            set
+            {
+            if( String.Equals( m_ComputerOthers, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameComputerOthers, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_ComputerOthers= value;
+            OnPropertyChanged(PropertyNameComputerOthers);
+            }
+            }
+            get
+            {
+            return m_ComputerOthers;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
             public virtual string PelepasanDocument
             {
             set
@@ -5638,30 +5620,6 @@
             get
             {
             return m_CreatedBy;}
-            }
-          
-            ///<summary>
-            /// 
-            ///</summary>
-            [XmlAttribute]
-            [DebuggerHidden]
-
-            public virtual string ComputerOthers
-            {
-            set
-            {
-            if( String.Equals( m_ComputerOthers, value, StringComparison.Ordinal)) return;
-            var arg = new PropertyChangingEventArgs(PropertyNameComputerOthers, value);
-            OnPropertyChanging(arg);
-            if( !arg.Cancel)
-            {
-            m_ComputerOthers= value;
-            OnPropertyChanged(PropertyNameComputerOthers);
-            }
-            }
-            get
-            {
-            return m_ComputerOthers;}
             }
           
             ///<summary>

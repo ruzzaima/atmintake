@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SevenH.MMCSB.Atm.Domain.Interface
 {
@@ -17,7 +18,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         /// <param name="firsttime"></param>
         /// <param name="newpassword"></param>
         /// <returns></returns>
-        bool ChangePasswordFirstTime(int loginid,bool firsttime, string newpassword);
+        bool ChangePasswordFirstTime(int loginid, bool firsttime, string newpassword);
         LoginUser GetByUserName(string username);
         LoginUser GetByIdNumber(string idnumber);
         LoginUser GetById(int id);
@@ -27,5 +28,6 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         int LoggingUser(int userid, string statuscode, string by, DateTime bydate);
 
         bool Delete(int userid);
+        string GetPassword(int userid);
     }
 }

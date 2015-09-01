@@ -12,11 +12,11 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             using (var entities = new atmEntities())
             {
-                if (application.AppId != 0)
+                var exist = (from a in entities.tblApplications where a.ApplicantId == application.ApplicantId && a.AcquisitionId == application.AcquisitionId select a).SingleOrDefault();
+                if (null != exist)
                 {
-                    var exist = (from a in entities.tblApplications where a.AppId == application.AppId select a).SingleOrDefault();
-                    if (null != exist)
-                        return Update(application);
+                    application.AppId = exist.AppId;
+                    return Update(application);
                 }
 
                 var app = new tblApplication
@@ -205,7 +205,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             {
                 using (var entities = new atmEntities())
                 {
-                    var exist = (from a in entities.tblApplications where a.ApplicantId == applicantid && a.AcquisitionId == acquisitionid select a).SingleOrDefault();
+                    var exist = (from a in entities.tblApplications where a.ApplicantId == applicantid && a.AcquisitionId == acquisitionid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
                     if (null != exist)
                     {
                         return BindingToClass(exist);

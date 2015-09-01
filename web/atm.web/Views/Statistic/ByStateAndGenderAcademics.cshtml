@@ -1,24 +1,47 @@
 ﻿@using SevenH.MMCSB.Atm.Domain
 @model SevenH.MMCSB.Atm.Web.Models.StatisticViewModel
 @{
-    ViewBag.Title = "Statistik mengikut negeri dan jantina dan pendidikan";
+    ViewBag.Title = "Statistik mengikut negeri dan jantina dan akademik";
     Layout = "~/Views/Shared/_EmptyLayout.cshtml";
 }
 
+
 <div class="row">
-    <h5>Statistik Calon Mengikut Jantina, Negeri Kelahiran dan Pendidikan - Pengambilan Siri @Model.Acquisition.Siri @Model.Acquisition.AcquisitionType.AcquisitionTypeNm</h5>
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
+    <h5>Statistik Calon Mengikut Akademik,Jantina dan Negeri Kelahiran - Pengambilan Siri @string.Format("{0}/{1} bagi {2}", Model.Acquisition.Siri, Model.Acquisition.Year, Model.Acquisition.AcquisitionType.AcquisitionTypeNm)</h5>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
         <table class="table table-bordered tile">
             <thead>
                 <tr>
-                    <th>
-                        Pendidikan
+                    <th rowspan="2" style="vertical-align: middle">Pendidikan</th>
+                    <th colspan="2" class="text-center">
+                        Semenanjung
                     </th>
-                    <th>
-                        Negeri
+                    <th colspan="2" class="text-center">
+                        Sabah
                     </th>
-                    <th class="center">
+                    <th colspan="2" class="text-center">
+                        Sarawak
+                    </th>
+                    <th rowspan="2" style="vertical-align: middle; border-left: 1px solid" class="text-center">
+                        Jumlah
+                    </th>
+                </tr>
+                <tr>
+                    <th class="text-center">
+                        Lelaki
+                    </th>
+                    <th class="text-center">
+                        Perempuan
+                    </th>
+
+                    <th class="text-center">
+                        Lelaki
+                    </th>
+                    <th class="text-center">
+                        Perempuan
+                    </th>
+                    <th class="text-center">
                         Lelaki
                     </th>
                     <th class="center">
@@ -27,21 +50,81 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var ap in @Model.ListOfHighEduLevel.OrderBy(a => a.HighestEduLevel))
+                @{
+                    var total = 0;
+                    var totalsl = 0;
+                    var totalsp = 0;
+                    var totalsabl = 0;
+                    var totalsabp = 0;
+                    var totalsarl = 0;
+                    var totalsarp = 0;
+                    var semenanjung = Model.ListOfState.Where(a => !a.StateDesc.ToLower().Contains("sabah") && !a.StateDesc.ToLower().Contains("sarawak")).Select(a => a.StateCd);
+                    var sabah = Model.ListOfState.Where(a => a.StateDesc.ToLower().Contains("sabah")).Select(a => a.StateCd);
+                    var sarawak = Model.ListOfState.Where(a => a.StateDesc.ToLower().Contains("sarawak")).Select(a => a.StateCd);
+                }
+                @foreach (var ap in @Model.ListOfHighEduLevel.OrderBy(a => a.HighestEduLevelRank))
                 {
-                    var byacademics = Model.ListOfApplicant.Where(a => a.BirthStateCd == ap.HighEduLevelCd);
-                    var applicantSubmitteds = byacademics as IList<ApplicantSubmitted> ?? byacademics.ToList();
-                    var lcount = applicantSubmitteds.Count(a => a.GenderCd == "L");
-                    var pcount = applicantSubmitteds.Count(a => a.GenderCd == "P");
+                    var byacademics = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, new string[] { }, string.Empty, ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    total = total + byacademics;
+                    var enumerable = semenanjung as string[] ?? semenanjung.ToArray();
+                    var semenanjunglcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable.ToArray(), "L", ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    totalsl = totalsl + semenanjunglcount;
+                    var semenanjungpcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable.ToArray(), "P", ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    totalsp = totalsp + semenanjungpcount;
+                    var enumerable1  = sabah as string[] ?? sabah.ToArray();
+                    var sablcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable1.ToArray(), "L", ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    totalsabl = totalsabl + sablcount;
+                    var sabpcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable1.ToArray(), "P", ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    totalsabp = totalsabp + sabpcount;
+                    var sarawak1 = sarawak as string[] ?? sarawak.ToArray();
+                    var sarlcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, sarawak1.ToArray(), "L", ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    totalsarl = totalsarl + sarlcount;
+                    var sarpcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, sarawak1.ToArray(), "p", ap.HighEduLevelCd, string.Empty, string.Empty, string.Empty);
+                    totalsarp = totalsarp + sarpcount;
                     <tr>
-                        <td style="text-align: left">@ap.HighEduLevelCd</td>
                         <td style="text-align: left">@ap.HighestEduLevel</td>
-                        <td style="width: 80px">@lcount</td>
-                        <td style="width: 80px">@pcount</td>
+                        <td style="width: 80px">@semenanjunglcount</td>
+                        <td style="width: 80px">@semenanjungpcount</td>
+                        <td style="width: 80px">@sablcount</td>
+                        <td style="width: 80px">@sabpcount</td>
+                        <td style="width: 80px">@sarlcount</td>
+                        <td style="width: 80px">@sarpcount</td>
+                        <td style="width: 80px" class="bg-primary">@byacademics</td>
                     </tr>
                 }
             </tbody>
+            <tfoot>
+                <tr class="bg-success">
+                    <td style="text-align: left">JUMLAH</td>
+                    <td style="width: 80px">@totalsl</td>
+                    <td style="width: 80px">@totalsp</td>
+                    <td style="width: 80px">@totalsabl</td>
+                    <td style="width: 80px">@totalsabp</td>
+                    <td style="width: 80px">@totalsarl</td>
+                    <td style="width: 80px">@totalsarp</td>
+                    <td style="width: 80px">@total</td>
+                </tr>
+                @{
+                    var subtotals = 0;
+                    subtotals = totalsl + totalsp;
+                    var subtotalsab = 0;
+                    subtotalsab = totalsabl + totalsabp;
+                    var subtotalsar = 0;
+                    subtotalsar = totalsarl + totalsarp;
+                }
+                <tr class="bg-primary">
+                    <td style="text-align: left">JUMLAH KESELURUHAN</td>
+                    <td colspan="2">@subtotals</td>
+                    <td colspan="2">@subtotalsab</td>
+                    <td colspan="2">@subtotalsar</td>
+                    <td style="width: 80px">@total</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
-    <div class="col-md-3"></div>
+    <div class="col-md-2"></div>
+</div>
+<div class="row">
+    <input type="button" class="btn btn-sm hidden-print" value="Tutup" onclick="javascript: window.close();" />
+    <input type="button" class="btn btn-sm hidden-print" value="Cetak" onclick="javascript: window.print();" />
 </div>

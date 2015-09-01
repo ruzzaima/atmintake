@@ -19,5 +19,16 @@ namespace SevenH.MMCSB.Persistance
             
             return null;
         }
+
+        public int ExecuteQuery(string sql)
+        {
+            if (!string.IsNullOrWhiteSpace(sql))
+            {
+                var result = Factory.OpenSession().CreateSQLQuery(sql).ExecuteUpdate();
+                return result;
+            }
+
+            return 0;
+        }
     }
 }

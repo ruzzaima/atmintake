@@ -26,5 +26,7 @@
   <object id="ApplicantPersistence" type="SevenH.MMCSB.Atm.Entity.Persistance.ApplicantPersistence, atm.entity.persistance" />
   <object id="AdvertismentPersistance" type="SevenH.MMCSB.Atm.Entity.Persistance.AdvertismentPersistance, atm.entity.persistance" />
   <object id="ApplicationPersistance" type="SevenH.MMCSB.Atm.Entity.Persistance.ApplicationPersistance, atm.entity.persistance" />
+  <object id="StatisticPersistance" type="SevenH.MMCSB.Atm.Entity.Persistance.StatisticPersistance, atm.entity.persistance" />
+  <object id="ExistingAtmPersistance" type="SevenH.MMCSB.Atm.Entity.Persistance.ExistingAtmPersistance, atm.entity.persistance" />
   
 </objects>

@@ -6,6 +6,91 @@ $(function () {
     $("#form_peribadi").validationEngine();
     $("#form_akademik").validationEngine();
 
+    function initializeAcademics() {
+
+        // sarjana muda oversea indicator
+        $('input[name="08InstCd"]').on('ifClicked', function (event) {
+            var selectedval = this.value;
+            if (viewModel.applicant.ApplicantEducations().length > 0) {
+                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                    if (v.HighEduLevelCd() === '08') {
+                        if (selectedval === 'O') {
+                            viewModel.overseas08(true);
+                        } else {
+                            viewModel.overseas08(false);
+                        }
+                    }
+                });
+            }
+        });
+
+
+        $('input[name="20InstCd"]').on('ifClicked', function (event) {
+            var selectedval = this.value;
+            if (viewModel.applicant.ApplicantEducations().length > 0) {
+                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                    if (v.HighEduLevelCd() === '20') {
+                        if (selectedval === 'O') {
+                            viewModel.overseas20(true);
+                        } else {
+                            viewModel.overseas20(false);
+                        }
+                    }
+                });
+            }
+        });
+
+        if (viewModel.applicant.ApplicantEducations().length > 0) {
+            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                if (v.HighEduLevelCd() === '08') {
+                    $('input[name="08InstCd"]').each(function () {
+                        if (v.OverSeaInd() !== null) {
+                            if (v.OverSeaInd() === true) {
+                                if (this.value === 'O') {
+                                    viewModel.overseas08(true);
+                                    $(this).iCheck('check');
+                                }
+                            } else {
+                                if (this.value === 'D') {
+                                    viewModel.overseas08(false);
+                                    $(this).iCheck('check');
+                                }
+                            }
+                        } else {
+                            if (this.value === 'D') {
+                                viewModel.overseas08(false);
+                                $(this).iCheck('check');
+                            }
+                        }
+                    });
+                }
+
+                if (v.HighEduLevelCd() === '20') {
+                    $('input[name="20InstCd"]').each(function () {
+                        if (v.OverSeaInd() !== null) {
+                            if (v.OverSeaInd() === true) {
+                                if (this.value === 'O') {
+                                    viewModel.overseas20(true);
+                                    $(this).iCheck('check');
+                                }
+                            } else {
+                                if (this.value === 'D') {
+                                    viewModel.overseas20(false);
+                                    $(this).iCheck('check');
+                                }
+                            }
+                        } else {
+                            if (this.value === 'D') {
+                                viewModel.overseas20(false);
+                                $(this).iCheck('check');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -89,6 +174,17 @@ $(function () {
                 }
             }
 
+            if (viewModel.applicant.ApplicantEducations().length > 0) {
+                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                    if (v.HighEduLevelCd() === '08') {
+                        v.OverSeaInd(viewModel.overseas08());
+                    }
+                    if (v.HighEduLevelCd() === '20') {
+                        v.OverSeaInd(viewModel.overseas20());
+                    }
+                });
+            }
+            
             showLoading();
 
             $.ajax({
@@ -150,6 +246,9 @@ $(function () {
 
                             }
                         });
+
+                        initializeCheckBoxAndRadio();
+                        initializeAcademics();
 
                     }
                     hideLoading();
@@ -779,7 +878,7 @@ $(function () {
             }
         });
     }
-    
+
     // cronic_illness
     $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function (event) {
         var selectedval = this.value;
@@ -853,78 +952,6 @@ $(function () {
         }
     });
 
-    // sarjana muda oversea indicator
-    $('input[name="08InstCd"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (viewModel.applicant.ApplicantEducations().length > 0) {
-            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                var item = ko.mapping.toJS(v);
-                if (item.HighEduLevelCd === '08') {
-                    console.log(selectedval);
-                    if (selectedval === 'O') {
-                        viewModel.overseas08(true);
-                    } else {
-                        viewModel.overseas08(false);
-                    }
-                }
-            });
-        }
-    });
-
-
-    $('input[name="20InstCd"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (viewModel.applicant.ApplicantEducations().length > 0) {
-            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                var item = ko.mapping.toJS(v);
-                if (item.HighEduLevelCd === '20') {
-                    console.log(selectedval);
-                    if (selectedval === 'O') {
-                        viewModel.overseas20(true);
-                    } else {
-                        viewModel.overseas20(false);
-                    }
-                }
-            });
-        }
-    });
-
-    if (viewModel.applicant.ApplicantEducations().length > 0) {
-        $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-            var item = ko.mapping.toJS(v);
-            if (item.HighEduLevelCd === '08') {
-                $('input[name="08InstCd"]').each(function () {
-                    if (item.OverSeaInd !== null) {
-                        if (item.OverSeaInd === true) {
-                            if (this.value === 'O') {
-                                $(this).iCheck('check');
-                            }
-                        }
-                    } else {
-                        if (this.value === 'D') {
-                            $(this).iCheck('check');
-                        }
-                    }
-                });
-            }
-
-            if (item.HighEduLevelCd === '20') {
-                $('input[name="20InstCd"]').each(function () {
-                    if (item.OverSeaInd !== null) {
-                        if (item.OverSeaInd === true) {
-                            if (this.value === 'O') {
-                                $(this).iCheck('check');
-                            }
-                        }
-                    } else {
-                        if (this.value === 'D') {
-                            $(this).iCheck('check');
-                        }
-                    }
-                });
-            }
-        });
-    }
 
     // event for pilihan sequence
     $('input[name="servicetab_firstchoice"]').on('ifClicked', function (event) {
@@ -1280,6 +1307,7 @@ $(function () {
         }
     }
 
+    initializeAcademics();
     loadCountry();
     loadReligions();
     loadRace();

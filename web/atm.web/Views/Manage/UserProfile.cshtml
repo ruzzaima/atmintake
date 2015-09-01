@@ -1,6 +1,7 @@
 ﻿@model SevenH.MMCSB.Atm.Web.Models.AddUserViewModel
 @using Newtonsoft.Json
 @using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
 @{
     ViewBag.Title = "Tambah Pengguna";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -9,10 +10,24 @@
 <div class="row">
     <div class="col-md-12">
         <div class="tile">
-            <div class="tile-title">Tambah Pengguna</div>
+            @if (Model.LoginUser.UserId == 0)
+            {
+                <div class="tile-title">Tambah Pengguna</div>
+            }
+            else
+            {
+                <div class="tile-title">Kemaskini Pengguna</div>
+            }
             <form id="adduser_form" class="form-horizontal p-15" role="form">
                 <div class="form-group">
-                    <label class="col-md-4 control-label">No Tentera / Id Pengguna</label>
+                    @if (Model.LoginUser.LoginRole.Roles == RolesString.AWAM)
+                    {
+                        <label class="col-md-4 control-label">Id Pengguna</label>
+                    }
+                    else
+                    {
+                        <label class="col-md-4 control-label">No Tentera / Id Pengguna</label>
+                    }
                     <div class="col-md-2">
                         <input type="text" class="form-control validate[required]" data-bind="value: user.LoginId, enable: user.UserId() == 0" />
                     </div>
@@ -23,17 +38,11 @@
                         <label data-bind="text: user.FullName"></label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Peranan</label>
-                    <div class="col-md-8">
-                        @if (Model.LoginUser.LoginRole.Roles == RolesString.AWAM)
-                        {
-                            <label class="radio-inline">
-                                <input type="radio" name="role" value="@RolesString.AWAM" />@RolesString.AWAM
-                            </label>
-                        }
-                        else
-                        {
+                @if (Model.LoginUser.LoginRole.Roles != RolesString.AWAM)
+                {
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Peranan</label>
+                        <div class="col-md-8">
                             <label class="radio-inline">
                                 <input type="radio" name="role" value="@RolesString.PEGAWAI_PENGAMBILAN" />@RolesString.PEGAWAI_PENGAMBILAN
                             </label>
@@ -43,9 +52,9 @@
                             <label class="radio-inline">
                                 <input type="radio" name="role" value="@RolesString.STATISTIC" />@RolesString.STATISTIC
                             </label>
-                        }
+                        </div>
                     </div>
-                </div>
+                }
                 @if (Model.LoginUser.LoginRole.Roles != RolesString.AWAM)
                 {
                     <div class="form-group">
@@ -95,16 +104,27 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Kata Laluan</label>
+                        <label class="col-md-4 control-label">Kata Laluan Sekarang</label>
+                        <div class="col-md-8">
+                            <label>@string.Format("{0}", ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetPassword(Model.LoginUser.UserId))</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Kata Laluan Baru</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" data-bind="value: user.Password" />
                         </div>
                         <div class="col-md-2">
                             <input type="button" class="btn btn-primary btn-sm" data-bind="click: generatetempassword" value="Jana Kata Laluan Sementara" />
                         </div>
-
                     </div>
                 }
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Kali Terakhir Login Pada</label>
+                    <div class="col-md-8">
+                        <label> @string.Format("{0:dd MMM yyyy hh:mm:tt}", Model.LoginUser.LastLoginDt)</label>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Status</label>
                     <div class="col-md-8">

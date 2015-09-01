@@ -42,7 +42,7 @@ $(function () {
                                 "mRender": function (data, type, full) {
                                     var id = data;
                                     if (parseInt(selectedid) === parseInt(id)) {
-                                        return '<input type="button" class="btn btn-sm" id="' + id + '" value="Sedang Dipilih" />';
+                                        return '<span class="label label-success" id="' + id + '">Sedang Dipilih</span>';
                                     }
                                     return '<input type="button" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '" value="Pilih" />';
                                 }
