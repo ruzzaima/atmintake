@@ -85,6 +85,25 @@
                 }
             </div>
         }
+        if (exectype == "OTHER")
+        {
+            <br />
+            <div>
+                @if (results != 0)
+                {
+                    <table border="1">
+                        <tr>
+                            <td style="min-width:30px;">Successfully Executed</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <br />
+                    <div>Fail Execute</div>
+                }
+            </div>
+        }
     }
 </body>
 </html>

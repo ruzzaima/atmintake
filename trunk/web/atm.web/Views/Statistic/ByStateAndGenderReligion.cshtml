@@ -1,0 +1,136 @@
+﻿@using SevenH.MMCSB.Atm.Domain
+@model SevenH.MMCSB.Atm.Web.Models.StatisticViewModel
+@{
+    ViewBag.Title = "Statistik mengikut negeri, jantina dan agama";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+@section styles{
+    <style type="text/css">
+        a {
+            color: #0000ff;
+        }
+    </style>
+}
+
+<div class="row">
+    <h5>Statistik Calon Mengikut Agama,Jantina dan Negeri Kelahiran - Pengambilan Siri @string.Format("{0}/{1} bagi {2}", Model.Acquisition.Siri, Model.Acquisition.Year, Model.Acquisition.AcquisitionType.AcquisitionTypeNm)</h5>
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <table class="table table-bordered tile">
+            <thead>
+            <tr>
+                <th rowspan="2" style="vertical-align: middle">Agama</th>
+                <th colspan="2" class="text-center">
+                    Semenanjung
+                </th>
+                <th colspan="2" class="text-center">
+                    Sabah
+                </th>
+                <th colspan="2" class="text-center">
+                    Sarawak
+                </th>
+                <th rowspan="2" style="vertical-align: middle; border-left: 1px solid" class="text-center">
+                    Jumlah
+                </th>
+            </tr>
+            <tr>
+                <th class="text-center">
+                    Lelaki
+                </th>
+                <th class="text-center">
+                    Perempuan
+                </th>
+
+                <th class="text-center">
+                    Lelaki
+                </th>
+                <th class="text-center">
+                    Perempuan
+                </th>
+                <th class="text-center">
+                    Lelaki
+                </th>
+                <th class="text-center">
+                    Perempuan
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                var total = 0;
+                var totalsl = 0;
+                var totalsp = 0;
+                var totalsabl = 0;
+                var totalsabp = 0;
+                var totalsarl = 0;
+                var totalsarp = 0;
+                var semenanjung = Model.ListOfState.Where(a => !a.StateDesc.ToLower().Contains("sabah") && !a.StateDesc.ToLower().Contains("sarawak")).Select(a => a.StateCd);
+                var sabah = Model.ListOfState.Where(a => a.StateDesc.ToLower().Contains("sabah")).Select(a => a.StateCd);
+                var sarawak = Model.ListOfState.Where(a => a.StateDesc.ToLower().Contains("sarawak")).Select(a => a.StateCd);
+            }
+            @foreach (var ap in @Model.ListOfReligion.OrderBy(a => a.ReligionDescription))
+            {
+                var byreligion = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, new string[] {}, string.Empty, string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                total = total + byreligion;
+                var enumerable = semenanjung as string[] ?? semenanjung.ToArray();
+                var semenanjunglcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable.ToArray(), "L", string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                totalsl = totalsl + semenanjunglcount;
+                var semenanjungpcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable.ToArray(), "P", string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                totalsp = totalsp + semenanjungpcount;
+                var enumerable1 = sabah as string[] ?? sabah.ToArray();
+                var sablcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable1.ToArray(), "L", string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                totalsabl = totalsabl + sablcount;
+                var sabpcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, enumerable1.ToArray(), "P", string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                totalsabp = totalsabp + sabpcount;
+                var sarawak1 = sarawak as string[] ?? sarawak.ToArray();
+                var sarlcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, sarawak1.ToArray(), "L", string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                totalsarl = totalsarl + sarlcount;
+                var sarpcount = ObjectBuilder.GetObject<IStatisticPersistance>("StatisticPersistance").Count(Model.Acquisition.AcquisitionId, sarawak1.ToArray(), "p", string.Empty, string.Empty, string.Empty, ap.ReligionCd);
+                totalsarp = totalsarp + sarpcount;
+                <tr>
+                    <td style="text-align: left">@ap.ReligionDescription</td>
+                    <td style="width: 80px">@semenanjunglcount</td>
+                    <td style="width: 80px">@semenanjungpcount</td>
+                    <td style="width: 80px">@sablcount</td>
+                    <td style="width: 80px">@sabpcount</td>
+                    <td style="width: 80px">@sarlcount</td>
+                    <td style="width: 80px">@sarpcount</td>
+                    <td style="width: 80px" class="bg-primary">@byreligion</td>
+                </tr>
+            }
+            </tbody>
+            <tfoot>
+            <tr class="bg-success">
+                <td style="text-align: left">JUMLAH</td>
+                <td style="width: 80px">@totalsl</td>
+                <td style="width: 80px">@totalsp</td>
+                <td style="width: 80px">@totalsabl</td>
+                <td style="width: 80px">@totalsabp</td>
+                <td style="width: 80px">@totalsarl</td>
+                <td style="width: 80px">@totalsarp</td>
+                <td style="width: 80px">@total</td>
+            </tr>
+            @{
+                var subtotals = 0;
+                subtotals = totalsl + totalsp;
+                var subtotalsab = 0;
+                subtotalsab = totalsabl + totalsabp;
+                var subtotalsar = 0;
+                subtotalsar = totalsarl + totalsarp;
+            }
+            <tr class="bg-primary">
+                <td style="text-align: left">JUMLAH KESELURUHAN</td>
+                <td colspan="2">@subtotals</td>
+                <td colspan="2">@subtotalsab</td>
+                <td colspan="2">@subtotalsar</td>
+                <td style="width: 80px">@total</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+<div class="row">
+    <input type="button" class="btn btn-sm hidden-print" value="Tutup" onclick="javascript: window.close();"/>
+    <input type="button" class="btn btn-sm hidden-print" value="Cetak" onclick="javascript: window.print();" />
+</div>

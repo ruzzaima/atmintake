@@ -121,5 +121,11 @@ namespace SevenH.MMCSB.Persistance
             Factory.OpenSession().Flush();
             return true;
         }
+
+
+        public string GetPassword(int userid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

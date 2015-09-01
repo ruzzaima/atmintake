@@ -8,6 +8,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         void Delete(int id);
         int Save(ApplicantSubmitted appl);
         int Update(ApplicantSubmitted applicant);
+        ApplicantSubmitted GetApplicant(int applicantid);
         ApplicantSubmitted GetApplicant(string icno, int acquisitionid);
         ApplicantSubmitted GetApplicant(int applicantid, int acquisitionid);
         IEnumerable<ApplicantSubmitted> GetApplicants(string icno);
@@ -34,5 +35,6 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         int UpdateApplicantPhoto(ApplicantSubmittedPhoto photo);
 
         IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria);
+        IEnumerable<ApplicantSubmitted> GetByAcademis(string highleveleducd);
     }
 }

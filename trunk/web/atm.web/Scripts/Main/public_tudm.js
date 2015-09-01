@@ -7,6 +7,54 @@ $(function () {
     $("#form_peribadi").validationEngine();
     $("#form_akademik").validationEngine();
 
+    function initializeAcademics() {
+
+        // sarjana muda oversea indicator
+        $('input[name="08InstCd"]').on('ifClicked', function (event) {
+            var selectedval = this.value;
+            if (viewModel.applicant.ApplicantEducations().length > 0) {
+                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                    if (v.HighEduLevelCd() === '08') {
+                        if (selectedval === 'O') {
+                            viewModel.overseas08(true);
+                        } else {
+                            viewModel.overseas08(false);
+                        }
+                    }
+                });
+            }
+        });
+
+
+        if (viewModel.applicant.ApplicantEducations().length > 0) {
+            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                if (v.HighEduLevelCd() === '08') {
+                    $('input[name="08InstCd"]').each(function () {
+                        if (v.OverSeaInd() !== null) {
+                            if (v.OverSeaInd() === true) {
+                                if (this.value === 'O') {
+                                    viewModel.overseas08(true);
+                                    $(this).iCheck('check');
+                                }
+                            } else {
+                                if (this.value === 'D') {
+                                    viewModel.overseas08(false);
+                                    $(this).iCheck('check');
+                                }
+                            }
+                        } else {
+                            if (this.value === 'D') {
+                                viewModel.overseas08(false);
+                                $(this).iCheck('check');
+                            }
+                        }
+                    });
+                }
+
+            });
+        }
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -64,6 +112,14 @@ $(function () {
                 }
             }
 
+            if (viewModel.applicant.ApplicantEducations().length > 0) {
+                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                    if (v.HighEduLevelCd() === '08') {
+                        v.OverSeaInd(viewModel.overseas08());
+                    }
+                });
+            }
+
             showLoading();
             $.ajax({
                 type: 'POST',
@@ -97,6 +153,9 @@ $(function () {
 
                             }
                         });
+
+                        initializeCheckBoxAndRadio();
+                        initializeAcademics();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -750,46 +809,6 @@ $(function () {
         }
     });
 
-    // sarjana muda oversea indicator
-    $('input[name="08InstCd"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (viewModel.applicant.ApplicantEducations().length > 0) {
-            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                var item = ko.mapping.toJS(v);
-                if (item.HighEduLevelCd === '08') {
-                    console.log(selectedval);
-                    if (selectedval === 'O') {
-                        viewModel.overseas08(true);
-                    } else {
-                        viewModel.overseas08(false);
-                    }
-                }
-            });
-        }
-    });
-
-    if (viewModel.applicant.ApplicantEducations().length > 0) {
-        $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-            var item = ko.mapping.toJS(v);
-            if (item.HighEduLevelCd === '08') {
-                $('input[name="08InstCd"]').each(function () {
-                    if (item.OverSeaInd !== null) {
-                        if (item.OverSeaInd === true) {
-                            if (this.value === 'O') {
-                                $(this).iCheck('check');
-                            }
-                        }
-                    } else {
-                        if (this.value === 'D') {
-                            $(this).iCheck('check');
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-
     //ComputerMSWordcb
     $('input[name="ComputerMSWordcb"]').on('ifChecked', function (event) {
         viewModel.applicant.ComputerMSWord(true);
@@ -862,6 +881,7 @@ $(function () {
         }
     }
 
+    initializeAcademics();
     loadCountry();
     loadReligions();
     loadRace();

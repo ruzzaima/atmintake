@@ -1,10 +1,27 @@
-﻿@model SevenH.MMCSB.Atm.Web.Models.DashboardViewModel
+﻿@using SevenH.MMCSB.Atm.Domain
+@model SevenH.MMCSB.Atm.Web.Models.DashboardViewModel
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 @section styles{
     <style>
+        .amarelo {
+            background: #DAA520;
+        }
+
+        .vermelho {
+            background: #CD0000;
+        }
+
+        .azul {
+            background: #4682B4;
+        }
+
+        .verde {
+            background-color: #2E8B57;
+        }
+
         a:hover {
             color: #0000ff;
         }
@@ -18,67 +35,133 @@
 
 <div class="row">
     <div class="tile">
-        <h2 class="tile-title">Menu Bagi Pengambilan @Model.Acquisition.AcquisitionType.AcquisitionTypeNm @Model.Acquisition.Siri / @Model.Acquisition.Year</h2>
+        <h2 class="tile-title">Menu Bagi Pengambilan bagi @string.Format("{0} Siri {1}/{2} ", Model.Acquisition.AcquisitionType.AcquisitionTypeNm, Model.Acquisition.Siri, @Model.Acquisition.Year)</h2>
         <div class="p-10">
-            <div class="shortcut-area">
-                <a class="shortcut tile" href="">
-                    <span>
-                        Selenggara Siri Pengambilan
-                    </span>
-                </a>
-                <a class="shortcut tile" href="@Url.Action("SearchApplicant", "Admin")">
-                    <span>
-                        Senarai Permohonan
-                    </span>
-                </a>
-                <a class="shortcut tile" href="@Url.Action("Index", "Statistic")">
-                    <span>
-                        Statistik Permohonan
-                    </span>
-                </a>
-                <a class="shortcut tile" href="@Url.Action("FirstIntakeSelection","Admin")">
-                    <span>
-                        Membuat Panggilan Pemilihan Awal
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Merekodkan Status &amp; Markah Ujian Bertulis
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Merekodkan Tapisan Keselamatan
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Merekodkan Semakan Dokumen
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Merekodkan Keputusan Pemeriksaan Fizikal, <br/>Pemeriksaan Kesihatan dan Ujian Kecergasan
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Mengemaskini Pemilihan Awal &amp; <br/> Membuat Panggilan Pemilihan Akhir
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Mengemaskini Status Temuduga/Pemilihan Akhir
-                    </span>
-                </a>
-                <a class="shortcut tile" href="">
-                    <span>
-                        Penetapan No Tentera &amp; Hantar ke HRMIS
-                    </span>
-                </a>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="thumbnail thumbnail-menu tile azul">
+                        <div class="p-10">
+                            <h4>Selenggara Siri Pengambilan</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="thumbnail thumbnail-menu tile amarelo">
+                        <div class="p-10">
+                            <h4>Senarai Permohonan</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="@Url.Action("SearchApplicant", "Admin")" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="thumbnail thumbnail-menu tile vermelho">
+                        <div class="p-10">
+                            <h4>Statistik Permohonan</h4>
+                            <a href="@Url.Action("Index", "Statistic")" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail thumbnail-menu tile vermelho">
+                        <div class="p-10">
+                            <h4>Membuat Panggilan Pemilihan Awal</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="@Url.Action("FirstIntakeSelection", "Admin")" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="thumbnail thumbnail-menu tile azul">
+                        <div class="p-10">
+                            <h4>Merekodkan Status &amp; Markah Ujian Bertulis</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="thumbnail thumbnail-menu tile verde">
+                        <div class="p-10">
+                            <h4>Merekodkan Tapisan Keselamatan</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="thumbnail thumbnail-menu tile amarelo">
+                        <div class="p-10">
+                            <h4>Merekodkan Keputusan Pemeriksaan Fizikal, Pemeriksaan Kesihatan dan Ujian Kecergasan</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail thumbnail-menu tile vermelho">
+                        <div class="p-10">
+                            <h4>Mengemaskini Pemilihan Awal &amp; Membuat Panggilan Pemilihan Akhir</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="@Url.Action("FirstIntakeUpdateAndFinalSelection", "Admin")" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="thumbnail thumbnail-menu tile verde">
+                        <div class="p-10">
+                            <h4>Merekodkan Semakan Dokumen</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail thumbnail-menu tile azul">
+                        <div class="p-10">
+                            <h4>Mengemaskini Status Temuduga / Pemilihan Akhir</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="thumbnail thumbnail-menu tile amarelo">
+                        <div class="p-10">
+                            <h4>Penetapan No Tentera &amp; Hantar ke HRMIS</h4>
+                            @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            {
+                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <a class="btn btn-sm" href="@Url.Action("Intakes","Admin")">Kembali</a>
+            <div class="row">
+                <div class="p-l-5">
+                    <a class="btn btn-sm" href="@Url.Action("Intakes", "Admin")">Kembali</a>
+                </div>
             </div>
         </div>
     </div>

@@ -935,18 +935,23 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = (from a in entities.tblExistingAtmMembers where a.NoTentera == armyno select a).SingleOrDefault();
                     if (null != exist)
                     {
-                        return new ExistingMember
+                        var atm = new ExistingMember
                         {
                             CoId = exist.COID,
                             Name = exist.CONm,
                             ArmyNo = exist.NoTentera,
                             IdNumber = exist.ICNOBaru,
-                            ExistingMemberStatus = new ExistingMemberStatus
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(exist.ExistingMemberStatusCd))
+                        {
+                            atm.ExistingMemberStatus = new ExistingMemberStatus
                             {
                                 Code = exist.tblREFExistingMemberStatu.ExistingMemberStatusCD,
                                 Status = exist.tblREFExistingMemberStatu.ExistingMemberStatus
-                            }
-                        };
+                            };
+                        }
+                        return atm;
                     }
                 }
             }

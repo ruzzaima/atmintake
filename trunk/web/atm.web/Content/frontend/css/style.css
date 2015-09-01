@@ -1705,7 +1705,12 @@ a.list-group-item {
 
 /* Media */
 .thumbnail, .well {
-    border: 0;
+    border: 1;
+}
+
+.thumbnail-menu {
+    min-height: 150px;
+    max-height: 250px;
 }
 
 .media-object {

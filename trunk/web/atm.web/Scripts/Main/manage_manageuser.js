@@ -18,27 +18,36 @@ $(function () {
             "fnDrawCallback": function (oSettings) {
                 /* Need to redo the counters if filtered or sorted */
                 //if (oSettings.bSorted || oSettings.bFiltered) {
-                    for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
-                        $('td:eq(0)', oSettings.aoData[oSettings.aiDisplay[i]].nTr).html(i + 1);
-                    }
+                for (var i = 0, iLen = oSettings.aiDisplay.length; i < iLen; i++) {
+                    $('td:eq(0)', oSettings.aoData[oSettings.aiDisplay[i]].nTr).html(i + 1);
+                }
                 //}
             },
             "aoColumns": [
                 { "bSortable": false },
                 { "bSortable": true },
                 { "bSortable": true },
+                { "bSortable": true },
+                { "bSortable": false },
                 { "bSortable": false },
                 { "bSortable": false },
                 { "bSortable": false },
                 {
                     "bSortable": false,
-                    "fnRender": function (d) {
-                        var id = d.aData[6];
+                    "mRender": function (data, type, full) {
+                        var id = data;
                         return '<a class="btn btn-sm" href="' + server + "/Manage/UserProfile?id=" + id + '" >Kemaskini</a>';
                     }
                 }
             ],
         });
+
+        if (
+        viewModel.category() === 'AW') {
+            oTable.fnSetColumnVis(5, false);
+        } else {
+            oTable.fnSetColumnVis(5, true);
+        }
     }
 
     viewModel = {
@@ -63,6 +72,11 @@ $(function () {
     $('input[name="category"]').on('ifClicked', function (event) {
         var selectedval = this.value;
         viewModel.category(selectedval);
+        if (selectedval == "AW") {
+            oTable.fnSetColumnVis(5, false);
+        } else {
+            oTable.fnSetColumnVis(5, true);
+        }
     });
 
     loaduser('SP');

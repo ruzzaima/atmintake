@@ -115,11 +115,13 @@
     <Compile Include="Interface\IApplicationPersistance.cs" />
     <Compile Include="Interface\ICodeItemPersistence.cs" />
     <Compile Include="Interface\ICryptorService.cs" />
+    <Compile Include="Interface\IExistingAtmPersistance.cs" />
     <Compile Include="Interface\IHibernateSqlExecution.cs" />
     <Compile Include="Interface\ILoginUserPersistance.cs" />
     <Compile Include="Interface\IMembershipProvider.cs" />
     <Compile Include="Interface\IReferencePersistence.cs" />
     <Compile Include="Interface\IRoleProvider.cs" />
+    <Compile Include="Interface\IStatisticPersistance.cs" />
     <Compile Include="Mapping\Acquisition.mapping.cs" />
     <Compile Include="Mapping\ApplicantSubmitted.mapping.cs" />
     <Compile Include="Mapping\ExistingMember.mapping.cs" />

@@ -43,10 +43,14 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 var atmexist = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").ExistingAtmMemberByArmyNo(id);
                 if (null != atmexist)
                 {
-                    if (atmexist.ExistingMemberStatus.Code.Trim() != "1")
-                        return Json(new { OK = false, message = "Anda tidak layak memohon kerana anda tidak berkhidmat di dalam ATM." });
-                    else
-                        return Json(new { OK = true, message = "Pengguna wujud dan layak.", name = atmexist.Name });
+                    if (atmexist.ExistingMemberStatus != null)
+                    {
+                        if (atmexist.ExistingMemberStatus.Code.Trim() != "1")
+                            return Json(new { OK = false, message = "Anda tidak layak memohon kerana anda tidak berkhidmat di dalam ATM." });
+                        else
+                            return Json(new { OK = true, message = "Pengguna wujud dan layak.", name = atmexist.Name });
+                    }
+                    return Json(new { OK = false, message = "Maklumat status tidak wujud." });
                 }
                 else
                 {
@@ -172,9 +176,11 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 a.UserId.ToString(),
                 a.FullName,
                 a.LoginId,
+                string.Format("{0}<br/>{1}", a.Email, a.AlternativeEmail),
                 a.ServiceName,
                 a.LoginRole.Roles,
                 a.IsLocked ? "Tidak Aktif" : "Aktif",
+                string.Format("{0:dd/MM/yyyy hh:mm:tt}", a.LastLoginDt),
                 a.UserId.ToString()
             }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
 

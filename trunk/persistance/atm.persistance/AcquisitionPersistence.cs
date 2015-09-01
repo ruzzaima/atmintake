@@ -203,7 +203,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 var l = from a in entities.tblAcquisitions select a;
                 if (isactive.HasValue)
                     l = l.Where(a => a.CloseStatus.HasValue && a.CloseStatus.Value == isactive);
-                if (!string.IsNullOrWhiteSpace(servicecode))
+                if (!string.IsNullOrWhiteSpace(servicecode) && servicecode != "00")
                     l = from a in entities.tblAcquisitions join b in entities.tblREFAcqTypes on a.AcquisitionTypeCd equals b.AcquisitionTypeCd where b.ServiceCd == servicecode select a;
 
                 if (l.Any())

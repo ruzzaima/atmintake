@@ -50,7 +50,6 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             {
                 vm.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
                 vm.ListOfState.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStates("MYS"));
-                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicants(id));
             }
             return View(vm);
         }
@@ -68,7 +67,6 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 vm.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
                 vm.ListOfState.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStates("MYS"));
                 vm.ListOfRace.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetRaces());
-                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicants(id));
             }
             return View(vm);
         }
@@ -87,7 +85,6 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 vm.ListOfState.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStates("MYS"));
                 vm.Race = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetRace(race);
                 vm.ListOfEthnic.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetEthnics(race));
-                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicants(id, race));
             }
             return View(vm);
         }
@@ -105,7 +102,23 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 vm.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
                 vm.ListOfState.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStates("MYS"));
                 vm.ListOfHighEduLevel.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetHighEduLevels());
-                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicants(id));
+            }
+            return View(vm);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">AcquisitionId</param>
+        /// <returns></returns>
+        public ActionResult ByStateAndGenderReligion(int id)
+        {
+            var vm = new StatisticViewModel();
+            if (id != 0)
+            {
+                vm.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
+                vm.ListOfState.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStates("MYS"));
+                vm.ListOfReligion.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetReligions());
             }
             return View(vm);
         }

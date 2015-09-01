@@ -220,6 +220,12 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new NotImplementedException();
         }
+
+
+        public IEnumerable<ApplicantSubmitted> GetByAcademis(string highleveleducd)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -13,7 +13,8 @@ namespace SevenH.MMCSB.Atm.Domain
         {
             if (UserId == 0)
                 UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").AddNew(this);
-            UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Update(this);
+            else
+                UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Update(this);
 
             if (LoginRole != null && !string.IsNullOrWhiteSpace(LoginRole.Roles))
             {

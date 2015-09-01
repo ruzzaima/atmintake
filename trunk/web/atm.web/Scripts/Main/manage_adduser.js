@@ -138,7 +138,7 @@ $(function () {
 
     $('input[name="role"]').each(function () {
         if (viewModel.user.LoginRole) {
-            if (viewModel.user.LoginRole.Roles()) {
+            if (viewModel.user.LoginRole.Roles() !== null) {
                 if (this.value === viewModel.user.LoginRole.Roles()) {
                     $(this).iCheck('check');
                 }
@@ -154,7 +154,7 @@ $(function () {
 
     $('input[name="service"]').each(function () {
         if (viewModel.user.ServiceCd) {
-            if (viewModel.user.ServiceCd()) {
+            if (viewModel.user.ServiceCd() !== null) {
                 if (this.value === viewModel.user.ServiceCd()) {
                     $(this).iCheck('check');
                 }
@@ -170,7 +170,7 @@ $(function () {
 
     $('input[name="status"]').each(function () {
         if (viewModel.user.Status) {
-            if (this.value === viewModel.user.Status()) {
+            if (this.value === viewModel.user.Status() || viewModel.user.Status() === 'Y') {
                 $(this).iCheck('check');
             }
         } else {

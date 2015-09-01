@@ -22,7 +22,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             using (var entities = new atmEntities())
             {
-                var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == appl.NewICNo && a.AcquisitionId == appl.AcquisitionId select a).SingleOrDefault();
+                var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == appl.NewICNo && a.AcquisitionId == appl.AcquisitionId select a).LastOrDefault();
                 if (null != exist)
                 {
                     appl.ApplicantId = exist.ApplicantId;
@@ -158,7 +158,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == icno && a.AcquisitionId == acquisitionid select a).SingleOrDefault();
                     if (null != exist)
-                        return BindingToClass(exist);
+                    {
+                        var app = BindingToClass(exist);
+                        var edus = GetEducation(app.ApplicantId);
+                        foreach (var ed in edus)
+                            app.ApplicantEducationSubmittedCollection.Add(ed);
+
+                        return app;
+                    }
                 }
             }
             return null;
@@ -171,7 +178,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     var exist = (from a in entities.tblApplicantSubmiteds where a.ApplicantId == applicantid && a.AcquisitionId == acquisitionid select a).SingleOrDefault();
                     if (null != exist)
-                        return BindingToClass(exist);
+                    {
+                        var app = BindingToClass(exist);
+                        var edus = GetEducation(app.ApplicantId);
+                        foreach (var ed in edus)
+                            app.ApplicantEducationSubmittedCollection.Add(ed);
+
+                        return app;
+                    }
                 }
             }
             return null;
@@ -188,7 +202,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = from a in entities.tblApplicantSubmiteds where a.NewICNo == icno select a;
                     if (exist.Any())
                         foreach (var u in exist)
-                            list.Add(BindingToClass(u));
+                        {
+                            var app = BindingToClass(u);
+                            var edus = GetEducation(app.ApplicantId);
+                            foreach (var ed in edus)
+                                app.ApplicantEducationSubmittedCollection.Add(ed);
+
+                            list.Add(app);
+                        }
 
 
                 }
@@ -207,9 +228,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
                     if (exist.Any())
                         foreach (var u in exist)
-                            list.Add(BindingToClass(u));
+                        {
+                            var app = BindingToClass(u);
+                            var edus = GetEducation(app.ApplicantId);
+                            foreach (var ed in edus)
+                                app.ApplicantEducationSubmittedCollection.Add(ed);
 
-
+                            list.Add(app);
+                        }
                 }
             }
             return list;
@@ -746,108 +772,106 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
         private static ApplicantSubmitted BindingToClass(tblApplicantSubmited appl)
         {
-            var usr = new ApplicantSubmitted
-            {
-                ApplicantId = appl.ApplicantId,
-                AcquisitionId = appl.AcquisitionId,
-                Email = appl.Email,
-                FullName = appl.FullName,
-                CreatedDt = appl.CreatedDt,
-                ArmySelectionDt = appl.ArmySelectionDt,
-                ArmySelectionInd = appl.ArmySelectionInd,
-                ArmySelectionVenue = appl.ArmySelectionVenue,
-                ArmyServiceInd = appl.ArmyServiceInd,
-                ArmyServiceResignRemark = appl.ArmyServiceResignRemark,
-                ArmyServiceYrOfServ = appl.ArmyServiceYrOfServ,
-                BMI = appl.BMI,
-                BirthCertNo = appl.BirthCertNo,
-                BirthCityCd = appl.BirthCityCd,
-                BirthCountryCd = appl.BirthCountryCd,
-                BirthDt = appl.BirthDt,
-                BirthPlace = appl.BirthPlace,
-                BirthStateCd = appl.BirthStateCd,
-                BirthStateName = appl.tblREFState.State,
-                BloodTypeCd = appl.BloodTypeCd,
-                ChildNo = appl.ChildNo,
-                ColorBlindInd = appl.ColorBlindInd,
-                ComputerICT = appl.ComputerICT,
-                ComputerMSExcel = appl.ComputerMSExcel,
-                ComputerMSPwrPoint = appl.ComputerMSPwrPoint,
-                ComputerMSWord = appl.ComputerMSWord,
-                ComputerOthers = appl.ComputerOthers,
-                CorresponAddr1 = appl.CorresponAddr1,
-                CorresponAddr2 = appl.CorresponAddr2,
-                CorresponAddr3 = appl.CorresponAddr3,
-                CorresponAddrCityCd = appl.CorresponAddrCityCd,
-                CorresponAddrCountryCd = appl.CorresponAddrCountryCd,
-                CorresponAddrPostCd = appl.CorresponAddrPostCd,
-                CorresponAddrStateCd = appl.CorresponAddrStateCd,
-                CreatedBy = appl.CreatedBy,
-                CrimeInvolvement = appl.CrimeInvolvement,
-                CronicIlnessInd = appl.CronicIlnessInd,
-                CurrentOccupation = appl.CurrentOccupation,
-                CurrentOrganisation = appl.CurrentOrganisation,
-                CurrentSalary = appl.CurrentSalary,
-                DadICNo = appl.DadICNo,
-                DadName = appl.DadName,
-                DadNationalityCd = appl.DadNationalityCd,
-                DadNotApplicable = appl.DadNotApplicable,
-                DadOccupation = appl.DadOccupation,
-                DadPhoneNo = appl.DadPhoneNo,
-                DadSalary = appl.DadSalary,
-                DrugCaseInvolvement = appl.DrugCaseInvolvement,
-                EmployeeAggreeInd = appl.EmployeeAggreeInd,
-                EthnicCd = appl.EthnicCd,
-                FamilyHighestEduLevel = appl.FamilyHighestEduLevel,
-                GenderCd = appl.GenderCd,
-                GuardianICNo = appl.GuardianICNo,
-                GuardianName = appl.GuardianName,
-                GuardianNationalityCd = appl.GuardianNationalityCd,
-                GuardianNotApplicable = appl.GuardianNotApplicable,
-                GuardianOccupation = appl.GuardianOccupation,
-                GuardianPhoneNo = appl.GuardianPhoneNo,
-                GuardianSalary = appl.GuardianSalary,
-                Height = appl.Height,
-                HomePhoneNo = appl.HomePhoneNo,
-                LastModifiedBy = appl.LastModifiedBy,
-                LastModifiedDt = appl.LastModifiedDt,
-                MobilePhoneNo = appl.MobilePhoneNo,
-                MomICNo = appl.MomICNo,
-                MomName = appl.MomName,
-                MomNationalityCd = appl.MomNationalityCd,
-                MomNotApplicable = appl.MomNotApplicable,
-                MomOccupation = appl.MomOccupation,
-                MomPhoneNo = appl.MomPhoneNo,
-                MomSalary = appl.MomSalary,
-                MrtlStatusCd = appl.MrtlStatusCd,
-                NationalityCd = appl.NationalityCd,
-                NationalityCertNo = appl.NationalityCertNo,
-                NewICNo = appl.NewICNo,
-                NoOfSibling = appl.NoOfSibling,
-                NoTentera = appl.NoTentera,
-                OriginalPelepasanDocument = appl.OriginalPelepasanDocument,
-                PalapesArmyNo = appl.PalapesArmyNo,
-                PalapesInd = appl.PalapesInd,
-                PalapesInstitution = appl.PalapesInstitution,
-                PalapesRemark = appl.PalapesRemark,
-                PalapesServices = appl.PalapesServices,
-                PalapesTauliahEndDt = appl.PalapesTauliahEndDt,
-                PalapesYear = appl.PalapesYear,
-                PelepasanDocument = appl.PelepasanDocument,
-                RaceCd = appl.RaceCd,
-                ReligionCd = appl.ReligionCd,
-                ResidenceTypeInd = appl.ResidenceTypeInd,
-                ScholarshipBody = appl.ScholarshipBody,
-                ScholarshipBodyAddr = appl.ScholarshipBodyAddr,
-                ScholarshipContractStDate = appl.ScholarshipContractStDate,
-                ScholarshipInd = appl.ScholarshipInd,
-                ScholarshipNoOfYrContract = appl.ScholarshipNoOfYrContract,
-                SelectionTD = appl.SelectionTD,
-                SelectionTL = appl.SelectionTL,
-                SelectionTU = appl.SelectionTU,
-                SpectaclesUserInd = appl.SpectaclesUserInd,
-                Weight = appl.Weight
-            };
+            var usr = new ApplicantSubmitted();
+            usr.ApplicantId = appl.ApplicantId;
+            usr.AcquisitionId = appl.AcquisitionId;
+            usr.Email = appl.Email;
+            usr.FullName = appl.FullName;
+            usr.CreatedDt = appl.CreatedDt;
+            usr.ArmySelectionDt = appl.ArmySelectionDt;
+            usr.ArmySelectionInd = appl.ArmySelectionInd;
+            usr.ArmySelectionVenue = appl.ArmySelectionVenue;
+            usr.ArmyServiceInd = appl.ArmyServiceInd;
+            usr.ArmyServiceResignRemark = appl.ArmyServiceResignRemark;
+            usr.ArmyServiceYrOfServ = appl.ArmyServiceYrOfServ;
+            usr.BMI = appl.BMI;
+            usr.BirthCertNo = appl.BirthCertNo;
+            usr.BirthCityCd = appl.BirthCityCd;
+            usr.BirthCountryCd = appl.BirthCountryCd;
+            usr.BirthDt = appl.BirthDt;
+            usr.BirthPlace = appl.BirthPlace;
+            usr.BirthStateCd = appl.BirthStateCd;
+            usr.BirthStateName = appl.tblREFState != null ?appl.tblREFState.State : string.Empty;
+            usr.BloodTypeCd = appl.BloodTypeCd;
+            usr.ChildNo = appl.ChildNo;
+            usr.ColorBlindInd = appl.ColorBlindInd;
+            usr.ComputerICT = appl.ComputerICT;
+            usr.ComputerMSExcel = appl.ComputerMSExcel;
+            usr.ComputerMSPwrPoint = appl.ComputerMSPwrPoint;
+            usr.ComputerMSWord = appl.ComputerMSWord;
+            usr.ComputerOthers = appl.ComputerOthers;
+            usr.CorresponAddr1 = appl.CorresponAddr1;
+            usr.CorresponAddr2 = appl.CorresponAddr2;
+            usr.CorresponAddr3 = appl.CorresponAddr3;
+            usr.CorresponAddrCityCd = appl.CorresponAddrCityCd;
+            usr.CorresponAddrCountryCd = appl.CorresponAddrCountryCd;
+            usr.CorresponAddrPostCd = appl.CorresponAddrPostCd;
+            usr.CorresponAddrStateCd = appl.CorresponAddrStateCd;
+            usr.CreatedBy = appl.CreatedBy;
+            usr.CrimeInvolvement = appl.CrimeInvolvement;
+            usr.CronicIlnessInd = appl.CronicIlnessInd;
+            usr.CurrentOccupation = appl.CurrentOccupation;
+            usr.CurrentOrganisation = appl.CurrentOrganisation;
+            usr.CurrentSalary = appl.CurrentSalary;
+            usr.DadICNo = appl.DadICNo;
+            usr.DadName = appl.DadName;
+            usr.DadNationalityCd = appl.DadNationalityCd;
+            usr.DadNotApplicable = appl.DadNotApplicable;
+            usr.DadOccupation = appl.DadOccupation;
+            usr.DadPhoneNo = appl.DadPhoneNo;
+            usr.DadSalary = appl.DadSalary;
+            usr.DrugCaseInvolvement = appl.DrugCaseInvolvement;
+            usr.EmployeeAggreeInd = appl.EmployeeAggreeInd;
+            usr.EthnicCd = appl.EthnicCd;
+            usr.FamilyHighestEduLevel = appl.FamilyHighestEduLevel;
+            usr.GenderCd = appl.GenderCd;
+            usr.GuardianICNo = appl.GuardianICNo;
+            usr.GuardianName = appl.GuardianName;
+            usr.GuardianNationalityCd = appl.GuardianNationalityCd;
+            usr.GuardianNotApplicable = appl.GuardianNotApplicable;
+            usr.GuardianOccupation = appl.GuardianOccupation;
+            usr.GuardianPhoneNo = appl.GuardianPhoneNo;
+            usr.GuardianSalary = appl.GuardianSalary;
+            usr.Height = appl.Height;
+            usr.HomePhoneNo = appl.HomePhoneNo;
+            usr.LastModifiedBy = appl.LastModifiedBy;
+            usr.LastModifiedDt = appl.LastModifiedDt;
+            usr.MobilePhoneNo = appl.MobilePhoneNo;
+            usr.MomICNo = appl.MomICNo;
+            usr.MomName = appl.MomName;
+            usr.MomNationalityCd = appl.MomNationalityCd;
+            usr.MomNotApplicable = appl.MomNotApplicable;
+            usr.MomOccupation = appl.MomOccupation;
+            usr.MomPhoneNo = appl.MomPhoneNo;
+            usr.MomSalary = appl.MomSalary;
+            usr.MrtlStatusCd = appl.MrtlStatusCd;
+            usr.NationalityCd = appl.NationalityCd;
+            usr.NationalityCertNo = appl.NationalityCertNo;
+            usr.NewICNo = appl.NewICNo;
+            usr.NoOfSibling = appl.NoOfSibling;
+            usr.NoTentera = appl.NoTentera;
+            usr.OriginalPelepasanDocument = appl.OriginalPelepasanDocument;
+            usr.PalapesArmyNo = appl.PalapesArmyNo;
+            usr.PalapesInd = appl.PalapesInd;
+            usr.PalapesInstitution = appl.PalapesInstitution;
+            usr.PalapesRemark = appl.PalapesRemark;
+            usr.PalapesServices = appl.PalapesServices;
+            usr.PalapesTauliahEndDt = appl.PalapesTauliahEndDt;
+            usr.PalapesYear = appl.PalapesYear;
+            usr.PelepasanDocument = appl.PelepasanDocument;
+            usr.RaceCd = appl.RaceCd;
+            usr.ReligionCd = appl.ReligionCd;
+            usr.ResidenceTypeInd = appl.ResidenceTypeInd;
+            usr.ScholarshipBody = appl.ScholarshipBody;
+            usr.ScholarshipBodyAddr = appl.ScholarshipBodyAddr;
+            usr.ScholarshipContractStDate = appl.ScholarshipContractStDate;
+            usr.ScholarshipInd = appl.ScholarshipInd;
+            usr.ScholarshipNoOfYrContract = appl.ScholarshipNoOfYrContract;
+            usr.SelectionTD = appl.SelectionTD;
+            usr.SelectionTL = appl.SelectionTL;
+            usr.SelectionTU = appl.SelectionTU;
+            usr.SpectaclesUserInd = appl.SpectaclesUserInd;
+            usr.Weight = appl.Weight;
             return usr;
         }
 
@@ -863,7 +887,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid && a.RaceCd == racecode select a;
                     if (exist.Any())
                         foreach (var u in exist)
-                            list.Add(BindingToClass(u));
+                        {
+                            var app = BindingToClass(u);
+                            var edus = GetEducation(app.ApplicantId);
+                            foreach (var ed in edus)
+                                app.ApplicantEducationSubmittedCollection.Add(ed);
+
+                            list.Add(app);
+                        }
                 }
             }
             return list;
@@ -899,6 +930,42 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
             }
             return list;
+        }
+
+
+        public IEnumerable<ApplicantSubmitted> GetByAcademis(string highleveleducd)
+        {
+            var list = new List<ApplicantSubmitted>();
+            using (var entities = new atmEntities())
+            {
+                var submittededue = (from a in entities.tblApplicantEduSubmitteds select a);
+                if (!string.IsNullOrWhiteSpace(highleveleducd))
+                    submittededue = submittededue.Where(a => a.HighEduLevelCd == highleveleducd);
+
+                if (submittededue.Any())
+                {
+                    foreach (var app in submittededue)
+                    {
+                        list.Add(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(app.ApplicantId));
+                    }
+                }
+            }
+            return list;
+        }
+
+
+        public ApplicantSubmitted GetApplicant(int applicantid)
+        {
+            if (applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblApplicantSubmiteds where a.ApplicantId == applicantid select a).SingleOrDefault();
+                    if (null != exist)
+                        return BindingToClass(exist);
+                }
+            }
+            return null;
         }
     }
 }

@@ -24,7 +24,7 @@
 
             </td>
         </tr>
-        <tr>
+        <tr class="hidden-print">
             <td>
                 @Html.Partial("_Footer")
             </td>
@@ -61,6 +61,6 @@
     <script src="@Url.Content("~/Scripts/Main/default.js")"></script>
         @RenderSection("scripts", required: false)
     <!-- Debug Purpose -->
-    @*<script src="@Url.Content("~/Scripts/Main/debug.js")"></script>*@
+    <script src="@Url.Content("~/Scripts/Main/debug.js")"></script>
 </body>
 </html>

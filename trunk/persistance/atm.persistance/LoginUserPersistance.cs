@@ -435,5 +435,20 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             return false;
         }
+
+
+        public string GetPassword(int userid)
+        {
+            if (userid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var user = (from a in entities.tblUsers where a.UserId == userid select a).SingleOrDefault();
+                    if (null != user)
+                        return user.Password;
+                }
+            }
+            return string.Empty;
+        }
     }
 }
