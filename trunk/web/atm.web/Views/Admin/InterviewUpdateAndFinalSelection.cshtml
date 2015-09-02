@@ -1,0 +1,54 @@
+﻿@using Newtonsoft.Json
+@using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
+@model SevenH.MMCSB.Atm.Web.Models.AdminViewModel
+@{
+    ViewBag.Title = "Kemaskini Temuduga dan Membuat Pemilihan Akhir";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="tile">
+        <h2 class="tile-title">Kemaskini Temuduga dan Pemilihan Akhir @string.Format("{0}/{1} {2}", Model.Acquisition.Siri, Model.Acquisition.Year, Model.Acquisition.AcquisitionType.AcquisitionTypeNm)</h2>
+        <div class="p-10">
+
+            <table id="applicant_table" class="table table-bordered tile" width="100%">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">Bil</th>
+                        <th>Nama</th>
+                        <th class="col-md-2">No Kad Pengenalan</th>
+                        <th class="col-md-2">Status Permohonan</th>
+                        <th class="col-md-2">
+                            <div>
+                                <label> <input type="checkbox" id="approveall" /> Lulus Semua Calon</label>
+                            </div>
+                        </th>
+                        <th class="col-md-2">
+                            <div>
+                                @*<label> <input type="checkbox" id="selectall" /> Pilih Semua Calon</label>*@
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <input type="button" class="btn btn-primary btn-sm" value="Hantar Pemilihan" data-bind="click: submit" />
+            <a class="btn btn-sm" href="@Url.Action("Index", "Admin")">Kembali</a>
+
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var selectedid = @Model.Acquisition.AcquisitionId;
+        var announcement = @Html.Raw(JsonConvert.SerializeObject(@Model.Announcement, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+    </script>
+    <script src="@Url.Content("~/Content/frontend/js/markdown.min.js")"></script> <!-- Markdown Editor -->
+    <script src="@Url.Content("~/Content/frontend/js/editor.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_finalselection.js")"></script>
+}
+

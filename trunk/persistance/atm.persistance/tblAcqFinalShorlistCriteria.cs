@@ -14,7 +14,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
     
     public partial class tblAcqFinalShorlistCriteria
     {
-        public Nullable<int> AcqFinalShortlistCriteriaId { get; set; }
+        public int AcqFinalShortlistCriteriaId { get; set; }
         public int AcquisitionId { get; set; }
         public string GenderValue { get; set; }
         public string MaritalStatusValue { get; set; }

@@ -63,6 +63,7 @@
     <Compile Include="Class\AcqQuestion.cs" />
     <Compile Include="Class\AcqQuestionnaire.cs" />
     <Compile Include="Class\AcqEduCriteriaFieldOfStudy.cs" />
+    <Compile Include="Class\AcquisitionAnnouncement.cs" />
     <Compile Include="Class\AcquisitionLocation.cs" />
     <Compile Include="Class\AcquisitionType.cs" />
     <Compile Include="Class\Advertisment.cs" />

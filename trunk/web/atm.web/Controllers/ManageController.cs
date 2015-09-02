@@ -102,12 +102,19 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                             loguser.Salt = Guid.NewGuid().ToString();
                     }
                 }
-                loguser.CreatedDt = DateTime.Now;
-                loguser.CreatedBy = User.Identity.Name;
+                if (loguser.UserId == 0)
+                {
+                    loguser.CreatedDt = DateTime.Now;
+                    loguser.CreatedBy = User.Identity.Name;
+                }
                 loguser.IsLocked = loguser.Status != "Aktif";
                 loguser.FirstTime = true;
                 if (loguser.Save() > 0)
                 {
+                    // change the password if the is new password
+                    if (loguser.UserId != 0)
+                        loguser.ChangePassword(loguser.Password);
+
                     var user = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
                     if (null != user)
                     {
@@ -118,7 +125,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                             var loginurl = ConfigurationManager.AppSettings["server"] + "/Account/Login";
                             var templatepath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Templates"), "TempPassword.html");
                             var mail = new MailService();
-                            mail.SendMail("[JOM MASUK TENTERA]Notifikasi Kata Laluan Sementara", from, new List<string> { loguser.Email, loguser.AlternativeEmail }, null, null, user, loginurl, templatepath, DateTime.Now);
+                            mail.SendMail("[JOM MASUK TENTERA]Notifikasi Kata Laluan Sementara", from, new List<string> { loguser.Email, loguser.AlternativeEmail }, null, null, loguser, loginurl, templatepath, DateTime.Now);
                         }
                         ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(user.UserId, LogStatusCodeString.Create_User, User.Identity.Name, DateTime.Now);
                     }

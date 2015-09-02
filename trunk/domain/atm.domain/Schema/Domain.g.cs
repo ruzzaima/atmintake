@@ -20704,6 +20704,395 @@
 
           }
         
+          ///<summary>
+          /// 
+          ///</summary>
+          [Serializable]
+          [XmlType("AcquisitionAnnouncement",  Namespace=Strings.DefaultNamespace)]
+          public  partial class AcquisitionAnnouncement
+          {
+
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  int  m_AcqAnnouncementId;
+            public const string PropertyNameAcqAnnouncementId = "AcqAnnouncementId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  int  m_AcquisitionId;
+            public const string PropertyNameAcquisitionId = "AcquisitionId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_Header;
+            public const string PropertyNameHeader = "Header";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_AttachmentFileName;
+            public const string PropertyNameAttachmentFileName = "AttachmentFileName";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_AttachmentOriginalFileName;
+            public const string PropertyNameAttachmentOriginalFileName = "AttachmentOriginalFileName";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_AnnouncementTypeInd;
+            public const string PropertyNameAnnouncementTypeInd = "AnnouncementTypeInd";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_CreatedBy;
+            public const string PropertyNameCreatedBy = "CreatedBy";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_LastModifiedBy;
+            public const string PropertyNameLastModifiedBy = "LastModifiedBy";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_AnnouncementSelectionInd;
+            public const string PropertyNameAnnouncementSelectionInd = "AnnouncementSelectionInd";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private DateTime?  m_CreatedDate;
+            public const string PropertyNameCreatedDate = "CreatedDate";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private DateTime?  m_LastModifiedDate;
+            public const string PropertyNameLastModifiedDate = "LastModifiedDate";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private string  m_Body;
+            public const string PropertyNameBody = "Body";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private bool?  m_AnnouncementStatusInd;
+            public const string PropertyNameAnnouncementStatusInd = "AnnouncementStatusInd";
+          
+      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+      private Acquisition m_Acquisition
+          =  new Acquisition();
+        
+      public const string PropertyNameAcquisition = "Acquisition";
+      [DebuggerHidden]
+
+      public virtual Acquisition Acquisition
+      {
+      get{ return m_Acquisition;}
+      set
+      {
+      m_Acquisition = value;
+      OnPropertyChanged(PropertyNameAcquisition);
+      }
+      }
+    
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int AcqAnnouncementId
+            {
+            set
+            {
+            if( m_AcqAnnouncementId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAcqAnnouncementId, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_AcqAnnouncementId= value;
+            OnPropertyChanged(PropertyNameAcqAnnouncementId);
+            }
+            }
+            get
+            {
+            return m_AcqAnnouncementId;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int AcquisitionId
+            {
+            set
+            {
+            if( m_AcquisitionId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAcquisitionId, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_AcquisitionId= value;
+            OnPropertyChanged(PropertyNameAcquisitionId);
+            }
+            }
+            get
+            {
+            return m_AcquisitionId;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string Header
+            {
+            set
+            {
+            if( String.Equals( m_Header, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameHeader, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_Header= value;
+            OnPropertyChanged(PropertyNameHeader);
+            }
+            }
+            get
+            {
+            return m_Header;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string AttachmentFileName
+            {
+            set
+            {
+            if( String.Equals( m_AttachmentFileName, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAttachmentFileName, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_AttachmentFileName= value;
+            OnPropertyChanged(PropertyNameAttachmentFileName);
+            }
+            }
+            get
+            {
+            return m_AttachmentFileName;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string AttachmentOriginalFileName
+            {
+            set
+            {
+            if( String.Equals( m_AttachmentOriginalFileName, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAttachmentOriginalFileName, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_AttachmentOriginalFileName= value;
+            OnPropertyChanged(PropertyNameAttachmentOriginalFileName);
+            }
+            }
+            get
+            {
+            return m_AttachmentOriginalFileName;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string AnnouncementTypeInd
+            {
+            set
+            {
+            if( String.Equals( m_AnnouncementTypeInd, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAnnouncementTypeInd, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_AnnouncementTypeInd= value;
+            OnPropertyChanged(PropertyNameAnnouncementTypeInd);
+            }
+            }
+            get
+            {
+            return m_AnnouncementTypeInd;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string CreatedBy
+            {
+            set
+            {
+            if( String.Equals( m_CreatedBy, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameCreatedBy, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_CreatedBy= value;
+            OnPropertyChanged(PropertyNameCreatedBy);
+            }
+            }
+            get
+            {
+            return m_CreatedBy;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string LastModifiedBy
+            {
+            set
+            {
+            if( String.Equals( m_LastModifiedBy, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedBy, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_LastModifiedBy= value;
+            OnPropertyChanged(PropertyNameLastModifiedBy);
+            }
+            }
+            get
+            {
+            return m_LastModifiedBy;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? AnnouncementSelectionInd
+            {
+            set
+            {
+            if(m_AnnouncementSelectionInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAnnouncementSelectionInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_AnnouncementSelectionInd= value;
+            OnPropertyChanged(PropertyNameAnnouncementSelectionInd);
+            }
+            }
+            get { return m_AnnouncementSelectionInd;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? CreatedDate
+            {
+            set
+            {
+            if(m_CreatedDate == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameCreatedDate, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_CreatedDate= value;
+            OnPropertyChanged(PropertyNameCreatedDate);
+            }
+            }
+            get { return m_CreatedDate;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? LastModifiedDate
+            {
+            set
+            {
+            if(m_LastModifiedDate == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameLastModifiedDate, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_LastModifiedDate= value;
+            OnPropertyChanged(PropertyNameLastModifiedDate);
+            }
+            }
+            get { return m_LastModifiedDate;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual string Body
+            {
+            set
+            {
+            if(String.Equals( m_Body, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameBody, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_Body= value;
+            OnPropertyChanged(PropertyNameBody);
+            }
+            }
+            get { return m_Body;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual bool? AnnouncementStatusInd
+            {
+            set
+            {
+            if(m_AnnouncementStatusInd == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameAnnouncementStatusInd, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_AnnouncementStatusInd= value;
+            OnPropertyChanged(PropertyNameAnnouncementStatusInd);
+            }
+            }
+            get { return m_AnnouncementStatusInd;}
+            }
+          
+
+
+          }
+        
     }
 
   

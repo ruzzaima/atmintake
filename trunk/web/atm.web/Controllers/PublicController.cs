@@ -399,7 +399,15 @@ namespace SevenH.MMCSB.Atm.Web
                                 if (acq.AcquisitionTypeCd == 2)
                                     if (applicant.GenderCd == "P")
                                         return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar kerana pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+
+                                // Pegawai.. Check the selection indicator
+                                if (acqtype.ServiceCd == "10")
+                                {
+                                    if (!applicant.SelectionTD.HasValue && !applicant.SelectionTL.HasValue && !applicant.SelectionTU.HasValue)
+                                        return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Sila pilih Keutamaan Perkhidmatan Pilihan" });
+                                }
                             }
+
                         }
 
                         // mandatory checking on profile photo
@@ -649,6 +657,7 @@ namespace SevenH.MMCSB.Atm.Web
                         }
                     }
                 }
+                return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar kerana maklumat tidak lengkap." });
             }
             return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar." });
         }

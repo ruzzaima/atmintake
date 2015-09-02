@@ -120,9 +120,6 @@
     <Compile Include="tblAcquisition.cs">
       <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="tblAdvertisement_Xpakai.cs">
-      <DependentUpon>AtmIntakeModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="tblAdvertisment.cs">
       <DependentUpon>AtmIntakeModel.tt</DependentUpon>
     </Compile>

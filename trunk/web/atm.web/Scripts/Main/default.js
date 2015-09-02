@@ -1,4 +1,5 @@
 ﻿$.support.cors = true;
+var loadingdatatable = '<div class="col-md-12 text-center" style="position: absolute;z-index:2;"><img src="' + server + "/Images/ajax-loader.png" + '" alt="Sedang diproses"/> <br /> <span class="red"><b>Sedang diproses...</b></span> </div>';
 
 $(function () {
     var sPath = window.location.pathname;

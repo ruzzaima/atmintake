@@ -112,7 +112,8 @@ namespace SevenH.MMCSB.Atm.Web
 
             ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
             ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
-            ldReplacement.Add("<%Password%>", user.Password);
+            if (!string.IsNullOrWhiteSpace(user.Password))
+                ldReplacement.Add("<%Password%>", user.Password);
             ldReplacement.Add("<%LoginUrl%>", loginurl);
             var mail = new MailMessage();
             mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
@@ -149,5 +150,44 @@ namespace SevenH.MMCSB.Atm.Web
                     }
                 }
         }
+        public void SendWithMessage(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string subject, string body, DateTime? dateTime)
+        {
+            var client = new SmtpClient();
+
+            var mail = new MailMessage { From = new MailAddress(@from, "No Reply") };
+
+            if (null != ccs)
+                foreach (var cc in ccs.ToList().SelectMany(Spliter))
+                {
+                    mail.CC.Add(new MailAddress(cc, ""));
+                }
+
+            if (null != bccs)
+                foreach (var bcc in bccs.ToList().SelectMany(Spliter))
+                {
+                    mail.Bcc.Add(new MailAddress(bcc, ""));
+                }
+
+            mail.Subject = subject;
+            mail.IsBodyHtml = true;
+            mail.Body = body;
+            AlternateView htmlView = null;
+            if (mail.Body != null) htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
+            mail.AlternateViews.Add(htmlView);
+
+            if (null != tos)
+                foreach (var recipient in tos.ToList().SelectMany(Spliter))
+                {
+                    mail.To.Add(new MailAddress(recipient));
+                    try
+                    {
+                        client.Send(mail);
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+        }
+
     }
 }

@@ -166,6 +166,27 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new System.NotImplementedException();
         }
+
+
+        public int AddAnnouncement(AcquisitionAnnouncement announcement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int UpdateAnnouncement(AcquisitionAnnouncement announcement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool DeleteAnnouncement(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public AcquisitionAnnouncement GetAnnouncement(int acquisitionid, int? announcementselectiontype)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 

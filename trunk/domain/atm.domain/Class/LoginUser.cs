@@ -35,5 +35,12 @@ namespace SevenH.MMCSB.Atm.Domain
 
             return false;
         }
+        public virtual bool ChangePassword(string newpassword)
+        {
+            if (!string.IsNullOrWhiteSpace(newpassword))
+                return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").ChangePasswordFirstTime(UserId, true, newpassword);
+
+            return false;
+        }
     }
 }

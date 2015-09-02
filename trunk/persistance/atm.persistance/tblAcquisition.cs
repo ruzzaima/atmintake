@@ -25,6 +25,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             this.tblAdvertisments = new HashSet<tblAdvertisment>();
             this.tblAppApplicantMeritScores = new HashSet<tblAppApplicantMeritScore>();
             this.tblApplications = new HashSet<tblApplication>();
+            this.tblAcqFinalShorlistCriterias = new HashSet<tblAcqFinalShorlistCriteria>();
         }
     
         public int AcquisitionId { get; set; }
@@ -81,10 +82,10 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual ICollection<tblAcqLocation> tblAcqLocations { get; set; }
         public virtual ICollection<tblAcqMerit> tblAcqMerits { get; set; }
         public virtual ICollection<tblAcqQuestionnaire> tblAcqQuestionnaires { get; set; }
-        public virtual tblAcqFinalShorlistCriteria tblAcqFinalShorlistCriteria { get; set; }
         public virtual tblREFAcqType tblREFAcqType { get; set; }
         public virtual ICollection<tblAdvertisment> tblAdvertisments { get; set; }
         public virtual ICollection<tblAppApplicantMeritScore> tblAppApplicantMeritScores { get; set; }
         public virtual ICollection<tblApplication> tblApplications { get; set; }
+        public virtual ICollection<tblAcqFinalShorlistCriteria> tblAcqFinalShorlistCriterias { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using SevenH.MMCSB.Atm.Domain;
 
@@ -84,50 +85,50 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     var a = new Acquisition
                     {
-                               AcquisitionId = acq.AcquisitionId,
-                               AcquisitionTypeCd = acq.AcquisitionTypeCd,
-                               CreatedBy = acq.CreatedBy,
-                               CreatedDt = acq.CreatedDt,
-                               NewStatus = acq.NewStatus,
-                               NewStatusBy = acq.NewStatusBy,
-                               OpenStatus = acq.OpenStatus,
-                               OpenStatusBy = acq.OpenStatusBy,
-                               SecurityCheckStatus = acq.SecurityCheckStatus,
-                               SecurityCheckStatusBy = acq.SecurityCheckStatusBy,
-                               Siri = acq.Siri,
-                               Target = acq.Target,
-                               Year = acq.Year,
-                               ArmyNumberFrom = acq.ArmyNumberFrom,
-                               PhysicalHealthStatus = acq.PhysicalHealthStatus,
-                               PhysicalHealthStatusBy = acq.PhysicalHealthStatusBy,
-                               ShortlistMeritInd = acq.ShortlistMeritInd,
-                               ToFinalSelNominated = acq.ToFinalSelNominated,
-                               ToFinalSelNominatedBy = acq.ToFinalSelNominatedBy,
-                               WrittenTestStatus = acq.WrittenTestStatus,
-                               WrittenTestStatusBy = acq.WrittenTestStatusBy,
-                               ArmyNumberTo = acq.ArmyNumberTo,
-                               AssignNoTenteraStatus = acq.AssignNoTenteraStatus,
-                               AssignNoTenteraStatusBy = acq.AssignNoTenteraStatusBy,
-                               CloseStatus = acq.CloseStatus,
-                               CloseStatusBy = acq.CloseStatusBy,
-                               CompleteStatus = acq.CompleteStatus,
-                               CompleteStatusBy = acq.CompleteStatusBy,
-                               FirstSelShortlisProcessInd = acq.FirstSelShortlisProcessInd,
-                               ClosingDate = acq.ClosingDate,
-                               DocumentStatus = acq.DocumentStatus,
-                               DocumentStatusBy = acq.DocumentStatusBy,
-                               FinalSelShortlisProcessInd = acq.FinalSelShortlisProcessInd,
-                               FinalSelStatus = acq.FinalSelStatus,
-                               FinalSelStatusBy = acq.FinalSelStatusBy,
-                               FirstSelectionStatus = acq.FirstSelectionStatus,
-                               FirstSelectionStatusBy = acq.FirstSelectionStatusBy,
-                               InviteFinalSelStatus = acq.InviteFinalSelStatus,
-                               InviteFinalSelStatusBy = acq.InviteFinalSelStatusBy,
-                               InviteFirstSelNominated = acq.InviteFirstSelNominated,
-                               InviteFirstSelNominatedBy = acq.InviteFirstSelNominatedBy,
-                               InviteFirstSelStatus = acq.InviteFirstSelStatus,
-                               InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy
-                           };
+                        AcquisitionId = acq.AcquisitionId,
+                        AcquisitionTypeCd = acq.AcquisitionTypeCd,
+                        CreatedBy = acq.CreatedBy,
+                        CreatedDt = acq.CreatedDt,
+                        NewStatus = acq.NewStatus,
+                        NewStatusBy = acq.NewStatusBy,
+                        OpenStatus = acq.OpenStatus,
+                        OpenStatusBy = acq.OpenStatusBy,
+                        SecurityCheckStatus = acq.SecurityCheckStatus,
+                        SecurityCheckStatusBy = acq.SecurityCheckStatusBy,
+                        Siri = acq.Siri,
+                        Target = acq.Target,
+                        Year = acq.Year,
+                        ArmyNumberFrom = acq.ArmyNumberFrom,
+                        PhysicalHealthStatus = acq.PhysicalHealthStatus,
+                        PhysicalHealthStatusBy = acq.PhysicalHealthStatusBy,
+                        ShortlistMeritInd = acq.ShortlistMeritInd,
+                        ToFinalSelNominated = acq.ToFinalSelNominated,
+                        ToFinalSelNominatedBy = acq.ToFinalSelNominatedBy,
+                        WrittenTestStatus = acq.WrittenTestStatus,
+                        WrittenTestStatusBy = acq.WrittenTestStatusBy,
+                        ArmyNumberTo = acq.ArmyNumberTo,
+                        AssignNoTenteraStatus = acq.AssignNoTenteraStatus,
+                        AssignNoTenteraStatusBy = acq.AssignNoTenteraStatusBy,
+                        CloseStatus = acq.CloseStatus,
+                        CloseStatusBy = acq.CloseStatusBy,
+                        CompleteStatus = acq.CompleteStatus,
+                        CompleteStatusBy = acq.CompleteStatusBy,
+                        FirstSelShortlisProcessInd = acq.FirstSelShortlisProcessInd,
+                        ClosingDate = acq.ClosingDate,
+                        DocumentStatus = acq.DocumentStatus,
+                        DocumentStatusBy = acq.DocumentStatusBy,
+                        FinalSelShortlisProcessInd = acq.FinalSelShortlisProcessInd,
+                        FinalSelStatus = acq.FinalSelStatus,
+                        FinalSelStatusBy = acq.FinalSelStatusBy,
+                        FirstSelectionStatus = acq.FirstSelectionStatus,
+                        FirstSelectionStatusBy = acq.FirstSelectionStatusBy,
+                        InviteFinalSelStatus = acq.InviteFinalSelStatus,
+                        InviteFinalSelStatusBy = acq.InviteFinalSelStatusBy,
+                        InviteFirstSelNominated = acq.InviteFirstSelNominated,
+                        InviteFirstSelNominatedBy = acq.InviteFirstSelNominatedBy,
+                        InviteFirstSelStatus = acq.InviteFirstSelStatus,
+                        InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy
+                    };
 
                     if (a.AcquisitionTypeCd != 0)
                     {
@@ -333,6 +334,108 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
             }
             return 0;
+        }
+
+
+        public int AddAnnouncement(AcquisitionAnnouncement announcement)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblAcqAnnouncements where a.AcquisitionId == announcement.AcquisitionId && a.AnnouncementSelectionInd == announcement.AnnouncementSelectionInd select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    announcement.AcqAnnouncementId = exist.AcqAnnouncementId;
+                    return UpdateAnnouncement(announcement);
+                }
+
+                var ann = new tblAcqAnnouncement()
+                {
+                    AnnouncementSelectionInd = announcement.AnnouncementSelectionInd,
+                    AnnouncementStatusInd = announcement.AnnouncementStatusInd,
+                    AcquisitionId = announcement.AcquisitionId,
+                    AnnouncementTypeInd = announcement.AnnouncementTypeInd,
+                    AttachmentFileName = announcement.AttachmentFileName,
+                    AttachmentOriginalFileName = announcement.AttachmentOriginalFileName,
+                    Body = announcement.Body,
+                    Header = announcement.Header,
+                    CreatedBy = announcement.CreatedBy,
+                    CreatedDt = announcement.CreatedDate,
+                };
+                entities.tblAcqAnnouncements.Add(ann);
+                if (entities.SaveChanges() > 0)
+                    return ann.AcqAnnouncementId;
+            }
+            return 0;
+        }
+
+        public int UpdateAnnouncement(AcquisitionAnnouncement announcement)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblAcqAnnouncements where a.AcqAnnouncementId == announcement.AcqAnnouncementId select a).SingleOrDefault();
+                if (null != exist)
+                {
+                    exist.AnnouncementSelectionInd = announcement.AnnouncementSelectionInd;
+                    exist.AnnouncementStatusInd = announcement.AnnouncementStatusInd;
+                    exist.AcquisitionId = announcement.AcquisitionId;
+                    exist.AnnouncementTypeInd = announcement.AnnouncementTypeInd;
+                    exist.AttachmentFileName = announcement.AttachmentFileName;
+                    exist.AttachmentOriginalFileName = announcement.AttachmentOriginalFileName;
+                    exist.Body = announcement.Body;
+                    exist.Header = announcement.Header;
+                    exist.LastModifiedBy = announcement.LastModifiedBy;
+                    exist.LastModifiedDt = announcement.LastModifiedDate;
+
+                    if (entities.SaveChanges() > 0)
+                        return exist.AcqAnnouncementId;
+                }
+            }
+            return 0;
+        }
+
+        public bool DeleteAnnouncement(int id)
+        {
+            if (id != 0)
+                using (var entities = new atmEntities())
+                {
+                    var exist = (from a in entities.tblAcqAnnouncements where a.AcqAnnouncementId == id select a).SingleOrDefault();
+                    if (null != exist)
+                    {
+                        entities.tblAcqAnnouncements.Remove(exist);
+                        return entities.SaveChanges() > 0;
+                    }
+                }
+            return false;
+        }
+
+        public AcquisitionAnnouncement GetAnnouncement(int acquisitionid, int? announcementselectiontype)
+        {
+            using (var entities = new atmEntities())
+            {
+                var exist = (from a in entities.tblAcqAnnouncements where a.AcquisitionId == acquisitionid && a.AnnouncementSelectionInd == announcementselectiontype select a).SingleOrDefault();
+                
+                if (null != exist)
+                {
+                    var ann = new AcquisitionAnnouncement()
+                    {
+                        AcqAnnouncementId = exist.AcqAnnouncementId,
+                        AnnouncementSelectionInd = exist.AnnouncementSelectionInd,
+                        AnnouncementStatusInd = exist.AnnouncementStatusInd,
+                        AcquisitionId = exist.AcquisitionId,
+                        AnnouncementTypeInd = exist.AnnouncementTypeInd,
+                        AttachmentFileName = exist.AttachmentFileName,
+                        AttachmentOriginalFileName = exist.AttachmentOriginalFileName,
+                        Body = exist.Body,
+                        Header = exist.Header,
+                        CreatedBy = exist.CreatedBy,
+                        CreatedDate = exist.CreatedDt,
+                        LastModifiedBy = exist.LastModifiedBy,
+                        LastModifiedDate = exist.LastModifiedDt
+                    };
+                    return ann;
+                }
+            }
+            return null;
         }
     }
 }
