@@ -13,7 +13,6 @@ $(function () {
             name: ko.observable(''),
             icno: ko.observable('')
         },
-        approvecandidates: ko.observableArray([]),
         candidates: ko.observableArray([]),
         announcement: ko.mapping.fromJS(announcement),
         search: function (d) {
@@ -27,7 +26,7 @@ $(function () {
                 "bProcessing": true,
                 "bDestroy": true,
                 "bServerSide": true,
-                "sAjaxSource": server + '/Admin/LoadToUpdateApplicant?category=' + ko.mapping.toJS(viewModel.searchcriteria.category) + "&name=" + ko.mapping.toJS(viewModel.searchcriteria.name) + "&icno=" + ko.mapping.toJS(viewModel.searchcriteria.icno) + "&acquisitionid=" + selectedid + "&finalinvitation=true",
+                "sAjaxSource": server + '/Admin/LoadToUpdateApplicant?category=' + ko.mapping.toJS(viewModel.searchcriteria.category) + "&name=" + ko.mapping.toJS(viewModel.searchcriteria.name) + "&icno=" + ko.mapping.toJS(viewModel.searchcriteria.icno) + "&acquisitionid=" + selectedid + "&firstinvitation=true",
                 "fnDrawCallback": function (oSettings) {
                     /* Need to redo the counters if filtered or sorted */
                     //if (oSettings.bSorted || oSettings.bFiltered) {
@@ -46,15 +45,7 @@ $(function () {
                                     "sClass": "text-middle",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="checkbox" app-data="true" class="approve-row" id="af_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Lulus Pemilihan Pertama</span> </label>';
-                                    }
-                                },
-                                {
-                                    "bSortable": false,
-                                    "sClass": "text-middle",
-                                    "mRender": function (data, type, full) {
-                                        var id = data;
-                                        return '<label><input type="checkbox" call-data="true" class="check-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Pemilihan Akhir</span> </label>';
+                                        return '<label><input type="checkbox" class="check-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Pemilihan</span> </label>';
                                     }
                                 }
                 ],
@@ -71,23 +62,16 @@ $(function () {
         submit: function () {
             viewModel.candidates.removeAll();
             $("input:checked", oTable.fnGetNodes()).each(function () {
-                if ($(this).attr('app-data')) {
-                    viewModel.approvecandidates.push($(this).val());
-                }
-
-                if ($(this).attr('call-data')) {
-                    viewModel.candidates.push($(this).val());
-                }
+                viewModel.candidates.push($(this).val());
             });
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ approvecandidates: ko.mapping.toJS(viewModel.approvecandidates), candidates: ko.mapping.toJS(viewModel.candidates) }),
-                url: server + '/Admin/SubmitFinalSelection',
+                data: JSON.stringify({ candidates: ko.mapping.toJS(viewModel.candidates) }),
+                url: server + '/Admin/SubmitFirstSelection',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.OK) {
-                        $("#approveall").prop("checked", false);
                         $("#selectall").prop("checked", false);
                         loadApplicant();
                     }
@@ -101,7 +85,7 @@ $(function () {
         },
         savetemplate: function () {
             viewModel.announcement.Body($('.wysiwye-editor').code());
-            viewModel.announcement.AnnouncementSelectionInd(2);
+            viewModel.announcement.AnnouncementSelectionInd(1);
             viewModel.announcement.AnnouncementTypeInd('E');
             $.ajax({
                 type: 'POST',
@@ -118,6 +102,9 @@ $(function () {
                     hideLoading();
                 }
             });
+        },
+        print: function () {
+            window.open(server + "/Admin/PrintFirstInvitation", "PrintFirstInvite", null, true);
         }
     };
 
@@ -129,14 +116,6 @@ $(function () {
             $('.check-row').prop("checked", true);
         } else {
             $('.check-row').prop("checked", false);
-        }
-    });
-
-    $("#approveall").change(function () {
-        if ($(this).is(":checked")) {
-            $('.approve-row').prop("checked", true);
-        } else {
-            $('.approve-row').prop("checked", false);
         }
     });
 

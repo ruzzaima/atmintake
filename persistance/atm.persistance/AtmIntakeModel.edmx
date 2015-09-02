@@ -6,7 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="AtmIntakeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
-warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DBHRMISINTAKE.dbo.sysdiagrams' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="name" />
@@ -23,7 +23,7 @@ warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary
           <Key>
             <PropertyRef Name="AcqAnnouncementId" />
           </Key>
-          <Property Name="AcqAnnouncementId" Type="int" Nullable="false" />
+          <Property Name="AcqAnnouncementId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" Nullable="false" />
           <Property Name="AnnouncementSelectionInd" Type="int" />
           <Property Name="AnnouncementTypeInd" Type="char" MaxLength="1" />
@@ -41,7 +41,7 @@ warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary
           <Key>
             <PropertyRef Name="AcqCriteriaId" />
           </Key>
-          <Property Name="AcqCriteriaId" Type="int" Nullable="false" />
+          <Property Name="AcqCriteriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" />
           <Property Name="TDHeightM" Type="decimal" Precision="5" Scale="2" />
           <Property Name="TDWeightM" Type="decimal" Precision="5" Scale="2" />
@@ -72,7 +72,7 @@ warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary
           <Key>
             <PropertyRef Name="AcqEduCriteriaId" />
           </Key>
-          <Property Name="AcqEduCriteriaId" Type="int" Nullable="false" />
+          <Property Name="AcqEduCriteriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" />
           <Property Name="HighEduLevelCd" Type="char" MaxLength="2" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" Nullable="false" />
@@ -85,7 +85,7 @@ warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary
           <Key>
             <PropertyRef Name="AcqEduCriteriaSubjectId" />
           </Key>
-          <Property Name="AcqEduCriteriaSubjectId" Type="int" Nullable="false" />
+          <Property Name="AcqEduCriteriaSubjectId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcqEduCriteriaId" Type="int" />
           <Property Name="SubjectCd" Type="int" />
           <Property Name="Subject" Type="char" MaxLength="20" />
@@ -101,7 +101,7 @@ warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary
           <Key>
             <PropertyRef Name="AcqEduCriFOS" />
           </Key>
-          <Property Name="AcqEduCriFOS" Type="int" Nullable="false" />
+          <Property Name="AcqEduCriFOS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcqEduCriteriaId" Type="int" />
           <Property Name="MajorMinorCd" Type="char" MaxLength="6" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
@@ -111,12 +111,13 @@ warning 6002: The table/view 'atmintake.dbo.sysdiagrams' does not have a primary
           <Property Name="MajorMinor" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblAcqFinalShorlistCriteria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblAcqFinalShorlistCriteria">
           <Key>
+            <PropertyRef Name="AcqFinalShortlistCriteriaId" />
             <PropertyRef Name="AcquisitionId" />
           </Key>
-          <Property Name="AcqFinalShortlistCriteriaId" Type="int" />
+          <Property Name="AcqFinalShortlistCriteriaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" Nullable="false" />
           <Property Name="GenderValue" Type="varchar" MaxLength="50" />
           <Property Name="MaritalStatusValue" Type="varchar" MaxLength="50" />
@@ -157,7 +158,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AcqLocationId" />
           </Key>
-          <Property Name="AcqLocationId" Type="int" Nullable="false" />
+          <Property Name="AcqLocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" />
           <Property Name="ZoneCd" Type="char" MaxLength="1" />
           <Property Name="LocationId" Type="int" />
@@ -170,7 +171,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AcqMeritId" />
           </Key>
-          <Property Name="AcqMeritId" Type="int" Nullable="false" />
+          <Property Name="AcqMeritId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" Nullable="false" />
           <Property Name="MeritTypeCd" Type="char" MaxLength="2" />
           <Property Name="MeritInd" Type="bit" />
@@ -179,7 +180,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AcqMeritScoreId" />
           </Key>
-          <Property Name="AcqMeritScoreId" Type="int" Nullable="false" />
+          <Property Name="AcqMeritScoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcqMeritId" Type="int" Nullable="false" />
           <Property Name="GradeCd" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="CGPAFrom" Type="decimal" Precision="5" Scale="2" />
@@ -195,7 +196,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AcqQuestionId" />
           </Key>
-          <Property Name="AcqQuestionId" Type="int" Nullable="false" />
+          <Property Name="AcqQuestionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionnaireId" Type="int" />
           <Property Name="Statement" Type="varchar" MaxLength="200" />
           <Property Name="SequenceNo" Type="int" />
@@ -210,7 +211,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="QuestionnaireId" />
           </Key>
-          <Property Name="QuestionnaireId" Type="int" Nullable="false" />
+          <Property Name="QuestionnaireId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" />
           <Property Name="QuestionnaireTypeCd" Type="char" MaxLength="1" />
           <Property Name="Weightage" Type="int" />
@@ -228,7 +229,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="QuestionnaireScaleId" />
           </Key>
-          <Property Name="QuestionnaireScaleId" Type="int" Nullable="false" />
+          <Property Name="QuestionnaireScaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionnaireId" Type="int" />
           <Property Name="Scale" Type="int" />
           <Property Name="ScaleRemark" Type="varchar" MaxLength="20" />
@@ -238,7 +239,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AcquisitionId" />
           </Key>
-          <Property Name="AcquisitionId" Type="int" Nullable="false" />
+          <Property Name="AcquisitionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionTypeCd" Type="int" />
           <Property Name="Year" Type="int" />
           <Property Name="Siri" Type="int" />
@@ -286,26 +287,6 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="FinalSupportingDocument" Type="varchar" MaxLength="255" />
           <Property Name="ReportDutySupportingDocument" Type="varchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="tblAdvertisement_Xpakai">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="ServiceCd" Type="char" MaxLength="2" />
-          <Property Name="IntakeLocationId" Type="int" />
-          <Property Name="InterviewLocationId" Type="int" />
-          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="ShortDescription" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Description" Type="text" Nullable="false" />
-          <Property Name="StartDate" Type="datetime" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="IsACtive" Type="bit" Nullable="false" />
-          <Property Name="CreatedBy" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="LastModifiedBy" Type="varchar" MaxLength="100" />
-          <Property Name="LastModifiedDt" Type="datetime" />
-          <Property Name="AcquisitionId" Type="int" />
-        </EntityType>
         <EntityType Name="tblAdvertisment">
           <Key>
             <PropertyRef Name="Id" />
@@ -330,7 +311,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AppApplicantDentalExamineId" />
           </Key>
-          <Property Name="AppApplicantDentalExamineId" Type="int" Nullable="false" />
+          <Property Name="AppApplicantDentalExamineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="int" />
           <Property Name="DentallExamineVenue" Type="varchar" MaxLength="200" />
           <Property Name="DentalExamineDate" Type="date" />
@@ -350,7 +331,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AppApplicantMeritScore" />
           </Key>
-          <Property Name="AppApplicantMeritScore" Type="int" Nullable="false" />
+          <Property Name="AppApplicantMeritScore" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionId" Type="int" Nullable="false" />
           <Property Name="AppId" Type="int" Nullable="false" />
           <Property Name="OverallAcademicScore" Type="decimal" Precision="5" Scale="2" />
@@ -381,7 +362,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AppApplicantPhysicalExamIllnessId" />
           </Key>
-          <Property Name="AppApplicantPhysicalExamIllnessId" Type="int" Nullable="false" />
+          <Property Name="AppApplicantPhysicalExamIllnessId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppApplicantPhysicalId" Type="int" />
           <Property Name="MedDiseaseCd" Type="char" MaxLength="3" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
@@ -393,7 +374,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AppApplicantPhysicalId" />
           </Key>
-          <Property Name="AppApplicantPhysicalId" Type="int" Nullable="false" />
+          <Property Name="AppApplicantPhysicalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="int" Nullable="false" />
           <Property Name="SelectionInd" Type="int" />
           <Property Name="PhysicalExamineVenue" Type="varchar" MaxLength="200" />
@@ -433,7 +414,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="AppApplicantPhysicalTestId" />
           </Key>
-          <Property Name="AppApplicantPhysicalTestId" Type="int" Nullable="false" />
+          <Property Name="AppApplicantPhysicalTestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="int" Nullable="false" />
           <Property Name="SelectionInd" Type="int" />
           <Property Name="PhysicalTestVenue" Type="varchar" MaxLength="200" />
@@ -579,7 +560,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="ApplicantDispStatusId" />
           </Key>
-          <Property Name="ApplicantDispStatusId" Type="int" Nullable="false" />
+          <Property Name="ApplicantDispStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="Disciplinary" Type="varchar" MaxLength="100" />
           <Property Name="NoTentera" Type="char" MaxLength="12" />
@@ -593,7 +574,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Key>
             <PropertyRef Name="ApplicantDispStatusId" />
           </Key>
-          <Property Name="ApplicantDispStatusId" Type="int" Nullable="false" />
+          <Property Name="ApplicantDispStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ApplicantId" Type="int" />
           <Property Name="Disciplinary" Type="varchar" MaxLength="100" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
@@ -888,10 +869,7 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="InvitationFirstSel" Type="bit" />
           <Property Name="FirstSelectionAttdnInd" Type="bit" />
           <Property Name="FirstSelActualAcqLocationId" Type="int" />
-          <Property Name="FinalSelActualAcqLocationId" Type="int" />
-          <Property Name="FirstSelectionDate" Type="datetime" />
-          <Property Name="FinalSelectionStartDate" Type="datetime" />
-          <Property Name="FinalSelectionEndDate" Type="datetime" />
+          <Property Name="FirstSelectionDate" Type="date" />
           <Property Name="WrittenTest" Type="bit" />
           <Property Name="SecurityStatus" Type="bit" />
           <Property Name="SecurityPDRM" Type="bit" />
@@ -911,8 +889,6 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="PhysicalTest" Type="bit" />
           <Property Name="FinalSelectionRemark" Type="varchar" MaxLength="1000" />
           <Property Name="ReportDuty" Type="int" />
-          <Property Name="ReportDutyDate" Type="datetime" />
-          <Property Name="ReportDutyLocId" Type="int" />
           <Property Name="Urine" Type="bit" />
           <Property Name="FirstShortlistedInd" Type="int" />
           <Property Name="FinalShortlistedInd" Type="int" />
@@ -920,14 +896,20 @@ warning 6002: The table/view 'atmintake.dbo.tblAcqFinalShorlistCriteria' does no
           <Property Name="Panel2Score" Type="int" />
           <Property Name="Panel3Score" Type="int" />
           <Property Name="ArmyNo" Type="varchar" MaxLength="12" />
+          <Property Name="FinalSelActualAcqLocationId" Type="int" />
+          <Property Name="FinalSelectionStartDate" Type="datetime" />
+          <Property Name="FinalSelectionEndDate" Type="datetime" />
+          <Property Name="ReportDutyDate" Type="datetime" />
+          <Property Name="ReportDutyLocId" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblApplicationStatus">
           <Key>
+            <PropertyRef Name="ApplciationStatusId" />
             <PropertyRef Name="AppId" />
           </Key>
-          <Property Name="ApplciationStatusId" Type="int" />
+          <Property Name="ApplciationStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="int" Nullable="false" />
           <Property Name="ApplicationStatusCd" Type="char" MaxLength="2" />
           <Property Name="CurrentInd" Type="bit" />
@@ -938,7 +920,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Key>
             <PropertyRef Name="AppQstnFeedback" />
           </Key>
-          <Property Name="AppQstnFeedback" Type="int" Nullable="false" />
+          <Property Name="AppQstnFeedback" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AppId" Type="int" />
           <Property Name="AcqQuestionId" Type="int" />
           <Property Name="QuestionnaireScaleId" Type="int" />
@@ -950,7 +932,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Key>
             <PropertyRef Name="AppQuestionnaireScoreId" />
           </Key>
-          <Property Name="AppQuestionnaireScoreId" Type="int" Nullable="false" />
+          <Property Name="AppQuestionnaireScoreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuestionnaireId" Type="int" Nullable="false" />
           <Property Name="AppId" Type="int" Nullable="false" />
           <Property Name="Score" Type="int" />
@@ -963,7 +945,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Key>
             <PropertyRef Name="COID" />
           </Key>
-          <Property Name="COID" Type="int" Nullable="false" />
+          <Property Name="COID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ICNOBaru" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="NoTentera" Type="int" Nullable="false" />
           <Property Name="CONm" Type="varchar" MaxLength="120" Nullable="false" />
@@ -985,7 +967,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Key>
             <PropertyRef Name="AcquisitionTypeCd" />
           </Key>
-          <Property Name="AcquisitionTypeCd" Type="int" Nullable="false" />
+          <Property Name="AcquisitionTypeCd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AcquisitionTypeNm" Type="varchar" MaxLength="30" />
           <Property Name="ServiceCd" Type="char" MaxLength="2" />
         </EntityType>
@@ -1029,7 +1011,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Key>
             <PropertyRef Name="DocumentId" />
           </Key>
-          <Property Name="DocumentId" Type="int" Nullable="false" />
+          <Property Name="DocumentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DocumentName" Type="varchar" MaxLength="200" />
           <Property Name="ActiveInd" Type="bit" />
         </EntityType>
@@ -1107,7 +1089,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Key>
             <PropertyRef Name="LocationId" />
           </Key>
-          <Property Name="LocationId" Type="int" Nullable="false" />
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="LocationNm" Type="varchar" MaxLength="100" />
           <Property Name="CityCd" Type="char" MaxLength="6" />
           <Property Name="StateCd" Type="char" MaxLength="2" />
@@ -1204,7 +1186,7 @@ warning 6002: The table/view 'atmintake.dbo.tblApplicationStatus' does not have 
           <Property Name="QuestionnaireType" Type="varchar" MaxLength="30" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblREFQuestionnareType">
           <Key>
             <PropertyRef Name="QuestionnaireTypeCd" />
@@ -1241,8 +1223,8 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Key>
             <PropertyRef Name="ReportDutyLocId" />
           </Key>
-          <Property Name="ReportDutyLocId" Type="int" Nullable="false" />
-          <Property Name="ReportDutyLoc" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ReportDutyLocId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportDutyLoc" Type="varchar" MaxLength="255" />
           <Property Name="BUID" Type="int" />
         </EntityType>
         <EntityType Name="tblREFService">
@@ -1276,7 +1258,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Key>
             <PropertyRef Name="SportAssocId" />
           </Key>
-          <Property Name="SportAssocId" Type="int" Nullable="false" />
+          <Property Name="SportAssocId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SportAssociatType" Type="char" MaxLength="1" />
           <Property Name="SportAssociatName" Type="varchar" MaxLength="100" />
           <Property Name="ActiveInd" Type="bit" />
@@ -1351,11 +1333,11 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="IsLocked" Type="bit" />
           <Property Name="FirstTime" Type="bit" />
           <Property Name="LastLoginDt" Type="smalldatetime" />
-          <Property Name="LastLoginDt2" Type="smalldatetime" />
           <Property Name="CreatedDt" Type="smalldatetime" Nullable="false" />
           <Property Name="CreatedBy" Type="varchar" MaxLength="100" />
           <Property Name="ModifiedDt" Type="smalldatetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="100" />
+          <Property Name="LastLoginDt2" Type="datetime" />
         </EntityType>
         <EntityType Name="tblUserLog">
           <Key>
@@ -1460,7 +1442,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
         </Association>
         <Association Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition">
           <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="1" />
-          <End Role="tblAcqFinalShorlistCriteria" Type="Self.tblAcqFinalShorlistCriteria" Multiplicity="0..1" />
+          <End Role="tblAcqFinalShorlistCriteria" Type="Self.tblAcqFinalShorlistCriteria" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblAcquisition">
               <PropertyRef Name="AcquisitionId" />
@@ -1647,18 +1629,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Principal>
             <Dependent Role="tblAcqQuestionnaireScale">
               <PropertyRef Name="QuestionnaireId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblAcquisition_tblREFAcqType">
-          <End Role="tblREFAcqType" Type="Self.tblREFAcqType" Multiplicity="0..1" />
-          <End Role="tblAcquisition" Type="Self.tblAcquisition" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblREFAcqType">
-              <PropertyRef Name="AcquisitionTypeCd" />
-            </Principal>
-            <Dependent Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionTypeCd" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2576,7 +2546,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
         </Association>
         <Association Name="FK_tblApplicationStatus_tblApplication">
           <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="1" />
-          <End Role="tblApplicationStatus" Type="Self.tblApplicationStatus" Multiplicity="0..1" />
+          <End Role="tblApplicationStatus" Type="Self.tblApplicationStatus" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblApplication">
               <PropertyRef Name="AppId" />
@@ -2778,18 +2748,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblUserLog_tblREFLoginStatus">
-          <End Role="tblREFLoginStatus" Type="Self.tblREFLoginStatus" Multiplicity="0..1" />
-          <End Role="tblUserLog" Type="Self.tblUserLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblREFLoginStatus">
-              <PropertyRef Name="LoginStatusCd" />
-            </Principal>
-            <Dependent Role="tblUserLog">
-              <PropertyRef Name="LoginStatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="AtmIntakeModelStoreContainer">
           <EntitySet Name="tblAcqAnnouncement" EntityType="Self.tblAcqAnnouncement" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAcqCriteria" EntityType="Self.tblAcqCriteria" Schema="dbo" store:Type="Tables" />
@@ -2803,7 +2761,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySet Name="tblAcqQuestionnaire" EntityType="Self.tblAcqQuestionnaire" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAcqQuestionnaireScale" EntityType="Self.tblAcqQuestionnaireScale" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAcquisition" EntityType="Self.tblAcquisition" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblAdvertisement_Xpakai" EntityType="Self.tblAdvertisement_Xpakai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAdvertisment" EntityType="Self.tblAdvertisment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAppApplicantDentalExamination" EntityType="Self.tblAppApplicantDentalExamination" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAppApplicantMeritScore" EntityType="Self.tblAppApplicantMeritScore" Schema="dbo" store:Type="Tables" />
@@ -3025,10 +2982,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <AssociationSet Name="FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire" Association="Self.FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire">
             <End Role="tblAcqQuestionnaire" EntitySet="tblAcqQuestionnaire" />
             <End Role="tblAcqQuestionnaireScale" EntitySet="tblAcqQuestionnaireScale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblAcquisition_tblREFAcqType" Association="Self.FK_tblAcquisition_tblREFAcqType">
-            <End Role="tblREFAcqType" EntitySet="tblREFAcqType" />
-            <End Role="tblAcquisition" EntitySet="tblAcquisition" />
           </AssociationSet>
           <AssociationSet Name="FK_tblAdvertisment_tblAcquisition" Association="Self.FK_tblAdvertisment_tblAcquisition">
             <End Role="tblAcquisition" EntitySet="tblAcquisition" />
@@ -3402,10 +3355,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             <End Role="tblREFHighEduLevel" EntitySet="tblREFHighEduLevel" />
             <End Role="tblREFSubject" EntitySet="tblREFSubject" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblUserLog_tblREFLoginStatus" Association="Self.FK_tblUserLog_tblREFLoginStatus">
-            <End Role="tblREFLoginStatus" EntitySet="tblREFLoginStatus" />
-            <End Role="tblUserLog" EntitySet="tblUserLog" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -3614,26 +3563,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="MeritMark" Type="Int32" />
           <NavigationProperty Name="tblAcqQuestionnaire" Relationship="Self.FK_tblAcqQuestionnaireScale_tblAcqQuestionnaire" FromRole="tblAcqQuestionnaireScale" ToRole="tblAcqQuestionnaire" />
           <NavigationProperty Name="tblAppQuestionFeedbacks" Relationship="Self.FK_tblAppQuestionFeedback_tblAcqQuestionnaireScale" FromRole="tblAcqQuestionnaireScale" ToRole="tblAppQuestionFeedback" />
-        </EntityType>
-        <EntityType Name="tblAdvertisement_Xpakai">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="IntakeLocationId" Type="Int32" />
-          <Property Name="InterviewLocationId" Type="Int32" />
-          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ShortDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" Precision="3" />
-          <Property Name="EndDate" Type="DateTime" Precision="3" />
-          <Property Name="IsACtive" Type="Boolean" Nullable="false" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <Property Name="AcquisitionId" Type="Int32" />
         </EntityType>
         <EntityType Name="tblAdvertisment">
           <Key>
@@ -4301,7 +4230,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="InvitationFirstSel" Type="Boolean" />
           <Property Name="FirstSelectionAttdnInd" Type="Boolean" />
           <Property Name="FirstSelActualAcqLocationId" Type="Int32" />
-          <Property Name="FirstSelectionDate" Type="DateTime" Precision="3" />
+          <Property Name="FirstSelectionDate" Type="DateTime" Precision="0" />
           <Property Name="WrittenTest" Type="Boolean" />
           <Property Name="SecurityStatus" Type="Boolean" />
           <Property Name="SecurityPDRM" Type="Boolean" />
@@ -4335,7 +4264,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <NavigationProperty Name="tblAppApplicantPhysicalExaminations" Relationship="Self.FK_tblAppApplicantPhysical_tblApplication" FromRole="tblApplication" ToRole="tblAppApplicantPhysicalExamination" />
           <NavigationProperty Name="tblAppApplicantPhysicalTests" Relationship="Self.FK_tblAppApplicantPhysicalTest_tblApplication" FromRole="tblApplication" ToRole="tblAppApplicantPhysicalTest" />
           <NavigationProperty Name="tblAppDocumentStatus" Relationship="Self.FK_tblAppDocumentStatus_tblApplication" FromRole="tblApplication" ToRole="tblAppDocumentStatus" />
-          <NavigationProperty Name="tblApplicationStatu" Relationship="Self.FK_tblApplicationStatus_tblApplication" FromRole="tblApplication" ToRole="tblApplicationStatus" />
           <NavigationProperty Name="tblAppQuestionFeedbacks" Relationship="Self.FK_tblAppQuestionFeedback_tblApplication" FromRole="tblApplication" ToRole="tblAppQuestionFeedback" />
           <NavigationProperty Name="tblAppQuestionnaireScores" Relationship="Self.FK_tblAppQuestionnaireScore_tblApplication" FromRole="tblApplication" ToRole="tblAppQuestionnaireScore" />
           <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblApplication_tblAcquisition" FromRole="tblApplication" ToRole="tblAcquisition" />
@@ -4345,6 +4273,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="ReportDutyDate" Type="DateTime" Precision="3" />
           <Property Name="ReportDutyLocId" Type="Int32" />
           <NavigationProperty Name="tblREFReportDutyLoc" Relationship="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" FromRole="tblApplication" ToRole="tblREFReportDutyLoc" />
+          <NavigationProperty Name="tblApplicationStatus" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" FromRole="tblApplication" ToRole="tblApplicationStatu" />
         </EntityType>
         <EntityType Name="tblAppQuestionFeedback">
           <Key>
@@ -4410,7 +4339,7 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           </Key>
           <Property Name="ApplicationStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="ApplicationStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblApplicationStatus" Relationship="Self.FK_tblApplicationStatus_tblREFApplicationStatus" FromRole="tblREFApplicationStatus" ToRole="tblApplicationStatus" />
+          <NavigationProperty Name="tblApplicationStatus" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblREFApplicationStatus" FromRole="tblREFApplicationStatu" ToRole="tblApplicationStatu" />
         </EntityType>
         <EntityType Name="tblRefBloodType">
           <Key>
@@ -4585,7 +4514,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           </Key>
           <Property Name="LoginStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="LoginStatusNm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblUserLogs" Relationship="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus" FromRole="tblREFLoginStatu" ToRole="tblUserLog" />
         </EntityType>
         <EntityType Name="tblREFMajorMinor">
           <Key>
@@ -4823,61 +4751,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="diagram_id" Type="Int32" Nullable="false" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="tblAcqFinalShorlistCriteria">
-          <Key>
-            <PropertyRef Name="AcquisitionId" />
-          </Key>
-          <Property Name="AcqFinalShortlistCriteriaId" Type="Int32" />
-          <Property Name="AcquisitionId" Type="Int32" Nullable="false" />
-          <Property Name="GenderValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MaritalStatusValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PassPhysicalExamination" Type="Boolean" />
-          <Property Name="PassMedicalExamine" Type="Boolean" />
-          <Property Name="PassPhysicalTest" Type="Boolean" />
-          <Property Name="PassDentalExamine" Type="Boolean" />
-          <Property Name="PassEducationCriteria" Type="Boolean" />
-          <Property Name="PassSuppDocumentReview" Type="Boolean" />
-          <Property Name="PassSecurityCheck" Type="Boolean" />
-          <Property Name="MaleRun" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FemaleRun" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MaleBroadJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FemaleBroadJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MaleMendagu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FemaleMendagu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MaleJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FemaleJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MaleSitUp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FemaleSitUp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MalePushUp" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="FemalePushUp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CTKProfiling" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TDIQTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TDPsychologyTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TLSKMTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TUResilienceTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TUPsikotismeTest" Type="Boolean" />
-          <Property Name="TUNeurotismeTest" Type="Boolean" />
-          <Property Name="TUEkstrovertTest" Type="Boolean" />
-          <Property Name="TUELieTest" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcqFinalShorlistCriteria" ToRole="tblAcquisition" />
-        </EntityType>
-        <EntityType Name="tblApplicationStatu">
-          <Key>
-            <PropertyRef Name="AppId" />
-          </Key>
-          <Property Name="ApplciationStatusId" Type="Int32" />
-          <Property Name="AppId" Type="Int32" Nullable="false" />
-          <Property Name="ApplicationStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="CurrentInd" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblApplication" Relationship="Self.FK_tblApplicationStatus_tblApplication" FromRole="tblApplicationStatus" ToRole="tblApplication" />
-          <NavigationProperty Name="tblREFApplicationStatu" Relationship="Self.FK_tblApplicationStatus_tblREFApplicationStatus" FromRole="tblApplicationStatus" ToRole="tblREFApplicationStatus" />
         </EntityType>
         <EntityType Name="tblREFQuestionnareType">
           <Key>
@@ -5978,18 +5851,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblApplicationStatus_tblApplication">
-          <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="1" />
-          <End Role="tblApplicationStatus" Type="Self.tblApplicationStatu" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="tblApplication">
-              <PropertyRef Name="AppId" />
-            </Principal>
-            <Dependent Role="tblApplicationStatus">
-              <PropertyRef Name="AppId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblAppQuestionFeedback_tblApplication">
           <End Role="tblApplication" Type="Self.tblApplication" Multiplicity="0..1" />
           <End Role="tblAppQuestionFeedback" Type="Self.tblAppQuestionFeedback" Multiplicity="*" />
@@ -6023,18 +5884,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Principal>
             <Dependent Role="tblExistingAtmMember">
               <PropertyRef Name="ExistingMemberStatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblApplicationStatus_tblREFApplicationStatus">
-          <End Role="tblREFApplicationStatus" Type="Self.tblREFApplicationStatu" Multiplicity="0..1" />
-          <End Role="tblApplicationStatus" Type="Self.tblApplicationStatu" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblREFApplicationStatus">
-              <PropertyRef Name="ApplicationStatusCd" />
-            </Principal>
-            <Dependent Role="tblApplicationStatus">
-              <PropertyRef Name="ApplicationStatusCd" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6158,7 +6007,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySet Name="tblAcqQuestions" EntityType="Self.tblAcqQuestion" />
           <EntitySet Name="tblAcqQuestionnaires" EntityType="Self.tblAcqQuestionnaire" />
           <EntitySet Name="tblAcqQuestionnaireScales" EntityType="Self.tblAcqQuestionnaireScale" />
-          <EntitySet Name="tblAdvertisement_Xpakai" EntityType="Self.tblAdvertisement_Xpakai" />
           <EntitySet Name="tblAdvertisments" EntityType="Self.tblAdvertisment" />
           <EntitySet Name="tblAppApplicantDentalExaminations" EntityType="Self.tblAppApplicantDentalExamination" />
           <EntitySet Name="tblAppApplicantMeritScores" EntityType="Self.tblAppApplicantMeritScore" />
@@ -6220,8 +6068,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySet Name="tblREFTalentCats" EntityType="Self.tblREFTalentCat" />
           <EntitySet Name="tblREFUserCats" EntityType="Self.tblREFUserCat" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="tblAcqFinalShorlistCriterias" EntityType="Self.tblAcqFinalShorlistCriteria" />
-          <EntitySet Name="tblApplicationStatus" EntityType="Self.tblApplicationStatu" />
           <EntitySet Name="tblREFQuestionnareTypes" EntityType="Self.tblREFQuestionnareType" />
           <AssociationSet Name="FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria" Association="Self.FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria">
             <End Role="tblAcqEducationCriteria" EntitySet="tblAcqEducationCriterias" />
@@ -6587,10 +6433,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             <End Role="tblApplicantSubmited" EntitySet="tblApplicantSubmiteds" />
             <End Role="tblApplicantSubmittedPhoto" EntitySet="tblApplicantSubmittedPhotoes" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblApplicationStatus_tblApplication" Association="Self.FK_tblApplicationStatus_tblApplication">
-            <End Role="tblApplication" EntitySet="tblApplications" />
-            <End Role="tblApplicationStatus" EntitySet="tblApplicationStatus" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblAppQuestionFeedback_tblApplication" Association="Self.FK_tblAppQuestionFeedback_tblApplication">
             <End Role="tblApplication" EntitySet="tblApplications" />
             <End Role="tblAppQuestionFeedback" EntitySet="tblAppQuestionFeedbacks" />
@@ -6602,10 +6444,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <AssociationSet Name="FK_tblExistingATMMember_tblREFExistingMemberStatus" Association="Self.FK_tblExistingATMMember_tblREFExistingMemberStatus">
             <End Role="tblREFExistingMemberStatus" EntitySet="tblREFExistingMemberStatus" />
             <End Role="tblExistingAtmMember" EntitySet="tblExistingAtmMembers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblApplicationStatus_tblREFApplicationStatus" Association="Self.FK_tblApplicationStatus_tblREFApplicationStatus">
-            <End Role="tblREFApplicationStatus" EntitySet="tblREFApplicationStatus" />
-            <End Role="tblApplicationStatus" EntitySet="tblApplicationStatus" />
           </AssociationSet>
           <AssociationSet Name="FK_tblREFCity_tblREFState" Association="Self.FK_tblREFCity_tblREFState">
             <End Role="tblREFState" EntitySet="tblREFStates" />
@@ -6646,8 +6484,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <EntitySet Name="tblUserRoles" EntityType="AtmIntakeModel.tblUserRole" />
           <EntitySet Name="tblAcquisitions" EntityType="AtmIntakeModel.tblAcquisition" />
           <EntitySet Name="tblREFAcqTypes" EntityType="AtmIntakeModel.tblREFAcqType" />
-          <EntitySet Name="tblUsers" EntityType="AtmIntakeModel.tblUser" />
-          <EntitySet Name="tblUserLogs" EntityType="AtmIntakeModel.tblUserLog" />
           <AssociationSet Name="FK_tblAcqAnnouncement_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqAnnouncement_tblAcquisition">
             <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
             <End Role="tblAcqAnnouncement" EntitySet="tblAcqAnnouncements" />
@@ -6672,10 +6508,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
             <End Role="tblAcqQuestionnaire" EntitySet="tblAcqQuestionnaires" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition">
-            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
-            <End Role="tblAcqFinalShorlistCriteria" EntitySet="tblAcqFinalShorlistCriterias" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblAcquisition_tblREFAcqType" Association="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType">
             <End Role="tblREFAcqType" EntitySet="tblREFAcqTypes" />
             <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
@@ -6692,15 +6524,27 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
             <End Role="tblApplication" EntitySet="tblApplications" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblUserLog_tblREFLoginStatus" Association="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus">
-            <End Role="tblREFLoginStatu" EntitySet="tblREFLoginStatus" />
-            <End Role="tblUserLog" EntitySet="tblUserLogs" />
-          </AssociationSet>
           <EntitySet Name="tblREFReportDutyLocs" EntityType="AtmIntakeModel.tblREFReportDutyLoc" />
           <AssociationSet Name="FK_tblApplication_tblREFReportDutyLoc" Association="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc">
             <End Role="tblREFReportDutyLoc" EntitySet="tblREFReportDutyLocs" />
             <End Role="tblApplication" EntitySet="tblApplications" />
           </AssociationSet>
+          <EntitySet Name="tblAcqFinalShorlistCriterias" EntityType="AtmIntakeModel.tblAcqFinalShorlistCriteria" />
+          <EntitySet Name="tblApplicationStatus" EntityType="AtmIntakeModel.tblApplicationStatu" />
+          <AssociationSet Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition" Association="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition">
+            <End Role="tblAcquisition" EntitySet="tblAcquisitions" />
+            <End Role="tblAcqFinalShorlistCriteria" EntitySet="tblAcqFinalShorlistCriterias" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationStatus_tblApplication" Association="AtmIntakeModel.FK_tblApplicationStatus_tblApplication">
+            <End Role="tblApplication" EntitySet="tblApplications" />
+            <End Role="tblApplicationStatu" EntitySet="tblApplicationStatus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblApplicationStatus_tblREFApplicationStatus" Association="AtmIntakeModel.FK_tblApplicationStatus_tblREFApplicationStatus">
+            <End Role="tblREFApplicationStatu" EntitySet="tblREFApplicationStatus" />
+            <End Role="tblApplicationStatu" EntitySet="tblApplicationStatus" />
+          </AssociationSet>
+          <EntitySet Name="tblUserLogs" EntityType="AtmIntakeModel.tblUserLog" />
+          <EntitySet Name="tblUsers" EntityType="AtmIntakeModel.tblUser" />
         </EntityContainer>
         <EntityType Name="tblUserRole">
           <Key>
@@ -6764,13 +6608,13 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <NavigationProperty Name="tblAcqLocations" Relationship="AtmIntakeModel.FK_tblAcqLocation_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqLocation" />
           <NavigationProperty Name="tblAcqMerits" Relationship="AtmIntakeModel.FK_tblAcqMerit_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqMerit" />
           <NavigationProperty Name="tblAcqQuestionnaires" Relationship="AtmIntakeModel.FK_tblAcqQuestionnaire_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqQuestionnaire" />
-          <NavigationProperty Name="tblAcqFinalShorlistCriteria" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqFinalShorlistCriteria" />
           <NavigationProperty Name="tblREFAcqType" Relationship="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType" FromRole="tblAcquisition" ToRole="tblREFAcqType" />
           <NavigationProperty Name="tblAdvertisments" Relationship="AtmIntakeModel.FK_tblAdvertisment_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAdvertisment" />
           <NavigationProperty Name="tblAppApplicantMeritScores" Relationship="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAppApplicantMeritScore" />
           <NavigationProperty Name="tblApplications" Relationship="AtmIntakeModel.FK_tblApplication_tblAcquisition" FromRole="tblAcquisition" ToRole="tblApplication" />
           <Property Name="FinalSupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ReportDutySupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblAcqFinalShorlistCriterias" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqFinalShorlistCriteria" />
         </EntityType>
         <EntityType Name="tblREFAcqType">
           <Key>
@@ -6780,40 +6624,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
           <Property Name="AcquisitionTypeNm" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="tblAcquisitions" Relationship="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType" FromRole="tblREFAcqType" ToRole="tblAcquisition" />
-        </EntityType>
-        <EntityType Name="tblUser">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ApplicantId" Type="Int32" />
-          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AlternativeEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="Salt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IsLocked" Type="Boolean" />
-          <Property Name="FirstTime" Type="Boolean" />
-          <Property Name="LastLoginDt" Type="DateTime" Precision="0" />
-          <Property Name="CreatedDt" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="LastLoginDt2" Type="DateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="tblUserLog">
-          <Key>
-            <PropertyRef Name="UserLogId" />
-          </Key>
-          <Property Name="UserLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="LoginStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
-          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblREFLoginStatu" Relationship="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus" FromRole="tblUserLog" ToRole="tblREFLoginStatu" />
         </EntityType>
         <Association Name="FK_tblAcqAnnouncement_tblAcquisition">
           <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
@@ -6887,18 +6697,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition">
-          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
-          <End Type="AtmIntakeModel.tblAcqFinalShorlistCriteria" Role="tblAcqFinalShorlistCriteria" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="tblAcquisition">
-              <PropertyRef Name="AcquisitionId" />
-            </Principal>
-            <Dependent Role="tblAcqFinalShorlistCriteria">
-              <PropertyRef Name="AcquisitionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblAcquisition_tblREFAcqType">
           <End Type="AtmIntakeModel.tblREFAcqType" Role="tblREFAcqType" Multiplicity="0..1" />
           <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="*" />
@@ -6947,24 +6745,12 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblUserLog_tblREFLoginStatus">
-          <End Type="AtmIntakeModel.tblREFLoginStatu" Role="tblREFLoginStatu" Multiplicity="0..1" />
-          <End Type="AtmIntakeModel.tblUserLog" Role="tblUserLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblREFLoginStatu">
-              <PropertyRef Name="LoginStatusCd" />
-            </Principal>
-            <Dependent Role="tblUserLog">
-              <PropertyRef Name="LoginStatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="tblREFReportDutyLoc">
           <Key>
             <PropertyRef Name="ReportDutyLocId" />
           </Key>
           <Property Name="ReportDutyLocId" Type="Int32" Nullable="false" />
-          <Property Name="ReportDutyLoc" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ReportDutyLoc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="BUID" Type="Int32" />
           <NavigationProperty Name="tblApplications" Relationship="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" FromRole="tblREFReportDutyLoc" ToRole="tblApplication" />
         </EntityType>
@@ -6980,6 +6766,132 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblAcqFinalShorlistCriteria">
+          <Key>
+            <PropertyRef Name="AcqFinalShortlistCriteriaId" />
+            <PropertyRef Name="AcquisitionId" />
+          </Key>
+          <Property Name="AcqFinalShortlistCriteriaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AcquisitionId" Type="Int32" Nullable="false" />
+          <Property Name="GenderValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaritalStatusValue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PassPhysicalExamination" Type="Boolean" />
+          <Property Name="PassMedicalExamine" Type="Boolean" />
+          <Property Name="PassPhysicalTest" Type="Boolean" />
+          <Property Name="PassDentalExamine" Type="Boolean" />
+          <Property Name="PassEducationCriteria" Type="Boolean" />
+          <Property Name="PassSuppDocumentReview" Type="Boolean" />
+          <Property Name="PassSecurityCheck" Type="Boolean" />
+          <Property Name="MaleRun" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FemaleRun" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaleBroadJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FemaleBroadJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaleMendagu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FemaleMendagu" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaleJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FemaleJump" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MaleSitUp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FemaleSitUp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MalePushUp" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="FemalePushUp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CTKProfiling" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TDIQTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TDPsychologyTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TLSKMTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TUResilienceTest" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TUPsikotismeTest" Type="Boolean" />
+          <Property Name="TUNeurotismeTest" Type="Boolean" />
+          <Property Name="TUEkstrovertTest" Type="Boolean" />
+          <Property Name="TUELieTest" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblAcquisition" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcqFinalShorlistCriteria" ToRole="tblAcquisition" />
+        </EntityType>
+        <EntityType Name="tblApplicationStatu">
+          <Key>
+            <PropertyRef Name="ApplciationStatusId" />
+            <PropertyRef Name="AppId" />
+          </Key>
+          <Property Name="ApplciationStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppId" Type="Int32" Nullable="false" />
+          <Property Name="ApplicationStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="CurrentInd" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblApplication" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" FromRole="tblApplicationStatu" ToRole="tblApplication" />
+          <NavigationProperty Name="tblREFApplicationStatu" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblREFApplicationStatus" FromRole="tblApplicationStatu" ToRole="tblREFApplicationStatu" />
+        </EntityType>
+        <Association Name="FK_tblAcqFinalShorlistCriteria_tblAcquisition">
+          <End Type="AtmIntakeModel.tblAcquisition" Role="tblAcquisition" Multiplicity="1" />
+          <End Type="AtmIntakeModel.tblAcqFinalShorlistCriteria" Role="tblAcqFinalShorlistCriteria" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblAcquisition">
+              <PropertyRef Name="AcquisitionId" />
+            </Principal>
+            <Dependent Role="tblAcqFinalShorlistCriteria">
+              <PropertyRef Name="AcquisitionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationStatus_tblApplication">
+          <End Type="AtmIntakeModel.tblApplication" Role="tblApplication" Multiplicity="1" />
+          <End Type="AtmIntakeModel.tblApplicationStatu" Role="tblApplicationStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblApplication">
+              <PropertyRef Name="AppId" />
+            </Principal>
+            <Dependent Role="tblApplicationStatu">
+              <PropertyRef Name="AppId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblApplicationStatus_tblREFApplicationStatus">
+          <End Type="AtmIntakeModel.tblREFApplicationStatu" Role="tblREFApplicationStatu" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblApplicationStatu" Role="tblApplicationStatu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFApplicationStatu">
+              <PropertyRef Name="ApplicationStatusCd" />
+            </Principal>
+            <Dependent Role="tblApplicationStatu">
+              <PropertyRef Name="ApplicationStatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblUserLog">
+          <Key>
+            <PropertyRef Name="UserLogId" />
+          </Key>
+          <Property Name="UserLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="LoginStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ApplicantId" Type="Int32" />
+          <Property Name="LoginId" Type="String" Nullable="false" MaxLength="12" FixedLength="true" Unicode="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AlternativeEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="FirstTime" Type="Boolean" />
+          <Property Name="LastLoginDt" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDt" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreatedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastLoginDt2" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7166,27 +7078,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
                 <ScalarProperty Name="Scale" ColumnName="Scale" />
                 <ScalarProperty Name="ScaleRemark" ColumnName="ScaleRemark" />
                 <ScalarProperty Name="MeritMark" ColumnName="MeritMark" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblAdvertisement_Xpakai">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblAdvertisement_Xpakai">
-              <MappingFragment StoreEntitySet="tblAdvertisement_Xpakai">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ServiceCd" ColumnName="ServiceCd" />
-                <ScalarProperty Name="IntakeLocationId" ColumnName="IntakeLocationId" />
-                <ScalarProperty Name="InterviewLocationId" ColumnName="InterviewLocationId" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="IsACtive" ColumnName="IsACtive" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedDt" ColumnName="LastModifiedDt" />
-                <ScalarProperty Name="AcquisitionId" ColumnName="AcquisitionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8251,60 +8142,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblAcqFinalShorlistCriterias">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblAcqFinalShorlistCriteria">
-              <MappingFragment StoreEntitySet="tblAcqFinalShorlistCriteria">
-                <ScalarProperty Name="AcqFinalShortlistCriteriaId" ColumnName="AcqFinalShortlistCriteriaId" />
-                <ScalarProperty Name="AcquisitionId" ColumnName="AcquisitionId" />
-                <ScalarProperty Name="GenderValue" ColumnName="GenderValue" />
-                <ScalarProperty Name="MaritalStatusValue" ColumnName="MaritalStatusValue" />
-                <ScalarProperty Name="PassPhysicalExamination" ColumnName="PassPhysicalExamination" />
-                <ScalarProperty Name="PassMedicalExamine" ColumnName="PassMedicalExamine" />
-                <ScalarProperty Name="PassPhysicalTest" ColumnName="PassPhysicalTest" />
-                <ScalarProperty Name="PassDentalExamine" ColumnName="PassDentalExamine" />
-                <ScalarProperty Name="PassEducationCriteria" ColumnName="PassEducationCriteria" />
-                <ScalarProperty Name="PassSuppDocumentReview" ColumnName="PassSuppDocumentReview" />
-                <ScalarProperty Name="PassSecurityCheck" ColumnName="PassSecurityCheck" />
-                <ScalarProperty Name="MaleRun" ColumnName="MaleRun" />
-                <ScalarProperty Name="FemaleRun" ColumnName="FemaleRun" />
-                <ScalarProperty Name="MaleBroadJump" ColumnName="MaleBroadJump" />
-                <ScalarProperty Name="FemaleBroadJump" ColumnName="FemaleBroadJump" />
-                <ScalarProperty Name="MaleMendagu" ColumnName="MaleMendagu" />
-                <ScalarProperty Name="FemaleMendagu" ColumnName="FemaleMendagu" />
-                <ScalarProperty Name="MaleJump" ColumnName="MaleJump" />
-                <ScalarProperty Name="FemaleJump" ColumnName="FemaleJump" />
-                <ScalarProperty Name="MaleSitUp" ColumnName="MaleSitUp" />
-                <ScalarProperty Name="FemaleSitUp" ColumnName="FemaleSitUp" />
-                <ScalarProperty Name="MalePushUp" ColumnName="MalePushUp" />
-                <ScalarProperty Name="FemalePushUp" ColumnName="FemalePushUp" />
-                <ScalarProperty Name="CTKProfiling" ColumnName="CTKProfiling" />
-                <ScalarProperty Name="TDIQTest" ColumnName="TDIQTest" />
-                <ScalarProperty Name="TDPsychologyTest" ColumnName="TDPsychologyTest" />
-                <ScalarProperty Name="TLSKMTest" ColumnName="TLSKMTest" />
-                <ScalarProperty Name="TUResilienceTest" ColumnName="TUResilienceTest" />
-                <ScalarProperty Name="TUPsikotismeTest" ColumnName="TUPsikotismeTest" />
-                <ScalarProperty Name="TUNeurotismeTest" ColumnName="TUNeurotismeTest" />
-                <ScalarProperty Name="TUEkstrovertTest" ColumnName="TUEkstrovertTest" />
-                <ScalarProperty Name="TUELieTest" ColumnName="TUELieTest" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedDt" ColumnName="LastModifiedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblApplicationStatus">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblApplicationStatu">
-              <MappingFragment StoreEntitySet="tblApplicationStatus">
-                <ScalarProperty Name="ApplciationStatusId" ColumnName="ApplciationStatusId" />
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="ApplicationStatusCd" ColumnName="ApplicationStatusCd" />
-                <ScalarProperty Name="CurrentInd" ColumnName="CurrentInd" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblREFQuestionnareTypes">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblREFQuestionnareType">
               <MappingFragment StoreEntitySet="tblREFQuestionnareType">
@@ -8383,6 +8220,80 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblREFReportDutyLocs">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFReportDutyLoc">
+              <MappingFragment StoreEntitySet="tblREFReportDutyLoc">
+                <ScalarProperty Name="BUID" ColumnName="BUID" />
+                <ScalarProperty Name="ReportDutyLoc" ColumnName="ReportDutyLoc" />
+                <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAcqFinalShorlistCriterias">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblAcqFinalShorlistCriteria">
+              <MappingFragment StoreEntitySet="tblAcqFinalShorlistCriteria">
+                <ScalarProperty Name="LastModifiedDt" ColumnName="LastModifiedDt" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TUELieTest" ColumnName="TUELieTest" />
+                <ScalarProperty Name="TUEkstrovertTest" ColumnName="TUEkstrovertTest" />
+                <ScalarProperty Name="TUNeurotismeTest" ColumnName="TUNeurotismeTest" />
+                <ScalarProperty Name="TUPsikotismeTest" ColumnName="TUPsikotismeTest" />
+                <ScalarProperty Name="TUResilienceTest" ColumnName="TUResilienceTest" />
+                <ScalarProperty Name="TLSKMTest" ColumnName="TLSKMTest" />
+                <ScalarProperty Name="TDPsychologyTest" ColumnName="TDPsychologyTest" />
+                <ScalarProperty Name="TDIQTest" ColumnName="TDIQTest" />
+                <ScalarProperty Name="CTKProfiling" ColumnName="CTKProfiling" />
+                <ScalarProperty Name="FemalePushUp" ColumnName="FemalePushUp" />
+                <ScalarProperty Name="MalePushUp" ColumnName="MalePushUp" />
+                <ScalarProperty Name="FemaleSitUp" ColumnName="FemaleSitUp" />
+                <ScalarProperty Name="MaleSitUp" ColumnName="MaleSitUp" />
+                <ScalarProperty Name="FemaleJump" ColumnName="FemaleJump" />
+                <ScalarProperty Name="MaleJump" ColumnName="MaleJump" />
+                <ScalarProperty Name="FemaleMendagu" ColumnName="FemaleMendagu" />
+                <ScalarProperty Name="MaleMendagu" ColumnName="MaleMendagu" />
+                <ScalarProperty Name="FemaleBroadJump" ColumnName="FemaleBroadJump" />
+                <ScalarProperty Name="MaleBroadJump" ColumnName="MaleBroadJump" />
+                <ScalarProperty Name="FemaleRun" ColumnName="FemaleRun" />
+                <ScalarProperty Name="MaleRun" ColumnName="MaleRun" />
+                <ScalarProperty Name="PassSecurityCheck" ColumnName="PassSecurityCheck" />
+                <ScalarProperty Name="PassSuppDocumentReview" ColumnName="PassSuppDocumentReview" />
+                <ScalarProperty Name="PassEducationCriteria" ColumnName="PassEducationCriteria" />
+                <ScalarProperty Name="PassDentalExamine" ColumnName="PassDentalExamine" />
+                <ScalarProperty Name="PassPhysicalTest" ColumnName="PassPhysicalTest" />
+                <ScalarProperty Name="PassMedicalExamine" ColumnName="PassMedicalExamine" />
+                <ScalarProperty Name="PassPhysicalExamination" ColumnName="PassPhysicalExamination" />
+                <ScalarProperty Name="MaritalStatusValue" ColumnName="MaritalStatusValue" />
+                <ScalarProperty Name="GenderValue" ColumnName="GenderValue" />
+                <ScalarProperty Name="AcquisitionId" ColumnName="AcquisitionId" />
+                <ScalarProperty Name="AcqFinalShortlistCriteriaId" ColumnName="AcqFinalShortlistCriteriaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblApplicationStatus">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblApplicationStatu">
+              <MappingFragment StoreEntitySet="tblApplicationStatus">
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CurrentInd" ColumnName="CurrentInd" />
+                <ScalarProperty Name="ApplicationStatusCd" ColumnName="ApplicationStatusCd" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
+                <ScalarProperty Name="ApplciationStatusId" ColumnName="ApplciationStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserLogs">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblUserLog">
+              <MappingFragment StoreEntitySet="tblUserLog">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
+                <ScalarProperty Name="LoginStatusCd" ColumnName="LoginStatusCd" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserLogId" ColumnName="UserLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblUsers">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblUser">
               <MappingFragment StoreEntitySet="tblUser">
@@ -8404,26 +8315,6 @@ warning 6002: The table/view 'atmintake.dbo.tblREFQuestionnareType' does not hav
                 <ScalarProperty Name="LoginId" ColumnName="LoginId" />
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblUserLogs">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblUserLog">
-              <MappingFragment StoreEntitySet="tblUserLog">
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
-                <ScalarProperty Name="LoginStatusCd" ColumnName="LoginStatusCd" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="UserLogId" ColumnName="UserLogId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblREFReportDutyLocs">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFReportDutyLoc">
-              <MappingFragment StoreEntitySet="tblREFReportDutyLoc">
-                <ScalarProperty Name="BUID" ColumnName="BUID" />
-                <ScalarProperty Name="ReportDutyLoc" ColumnName="ReportDutyLoc" />
-                <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

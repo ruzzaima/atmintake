@@ -1,4 +1,5 @@
-﻿@using SevenH.MMCSB.Atm.Domain
+﻿@using Newtonsoft.Json
+@using SevenH.MMCSB.Atm.Domain
 @using SevenH.MMCSB.Atm.Domain.Interface
 @model SevenH.MMCSB.Atm.Web.Models.AdminViewModel
 @{
@@ -13,16 +14,24 @@
 
             <div class="tab-container tile">
                 <ul class="nav tab nav-tabs">
-                    <li class="active"><a href="#home">Mesej</a></li>
+                    <li class="active"><a href="#home">Template Mesej Panggilan</a></li>
                     <li><a href="#profile">Senarai Permohonan</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="home">
-                        <textarea class="markdown-editor" name="content" rows="10"></textarea>
+                        <div class="form-group">
+                            <label class="control-label">Tajuk</label>
+                            <input type="text" class="form-control" data-bind="value: announcement.Header" style="text-transform: none" noncap="true" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Mesej Emel</label>
+                            <textarea class="wysiwye-editor" name="content" rows="10" data-bind="value: announcement.Body"></textarea>
+                        </div>
+                        <input type="button" class="btn btn-primary btn-sm" value="Simpan" data-bind="click: savetemplate" />
                     </div>
                     <div class="tab-pane" id="profile">
-                        <table id="applicant_table" class="table table-bordered tile">
+                        <table id="applicant_table" class="table table-bordered tile" width="100%">
                             <thead>
                                 <tr>
                                     <th class="col-md-1">Bil</th>
@@ -30,15 +39,22 @@
                                     <th class="col-md-2">No Kad Pengenalan</th>
                                     <th class="col-md-2">Status Permohonan</th>
                                     <th class="col-md-2">
-                                        <div><label> <input type="checkbox" id="selectall" /> Pilih Semua</label></div> </th>
+                                        <div>
+                                            <label> <input type="checkbox" id="selectall" /> Pilih Semua Calon</label>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
+                        <input type="button" class="btn btn-primary btn-sm" value="Hantar Pemilihan" data-bind="click: submit" />
+                        <input type="button" class="btn btn-primary btn-sm" value="Cetak" data-bind="click: print" />
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="p-l-5 m-b-5">
+            <a class="btn btn-sm" href="@Url.Action("Index", "Admin")">Kembali</a>
         </div>
     </div>
 </div>
@@ -46,10 +62,12 @@
 @section scripts{
     <script type="text/javascript">
         var selectedid = @Model.Acquisition.AcquisitionId;
+        var announcement = @Html.Raw(JsonConvert.SerializeObject(@Model.Announcement, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
     </script>
     <script src="@Url.Content("~/Content/frontend/js/markdown.min.js")"></script> <!-- Markdown Editor -->
+    <script src="@Url.Content("~/Content/frontend/js/editor.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
-    <script src="@Url.Content("~/Scripts/Main/admin_firstintakeselection.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_firstinvitationselection.js")"></script>
 }
 

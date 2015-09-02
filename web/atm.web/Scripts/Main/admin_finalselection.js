@@ -14,6 +14,7 @@ $(function () {
             icno: ko.observable('')
         },
         approvecandidates: ko.observableArray([]),
+        rejectedcandidates: ko.observableArray([]),
         candidates: ko.observableArray([]),
         announcement: ko.mapping.fromJS(announcement),
         search: function (d) {
@@ -46,7 +47,7 @@ $(function () {
                                     "sClass": "text-middle",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="checkbox" app-data="true" class="approve-row" id="af_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Lulus Pemilihan Pertama</span> </label>';
+                                        return '<label><input type="checkbox" app-data="true" class="approve-row" id="af_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Lulus Pemilihan Akhir</span> </label>';
                                     }
                                 },
                                 {
@@ -54,7 +55,7 @@ $(function () {
                                     "sClass": "text-middle",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="checkbox" call-data="true" class="check-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Pemilihan Akhir</span> </label>';
+                                        return '<label><input type="checkbox" call-data="true" class="check-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Berjaya</span> </label> <br/><label><input type="checkbox" reject-data="true" class="reject-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Gagal</span> </label>';
                                     }
                                 }
                 ],
@@ -75,6 +76,10 @@ $(function () {
                     viewModel.approvecandidates.push($(this).val());
                 }
 
+                if ($(this).attr('reject-data')) {
+                    viewModel.rejectedcandidates.push($(this).val());
+                }
+
                 if ($(this).attr('call-data')) {
                     viewModel.candidates.push($(this).val());
                 }
@@ -82,37 +87,16 @@ $(function () {
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ approvecandidates: ko.mapping.toJS(viewModel.approvecandidates), candidates: ko.mapping.toJS(viewModel.candidates) }),
-                url: server + '/Admin/SubmitFinalSelection',
+                data: JSON.stringify({ approvecandidates: ko.mapping.toJS(viewModel.approvecandidates), rejectedcandidates: ko.mapping.toJS(viewModel.rejectedcandidates), candidates: ko.mapping.toJS(viewModel.candidates) }),
+                url: server + '/Admin/SubmitLastSelection',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.OK) {
                         $("#approveall").prop("checked", false);
-                        $("#selectall").prop("checked", false);
                         loadApplicant();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
-                },
-                error: function (xhr) {
-                    hideLoading();
-                }
-            });
-        },
-        savetemplate: function () {
-            viewModel.announcement.Body($('.wysiwye-editor').code());
-            viewModel.announcement.AnnouncementSelectionInd(2);
-            viewModel.announcement.AnnouncementTypeInd('E');
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify({ announcement: ko.mapping.toJS(viewModel.announcement) }),
-                url: server + '/Admin/SubmitAnnouncement',
-                contentType: "application/json; charset=utf-8",
-                success: function (msg) {
-                    if (msg.OK) {
-                        ShowMessage(msg.message);
-                    }
-                    hideLoading();
                 },
                 error: function (xhr) {
                     hideLoading();
@@ -140,9 +124,4 @@ $(function () {
         }
     });
 
-    if (viewModel.announcement.Body) {
-        if (viewModel.announcement.Body() !== null) {
-            $('.wysiwye-editor').code(viewModel.announcement.Body());
-        }
-    }
 });

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 
@@ -285,6 +286,31 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             applicationid = 0;
             return false;
+        }
+
+        public int UpdateStatus(int acquisitionid, int applicantid, bool? firstinvitation, bool? firstselection, bool? finalselection,bool? lastselection, string modifiedby)
+        {
+            if (acquisitionid != 0 && applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var application = (from a in entities.tblApplications where a.AcquisitionId == acquisitionid && a.ApplicantId == applicantid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
+                    if (null != application)
+                    {
+                        application.InvitationFirstSel = firstinvitation;
+                        application.FirstSelectionInd = firstselection;
+                        application.FinalSelectionInd = finalselection;
+                        application.ApplicationStatus = lastselection;
+
+                        application.LastModifiedDt = DateTime.Now;
+                        application.LastModifiedBy = modifiedby;
+                        var upd = entities.SaveChanges();
+
+                        return application.AppId;
+                    }
+                }
+            }
+            return 0;
         }
     }
 }

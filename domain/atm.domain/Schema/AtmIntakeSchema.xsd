@@ -1126,4 +1126,24 @@ new -  to call new at the field init
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>
+  <xs:element name="AcquisitionAnnouncement">
+    <xs:complexType>
+      <xs:all>
+        <xs:element ref="Acquisition" />
+        <xs:element name="AnnouncementSelectionInd" type="xs:int" nillable="true"/>
+        <xs:element name="CreatedDate" type="xs:date" nillable="true"/>
+        <xs:element name="LastModifiedDate" type="xs:date" nillable="true"/>
+        <xs:element name="Body" type="xs:string"/>
+        <xs:element name="AnnouncementStatusInd" type="xs:boolean" nillable="true"/>
+      </xs:all>
+      <xs:attribute name="AcqAnnouncementId" type="xs:int" use="required"/>
+      <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
+      <xs:attribute name="Header" type="xs:string" use="required"/>
+      <xs:attribute name="AttachmentFileName" type="xs:string" use="required"/>
+      <xs:attribute name="AttachmentOriginalFileName" type="xs:string" use="required"/>
+      <xs:attribute name="AnnouncementTypeInd" type="xs:string" use="required"/>
+      <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
+      <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -14,7 +14,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
     
     public partial class tblApplicationStatu
     {
-        public Nullable<int> ApplciationStatusId { get; set; }
+        public int ApplciationStatusId { get; set; }
         public int AppId { get; set; }
         public string ApplicationStatusCd { get; set; }
         public Nullable<bool> CurrentInd { get; set; }

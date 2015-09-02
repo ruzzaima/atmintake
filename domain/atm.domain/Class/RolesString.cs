@@ -13,6 +13,7 @@ namespace SevenH.MMCSB.Atm.Domain
         public const string PEGAWAI_PENGAMBILAN = "Pegawai Pengambilan";
         public const string KERANI_PENGAMBILAN = "Kerani Pengambilan";
         public const string STATISTIC = "STATISTIK";
+        public const string HRMIS = "HRMIS";
 
     }
 }

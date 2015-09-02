@@ -133,27 +133,33 @@ $(function () {
             if (viewModel.applicant.PalapesInd) {
                 if (viewModel.applicant.PalapesInd()) {
                     var pedt = $('#palapesgraduationdatepicker').data('date');
-                    var splitdate2 = pedt.split("/");
-                    pedt = splitdate2[1] + "/" + splitdate2[0] + "/" + splitdate2[2];
-                    viewModel.applicant.PalapesTauliahEndDt(pedt);
+                    if (pedt !== null && pedt !== undefined) {
+                        var splitdate2 = pedt.split("/");
+                        pedt = splitdate2[1] + "/" + splitdate2[0] + "/" + splitdate2[2];
+                        viewModel.applicant.PalapesTauliahEndDt(pedt);
+                    }
                 }
             }
 
             if (viewModel.applicant.ScholarshipInd) {
                 if (viewModel.applicant.ScholarshipInd()) {
                     var cedt = $('#contractstartdatepicker').data('date');
-                    var splitdate3 = cedt.split("/");
-                    cedt = splitdate3[1] + "/" + splitdate3[0] + "/" + splitdate3[2];
-                    viewModel.applicant.ScholarshipContractStDate(cedt);
+                    if (cedt !== null && cedt !== undefined) {
+                        var splitdate3 = cedt.split("/");
+                        cedt = splitdate3[1] + "/" + splitdate3[0] + "/" + splitdate3[2];
+                        viewModel.applicant.ScholarshipContractStDate(cedt);
+                    }
                 }
             }
 
             if (viewModel.applicant.ArmySelectionInd) {
                 if (viewModel.applicant.ArmySelectionInd()) {
                     var aedt = $('#attendatmofficerdatedatepicker').data('date');
-                    var splitdate4 = aedt.split("/");
-                    aedt = splitdate4[1] + "/" + splitdate4[0] + "/" + splitdate4[2];
-                    viewModel.applicant.ArmySelectionDt(aedt);
+                    if (aedt !== null && aedt !== undefined) {
+                        var splitdate4 = aedt.split("/");
+                        aedt = splitdate4[1] + "/" + splitdate4[0] + "/" + splitdate4[2];
+                        viewModel.applicant.ArmySelectionDt(aedt);
+                    }
                 }
 
             }
@@ -184,7 +190,7 @@ $(function () {
                     }
                 });
             }
-            
+
             showLoading();
 
             $.ajax({
@@ -417,12 +423,27 @@ $(function () {
 
                     $.ajax({
                         type: 'POST',
-                        data: JSON.stringify({ acquisitionid: acquisitionid }),
-                        url: server + '/Public/SubmitApplication',
+                        data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
+                        url: server + '/Public/SubmitProfile',
                         contentType: "application/json; charset=utf-8",
                         success: function (msg) {
                             if (msg.OK) {
-                                location.href = server + "/Public/SubmissionNotification?id=" + msg.id;
+                                $.ajax({
+                                    type: 'POST',
+                                    data: JSON.stringify({ acquisitionid: acquisitionid }),
+                                    url: server + '/Public/SubmitApplication',
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function (msg) {
+                                        if (msg.OK) {
+                                            location.href = server + "/Public/SubmissionNotification?id=" + msg.id;
+                                        }
+                                        hideLoading();
+                                        ShowMessage(msg.message);
+                                    },
+                                    error: function (xhr) {
+                                        hideLoading();
+                                    }
+                                });
                             }
                             hideLoading();
                             ShowMessage(msg.message);
@@ -431,6 +452,8 @@ $(function () {
                             hideLoading();
                         }
                     });
+
+
                     $('#notification_dialog').modal('hide');
                 });
 
@@ -542,15 +565,18 @@ $(function () {
 
     viewModel.applicant.Weight.subscribe(function (d) {
         if (d) {
-            if (viewModel.applicant.Height) {
-                var bmi = d / (viewModel.applicant.Height() * viewModel.applicant.Height());
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
+            var height = ko.mapping.toJS(viewModel.applicant.Height);
+            if (height) {
+                if (height !== null) {
+                    var bmi = d / (height * height);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
             }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -566,10 +592,18 @@ $(function () {
 
     viewModel.applicant.Height.subscribe(function (d) {
         if (d) {
+            var weight = ko.mapping.toJS(viewModel.applicant.Weight);
+            if (weight) {
+                if (weight != null) {
+                    var bmi = weight / (d * d);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
+            }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -580,12 +614,6 @@ $(function () {
                 error: function (xhr) {
                 }
             });
-
-            if (viewModel.applicant.Weight) {
-                var bmi = viewModel.applicant.Weight() / (d * d);
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
-            }
         }
     });
 

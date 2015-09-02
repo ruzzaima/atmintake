@@ -6,22 +6,6 @@
 }
 @section styles{
     <style>
-        .amarelo {
-            background: #DAA520;
-        }
-
-        .vermelho {
-            background: #CD0000;
-        }
-
-        .azul {
-            background: #4682B4;
-        }
-
-        .verde {
-            background-color: #2E8B57;
-        }
-
         a:hover {
             color: #0000ff;
         }
@@ -40,18 +24,18 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    <div class="thumbnail thumbnail-menu tile azul">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Selenggara Siri Pengambilan</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                @*<a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>*@
                             }
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="thumbnail thumbnail-menu tile amarelo">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Senarai Permohonan</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
@@ -62,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="thumbnail thumbnail-menu tile vermelho">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Statistik Permohonan</h4>
                             <a href="@Url.Action("Index", "Statistic")" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
@@ -70,7 +54,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="thumbnail thumbnail-menu tile vermelho">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Membuat Panggilan Pemilihan Awal</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
@@ -81,40 +65,40 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="thumbnail thumbnail-menu tile azul">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Merekodkan Status &amp; Markah Ujian Bertulis</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                @*<a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>*@
                             }
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="thumbnail thumbnail-menu tile verde">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Merekodkan Tapisan Keselamatan</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                @*<a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>*@
                             }
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="thumbnail thumbnail-menu tile amarelo">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Merekodkan Keputusan Pemeriksaan Fizikal, Pemeriksaan Kesihatan dan Ujian Kecergasan</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                @*<a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>*@
                             }
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="thumbnail thumbnail-menu tile vermelho">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Mengemaskini Pemilihan Awal &amp; Membuat Panggilan Pemilihan Akhir</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
@@ -125,34 +109,34 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="thumbnail thumbnail-menu tile verde">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Merekodkan Semakan Dokumen</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                @*<a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>*@
                             }
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="thumbnail thumbnail-menu tile azul">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Mengemaskini Status Temuduga / Pemilihan Akhir</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                <a href="@Url.Action("InterviewUpdateAndFinalSelection", "Admin")" c class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
                             }
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="thumbnail thumbnail-menu tile amarelo">
+                    <div class="thumbnail thumbnail-menu tile ">
                         <div class="p-10">
                             <h4>Penetapan No Tentera &amp; Hantar ke HRMIS</h4>
                             @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                             {
-                                <a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>
+                                @*<a href="#" class="btn btn-info btn-sm" style="position: absolute; bottom: 5px; right: 5px;">Buka</a>*@
                             }
                         </div>
                     </div>

@@ -23,6 +23,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             this.tblAppDocumentStatus = new HashSet<tblAppDocumentStatu>();
             this.tblAppQuestionFeedbacks = new HashSet<tblAppQuestionFeedback>();
             this.tblAppQuestionnaireScores = new HashSet<tblAppQuestionnaireScore>();
+            this.tblApplicationStatus = new HashSet<tblApplicationStatu>();
         }
     
         public int AppId { get; set; }
@@ -80,10 +81,10 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual ICollection<tblAppApplicantPhysicalExamination> tblAppApplicantPhysicalExaminations { get; set; }
         public virtual ICollection<tblAppApplicantPhysicalTest> tblAppApplicantPhysicalTests { get; set; }
         public virtual ICollection<tblAppDocumentStatu> tblAppDocumentStatus { get; set; }
-        public virtual tblApplicationStatu tblApplicationStatu { get; set; }
         public virtual ICollection<tblAppQuestionFeedback> tblAppQuestionFeedbacks { get; set; }
         public virtual ICollection<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
         public virtual tblAcquisition tblAcquisition { get; set; }
         public virtual tblREFReportDutyLoc tblREFReportDutyLoc { get; set; }
+        public virtual ICollection<tblApplicationStatu> tblApplicationStatus { get; set; }
     }
 }

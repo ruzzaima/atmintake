@@ -16,27 +16,26 @@
         <EntityTypeShape EntityType="AtmIntakeModel.tblAcqQuestion" Width="1.5" PointX="28.25" PointY="40.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAcqQuestionnaire" Width="1.5" PointX="26" PointY="40.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAcqQuestionnaireScale" Width="1.5" PointX="28.25" PointY="44.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblAdvertisement_Xpakai" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAdvertisment" Width="1.5" PointX="21" PointY="52.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantDentalExamination" Width="1.5" PointX="33.5" PointY="43.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantMeritScore" Width="1.5" PointX="33.5" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantDentalExamination" Width="2.375" PointX="33.5" PointY="43.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantMeritScore" Width="2.75" PointX="33.5" PointY="26.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantPhysicalExamIllness" Width="1.5" PointX="35.75" PointY="36.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantPhysicalExamination" Width="1.5" PointX="33.5" PointY="33.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppApplicantPhysicalTest" Width="1.5" PointX="33.5" PointY="55.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppDocumentStatu" Width="1.5" PointX="33.5" PointY="48.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicant" Width="1.5" PointX="6" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantDispStatu" Width="1.5" PointX="8.25" PointY="44.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantDispStatusSubmitted" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantDispStatusSubmitted" Width="1.75" PointX="2.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantEdu" Width="1.5" PointX="11.25" PointY="28.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantEduSubject" Width="1.5" PointX="16.5" PointY="29.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantEduSubjectSubmitted" Width="1.5" PointX="11.25" PointY="34.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantEduSubmitted" Width="1.5" PointX="3" PointY="28.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantPhoto" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantPhoto" Width="2.25" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSkill" Width="1.5" PointX="14.25" PointY="29.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSkillSubmitted" Width="1.5" PointX="14.25" PointY="24.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSportAssoc" Width="1.5" PointX="11.25" PointY="24.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSkillSubmitted" Width="4.375" PointX="14.25" PointY="24.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSportAssoc" Width="1.5" PointX="11.625" PointY="24.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSportAssocSubmitted" Width="1.5" PointX="14.25" PointY="34.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSubmited" Width="1.5" PointX="9" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSubmited" Width="2.25" PointX="9" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplicantSubmittedPhoto" Width="1.5" PointX="11.25" PointY="38.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplication" Width="1.5" PointX="31.25" PointY="42.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppQuestionFeedback" Width="1.5" PointX="36.5" PointY="44.625" IsExpanded="true" />
@@ -78,8 +77,6 @@
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFTalentCat" Width="1.5" PointX="4.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFUserCat" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.sysdiagram" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblAcqFinalShorlistCriteria" Width="1.5" PointX="21" PointY="71.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicationStatu" Width="1.5" PointX="39.5" PointY="47.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFQuestionnareType" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqEducationCriteriaSubject_tblAcqEducationCriteria" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqEduCriteriaFieldOfStudy_tblAcqEducationCriteria" ManuallyRouted="false" />
@@ -172,11 +169,9 @@
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplicantSubmited_tblREFState" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplicantSubmited_tblREFState1" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplicantSubmittedPhoto_tblApplicantSubmited" ManuallyRouted="false" />
-        <AssociationConnector Association="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAppQuestionFeedback_tblApplication" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAppQuestionnaireScore_tblApplication" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblExistingATMMember_tblREFExistingMemberStatus" ManuallyRouted="false" />
-        <AssociationConnector Association="AtmIntakeModel.FK_tblApplicationStatus_tblREFApplicationStatus" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblREFCity_tblREFState" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblRefLocation_tblREFCity" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblREFEthnic_tblREFEthnic" ManuallyRouted="false" />
@@ -187,24 +182,27 @@
         <AssociationConnector Association="AtmIntakeModel.FK_tblREFQuestionnaireSubType_tblREFQuestionnareType" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblREFSkill_tblREFSkillCat" ManuallyRouted="false" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblUserRole" Width="1.5" PointX="5.375" PointY="11.75" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblAcquisition" Width="1.5" PointX="18.75" PointY="47.125" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblREFAcqType" Width="1.5" PointX="16.5" PointY="52.125" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblUser" Width="1.5" PointX="11.375" PointY="3.75" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblUserLog" Width="1.5" PointX="10" PointY="61.5" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblAcquisition" Width="2.75" PointX="17.5" PointY="47.125" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblREFAcqType" Width="1.5" PointX="14.75" PointY="52.125" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqAnnouncement_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqCriteria_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqEducationCriteria_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqLocation_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqMerit_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcqQuestionnaire_tblAcquisition" />
-        <AssociationConnector Association="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAcquisition_tblREFAcqType" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAdvertisment_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAppApplicantMeritScore_tblAcquisition" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplication_tblAcquisition" />
-        <AssociationConnector Association="AtmIntakeModel.FK_tblUserLog_tblREFLoginStatus" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFReportDutyLoc" Width="1.5" PointX="11.375" PointY="9.875" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblAcqFinalShorlistCriteria" Width="1.5" PointX="21" PointY="64.125" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblApplicationStatu" Width="1.5" PointX="39.5" PointY="47.125" />
+        <AssociationConnector Association="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" />
+        <AssociationConnector Association="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" />
+        <AssociationConnector Association="AtmIntakeModel.FK_tblApplicationStatus_tblREFApplicationStatus" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblUserLog" Width="1.5" PointX="11.375" PointY="12.75" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblUser" Width="1.5" PointX="11.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

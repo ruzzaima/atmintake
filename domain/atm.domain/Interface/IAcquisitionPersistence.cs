@@ -11,5 +11,9 @@ namespace SevenH.MMCSB.Atm.Domain
         Acquisition GetAcquisition(int id);
         IEnumerable<AcquisitionLocation> GetLocations(string zonecode);
         IEnumerable<Acquisition> GetAllAcquisition(bool? isactive, string servicecode);
+        int AddAnnouncement(AcquisitionAnnouncement announcement);
+        int UpdateAnnouncement(AcquisitionAnnouncement announcement);
+        bool DeleteAnnouncement(int id);
+        AcquisitionAnnouncement GetAnnouncement(int acquisitionid, int? announcementselectiontype);
     }
 }

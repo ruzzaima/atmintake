@@ -22,7 +22,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             using (var entities = new atmEntities())
             {
-                var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == appl.NewICNo && a.AcquisitionId == appl.AcquisitionId select a).LastOrDefault();
+                var exist = (from a in entities.tblApplicantSubmiteds where a.NewICNo == appl.NewICNo && a.AcquisitionId == appl.AcquisitionId select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
                 if (null != exist)
                 {
                     appl.ApplicantId = exist.ApplicantId;
@@ -791,7 +791,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             usr.BirthDt = appl.BirthDt;
             usr.BirthPlace = appl.BirthPlace;
             usr.BirthStateCd = appl.BirthStateCd;
-            usr.BirthStateName = appl.tblREFState != null ?appl.tblREFState.State : string.Empty;
+            usr.BirthStateName = appl.tblREFState != null ? appl.tblREFState.State : string.Empty;
             usr.BloodTypeCd = appl.BloodTypeCd;
             usr.ChildNo = appl.ChildNo;
             usr.ColorBlindInd = appl.ColorBlindInd;
@@ -901,7 +901,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         }
 
 
-        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria)
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? finalivitation)
         {
             var list = new List<ApplicantSubmitted>();
             if (acquisitionid != 0)
@@ -915,6 +915,13 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         l = l.Where(a => a.NewICNo.Contains(icno));
                     if (!string.IsNullOrWhiteSpace(searchcriteria))
                         l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
+                    if (invitationfirtselection.HasValue)
+                        if (invitationfirtselection.Value)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.InvitationFirstSel == null select a;
+                    if (finalivitation.HasValue)
+                        if (finalivitation.Value)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.InvitationFirstSel == true && b.FirstSelectionInd == null && b.FinalSelectionInd == null select a;
+                    
                     if (l.Any())
                     {
                         foreach (var app in l)

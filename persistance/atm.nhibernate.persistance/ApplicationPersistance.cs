@@ -92,5 +92,10 @@ namespace SevenH.MMCSB.Persistance
             applicationid = 0;
             return false;
         }
+
+        public int UpdateStatus(int acquisitionid, int applicantid, bool? firstinvitation, bool? firstselection, bool? finalselection, bool? lastselection, string modifiedby)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

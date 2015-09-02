@@ -16,5 +16,6 @@ namespace SevenH.MMCSB.Atm.Domain
         IEnumerable<Application> GetAllByApplicantIdNumber(string idnumber);
         bool IsSubmitted(int applicantid, int acquisitionid, out int applicationid);
         bool IsSubmitted(string icno, int acquisitionid, out int applicationid);
+        int UpdateStatus(int acquisitionid, int applicantid, bool? firstinvitation, bool? firstselection, bool? finalselection, bool? lastselection, string modifiedby);
     }
 }

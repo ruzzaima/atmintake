@@ -101,14 +101,6 @@
                 @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                 {
                     <li>
-                        <a class="sa-side-home" href="@Url.Action("Index", "Admin")">
-                            <span class="menu-item">Dashboard</span>
-                        </a>
-                    </li>
-                }
-                @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN))
-                {
-                    <li>
                         <a class="sa-side-photos" href="@Url.Action("ManageUser", "Manage")">
                             <span class="menu-item">Pengurusan Pengguna</span>
                         </a>
@@ -117,13 +109,16 @@
                         <a class="sa-side-form" href="">
                             <span class="menu-item">Pengurusan Sistem</span>
                         </a>
-                        <ul class="list-unstyled menu-item">
-                            <li>
-                                <a href="@Url.Action("ExistingAtmMember", "Admin")" class="whiter" style="color: #ffffff">
-                                    Pengurusan Anggota Atm
-                                </a>
-                            </li>
-                        </ul>
+                        @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.HRMIS))
+                        {
+                            <ul class="list-unstyled menu-item">
+                                <li>
+                                    <a href="@Url.Action("ExistingAtmMember", "Admin")" class="whiter" style="color: #ffffff">
+                                        Pengurusan Anggota Atm
+                                    </a>
+                                </li>
+                            </ul>
+                        }
                     </li>
                 }
             </ul>

@@ -42,11 +42,12 @@ $(function () {
             ],
         });
 
-        if (
-        viewModel.category() === 'AW') {
+        if (category === 'AW') {
             oTable.fnSetColumnVis(5, false);
+            oTable.fnSetColumnVis(3, true);
         } else {
             oTable.fnSetColumnVis(5, true);
+            oTable.fnSetColumnVis(3, false);
         }
     }
 
@@ -62,22 +63,25 @@ $(function () {
 
     ko.applyBindings(viewModel);
 
+    loaduser('SP');
+
     $('input[name="category"]').each(function () {
         if (this.value === 'SP') {
             viewModel.category('SP');
             $(this).iCheck('check');
-        }
+        } 
     });
 
     $('input[name="category"]').on('ifClicked', function (event) {
         var selectedval = this.value;
         viewModel.category(selectedval);
-        if (selectedval == "AW") {
+        if (selectedval === "AW") {
             oTable.fnSetColumnVis(5, false);
+            oTable.fnSetColumnVis(3, true);
         } else {
             oTable.fnSetColumnVis(5, true);
+            oTable.fnSetColumnVis(3, false);
         }
     });
 
-    loaduser('SP');
 });

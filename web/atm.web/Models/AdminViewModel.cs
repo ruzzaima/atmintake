@@ -11,7 +11,15 @@ namespace SevenH.MMCSB.Atm.Web.Models
         private List<ApplicantSubmitted> m_listOfApplicant = new List<ApplicantSubmitted>();
         private List<State> m_listOfState = new List<State>();
         private Acquisition m_acquisition = new Acquisition();
+        private AcquisitionAnnouncement m_announcement = new AcquisitionAnnouncement();
 
+        public AcquisitionAnnouncement Announcement
+        {
+            get { return m_announcement; }
+            set { m_announcement = value; }
+        }
+
+        
         public Acquisition Acquisition
         {
             get { return m_acquisition; }

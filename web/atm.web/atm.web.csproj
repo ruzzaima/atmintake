@@ -680,6 +680,8 @@
     <Content Include="Scripts\Core\_references.js" />
     <Content Include="Scripts\Core\less-1.5.1.js" />
     <Content Include="Scripts\Core\less-1.5.1.min.js" />
+    <Content Include="Scripts\Main\admin_finalselection.js" />
+    <Content Include="Scripts\Main\admin_firstinvitationselection.js" />
     <Content Include="Scripts\Main\admin_intakes.js" />
     <Content Include="Scripts\Main\admin_firstintakeselection.js" />
     <Content Include="Scripts\Main\admin_existingatmmember.js" />
@@ -782,6 +784,9 @@
     <Content Include="Views\Admin\FirstIntakeUpdateAndFinalSelection.cshtml" />
     <Content Include="Views\Admin\ExistingAtmMember.cshtml" />
     <Content Include="Views\Admin\AddExistingAtm.cshtml" />
+    <Content Include="Views\Admin\InterviewUpdateAndFinalSelection.cshtml" />
+    <Content Include="Views\Admin\PrintFirstInvitation.cshtml" />
+    <Content Include="Views\Admin\PrintFinalnvitation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
