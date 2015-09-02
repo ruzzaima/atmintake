@@ -34,7 +34,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         int SaveApplicantPhoto(ApplicantSubmittedPhoto photo);
         int UpdateApplicantPhoto(ApplicantSubmittedPhoto photo);
 
-        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? finalinvitation);
+        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection);
         IEnumerable<ApplicantSubmitted> GetByAcademis(string highleveleducd);
     }
 }

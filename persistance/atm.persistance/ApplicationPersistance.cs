@@ -312,5 +312,70 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             return 0;
         }
+
+
+        public int UpdateFirstInvitationStatus(int acquisitionid, int applicantid, bool? firstinvitation, string modifiedby)
+        {
+            if (acquisitionid != 0 && applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var application = (from a in entities.tblApplications where a.AcquisitionId == acquisitionid && a.ApplicantId == applicantid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
+                    if (null != application)
+                    {
+                        application.InvitationFirstSel = firstinvitation;
+                        application.LastModifiedDt = DateTime.Now;
+                        application.LastModifiedBy = modifiedby;
+                        var upd = entities.SaveChanges();
+
+                        return application.AppId;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public int UpdateFirstSelectionStatus(int acquisitionid, int applicantid, bool? firstselection, string modifiedby)
+        {
+            if (acquisitionid != 0 && applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var application = (from a in entities.tblApplications where a.AcquisitionId == acquisitionid && a.ApplicantId == applicantid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
+                    if (null != application)
+                    {
+                        application.FirstSelectionInd = firstselection;
+                        application.LastModifiedDt = DateTime.Now;
+                        application.LastModifiedBy = modifiedby;
+                        var upd = entities.SaveChanges();
+
+                        return application.AppId;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        public int UpdateLastSelectionStatus(int acquisitionid, int applicantid, bool? finalselection, bool? interview, string modifiedby)
+        {
+            if (acquisitionid != 0 && applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var application = (from a in entities.tblApplications where a.AcquisitionId == acquisitionid && a.ApplicantId == applicantid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
+                    if (null != application)
+                    {
+                        application.FinalSelectionInd = finalselection;
+                        application.ApplicationStatus = interview;
+                        application.LastModifiedDt = DateTime.Now;
+                        application.LastModifiedBy = modifiedby;
+                        var upd = entities.SaveChanges();
+
+                        return application.AppId;
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

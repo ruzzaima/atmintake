@@ -32,36 +32,22 @@
             <div class="row">
                 <div class="form-group p-5">
                     <label class="radio-inline">
-                        <input type="radio" name="search" value="01" /> Hadir Pemilihan Awal Sahaja
+                        <input type="radio" name="search" value="01" /> Dipanggil ke Pemilihan Awal
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group p-5">
                     <label class="radio-inline">
-                        <input type="radio" name="search" value="02" /> Berjaya Pemilihan Awal (Dipanggil ke Pemilihan Akhir)
+                        <input type="radio" name="search" value="02" /> Dipanggil Temuduga/Berjaya Pemilihan Awal (dipanggil ke Pemilihan Akhir)
                     </label>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group p-5">
                     <label class="radio-inline">
-                        <input type="radio" name="search" value="03" /> Berjaya Pemilihan Akhir Sahaja
+                        <input type="radio" name="search" value="03" /> Lulus Temuduga/Pemilihan Akhir
                     </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">Nama</label>
-                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.name" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">No. Kad Pengenalan</label>
-                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.icno" />
-                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -74,8 +60,8 @@
                             <th class="col-md-1">Bil</th>
                             <th>Nama</th>
                             <th class="col-md-2">No Kad Pengenalan</th>
-                            <th class="col-md-2">Status Permohonan</th>
-                            <th class="col-md-2">Tindakan</th>
+                            <th class="col-md-3">Status Permohonan</th>
+                            <th class="col-md-1 text-center">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -87,7 +73,7 @@
 
 <div class="row">
     <a class="btn btn-sm" href="@Url.Action("Index", "Admin")">Kembali</a>
-    <a class="btn btn-sm" href="@Url.Action("AddApplicant", "Admin" )">Tambah Calon</a>
+    @*<a class="btn btn-sm" href="@Url.Action("AddApplicant", "Admin" )">Tambah Calon</a>*@
 </div>
 
 @section scripts{

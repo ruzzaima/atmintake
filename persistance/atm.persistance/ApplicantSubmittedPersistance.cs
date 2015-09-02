@@ -901,7 +901,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         }
 
 
-        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? finalivitation)
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection)
         {
             var list = new List<ApplicantSubmitted>();
             if (acquisitionid != 0)
@@ -909,19 +909,17 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 using (var entities = new atmEntities())
                 {
                     var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
+                    l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection select a;
+                    //l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.FirstSelectionInd == firstselection select a;
+                    //l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.FinalSelectionInd == finalselection select a;
+
                     if (!string.IsNullOrWhiteSpace(name))
                         l = l.Where(a => a.FullName.Contains(name));
                     if (!string.IsNullOrWhiteSpace(icno))
                         l = l.Where(a => a.NewICNo.Contains(icno));
                     if (!string.IsNullOrWhiteSpace(searchcriteria))
                         l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
-                    if (invitationfirtselection.HasValue)
-                        if (invitationfirtselection.Value)
-                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.InvitationFirstSel == null select a;
-                    if (finalivitation.HasValue)
-                        if (finalivitation.Value)
-                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.InvitationFirstSel == true && b.FirstSelectionInd == null && b.FinalSelectionInd == null select a;
-                    
+
                     if (l.Any())
                     {
                         foreach (var app in l)

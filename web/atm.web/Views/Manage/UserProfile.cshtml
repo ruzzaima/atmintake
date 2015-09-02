@@ -96,14 +96,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Kali Pertama Masuk</label>
-                        <div class="col-md-8">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" name="firsttime" data-bind="iCheckBox: !user.FirstTime" />Ya
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-md-4 control-label">Kata Laluan Sekarang</label>
                         <div class="col-md-8">
                             <label>@string.Format("{0}", ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetPassword(Model.LoginUser.UserId))</label>

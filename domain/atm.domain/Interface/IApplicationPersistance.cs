@@ -17,5 +17,8 @@ namespace SevenH.MMCSB.Atm.Domain
         bool IsSubmitted(int applicantid, int acquisitionid, out int applicationid);
         bool IsSubmitted(string icno, int acquisitionid, out int applicationid);
         int UpdateStatus(int acquisitionid, int applicantid, bool? firstinvitation, bool? firstselection, bool? finalselection, bool? lastselection, string modifiedby);
+        int UpdateFirstInvitationStatus(int acquisitionid, int applicantid, bool? firstinvitation, string modifiedby);
+        int UpdateFirstSelectionStatus(int acquisitionid, int applicantid, bool? firstselection, string modifiedby);
+        int UpdateLastSelectionStatus(int acquisitionid, int applicantid, bool? finalselection, bool? interview, string modifiedby);
     }
 }

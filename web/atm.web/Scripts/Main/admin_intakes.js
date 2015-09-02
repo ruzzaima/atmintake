@@ -15,11 +15,11 @@ $(function () {
     function loadintakes() {
         oTable = $('#intakes_table').dataTable({
             "sDom": "<'row table-top-control'<'col-md-6 hidden-xs per-page-selector'l><'col-md-6 text-right'f>r>t<'row table-bottom-control'<'col-md-6'i><'col-md-6 text-right'p>>",
-            "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": 'Sedang Diproses...', "sSearch": "Carian", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
+            "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": loadingdatatable, "sSearch": "Carian", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
             "bJQueryUI": false,
             "bPaginate": true,
             "sPaginationType": "bootstrap",
-            "bFilter": true,
+            "bFilter": false,
             "bProcessing": true,
             "bDestroy": true,
             "bServerSide": true,

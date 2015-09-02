@@ -97,5 +97,21 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new NotImplementedException();
         }
+
+
+        public int UpdateFirstInvitationStatus(int acquisitionid, int applicantid, bool? firstinvitation, string modifiedby)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateFirstSelectionStatus(int acquisitionid, int applicantid, bool? firstselection, string modifiedby)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateLastSelectionStatus(int acquisitionid, int applicantid, bool? finalselection, bool? interview, string modifiedby)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
