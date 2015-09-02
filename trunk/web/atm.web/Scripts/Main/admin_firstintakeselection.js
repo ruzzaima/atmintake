@@ -3,19 +3,16 @@ var oTable;
 
 
 $(function () {
-    function loadApplicant() {
-        viewModel.search();
-    }
-
+    
     viewModel = {
         searchcriteria: {
             category: ko.observable(''),
             name: ko.observable(''),
             icno: ko.observable('')
         },
-        approvecandidates: ko.observableArray([]),
         candidates: ko.observableArray([]),
-        announcement: ko.mapping.fromJS(announcement),
+        processcandidates: ko.observableArray([]),
+        rejectcandidates: ko.observableArray([]),
         search: function (d) {
             oTable = $('#applicant_table').dataTable({
                 "sDom": "<'row table-top-control'<'col-md-6 hidden-xs per-page-selector'l><'col-md-6 text-right'f>r>t<'row table-bottom-control'<'col-md-6'i><'col-md-6 text-right'p>>",
@@ -27,7 +24,7 @@ $(function () {
                 "bProcessing": true,
                 "bDestroy": true,
                 "bServerSide": true,
-                "sAjaxSource": server + '/Admin/LoadToUpdateApplicant?category=' + ko.mapping.toJS(viewModel.searchcriteria.category) + "&name=" + ko.mapping.toJS(viewModel.searchcriteria.name) + "&icno=" + ko.mapping.toJS(viewModel.searchcriteria.icno) + "&acquisitionid=" + selectedid + "&finalinvitation=true",
+                "sAjaxSource": server + '/Admin/LoadToUpdateApplicant?category=' + ko.mapping.toJS(viewModel.searchcriteria.category) + "&name=" + ko.mapping.toJS(viewModel.searchcriteria.name) + "&icno=" + ko.mapping.toJS(viewModel.searchcriteria.icno) + "&acquisitionid=" + selectedid + "&firstselection=true",
                 "fnDrawCallback": function (oSettings) {
                     /* Need to redo the counters if filtered or sorted */
                     //if (oSettings.bSorted || oSettings.bFiltered) {
@@ -43,18 +40,26 @@ $(function () {
                                 { "bSortable": false },
                                 {
                                     "bSortable": false,
-                                    "sClass": "text-middle",
+                                    "sClass": "text-middle text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="checkbox" app-data="true" class="approve-row" id="af_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Lulus Pemilihan Pertama</span> </label>';
+                                        return '<label><input type="radio" app-data="true" name="firstselection' + id + '" class="check-row-approve" id="cba_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Temuduga/Pemilihan Akhir</span> </label>';
                                     }
                                 },
                                 {
                                     "bSortable": false,
-                                    "sClass": "text-middle",
+                                    "sClass": "text-middle text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="checkbox" call-data="true" class="check-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Pemilihan Akhir</span> </label>';
+                                        return '<label><input type="radio" pro-data="true" name="firstselection' + id + '" class="check-row-process" id="cbp_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Sedang Diproses</span> </label>';
+                                    }
+                                },
+                                {
+                                    "bSortable": false,
+                                    "sClass": "text-middle text-center",
+                                    "mRender": function (data, type, full) {
+                                        var id = data;
+                                        return '<label><input type="radio" reject-data="true" name="firstselection' + id + '" class="check-row-reject" id="cbr_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Tidak Terpilih Ke Temuduga/Pemilihan Akhir</span> </label>';
                                     }
                                 }
                 ],
@@ -70,26 +75,33 @@ $(function () {
         },
         submit: function () {
             viewModel.candidates.removeAll();
+
             $("input:checked", oTable.fnGetNodes()).each(function () {
                 if ($(this).attr('app-data')) {
-                    viewModel.approvecandidates.push($(this).val());
+                    viewModel.candidates.push($(this).val());
                 }
 
-                if ($(this).attr('call-data')) {
-                    viewModel.candidates.push($(this).val());
+                if ($(this).attr('reject-data')) {
+                    viewModel.rejectcandidates.push($(this).val());
+                }
+
+                if ($(this).attr('pro-data')) {
+                    viewModel.processcandidates.push($(this).val());
                 }
             });
 
+
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ approvecandidates: ko.mapping.toJS(viewModel.approvecandidates), candidates: ko.mapping.toJS(viewModel.candidates) }),
+                data: JSON.stringify({ candidates: ko.mapping.toJS(viewModel.candidates), rejectcandidates: ko.mapping.toJS(viewModel.rejectcandidates), processcandidates: ko.mapping.toJS(viewModel.processcandidates) }),
                 url: server + '/Admin/SubmitFinalSelection',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.OK) {
-                        $("#approveall").prop("checked", false);
-                        $("#selectall").prop("checked", false);
-                        loadApplicant();
+                        $("#selectall_shortlist").prop("checked", false);
+                        $("#selectall_reject").prop("checked", false);
+                        $("#selectall_process").prop("checked", false);
+                        viewModel.search();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -118,31 +130,47 @@ $(function () {
                     hideLoading();
                 }
             });
+        },
+        print: function () {
+            window.open(server + "/Admin/PrintFinalInvitation", "PrintFinalInvite", null, true);
         }
     };
 
     ko.applyBindings(viewModel);
-    loadApplicant();
+    viewModel.search();
 
-    $("#selectall").change(function () {
+    $("#selectall_shortlist").change(function () {
+        $("#selectall_reject").prop("checked", false);
+        $("#selectall_process").prop("checked", false);
         if ($(this).is(":checked")) {
-            $('.check-row').prop("checked", true);
+            $('.check-row-approve').prop("checked", true);
         } else {
-            $('.check-row').prop("checked", false);
+            $('.check-row-approve').prop("checked", false);
         }
     });
 
-    $("#approveall").change(function () {
+    $("#selectall_reject").change(function () {
+        $("#selectall_shortlist").prop("checked", false);
+        $("#selectall_process").prop("checked", false);
         if ($(this).is(":checked")) {
-            $('.approve-row').prop("checked", true);
+            $('.check-row-reject').prop("checked", true);
         } else {
-            $('.approve-row').prop("checked", false);
+            $('.check-row-reject').prop("checked", false);
         }
     });
 
-    if (viewModel.announcement.Body) {
-        if (viewModel.announcement.Body() !== null) {
-            $('.wysiwye-editor').code(viewModel.announcement.Body());
+    $("#selectall_process").change(function () {
+        $("#selectall_shortlist").prop("checked", false);
+        $("#selectall_reject").prop("checked", false);
+        if ($(this).is(":checked")) {
+            $('.check-row-process').prop("checked", true);
+        } else {
+            $('.check-row-process').prop("checked", false);
         }
-    }
+    });
+
+    $('input[name="search"]').on('ifClicked', function (event) {
+        var selectedval = this.value;
+        viewModel.searchcriteria.category(selectedval);
+    });
 });

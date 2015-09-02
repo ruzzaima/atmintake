@@ -3,23 +3,23 @@
 @using SevenH.MMCSB.Atm.Domain.Interface
 @model SevenH.MMCSB.Atm.Web.Models.AdminViewModel
 @{
-    ViewBag.Title = "Kemaskini Pemilihan Awal dan Membuat Pemilihan Akhir";
+    ViewBag.Title = "Panggilan Temuduga/Pemilihan Akhir";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="row">
     <div class="tile">
-        <h2 class="tile-title">Kemaskini Pemilihan Awal dan Membuat Pemilihan Akhir @string.Format("{0}/{1} {2}", Model.Acquisition.Siri, Model.Acquisition.Year, Model.Acquisition.AcquisitionType.AcquisitionTypeNm)</h2>
+        <h2 class="tile-title">Panggilan Temuduga/Pemilihan Akhir @string.Format("{0}/{1} {2}", Model.Acquisition.Siri, Model.Acquisition.Year, Model.Acquisition.AcquisitionType.AcquisitionTypeNm)</h2>
         <div class="p-10">
 
             <div class="tab-container tile">
                 <ul class="nav tab nav-tabs">
-                    <li class="active"><a href="#home">Mesej</a></li>
-                    <li><a href="#profile">Senarai Permohonan</a></li>
+                    @*<li><a href="#home">Mesej</a></li>*@
+                    <li class="active"><a href="#profile">Senarai Permohonan</a></li>
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="home">
+                    @*<div class="tab-pane " id="home">
                         <div class="form-group">
                             <label class="control-label">Tajuk</label>
                             <input type="text" class="form-control" data-bind="value: announcement.Header" style="text-transform: none" noncap="true" />
@@ -29,30 +29,53 @@
                             <textarea class="wysiwye-editor" name="content" rows="10" data-bind="value: announcement.Body"></textarea>
                         </div>
                         <input type="button" class="btn btn-primary btn-sm" value="Simpan" data-bind="click: savetemplate" />
-                    </div>
-                    <div class="tab-pane" id="profile">
+                    </div>*@
+                    <div class="tab-pane active" id="profile">
+                        <div class="row">
+                            <div class="form-inline p-5">
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="04" /> Panggil Temuduga/Pemilihan Akhir
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="05" /> Tidak Dipanggil Temuduga/Pemilihan Akhir
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="02" /> Belum Tukar Status
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="03" /> Semua
+                                </label>
+                                <input type="button" class="btn btn-sm m-l-5" value="Carian Calon" data-bind="click: search" />
+                            </div>
+                        </div>
                         <table id="applicant_table" class="table table-bordered tile" width="100%">
                             <thead>
                                 <tr>
-                                    <th class="col-md-1">Bil</th>
+                                    <th style="width: 50px;">Bil</th>
                                     <th>Nama</th>
-                                    <th class="col-md-2">No Kad Pengenalan</th>
-                                    <th class="col-md-2">Status Permohonan</th>
-                                    <th class="col-md-2">
+                                    <th class="col-md-1 text-center">No Kad Pengenalan</th>
+                                    <th class="col-md-2 text-center">Status Permohonan Sekarang</th>
+                                    <th class="col-md-2 text-center">
                                         <div>
-                                            <label> <input type="checkbox" id="approveall" /> Lulus Semua Calon</label>
+                                            <label> <input type="checkbox" id="selectall_shortlist" /> Pilih Semua Calon</label>
                                         </div>
                                     </th>
-                                    <th class="col-md-2">
+                                    <th class="col-md-2 text-center">
                                         <div>
-                                            <label> <input type="checkbox" id="selectall" /> Pilih Semua Calon</label>
+                                            <label> <input type="checkbox" id="selectall_process" /> Pilih Semua Calon</label>
+                                        </div>
+                                    </th>
+                                    <th class="col-md-2 text-center">
+                                        <div>
+                                            <label> <input type="checkbox" id="selectall_reject" /> Pilih Semua Calon</label>
                                         </div>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                         </table>
-                        <input type="button" class="btn btn-primary btn-sm" value="Hantar Pemilihan" data-bind="click: submit" />
+                        <input type="button" class="btn btn-primary btn-sm" value="Simpan Status" data-bind="click: submit" />
+                        @*<input type="button" class="btn btn-primary btn-sm" value="Cetak" data-bind="click: print" />*@
                     </div>
                 </div>
             </div>

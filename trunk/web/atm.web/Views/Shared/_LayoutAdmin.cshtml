@@ -101,11 +101,16 @@
                 @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                 {
                     <li>
+                        <a class="sa-side-home" href="@Url.Action("Index", "Admin")">
+                            <span class="menu-item">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="sa-side-photos" href="@Url.Action("ManageUser", "Manage")">
                             <span class="menu-item">Pengurusan Pengguna</span>
                         </a>
                     </li>
-                    <li class="dropdown">
+                    @*<li class="dropdown">
                         <a class="sa-side-form" href="">
                             <span class="menu-item">Pengurusan Sistem</span>
                         </a>
@@ -119,7 +124,7 @@
                                 </li>
                             </ul>
                         }
-                    </li>
+                    </li>*@
                 }
             </ul>
 

@@ -14,7 +14,7 @@ $(function () {
 
             oTable = $('#applicant_table').dataTable({
                 "sDom": "<'row table-top-control'<'col-md-6 hidden-xs per-page-selector'l><'col-md-6 text-right'f>r>t<'row table-bottom-control'<'col-md-6'i><'col-md-6 text-right'p>>",
-                "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": 'Sedang Diproses...', "sSearch": "Carian Nama/No Kad Pengenalan", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
+                "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": loadingdatatable, "sSearch": "Carian Nama/No Kad Pengenalan", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
                 "bJQueryUI": false,
                 "bPaginate": true,
                 "sPaginationType": "bootstrap",
@@ -38,9 +38,10 @@ $(function () {
                                 { "bSortable": false },
                                 {
                                     "bSortable": false,
+                                    "sClass" : "text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<input type="button" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '" value="Pilih" />';
+                                        return '<input type="button" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '" value="Kemaskini" />';
                                     }
                                 }
                 ],

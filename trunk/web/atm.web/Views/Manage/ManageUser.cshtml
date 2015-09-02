@@ -53,22 +53,10 @@
 </div>
 
 @section scripts{
+    <script type="text/javascript">
+        var admin = @Html.Raw(ObjectBuilder.GetObject <IRoleProvider> ("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN).ToString().ToLower());
+    </script>
     <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
     <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
     <script src="@Url.Content("~/Scripts/Main/manage_manageuser.js")"></script>
-    @if (!ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN))
-    {
-        <script type="text/javascript">
-            $(function () {
-                $('input[name="category"]').each(function () {
-                    if (this.value === 'AW') {
-                        viewModel.category('AW');
-                        $(this).iCheck('check');
-                    }
-                });
-
-                oTable.fnSetColumnVis(5, false);
-            });
-        </script>
-    }
 }

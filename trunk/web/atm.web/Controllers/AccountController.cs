@@ -156,29 +156,32 @@ namespace SevenH.MMCSB.Atm.Web
                 var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(model.UserName);
                 if (null != login)
                 {
-                    if (ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Validate(model.UserName, model.Password))
+                    if (!login.IsLocked)
                     {
-                        FormsAuthentication.SetAuthCookie(model.UserName, true);
-                        if (login.FirstTime)
-                            return RedirectToAction("FirstTimeLogin", "Account");
-                        if (login.LastLoginDt.HasValue)
-                            login.LastLoginDt2 = login.LastLoginDt;
-                        login.LastLoginDt = DateTime.Now;
-                        login.Save();
-                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);
-                        if (login.ApplicantId.HasValue) Session["IsRegistered"] = "Yes"; else Session["IsRegistered"] = "No";
-                        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.AWAM))
-                            return RedirectToAction("Application", "Public");
-                        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.SUPER_ADMIN))
-                            return RedirectToAction("ManageUser", "Manage");
-                        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
-                            return RedirectToAction("Intakes", "Admin");
+                        if (ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Validate(model.UserName, model.Password))
+                        {
+                            FormsAuthentication.SetAuthCookie(model.UserName, true);
+                            if (login.FirstTime)
+                                return RedirectToAction("FirstTimeLogin", "Account");
+                            if (login.LastLoginDt.HasValue)
+                                login.LastLoginDt2 = login.LastLoginDt;
+                            login.LastLoginDt = DateTime.Now;
+                            login.Save();
+                            ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);
+                            if (login.ApplicantId.HasValue) Session["IsRegistered"] = "Yes"; else Session["IsRegistered"] = "No";
+                            if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.AWAM))
+                                return RedirectToAction("Application", "Public");
+                            if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.SUPER_ADMIN))
+                                return RedirectToAction("ManageUser", "Manage");
+                            if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                                return RedirectToAction("Intakes", "Admin");
+                        }
+                        else
+                        {
+                            ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Invalid_Password, User.Identity.Name, DateTime.Now);
+                        }
                     }
-                    else
-                    {
-                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Invalid_Password, User.Identity.Name, DateTime.Now);
-                    }
-                    ModelState.AddModelError("", "Kata laluan tidak tepat.");
+                    ModelState.AddModelError("", "Akaun anda telah tidak aktif.");
                 }
                 else
                 {

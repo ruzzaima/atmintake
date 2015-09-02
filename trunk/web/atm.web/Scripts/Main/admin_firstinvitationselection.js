@@ -3,9 +3,6 @@ var oTable;
 
 
 $(function () {
-    function loadApplicant() {
-        viewModel.search();
-    }
 
     viewModel = {
         searchcriteria: {
@@ -14,6 +11,8 @@ $(function () {
             icno: ko.observable('')
         },
         candidates: ko.observableArray([]),
+        processcandidates: ko.observableArray([]),
+        rejectcandidates: ko.observableArray([]),
         announcement: ko.mapping.fromJS(announcement),
         search: function (d) {
             oTable = $('#applicant_table').dataTable({
@@ -26,7 +25,7 @@ $(function () {
                 "bProcessing": true,
                 "bDestroy": true,
                 "bServerSide": true,
-                "sAjaxSource": server + '/Admin/LoadToUpdateApplicant?category=' + ko.mapping.toJS(viewModel.searchcriteria.category) + "&name=" + ko.mapping.toJS(viewModel.searchcriteria.name) + "&icno=" + ko.mapping.toJS(viewModel.searchcriteria.icno) + "&acquisitionid=" + selectedid + "&firstinvitation=true",
+                "sAjaxSource": server + '/Admin/LoadToUpdateApplicant?category=' + ko.mapping.toJS(viewModel.searchcriteria.category) + "&name=" + ko.mapping.toJS(viewModel.searchcriteria.name) + "&icno=" + ko.mapping.toJS(viewModel.searchcriteria.icno) + "&acquisitionid=" + selectedid,
                 "fnDrawCallback": function (oSettings) {
                     /* Need to redo the counters if filtered or sorted */
                     //if (oSettings.bSorted || oSettings.bFiltered) {
@@ -38,14 +37,30 @@ $(function () {
                 "aoColumns": [
                                 { "bSortable": false },
                                 { "bSortable": true },
-                                { "bSortable": true },
-                                { "bSortable": false },
+                                { "bSortable": true, "sClass": "text-middle text-center" },
+                                { "bSortable": false, "sClass": "text-middle text-center" },
                                 {
                                     "bSortable": false,
-                                    "sClass": "text-middle",
+                                    "sClass": "text-middle text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="checkbox" class="check-row" id="cb_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Pemilihan</span> </label>';
+                                        return '<label><input type="radio" app-data="true" name="firstselection' + id + '" class="check-row-approve" id="cba_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Pemilihan</span> </label>';
+                                    }
+                                },
+                                {
+                                    "bSortable": false,
+                                    "sClass": "text-middle text-center",
+                                    "mRender": function (data, type, full) {
+                                        var id = data;
+                                        return '<label><input type="radio" pro-data="true" name="firstselection' + id + '" class="check-row-process" id="cbp_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Sedang Diproses</span> </label>';
+                                    }
+                                },
+                                {
+                                    "bSortable": false,
+                                    "sClass": "text-middle text-center",
+                                    "mRender": function (data, type, full) {
+                                        var id = data;
+                                        return '<label><input type="radio" reject-data="true" name="firstselection' + id + '" class="check-row-reject" id="cbr_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Tidak Terpilih</span> </label>';
                                     }
                                 }
                 ],
@@ -61,19 +76,34 @@ $(function () {
         },
         submit: function () {
             viewModel.candidates.removeAll();
+            viewModel.rejectcandidates.removeAll();
+            viewModel.processcandidates.removeAll();
+
             $("input:checked", oTable.fnGetNodes()).each(function () {
-                viewModel.candidates.push($(this).val());
+                if ($(this).attr('app-data')) {
+                    viewModel.candidates.push($(this).val());
+                }
+
+                if ($(this).attr('reject-data')) {
+                    viewModel.rejectcandidates.push($(this).val());
+                }
+
+                if ($(this).attr('pro-data')) {
+                    viewModel.processcandidates.push($(this).val());
+                }
             });
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ candidates: ko.mapping.toJS(viewModel.candidates) }),
+                data: JSON.stringify({ candidates: ko.mapping.toJS(viewModel.candidates), rejectcandidates: ko.mapping.toJS(viewModel.rejectcandidates), processcandidates: ko.mapping.toJS(viewModel.processcandidates) }),
                 url: server + '/Admin/SubmitFirstSelection',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.OK) {
-                        $("#selectall").prop("checked", false);
-                        loadApplicant();
+                        $("#selectall_shortlist").prop("checked", false);
+                        $("#selectall_reject").prop("checked", false);
+                        $("#selectall_process").prop("checked", false);
+                        viewModel.search();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -109,19 +139,40 @@ $(function () {
     };
 
     ko.applyBindings(viewModel);
-    loadApplicant();
+    viewModel.search();
 
-    $("#selectall").change(function () {
+    $("#selectall_shortlist").change(function () {
+        $("#selectall_reject").prop("checked", false);
+        $("#selectall_process").prop("checked", false);
         if ($(this).is(":checked")) {
-            $('.check-row').prop("checked", true);
+            $('.check-row-approve').prop("checked", true);
         } else {
-            $('.check-row').prop("checked", false);
+            $('.check-row-approve').prop("checked", false);
         }
     });
 
-    if (viewModel.announcement.Body) {
-        if (viewModel.announcement.Body() !== null) {
-            $('.wysiwye-editor').code(viewModel.announcement.Body());
+    $("#selectall_reject").change(function () {
+        $("#selectall_shortlist").prop("checked", false);
+        $("#selectall_process").prop("checked", false);
+        if ($(this).is(":checked")) {
+            $('.check-row-reject').prop("checked", true);
+        } else {
+            $('.check-row-reject').prop("checked", false);
         }
-    }
+    });
+
+    $("#selectall_process").change(function () {
+        $("#selectall_shortlist").prop("checked", false);
+        $("#selectall_reject").prop("checked", false);
+        if ($(this).is(":checked")) {
+            $('.check-row-process').prop("checked", true);
+        } else {
+            $('.check-row-process').prop("checked", false);
+        }
+    });
+
+    $('input[name="search"]').on('ifClicked', function (event) {
+        var selectedval = this.value;
+        viewModel.searchcriteria.category(selectedval);
+    });
 });

@@ -13,7 +13,7 @@ using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
-    [AtmAuthorize(Roles = RolesString.SUPER_ADMIN)]
+    [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN)]
     public class ManageController : Controller
     {
         public ActionResult ManageUser()

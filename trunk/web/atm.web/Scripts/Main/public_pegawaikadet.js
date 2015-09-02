@@ -91,6 +91,90 @@ $(function () {
         }
     }
 
+    function checkPengakuan() {
+
+        // cronic illness
+        $('input[name="cronic_illness[cronic_illness]"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'Y') {
+                    viewModel.applicant.CronicIlnessInd(true);
+                } else {
+                    viewModel.applicant.CronicIlnessInd(false);
+                }
+            }
+        });
+
+
+        // crime_involve
+        $('input[name="crime_involve[crime_involve]"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'Y') {
+                    viewModel.applicant.CrimeInvolvement(true);
+                } else {
+                    viewModel.applicant.CrimeInvolvement(false);
+                }
+            }
+        });
+
+
+        // crime_drug
+        $('input[name="crime_drug[crime_drug]"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'Y') {
+                    viewModel.applicant.DrugCaseInvolvement(true);
+                } else {
+                    viewModel.applicant.DrugCaseInvolvement(false);
+                }
+            }
+        });
+    }
+
+    function checkSelection() {
+
+        $('input[name="servicetab_firstchoice"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'TD') {
+                    viewModel.applicant.SelectionTD(1);
+                }
+                if ($(this).prop('value') === 'TLDM') {
+                    viewModel.applicant.SelectionTL(1);
+                }
+                if ($(this).prop('value') === 'TUDM') {
+                    viewModel.applicant.SelectionTU(1);
+                }
+            }
+        });
+
+
+        $('input[name="servicetab_secondchoice"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'TD') {
+                    viewModel.applicant.SelectionTD(2);
+                }
+                if ($(this).prop('value') === 'TLDM') {
+                    viewModel.applicant.SelectionTL(2);
+                }
+                if ($(this).prop('value') === 'TUDM') {
+                    viewModel.applicant.SelectionTU(2);
+                }
+            }
+        });
+
+        $('input[name="servicetab_thirdchoice"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'TD') {
+                    viewModel.applicant.SelectionTD(3);
+                }
+                if ($(this).prop('value') === 'TLDM') {
+                    viewModel.applicant.SelectionTL(3);
+                }
+                if ($(this).prop('value') === 'TUDM') {
+                    viewModel.applicant.SelectionTU(3);
+                }
+            }
+        });
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -190,6 +274,9 @@ $(function () {
                     }
                 });
             }
+
+            checkPengakuan();
+            checkSelection();
 
             showLoading();
 
@@ -400,14 +487,31 @@ $(function () {
             $('#resume a[href="#crime"]').tab('show');
         },
         savescrime: function (d) {
-            viewModel.saveprofile();
+            var valid = $("#crime_form").validationEngine('validate');
+            var vars = $("#crime_form").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#crime_form").validationEngine();
+            }
         },
         savescrimeandcontinue: function (d) {
-            viewModel.saveprofile();
-            $('#resume a[href="#confirmation"]').tab('show');
+            var valid = $("#crime_form").validationEngine('validate');
+            var vars = $("#crime_form").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+                $('#resume a[href="#confirmation"]').tab('show');
+            } else {
+                $("#crime_form").validationEngine();
+            }
         },
         submitapplication: function (d) {
             if (viewModel.ischecked) {
+
+                if (viewModel.applicant.CronicIlnessInd() == null || viewModel.applicant.CrimeInvolvement() == null || viewModel.applicant.DrugCaseInvolvement() == null) {
+                    ShowMessage('Sila pilih maklumat Pengakuan.');
+                    return;
+                }
 
                 $("#notification_dialog .modal-body").html("Adakah anda pasti untuk menghantar permohonan ini?");
                 $("#notification_dialog").modal({
@@ -445,8 +549,6 @@ $(function () {
                                     }
                                 });
                             }
-                            hideLoading();
-                            ShowMessage(msg.message);
                         },
                         error: function (xhr) {
                             hideLoading();

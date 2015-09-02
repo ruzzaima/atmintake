@@ -41,13 +41,6 @@ $(function () {
             });
         },
         deleteuser: function () {
-            if (viewModel.user.ApplicantId) {
-                if (viewModel.user.ApplicantId !== null || viewModel.user.ApplicantId !== undefined) {
-                    ShowMessage('Maklumat pengguna ini tidak boleh dihapuskan.');
-                    return false;
-                }
-            }
-
             $("#notification_dialog .modal-body").html("Adakah anda pasti untuk menghapuskan maklumat pengguna ini?");
             $("#notification_dialog").modal({
                 show: 'true',
@@ -69,8 +62,10 @@ $(function () {
                         } else {
                             ShowMessage(msg.message);
                         }
+                        hideLoading();
                     },
                     error: function (xhr) {
+                        hideLoading();
                     }
                 });
 

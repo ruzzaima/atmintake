@@ -232,6 +232,12 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new NotImplementedException();
         }
+
+
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

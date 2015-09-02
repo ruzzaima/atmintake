@@ -7,6 +7,44 @@ $(function () {
     $("#form_peribadi").validationEngine();
     $("#form_akademik").validationEngine();
 
+    function checkPengakuan() {
+
+        // cronic illness
+        $('input[name="cronic_illness[cronic_illness]"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'Y') {
+                    viewModel.applicant.CronicIlnessInd(true);
+                } else {
+                    viewModel.applicant.CronicIlnessInd(false);
+                }
+            }
+        });
+
+
+        // crime_involve
+        $('input[name="crime_involve[crime_involve]"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'Y') {
+                    viewModel.applicant.CrimeInvolvement(true);
+                } else {
+                    viewModel.applicant.CrimeInvolvement(false);
+                }
+            }
+        });
+
+
+        // crime_drug
+        $('input[name="crime_drug[crime_drug]"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'Y') {
+                    viewModel.applicant.DrugCaseInvolvement(true);
+                } else {
+                    viewModel.applicant.DrugCaseInvolvement(false);
+                }
+            }
+        });
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -62,7 +100,9 @@ $(function () {
                 }
             }
 
+            checkPengakuan();
             showLoading();
+
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
@@ -244,8 +284,6 @@ $(function () {
         savescrime: function (d) {
             var valid = $("#crime_form").validationEngine('validate');
             var vars = $("#crime_form").serialize();
-            console.log(valid);
-            console.log(vars);
             if (valid === true) {
                 viewModel.saveprofile();
             } else {
@@ -265,6 +303,11 @@ $(function () {
         submitapplication: function (d) {
             if (viewModel.ischecked) {
 
+                if (viewModel.applicant.CronicIlnessInd() == null || viewModel.applicant.CrimeInvolvement() == null || viewModel.applicant.DrugCaseInvolvement() == null) {
+                    ShowMessage('Sila pilih maklumat Pengakuan.');
+                    return;
+                }
+
                 $("#notification_dialog .modal-body").html("Adakah anda pasti untuk menghantar permohonan ini?");
                 $("#notification_dialog").modal({
                     show: 'true',
@@ -279,15 +322,28 @@ $(function () {
 
                     $.ajax({
                         type: 'POST',
-                        data: JSON.stringify({ acquisitionid: acquisitionid }),
-                        url: server + '/Public/SubmitApplication',
+                        data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
+                        url: server + '/Public/SubmitProfile',
                         contentType: "application/json; charset=utf-8",
                         success: function (msg) {
                             if (msg.OK) {
-                                location.href = server + "/Public/SubmissionNotification?id=" + msg.id;
+                                $.ajax({
+                                    type: 'POST',
+                                    data: JSON.stringify({ acquisitionid: acquisitionid }),
+                                    url: server + '/Public/SubmitApplication',
+                                    contentType: "application/json; charset=utf-8",
+                                    success: function (msg) {
+                                        if (msg.OK) {
+                                            location.href = server + "/Public/SubmissionNotification?id=" + msg.id;
+                                        }
+                                        hideLoading();
+                                        ShowMessage(msg.message);
+                                    },
+                                    error: function (xhr) {
+                                        hideLoading();
+                                    }
+                                });
                             }
-                            hideLoading();
-                            ShowMessage(msg.message);
                         },
                         error: function (xhr) {
                             hideLoading();

@@ -6,7 +6,7 @@ $(function () {
     function loaduser(category) {
         oTable = $('#user_table').dataTable({
             "sDom": "<'row table-top-control'<'col-md-6 hidden-xs per-page-selector'l><'col-md-6 text-right'f>r>t<'row table-bottom-control'<'col-md-6'i><'col-md-6 text-right'p>>",
-            "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": 'Sedang Diproses...', "sSearch": "Carian Nama/Id Pengguna", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
+            "oLanguage": { "sLengthMenu": "_MENU_ &nbsp; rekod per muka surat", "sProcessing": loadingdatatable, "sSearch": "Carian Nama/Id Pengguna", "sInfo": "Memaparkan _START_ hingga _END_ daripada _TOTAL_ rekod" },
             "bJQueryUI": false,
             "bPaginate": true,
             "sPaginationType": "bootstrap",
@@ -43,9 +43,11 @@ $(function () {
         });
 
         if (category === 'AW') {
+            oTable.fnSetColumnVis(4, false);
             oTable.fnSetColumnVis(5, false);
             oTable.fnSetColumnVis(3, true);
         } else {
+            oTable.fnSetColumnVis(4, true);
             oTable.fnSetColumnVis(5, true);
             oTable.fnSetColumnVis(3, false);
         }
@@ -63,25 +65,40 @@ $(function () {
 
     ko.applyBindings(viewModel);
 
-    loaduser('SP');
-
     $('input[name="category"]').each(function () {
         if (this.value === 'SP') {
             viewModel.category('SP');
             $(this).iCheck('check');
-        } 
+        }
     });
 
     $('input[name="category"]').on('ifClicked', function (event) {
         var selectedval = this.value;
         viewModel.category(selectedval);
         if (selectedval === "AW") {
+            oTable.fnSetColumnVis(4, false);
             oTable.fnSetColumnVis(5, false);
             oTable.fnSetColumnVis(3, true);
         } else {
+            oTable.fnSetColumnVis(4, true);
             oTable.fnSetColumnVis(5, true);
             oTable.fnSetColumnVis(3, false);
         }
     });
+
+    if (admin) {
+        loaduser("SP");
+    } else {
+        loaduser("AW");
+        $('input[name="category"]').each(function () {
+            if (this.value === 'AW') {
+                viewModel.category('AW');
+                $(this).iCheck('check');
+            }
+        });
+
+        oTable.fnSetColumnVis(4, false);
+        oTable.fnSetColumnVis(5, false);
+    }
 
 });
