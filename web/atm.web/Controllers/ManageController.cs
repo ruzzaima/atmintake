@@ -146,7 +146,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (!user.ApplicantId.HasValue)
                     {
                         if (ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Delete(userid))
-                            return Json(new { OK = true, message = "Makluamt pengguna berjaya dibuang." });
+                            return Json(new { OK = true, message = "Makluamt pengguna berjaya dihapuskan." });
                     }
                 }
             }
@@ -157,16 +157,16 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
 
             IEnumerable<LoginUser> users = null;
-
+            var total = 0;
             if (!string.IsNullOrWhiteSpace(category))
             {
                 if (category == "SP")
-                    users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(true, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart);
+                    users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(true, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart, out total);
                 if (category == "AW")
-                    users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(false, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart);
+                    users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(false, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart, out total);
             }
             else
-                users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(true, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart);
+                users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(true, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart, out total);
 
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
             Func<LoginUser, string> orderingFunction = (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.LoginId);
@@ -189,15 +189,15 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 a.IsLocked ? "Tidak Aktif" : "Aktif",
                 string.Format("{0:dd/MM/yyyy hh:mm:tt}", a.LastLoginDt),
                 a.UserId.ToString()
-            }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
+            }).ToList();
 
             return Json(new
             {
                 OK = true,
                 message = "Succeed",
                 sEcho = param.sEcho,
-                iTotalRecords = loginUsers.Count(),
-                iTotalDisplayRecords = loginUsers.Count(),
+                iTotalRecords = total,
+                iTotalDisplayRecords = total,
                 aaData = aadata,
             }, JsonRequestBehavior.AllowGet);
         }

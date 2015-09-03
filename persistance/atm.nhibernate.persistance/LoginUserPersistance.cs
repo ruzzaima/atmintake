@@ -82,6 +82,12 @@ namespace SevenH.MMCSB.Persistance
         }
 
 
+        public IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search, int? take, int? skip,
+            out int total)
+        {
+            throw new NotImplementedException();
+        }
+
         public int LoggingUser(int userid, string statuscode, string by, DateTime bydate)
         {
             throw new System.NotImplementedException();

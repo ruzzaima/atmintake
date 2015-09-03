@@ -9966,6 +9966,21 @@
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
+            private DateTime?  m_ReportDutyDate;
+            public const string PropertyNameReportDutyDate = "ReportDutyDate";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private DateTime?  m_FinalSelectionStartDate;
+            public const string PropertyNameFinalSelectionStartDate = "FinalSelectionStartDate";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private DateTime?  m_FinalSelectionEndDate;
+            public const string PropertyNameFinalSelectionEndDate = "FinalSelectionEndDate";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
             private bool?  m_FirstSelectionInd;
             public const string PropertyNameFirstSelectionInd = "FirstSelectionInd";
           
@@ -10104,6 +10119,16 @@
             private bool?  m_WrittenTest;
             public const string PropertyNameWrittenTest = "WrittenTest";
           
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_ReportDutyLocId;
+            public const string PropertyNameReportDutyLocId = "ReportDutyLocId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_FinalSelActualAcqLocationId;
+            public const string PropertyNameFinalSelActualAcqLocationId = "FinalSelActualAcqLocationId";
+          
       [DebuggerBrowsable(DebuggerBrowsableState.Never)]
       private ApplicantSubmitted m_ApplicantSubmitted
           =  new ApplicantSubmitted();
@@ -10118,6 +10143,23 @@
       {
       m_ApplicantSubmitted = value;
       OnPropertyChanged(PropertyNameApplicantSubmitted);
+      }
+      }
+    
+      [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+      private AcquisitionLocation m_AcquisitionLocation
+          =  new AcquisitionLocation();
+        
+      public const string PropertyNameAcquisitionLocation = "AcquisitionLocation";
+      [DebuggerHidden]
+
+      public virtual AcquisitionLocation AcquisitionLocation
+      {
+      get{ return m_AcquisitionLocation;}
+      set
+      {
+      m_AcquisitionLocation = value;
+      OnPropertyChanged(PropertyNameAcquisitionLocation);
       }
       }
     
@@ -10451,6 +10493,72 @@
             }
             }
             get { return m_LastModifiedDt;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? ReportDutyDate
+            {
+            set
+            {
+            if(m_ReportDutyDate == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDutyDate, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_ReportDutyDate= value;
+            OnPropertyChanged(PropertyNameReportDutyDate);
+            }
+            }
+            get { return m_ReportDutyDate;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? FinalSelectionStartDate
+            {
+            set
+            {
+            if(m_FinalSelectionStartDate == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalSelectionStartDate, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FinalSelectionStartDate= value;
+            OnPropertyChanged(PropertyNameFinalSelectionStartDate);
+            }
+            }
+            get { return m_FinalSelectionStartDate;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual DateTime? FinalSelectionEndDate
+            {
+            set
+            {
+            if(m_FinalSelectionEndDate == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalSelectionEndDate, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FinalSelectionEndDate= value;
+            OnPropertyChanged(PropertyNameFinalSelectionEndDate);
+            }
+            }
+            get { return m_FinalSelectionEndDate;}
             }
           
 
@@ -11067,6 +11175,50 @@
             }
             }
             get { return m_WrittenTest;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? ReportDutyLocId
+            {
+            set
+            {
+            if(m_ReportDutyLocId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDutyLocId, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_ReportDutyLocId= value;
+            OnPropertyChanged(PropertyNameReportDutyLocId);
+            }
+            }
+            get { return m_ReportDutyLocId;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? FinalSelActualAcqLocationId
+            {
+            set
+            {
+            if(m_FinalSelActualAcqLocationId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalSelActualAcqLocationId, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_FinalSelActualAcqLocationId= value;
+            OnPropertyChanged(PropertyNameFinalSelActualAcqLocationId);
+            }
+            }
+            get { return m_FinalSelActualAcqLocationId;}
             }
           
 
@@ -11918,6 +12070,14 @@
             public const string PropertyNameInviteFirstSelNominatedBy = "InviteFirstSelNominatedBy";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_FinalSupportingDocument;
+            public const string PropertyNameFinalSupportingDocument = "FinalSupportingDocument";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_ReportDutySupportingDocument;
+            public const string PropertyNameReportDutySupportingDocument = "ReportDutySupportingDocument";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
             private DateTime?  m_CreatedDt;
             public const string PropertyNameCreatedDt = "CreatedDt";
@@ -12527,6 +12687,54 @@
             get
             {
             return m_InviteFirstSelNominatedBy;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string FinalSupportingDocument
+            {
+            set
+            {
+            if( String.Equals( m_FinalSupportingDocument, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalSupportingDocument, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_FinalSupportingDocument= value;
+            OnPropertyChanged(PropertyNameFinalSupportingDocument);
+            }
+            }
+            get
+            {
+            return m_FinalSupportingDocument;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string ReportDutySupportingDocument
+            {
+            set
+            {
+            if( String.Equals( m_ReportDutySupportingDocument, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDutySupportingDocument, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_ReportDutySupportingDocument= value;
+            OnPropertyChanged(PropertyNameReportDutySupportingDocument);
+            }
+            }
+            get
+            {
+            return m_ReportDutySupportingDocument;}
             }
           
 

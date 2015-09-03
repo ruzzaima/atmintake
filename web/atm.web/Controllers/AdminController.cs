@@ -130,16 +130,17 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         public ActionResult SearchingApplicant(JQueryDataTableParamModel param, int acquisitionid, string category, string name, string icno)
         {
             var applicants = new List<ApplicantSubmitted>();
+            var total = 0;
             if (!string.IsNullOrWhiteSpace(category))
             {
                 if (category == "00")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "01")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "02")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "03")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true, param.iDisplayLength, param.iDisplayStart, out total));
             }
 
             var applicantSubmitteds = new List<ApplicantSubmitted>();
@@ -159,15 +160,15 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 a.NewICNo,
                 GenerateStatusApplication(a.Application),
                 a.ApplicantId.ToString(),
-            }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
+            }).ToList();
 
             return Json(new
             {
                 OK = true,
                 message = "Succeed",
                 sEcho = param.sEcho,
-                iTotalRecords = applicantSubmitteds.Count(),
-                iTotalDisplayRecords = applicantSubmitteds.Count(),
+                iTotalRecords = total,
+                iTotalDisplayRecords = total,
                 aaData = aadata,
             }, JsonRequestBehavior.AllowGet);
         }
@@ -191,24 +192,25 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         public ActionResult LoadToUpdateApplicant(JQueryDataTableParamModel param, int acquisitionid, string category, string name, string icno, bool? firstinvitation, bool? finalinvitation)
         {
             var applicants = new List<ApplicantSubmitted>();
+            var total = 0;
             if (!string.IsNullOrWhiteSpace(category))
             {
                 if (category == "00")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "01")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, false, null, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, false, null, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "02")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "03")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "04")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "05")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, false, null));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, false, null, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "06")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true, param.iDisplayLength, param.iDisplayStart, out total));
                 if (category == "07")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, false));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, false, param.iDisplayLength, param.iDisplayStart, out total));
             }
 
             var applicantSubmitteds = new List<ApplicantSubmitted>();
@@ -227,15 +229,15 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 a.ApplicantId.ToString(),
                 a.ApplicantId.ToString(),
                 a.ApplicantId.ToString()
-            }).ToList().Skip(param.iDisplayStart).Take(param.iDisplayLength);
+            }).ToList();
 
             return Json(new
             {
                 OK = true,
                 message = "Succeed",
                 sEcho = param.sEcho,
-                iTotalRecords = applicantSubmitteds.Count(),
-                iTotalDisplayRecords = applicantSubmitteds.Count(),
+                iTotalRecords = total,
+                iTotalDisplayRecords = total,
                 aaData = aadata,
             }, JsonRequestBehavior.AllowGet);
         }
@@ -654,7 +656,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (null != acq)
                     {
                         vm.Acquisition = acq;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null));
+                        var total = 0;
+                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, out total));
                     }
 
                 }
@@ -662,7 +665,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult PrintFinalInvitation()
+        public ActionResult PrintFinalnvitation()
         {
             var vm = new AdminViewModel();
             var did = 0;
@@ -681,7 +684,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (null != acq)
                     {
                         vm.Acquisition = acq;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null));
+                        var total = 0;
+                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, out total));
                     }
 
                 }

@@ -23,7 +23,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         LoginUser GetByIdNumber(string idnumber);
         LoginUser GetById(int id);
 
-        IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search, int? take, int? skip);
+        IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search, int? take, int? skip, out int total);
 
         int LoggingUser(int userid, string statuscode, string by, DateTime bydate);
 
