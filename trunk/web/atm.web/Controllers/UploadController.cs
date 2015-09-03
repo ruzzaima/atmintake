@@ -107,6 +107,34 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                             //hpf.SaveAs(savedFileName);
                             return Json(new { OK = true, message = "Muatnaik Berjaya", item = JsonConvert.SerializeObject("") }, JsonRequestBehavior.AllowGet);
                         }
+
+                        if (uploadtype == "ACQDOC")
+                        {
+                            var acquisitionid = Request.Form["acquisitionid"];
+                            if (hpf.ContentLength > 5000000)
+                                return Json(new { Ok = false, message = "Muat naik tidak berjaya. Saiz fail melebihi saiz yang dibenarkan (5MB)", item = new object() }, JsonRequestBehavior.AllowGet);
+
+                            if (acquisitionid != null)
+                            {
+                                var path = ConfigurationManager.AppSettings["SuppDocFolder"];
+                                var appid = 0;
+                                int.TryParse(acquisitionid, out appid);
+                                if (appid != 0)
+                                {
+                                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(appid);
+                                    if (null != acq)
+                                    {
+                                        var guid = Guid.NewGuid().ToString();
+                                        var filename = guid + ext;
+                                        hpf.SaveAs(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/SuppDoc"), (filename)));
+                                        acq.FinalSupportingDocument = filename;
+                                        acq.Save();
+                                        return Json(new { OK = true, message = "Muatnaik Berjaya", item = JsonConvert.SerializeObject(new { DocumentName = filename }) }, JsonRequestBehavior.AllowGet);
+                                    }
+                                }
+                            }
+                        }
+
                     }
                     catch (Exception exc)
                     {

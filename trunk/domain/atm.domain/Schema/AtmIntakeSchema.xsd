@@ -257,8 +257,11 @@ new -  to call new at the field init
       <xs:attribute name="CorresponAddr3" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddrPostCd" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddrCityCd" type="xs:string" use="required"/>
+      <xs:attribute name="CorresponAddrCityNm" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddrStateCd" type="xs:string" use="required"/>
+      <xs:attribute name="CorresponAddrStateNm" type="xs:string" use="required"/>
       <xs:attribute name="CorresponAddrCountryCd" type="xs:string" use="required"/>
+      <xs:attribute name="CorresponAddrCountryNm" type="xs:string" use="required"/>
       <xs:attribute name="MobilePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="HomePhoneNo" type="xs:string" use="required"/>
       <xs:attribute name="Email" type="xs:string" use="required"/>

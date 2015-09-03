@@ -389,6 +389,379 @@ namespace SevenH.MMCSB.Atm.Web.Models
                 }
             }
         }
+        public ApplicantModel(ApplicantSubmitted app, int acquisitionid)
+        {
+            ApplicantId = app.ApplicantId;
+            NewIcNo = app.NewICNo;
+            NoTentera = app.NoTentera;
+            FullName = app.FullName;
+            MrtlStatusCd = app.MrtlStatusCd;
+            GenderCd = app.GenderCd;
+            Height = app.Height;
+            Weight = app.Weight;
+            Bmi = app.BMI;
+            NationalityCd = app.NationalityCd;
+            NationalityCertNo = app.NationalityCertNo;
+            BirthCertNo = app.BirthCertNo;
+            ReligionCd = app.ReligionCd;
+            RaceCd = app.RaceCd;
+            EthnicCd = !string.IsNullOrWhiteSpace(app.EthnicCd) ? app.EthnicCd.Trim() : app.EthnicCd;
+            BirthCountryCd = app.BirthCountryCd;
+            BirthStateCd = app.BirthStateCd;
+            BirthCityCd = !string.IsNullOrWhiteSpace(app.BirthCityCd) ? app.BirthCityCd.Trim() : app.BirthCityCd;
+            BirthPlace = app.BirthPlace;
+            BloodTypeCd = app.BloodTypeCd;
+            SpectaclesUserInd = app.SpectaclesUserInd;
+            ColorBlindInd = app.ColorBlindInd;
+            ResidenceTypeInd = app.ResidenceTypeInd;
+            CorresponAddr1 = app.CorresponAddr1;
+            CorresponAddr2 = app.CorresponAddr2;
+            CorresponAddr3 = app.CorresponAddr3;
+            CorresponAddrPostCd = app.CorresponAddrPostCd;
+            CorresponAddrCityCd = !string.IsNullOrWhiteSpace(app.CorresponAddrCityCd) ? app.CorresponAddrCityCd.Trim() : app.CorresponAddrCityCd;
+            CorresponAddrStateCd = app.CorresponAddrStateCd;
+            CorresponAddrCountryCd = app.CorresponAddrCountryCd;
+            MobilePhoneNo = app.MobilePhoneNo;
+            HomePhoneNo = app.HomePhoneNo;
+            Email = app.Email;
+            ChildNo = app.ChildNo;
+            NoOfSibling = app.NoOfSibling;
+            MomName = app.MomName;
+            MomIcNo = app.MomICNo;
+            MomNationalityCd = app.MomNationalityCd;
+            MomOccupation = app.MomOccupation;
+            MomSalary = app.MomSalary;
+            MomPhoneNo = app.MomPhoneNo;
+            DadName = app.DadName;
+            DadIcNo = app.DadICNo;
+            DadNationalityCd = app.DadNationalityCd;
+            DadOccupation = app.DadOccupation;
+            DadSalary = app.DadSalary;
+            DadPhoneNo = app.DadPhoneNo;
+            GuardianName = app.GuardianName;
+            GuardianIcNo = app.GuardianICNo;
+            GuardianNationalityCd = app.GuardianNationalityCd;
+            GuardianOccupation = app.GuardianOccupation;
+            GuardianSalary = app.GuardianSalary;
+            GuardianPhoneNo = app.GuardianPhoneNo;
+            FamilyHighestEduLevel = app.FamilyHighestEduLevel;
+            CurrentOccupation = app.CurrentOccupation;
+            CurrentOrganisation = app.CurrentOrganisation;
+            CurrentSalary = app.CurrentSalary;
+            PalapesInd = app.PalapesInd ?? false;
+            PalapesYear = app.PalapesYear;
+            PalapesArmyNo = app.PalapesArmyNo;
+            PalapesInstitution = app.PalapesInstitution;
+            PalapesRemark = app.PalapesRemark;
+            PalapesTauliahEndDt = app.PalapesTauliahEndDt;
+            ScholarshipInd = app.ScholarshipInd ?? false;
+            ScholarshipBody = app.ScholarshipBody;
+            ScholarshipBodyAddr = app.ScholarshipBodyAddr;
+            ScholarshipNoOfYrContract = app.ScholarshipNoOfYrContract;
+            ArmySelectionInd = app.ArmySelectionInd ?? false;
+            ArmySelectionVenue = app.ArmySelectionVenue;
+            ArmyServiceInd = app.ArmyServiceInd ?? false;
+            ArmyServiceYrOfServ = app.ArmyServiceYrOfServ;
+            ArmyServiceResignRemark = app.ArmyServiceResignRemark;
+            SelectionTD = app.SelectionTD;
+            SelectionTL = app.SelectionTL;
+            SelectionTU = app.SelectionTU;
+            ComputerMSWord = app.ComputerMSWord;
+            ComputerMSExcel = app.ComputerMSExcel;
+            ComputerMSPwrPoint = app.ComputerMSPwrPoint;
+            ComputerICT = app.ComputerICT;
+            ComputerOthers = app.ComputerOthers;
+            CrimeInvolvement = app.CrimeInvolvement;
+            DrugCaseInvolvement = app.DrugCaseInvolvement;
+            CreatedBy = app.CreatedBy;
+            LastModifiedBy = app.LastModifiedBy;
+            CreatedDateTime = app.CreatedDt;
+            LastModifiedDatetTime = app.LastModifiedDt;
+            BirthDate = app.BirthDt;
+            EmployeeAggreeInd = app.EmployeeAggreeInd ?? false;
+            CronicIlnessInd = app.CronicIlnessInd;
+            ScholarshipContractStDate = app.ScholarshipContractStDate;
+            OriginalPelepasanDocument = app.OriginalPelepasanDocument;
+            PelepasanDocument = app.PelepasanDocument;
+            ArmySelectionDt = app.ArmySelectionDt;
+            MomNotApplicable = app.MomNotApplicable ?? false;
+            DadNotApplicable = app.DadNotApplicable ?? false;
+            GuardianNotApplicable = app.GuardianNotApplicable ?? false;
+
+            if (!string.IsNullOrWhiteSpace(NewIcNo))
+            {
+                var lastid = NewIcNo.Substring(NewIcNo.Length - 1);
+                var checkgend = 0;
+                int.TryParse(lastid, out checkgend);
+                var even = new List<int>() { 0, 2, 4, 6, 8 };
+                var odd = new List<int>() { 1, 3, 5, 7, 9 };
+                if (string.IsNullOrWhiteSpace(app.GenderCd))
+                {
+                    if (even.Contains(checkgend)) GenderCd = "P";
+                    if (odd.Contains(checkgend)) GenderCd = "L";
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(app.NationalityCd))
+                NationalityCd = "MYS";
+            if (string.IsNullOrWhiteSpace(app.DadNationalityCd))
+                DadNationalityCd = "MYS";
+            if (string.IsNullOrWhiteSpace(app.MomNationalityCd))
+                MomNationalityCd = "MYS";
+            if (string.IsNullOrWhiteSpace(app.GuardianNationalityCd))
+                GuardianNationalityCd = "MYS";
+            if (string.IsNullOrWhiteSpace(BirthCountryCd))
+                BirthCountryCd = "MYS";
+            if (string.IsNullOrWhiteSpace(app.CorresponAddrCountryCd))
+                CorresponAddrCountryCd = "MYS";
+
+            if (string.IsNullOrWhiteSpace(BirthStateCd))
+            {
+                if (!string.IsNullOrWhiteSpace(NewIcNo))
+                {
+                    NewIcNo = NewIcNo.Trim();
+                    if (NewIcNo.Length == 12)
+                    {
+                        var icbirthstatecode = NewIcNo.Substring(6, 2);
+                        var birthstatecode = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetStatesByBirthStateCode(icbirthstatecode);
+                        if (null != birthstatecode)
+                            BirthStateCd = birthstatecode.StateCd;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(NewIcNo))
+            {
+                var yearstr = NewIcNo.Substring(0, 2);
+                var monthstr = NewIcNo.Substring(2, 2);
+                var daystr = NewIcNo.Substring(4, 2);
+                var yearint = Convert.ToInt32(yearstr);
+                if (yearint == 0) yearint = 2000;
+                if (yearint < 10) yearint = 2000 + yearint;
+                if (yearint > 10) yearint = 1900 + yearint;
+                var bdate = new DateTime(yearint, Convert.ToInt16(monthstr), Convert.ToInt16(daystr));
+                BirthDate = bdate;
+                DateTime zeroTime = DateTime.Now;
+                var daterange = DateTime.Now - bdate;
+                int years = (zeroTime + daterange).Year - 1;
+                DateTime today = DateTime.Today;
+                int months = zeroTime.Month - bdate.Month;
+
+                Age = zeroTime.Year - bdate.Year;
+                Month = months;
+            }
+
+            if (ApplicantId != 0)
+            {
+                // get educations
+                var education = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetEducation(ApplicantId);
+                if (null != education && education.Any())
+                {
+                    ApplicantEducationSubmitteds.Clear();
+                    ApplicantEducationSubmitteds.AddRange(education.ToList());
+                }
+
+                // get skills
+                var skills = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSkill(ApplicantId);
+                if (null != skills && skills.Any())
+                {
+                    SkillSubmitteds.AddRange(skills.ToList());
+
+                    if (SkillSubmitteds.Count <= 2)
+                        SkillSubmitteds.Add(new ApplicantSkillSubmitted() { SkillCd = "", SkillCatCd = "L", Skill = "" });
+                }
+
+
+                // get sports
+                var sports = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSport(ApplicantId);
+                if (null != sports && sports.Any())
+                {
+                    SportSubmitteds.AddRange(sports.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "S").ToList().DistinctBy(a => a.SportAssocId));
+                    KokoSubmitteds.AddRange(sports.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "A").ToList().DistinctBy(a => a.SportAssocId));
+                    OtherSubmitteds.AddRange(sports.Where(a => !string.IsNullOrWhiteSpace(a.Others)));
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(app.ComputerOthers))
+                ComputerOthersInd = true;
+
+            if (acquisitionid != 0)
+            {
+                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
+                if (acq != null && acq.AcquisitionTypeCd != 0)
+                {
+                    var selectededucation = new string[] { };
+                    var refrepos = new ReferenceRepo();
+                    //var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd);
+                    if (null != acq.AcquisitionType)
+                    {
+                        // pegawai
+                        if (acq.AcquisitionType.ServiceCd == "10")
+                            selectededucation = new string[] { "14", "13", "25", "11", "08", "20" };
+                        // td
+                        if (acq.AcquisitionType.ServiceCd == "01")
+                            selectededucation = new string[] { "14", "13", "25", "26", "11" };
+                        // tl
+                        if (acq.AcquisitionType.ServiceCd == "02")
+                            selectededucation = new string[] { "14", "13", "25", "15", "26", "11" };
+                        // tu
+                        if (acq.AcquisitionType.ServiceCd == "03")
+                            selectededucation = new string[] { "14", "13", "25", "26", "08", "11" };
+
+                        var he = refrepos.GetHighEduLevels().Where(a => selectededucation.Contains(a.HighEduLevelCd));
+                        if (he.Any())
+                        {
+                            he = he.OrderBy(a => a.IndexNo);
+                            if (ApplicantEducations != null && ApplicantEducations.Any())
+                            {
+                                var ledu = new List<ApplicantEducationSubmitted>();
+                                ledu.AddRange(ApplicantEducationSubmitteds);
+                                foreach (var ed in ledu.ToList())
+                                {
+                                    if (ed.HighEduLevelCd == "14")
+                                    {
+                                        var selectedsubject = ed.ApplicantEduSubjectSubmittedCollection.ToList().RemoveAll(a => !string.IsNullOrEmpty(a.GradeCd));
+                                        var subjects = refrepos.GetSubjects(ed.HighEduLevelCd);
+                                        if (subjects.Any())
+                                        {
+                                            foreach (var s in subjects.Take(10))
+                                            {
+                                                // check already exist or not in subjects
+                                                if (ed.ApplicantEduId != 0)
+                                                {
+                                                    var subbs = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSubject(ed.ApplicantEduId, s.SubjectCd);
+                                                    if (null != subbs)
+                                                    {
+                                                        if (ed.ApplicantEduSubjectSubmittedCollection.All(a => a.SubjectCd != subbs.SubjectCd))
+                                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = subbs.SubjectCd, Subject = subbs.Subject });
+                                                    }
+                                                    else
+                                                    {
+                                                        if (!ed.ApplicantEduSubjectSubmittedCollection.Any(a => subbs != null && a.SubjectCd == subbs.SubjectCd))
+                                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (ed.ApplicantEduSubjectSubmittedCollection.All(a => a.SubjectCd != s.SubjectCd))
+                                                        ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                }
+
+                                            }
+                                        }
+
+                                        var totalsubject = 16 - ed.ApplicantEduSubjectSubmittedCollection.Count();
+                                        for (int i = 0; i < totalsubject; i++)
+                                        {
+                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted());
+                                        }
+                                    }
+                                    foreach (var h in he)
+                                    {
+                                        if (ledu.All(a => a.HighEduLevelCd != h.HighEduLevelCd))
+                                        {
+                                            var edu = new ApplicantEducationSubmitted() { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
+
+                                            if (h.HighEduLevelCd == "14")
+                                            {
+                                                var subjects = refrepos.GetSubjects(h.HighEduLevelCd);
+                                                if (subjects.Any())
+                                                    foreach (var s in subjects.Take(10))
+                                                        edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+
+                                                var totalsubject = 16 - ed.ApplicantEduSubjectSubmittedCollection.Count();
+                                                for (int i = 0; i < totalsubject; i++)
+                                                {
+                                                    edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted());
+                                                }
+                                            }
+
+                                            ledu.Add(edu);
+                                        }
+                                    }
+                                }
+                                ApplicantEducationSubmitteds.Clear();
+                                ApplicantEducationSubmitteds.AddRange(ledu.DistinctBy(a => a.HighEduLevelCd));
+                            }
+                            else
+                            {
+                                foreach (var h in he)
+                                {
+                                    var edu = new ApplicantEducationSubmitted() { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
+                                    if (h.HighEduLevelCd == "14")
+                                    {
+                                        var subjects = refrepos.GetSubjects(h.HighEduLevelCd);
+                                        if (subjects.Any())
+                                            foreach (var s in subjects.Take(10))
+                                                edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+
+                                        for (int i = 0; i < 6; i++)
+                                        {
+                                            edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted());
+                                        }
+                                    }
+                                    ApplicantEducationSubmitteds.Add(edu);
+                                }
+                            }
+                        }
+
+                        var scount = 0;
+                        var kcount = 0;
+                        if (SportSubmitteds != null)
+                        {
+                            scount = SportSubmitteds.Count();
+                            if (scount == 0)
+                                scount = 2;
+                            else if (scount == 1)
+                                scount = 1;
+                            else
+                                scount = 0;
+                            for (int i = 0; i < scount; i++)
+                            {
+                                SportSubmitteds.Add(new ApplicantSportSubmitted());
+                            }
+
+                            kcount = KokoSubmitteds.Count();
+                            if (kcount == 0)
+                                kcount = 2;
+                            else if (kcount == 1)
+                                kcount = 1;
+                            else
+                                kcount = 0;
+                            for (int i = 0; i < kcount; i++)
+                            {
+                                KokoSubmitteds.Add(new ApplicantSportSubmitted());
+                            }
+                        }
+
+                        var skills = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetSkills("L");
+                        if (skills != null && skills.Any())
+                        {
+                            skills = skills.Take(2);
+                            foreach (var s in skills)
+                            {
+                                if (!SkillSubmitteds.Any(a => a.SkillCd.Trim() == s.SkillCd.Trim()))
+                                    SkillSubmitteds.Add(new ApplicantSkillSubmitted() { SkillCd = s.SkillCd.Trim(), SkillCatCd = "L", Skill = s.SkillDescription.Trim() });
+                            }
+                            if (SkillSubmitteds.Count <= 2)
+                                SkillSubmitteds.Add(new ApplicantSkillSubmitted() { SkillCd = "", SkillCatCd = "L", Skill = "" });
+                        }
+
+                        if (!OtherSubmitteds.Any())
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                OtherSubmitteds.Add(new ApplicantSportSubmitted());
+                            }
+                        }
+                        else if (OtherSubmitteds.Count() == 1)
+                        {
+                            OtherSubmitteds.Add(new ApplicantSportSubmitted());
+                        }
+                    }
+                }
+            }
+        }
 
         public int ApplicantId { get; set; }
         public string NewIcNo { get; set; }
@@ -492,6 +865,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public bool DadNotApplicable { get; set; }
         public bool GuardianNotApplicable { get; set; }
 
+
         private List<ApplicantEducation> m_applicantEducationCollection = new List<ApplicantEducation>();
         private List<ApplicantSport> m_applicantSportAndAssociations = new List<ApplicantSport>();
         private List<ApplicantSport> m_sports = new List<ApplicantSport>();
@@ -540,5 +914,53 @@ namespace SevenH.MMCSB.Atm.Web.Models
         }
 
 
+        // submitted
+
+        private List<ApplicantEducationSubmitted> m_applicantEducationCollectionSubmitted = new List<ApplicantEducationSubmitted>();
+        private List<ApplicantSportSubmitted> m_applicantSportAndAssociationsSubmitted = new List<ApplicantSportSubmitted>();
+        private List<ApplicantSportSubmitted> m_sportsSubmitted = new List<ApplicantSportSubmitted>();
+        private List<ApplicantSportSubmitted> m_kokosSubmitted = new List<ApplicantSportSubmitted>();
+        private List<ApplicantSkillSubmitted> m_skillsSubmitted = new List<ApplicantSkillSubmitted>();
+        private List<ApplicantSportSubmitted> m_othersSubmitted = new List<ApplicantSportSubmitted>();
+
+        public List<ApplicantSportSubmitted> OtherSubmitteds
+        {
+            get { return m_othersSubmitted; }
+            set { m_othersSubmitted = value; }
+        }
+
+
+        public List<ApplicantSkillSubmitted> SkillSubmitteds
+        {
+            get { return m_skillsSubmitted; }
+            set { m_skillsSubmitted = value; }
+        }
+
+
+        public List<ApplicantSportSubmitted> KokoSubmitteds
+        {
+            get { return m_kokosSubmitted; }
+            set { m_kokosSubmitted = value; }
+        }
+
+
+        public List<ApplicantSportSubmitted> SportSubmitteds
+        {
+            get { return m_sportsSubmitted; }
+            set { m_sportsSubmitted = value; }
+        }
+
+
+        public List<ApplicantSportSubmitted> ApplicantSportAndAssociationSubmitteds
+        {
+            get { return m_applicantSportAndAssociationsSubmitted; }
+            set { m_applicantSportAndAssociationsSubmitted = value; }
+        }
+
+        public List<ApplicantEducationSubmitted> ApplicantEducationSubmitteds
+        {
+            get { return m_applicantEducationCollectionSubmitted; }
+            set { m_applicantEducationCollectionSubmitted = value; }
+        }
     }
 }

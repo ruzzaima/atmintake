@@ -6,6 +6,7 @@ $(function () {
     // validation
     $("#form_peribadi").validationEngine();
     $("#form_akademik").validationEngine();
+    //$("#crime_form").validationEngine();
 
     function checkPengakuan() {
 

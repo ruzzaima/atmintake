@@ -393,5 +393,141 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             return 0;
         }
+
+
+        public IEnumerable<State> GetSubmittedApplicationStates(int acquisitionid, bool? firstselection, bool? finalselection)
+        {
+            var list = new List<State>();
+            if (acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    if (firstselection.HasValue)
+                    {
+                        var apps = (from a in entities.tblApplications join b in entities.tblApplicantSubmiteds on new { AcquisitionId = (int)a.AcquisitionId, ApplicantId = (int)a.ApplicantId } equals new { b.AcquisitionId, b.ApplicantId } where a.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select b.CorresponAddrStateCd).Distinct().OrderBy(a => a);
+                        list.AddRange(from cd in apps
+                                      select (from a in entities.tblREFStates where a.StateCd == cd select a).FirstOrDefault()
+                                          into st
+                                          where null != st
+                                          select new State()
+                                          {
+                                              StateCd = st.StateCd,
+                                              StateDesc = st.State
+                                          });
+                    }
+                    else if (finalselection.HasValue)
+                    {
+                        var apps = (from a in entities.tblApplications join b in entities.tblApplicantSubmiteds on new { AcquisitionId = (int)a.AcquisitionId, ApplicantId = (int)a.ApplicantId } equals new { b.AcquisitionId, b.ApplicantId } where a.FinalSelectionInd == finalselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select b.CorresponAddrStateCd).Distinct().OrderBy(a => a);
+                        list.AddRange(from cd in apps
+                                      select (from a in entities.tblREFStates where a.StateCd == cd select a).FirstOrDefault()
+                                          into st
+                                          where null != st
+                                          select new State()
+                                          {
+                                              StateCd = st.StateCd,
+                                              StateDesc = st.State
+                                          });
+                    }
+                    else
+                    {
+                        var apps = (from a in entities.tblApplications join b in entities.tblApplicantSubmiteds on new { AcquisitionId = (int)a.AcquisitionId, ApplicantId = (int)a.ApplicantId } equals new { b.AcquisitionId, b.ApplicantId } where a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select b.CorresponAddrStateCd).Distinct().OrderBy(a => a);
+                        list.AddRange(from cd in apps
+                                      select (from a in entities.tblREFStates where a.StateCd == cd select a).FirstOrDefault()
+                                          into st
+                                          where null != st
+                                          select new State()
+                                          {
+                                              StateCd = st.StateCd,
+                                              StateDesc = st.State
+                                          });
+                    }
+
+                }
+            }
+            return list;
+
+        }
+
+        public IEnumerable<City> GetSubmittedApplicationCities(int acquisitionid, string statecode, bool? firstselection, bool? finalselection)
+        {
+            var list = new List<City>();
+            if (acquisitionid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    if (firstselection.HasValue)
+                    {
+                        var apps = (from a in entities.tblApplications join b in entities.tblApplicantSubmiteds on new { AcquisitionId = (int)a.AcquisitionId, ApplicantId = (int)a.ApplicantId } equals new { b.AcquisitionId, b.ApplicantId } where a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.CorresponAddrStateCd == statecode && a.FirstSelectionInd == firstselection select b.CorresponAddrCityCd).Distinct().OrderBy(a => a);
+                        list.AddRange(from cd in apps
+                                      select (from a in entities.tblREFCities where a.CityCd == cd select a).FirstOrDefault()
+                                          into st
+                                          where null != st
+                                          select new City()
+                                          {
+                                              StateCd = st.StateCd,
+                                              CityCd = st.CityCd,
+                                              CityName = st.City
+                                          });
+
+                    }
+                    else if (finalselection.HasValue)
+                    {
+
+                        var apps = (from a in entities.tblApplications join b in entities.tblApplicantSubmiteds on new { AcquisitionId = (int)a.AcquisitionId, ApplicantId = (int)a.ApplicantId } equals new { b.AcquisitionId, b.ApplicantId } where a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.CorresponAddrStateCd == statecode && a.FinalSelectionInd == finalselection select b.CorresponAddrCityCd).Distinct().OrderBy(a => a);
+                        list.AddRange(from cd in apps
+                                      select (from a in entities.tblREFCities where a.CityCd == cd select a).FirstOrDefault()
+                                          into st
+                                          where null != st
+                                          select new City()
+                                          {
+                                              StateCd = st.StateCd,
+                                              CityCd = st.CityCd,
+                                              CityName = st.City
+                                          });
+                    }
+                    else
+                    {
+
+                        var apps = (from a in entities.tblApplications join b in entities.tblApplicantSubmiteds on new { AcquisitionId = (int)a.AcquisitionId, ApplicantId = (int)a.ApplicantId } equals new { b.AcquisitionId, b.ApplicantId } where a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.CorresponAddrStateCd == statecode select b.CorresponAddrCityCd).Distinct().OrderBy(a => a);
+                        list.AddRange(from cd in apps
+                                      select (from a in entities.tblREFCities where a.CityCd == cd select a).FirstOrDefault()
+                                          into st
+                                          where null != st
+                                          select new City()
+                                          {
+                                              StateCd = st.StateCd,
+                                              CityCd = st.CityCd,
+                                              CityName = st.City
+                                          });
+                    }
+
+                }
+            }
+            return list;
+        }
+
+
+        public int UpdateFirstSelectionLocationAndDateTime(int acquisitionid, int applicantid, int? locationid, DateTime? startdate, DateTime? enddate, string modifiedby)
+        {
+            if (acquisitionid != 0 && applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var application = (from a in entities.tblApplications where a.AcquisitionId == acquisitionid && a.ApplicantId == applicantid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
+                    if (null != application)
+                    {
+                        application.FinalSelActualAcqLocationId = locationid;
+                        application.FinalSelectionStartDate = startdate;
+                        application.FinalSelectionEndDate = enddate;
+                        application.LastModifiedDt = DateTime.Now;
+                        application.LastModifiedBy = modifiedby;
+                        var upd = entities.SaveChanges();
+
+                        return application.AppId;
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

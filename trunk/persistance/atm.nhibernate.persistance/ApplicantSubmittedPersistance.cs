@@ -70,6 +70,20 @@ namespace SevenH.MMCSB.Persistance
         }
 
         public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria,
+            bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, bool? all,
+            out int total)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string searchcriteria, bool? invitationfirtselection, bool? firstselection,
+            bool? finalselection, int? take, int? skip, int? finalselectionlocid, string statecode, string citycode, bool? all,
+            out int total)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria,
             bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, out int total)
         {
             throw new NotImplementedException();
@@ -103,6 +117,11 @@ namespace SevenH.MMCSB.Persistance
         public IEnumerable<ApplicantEduSubjectSubmitted> GetEducationSubject(int appeduid)
         {
             return Factory.OpenSession().QueryOver<ApplicantEduSubjectSubmitted>().Where(a => a.ApplicantEduId == appeduid).List();
+        }
+
+        public ApplicantEduSubjectSubmitted GetSubject(int appeduid, int subjectcode)
+        {
+            throw new NotImplementedException();
         }
 
         public int SaveEducation(ApplicantEducationSubmitted education)
@@ -241,6 +260,133 @@ namespace SevenH.MMCSB.Persistance
 
 
         public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        int IApplicantSubmittedPersistence.Save(ApplicantSubmitted appl)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.Update(ApplicantSubmitted applicant)
+        {
+            throw new NotImplementedException();
+        }
+
+        ApplicantSubmitted IApplicantSubmittedPersistence.GetApplicant(int applicantid)
+        {
+            throw new NotImplementedException();
+        }
+
+        ApplicantSubmitted IApplicantSubmittedPersistence.GetApplicant(string icno, int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
+
+        ApplicantSubmitted IApplicantSubmittedPersistence.GetApplicant(int applicantid, int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantSubmitted> IApplicantSubmittedPersistence.GetApplicants(string icno)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantSubmitted> IApplicantSubmittedPersistence.GetApplicants(int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantSubmitted> IApplicantSubmittedPersistence.GetApplicants(int acquisitionid, string racecode)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.SaveEducation(ApplicantEducationSubmitted education)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.UpdateEducation(ApplicantEducationSubmitted education)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantEducationSubmitted> IApplicantSubmittedPersistence.GetEducation(int applicantid)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.SaveEducationSubject(ApplicantEduSubjectSubmitted subject)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.UpdateEducationSubject(ApplicantEduSubjectSubmitted subject)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantEduSubjectSubmitted> IApplicantSubmittedPersistence.GetEducationSubject(int appeduid)
+        {
+            throw new NotImplementedException();
+        }
+
+        ApplicantEduSubjectSubmitted IApplicantSubmittedPersistence.GetSubject(int appeduid, int subjectcode)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.SaveSkill(ApplicantSkillSubmitted skill)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.UpdateSkill(ApplicantSkillSubmitted skill)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantSkillSubmitted> IApplicantSubmittedPersistence.GetSkill(int applicantid)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.SaveSport(ApplicantSportSubmitted sport)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.UpdateSport(ApplicantSportSubmitted sport)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<ApplicantSportSubmitted> IApplicantSubmittedPersistence.GetSport(int applicantid)
+        {
+            throw new NotImplementedException();
+        }
+
+        ApplicantSubmittedPhoto IApplicantSubmittedPersistence.GetPhoto(int applicantid)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.SaveApplicantPhoto(ApplicantSubmittedPhoto photo)
+        {
+            throw new NotImplementedException();
+        }
+
+        int IApplicantSubmittedPersistence.UpdateApplicantPhoto(ApplicantSubmittedPhoto photo)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        IEnumerable<ApplicantSubmitted> IApplicantSubmittedPersistence.GetByAcademis(string highleveleducd)
         {
             throw new NotImplementedException();
         }

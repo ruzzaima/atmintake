@@ -648,5 +648,32 @@ namespace SevenH.MMCSB.Atm.Web
                 message = "Sila masukkan maklumat permohonan dahulu."
             });
         }
+
+        public ActionResult GetAcqLocations(int acquisitionid)
+        {
+            var  acquisitionLocations = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetLocations(acquisitionid);
+            var enumerable = acquisitionLocations as IList<AcquisitionLocation> ?? acquisitionLocations.ToList();
+            if (acquisitionLocations != null && enumerable.Any())
+            {
+                var value = from a in enumerable
+                            orderby a.Location.LocationNm
+                            select new
+                            {
+                                Code = a.AcqLocationId,
+                                Name = a.Location.LocationNm
+                            };
+                return Json(new
+                {
+                    OK = true,
+                    message = "Rekod wujud",
+                    list = JsonConvert.SerializeObject(value)
+                });
+            }
+            return Json(new
+            {
+                OK = false,
+                message = "Tiada Rekod"
+            });
+        }
     }
 }

@@ -12,14 +12,17 @@ namespace SevenH.MMCSB.Atm.Web.Models
         private List<State> m_listOfState = new List<State>();
         private Acquisition m_acquisition = new Acquisition();
         private AcquisitionAnnouncement m_announcement = new AcquisitionAnnouncement();
-
+        public string FinalSupportingDocument { get; set; }
+        public string ReportDutySuppotingDocument { get; set; }
+        public string FinalSupportingDocumentPath { get; set; }
+        public string ReportDutySupportingDocumentPath { get; set; }
         public AcquisitionAnnouncement Announcement
         {
             get { return m_announcement; }
             set { m_announcement = value; }
         }
 
-        
+
         public Acquisition Acquisition
         {
             get { return m_acquisition; }

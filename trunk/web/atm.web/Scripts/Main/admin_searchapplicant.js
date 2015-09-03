@@ -38,10 +38,10 @@ $(function () {
                                 { "bSortable": false },
                                 {
                                     "bSortable": false,
-                                    "sClass" : "text-center",
+                                    "sClass": "text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<input type="button" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '" value="Kemaskini" />';
+                                        return '<a href="' + server + '/RedirectForm?id=' + id + '&acquisitionid=' + selectedid + '" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '" value="Kemaskini" />';
                                     }
                                 }
                 ],

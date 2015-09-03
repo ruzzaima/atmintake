@@ -22,6 +22,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         int SaveEducationSubject(ApplicantEduSubjectSubmitted subject);
         int UpdateEducationSubject(ApplicantEduSubjectSubmitted subject);
         IEnumerable<ApplicantEduSubjectSubmitted> GetEducationSubject(int appeduid);
+        ApplicantEduSubjectSubmitted GetSubject(int appeduid, int subjectcode);
 
         int SaveSkill(ApplicantSkillSubmitted skill);
         int UpdateSkill(ApplicantSkillSubmitted skill);
@@ -34,7 +35,8 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
         int SaveApplicantPhoto(ApplicantSubmittedPhoto photo);
         int UpdateApplicantPhoto(ApplicantSubmittedPhoto photo);
 
-        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, out int total);
+        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, bool? all, out int total);
+        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, int? finalselectionlocid, string statecode, string citycode, bool? all, out int total);
         IEnumerable<ApplicantSubmitted> GetByAcademis(string highleveleducd);
     }
 }

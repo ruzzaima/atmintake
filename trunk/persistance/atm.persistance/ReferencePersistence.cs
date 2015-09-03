@@ -203,5 +203,11 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             throw new NotImplementedException();
         }
+
+
+        public IEnumerable<AcquisitionLocation> GetAcquisitionLocations(int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
