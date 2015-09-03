@@ -184,7 +184,12 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 SelectionCenterId = exist.SelectionCenterId,
                 SuppDocumentReview = exist.SuppDocumentReview,
                 Urine = exist.Urine,
-                WrittenTest = exist.WrittenTest
+                WrittenTest = exist.WrittenTest,
+                ReportDutyLocId = exist.ReportDutyLocId,
+                ReportDutyDate = exist.ReportDutyDate,
+                FinalSelectionEndDate = exist.FinalSelectionEndDate,
+                FinalSelectionStartDate = exist.FinalSelectionStartDate,
+                FinalSelActualAcqLocationId = exist.FinalSelActualAcqLocationId
             };
 
             if (exist.AcquisitionId.HasValue)
@@ -196,6 +201,17 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 app.ApplicantSubmitted =
                     ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence")
                         .GetApplicant(exist.ApplicantId.Value, exist.AcquisitionId.Value);
+
+            if (exist.ReportDutyLocId.HasValue)
+                if (exist.tblREFReportDutyLoc != null)
+                    app.ReportDutyLocation = new Location()
+                    {
+                        LocationId = exist.tblREFReportDutyLoc.ReportDutyLocId,
+                        LocationNm = exist.tblREFReportDutyLoc.ReportDutyLoc
+                    };
+
+            if (exist.FinalSelActualAcqLocationId.HasValue)
+                app.FinalSelectionLocation = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetLocation(exist.FinalSelActualAcqLocationId.Value);
 
             return app;
         }
@@ -288,7 +304,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return false;
         }
 
-        public int UpdateStatus(int acquisitionid, int applicantid, bool? firstinvitation, bool? firstselection, bool? finalselection,bool? lastselection, string modifiedby)
+        public int UpdateStatus(int acquisitionid, int applicantid, bool? firstinvitation, bool? firstselection, bool? finalselection, bool? lastselection, string modifiedby)
         {
             if (acquisitionid != 0 && applicantid != 0)
             {

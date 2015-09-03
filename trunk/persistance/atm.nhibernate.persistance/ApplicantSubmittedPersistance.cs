@@ -69,6 +69,12 @@ namespace SevenH.MMCSB.Persistance
             return photo.ApplicantId;
         }
 
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria,
+            bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, out int total)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public IEnumerable<ApplicantEducationSubmitted> GetEducation(int applicantid)
         {

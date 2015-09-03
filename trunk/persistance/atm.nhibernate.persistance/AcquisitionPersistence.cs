@@ -155,6 +155,11 @@ namespace SevenH.MMCSB.Persistance
             return Factory.OpenSession().QueryOver<AcquisitionLocation>().Where(a => a.ZoneCd == zonecode).List();
         }
 
+        public AcquisitionLocation GetLocation(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
 
         public IEnumerable<Acquisition> GetAllAcquisition(bool? isactive, string servicecode)
         {

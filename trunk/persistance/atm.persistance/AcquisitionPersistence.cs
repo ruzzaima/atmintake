@@ -67,7 +67,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     InviteFirstSelNominated = appl.InviteFirstSelNominated,
                     InviteFirstSelNominatedBy = appl.InviteFirstSelNominatedBy,
                     InviteFirstSelStatus = appl.InviteFirstSelStatus,
-                    InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy
+                    InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy,
+                    FinalSupportingDocument = appl.FinalSupportingDocument,
+                    ReportDutySupportingDocument = appl.ReportDutySupportingDocument
                 };
                 entities.tblAcquisitions.Add(acq);
                 if (entities.SaveChanges() > 0)
@@ -127,7 +129,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         InviteFirstSelNominated = acq.InviteFirstSelNominated,
                         InviteFirstSelNominatedBy = acq.InviteFirstSelNominatedBy,
                         InviteFirstSelStatus = acq.InviteFirstSelStatus,
-                        InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy
+                        InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy,
+                        FinalSupportingDocument = acq.FinalSupportingDocument,
+                        ReportDutySupportingDocument = acq.ReportDutySupportingDocument
                     };
 
                     if (a.AcquisitionTypeCd != 0)
@@ -141,6 +145,32 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                                 AcquisitionTypeNm = aty.AcquisitionTypeNm,
                                 ServiceCd = aty.ServiceCd
                             };
+                        }
+                    }
+
+                    if (acq.tblAcqLocations != null && acq.tblAcqLocations.Any())
+                    {
+                        foreach (var loc in acq.tblAcqLocations)
+                        {
+                            a.AcquisitionLocationCollection.Add(new AcquisitionLocation()
+                            {
+                                AcqLocationId = loc.AcqLocationId,
+                                AcquisitionId = loc.AcquisitionId,
+                                ZoneCd = loc.ZoneCd,
+                                CreatedBy = loc.CreatedBy,
+                                CreatedDt = loc.CreatedDt,
+                                LastModifiedBy = loc.LastModifiedBy,
+                                LastModifiedDt = loc.LastModifiedDt,
+                                LocationId = loc.LocationId,
+                                Location = loc.tblRefLocation != null ? new Location()
+                                {
+                                    LocationId = loc.tblRefLocation.LocationId,
+                                    LocationNm = loc.tblRefLocation.LocationNm,
+                                    CityCd = loc.tblRefLocation.CityCd,
+                                    StateCd = loc.tblRefLocation.StateCd,
+                                    ZoneCd = loc.tblRefLocation.ZoneCd,
+                                } : null
+                            });
                         }
                     }
 
@@ -194,6 +224,48 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 }
             }
             return list;
+        }
+
+        public AcquisitionLocation GetLocation(int id)
+        {
+            if (id != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var l = (from a in entities.tblAcqLocations where a.AcqLocationId == id select a).SingleOrDefault();
+                    if (l != null)
+                    {
+                        var loc = new AcquisitionLocation
+                        {
+                            AcqLocationId = l.AcqLocationId,
+                            AcquisitionId = l.AcquisitionId,
+                            CreatedBy = l.CreatedBy,
+                            CreatedDt = l.CreatedDt,
+                            LastModifiedBy = l.LastModifiedBy,
+                            LastModifiedDt = l.LastModifiedDt,
+                            ZoneCd = l.ZoneCd
+                        };
+                        if (l.tblRefLocation != null)
+                        {
+                            loc.Location = new Location
+                            {
+                                LocationId = l.tblRefLocation.LocationId,
+                                LocationNm = l.tblRefLocation.LocationNm,
+                                StateCd = l.tblRefLocation.StateCd,
+                                ZoneCd = l.tblRefLocation.ZoneCd,
+                                CreatedBy = l.tblRefLocation.CreatedBy,
+                                CreatedDt = l.tblRefLocation.CreatedDt,
+                                CityCd = l.tblRefLocation.CityCd,
+                                ActiveInd = l.tblRefLocation.ActiveInd,
+                                LastModifiedBy = l.tblRefLocation.LastModifiedBy,
+                                LastModifiedDt = l.tblRefLocation.LastModifiedDt
+                            };
+                        }
+                        return loc;
+                    }
+                }
+            }
+            return null;
         }
 
         public IEnumerable<Acquisition> GetAllAcquisition(bool? isactive, string servicecode)
@@ -255,7 +327,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             InviteFirstSelNominated = acq.InviteFirstSelNominated,
                             InviteFirstSelNominatedBy = acq.InviteFirstSelNominatedBy,
                             InviteFirstSelStatus = acq.InviteFirstSelStatus,
-                            InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy
+                            InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy,
+                            FinalSupportingDocument = acq.FinalSupportingDocument,
+                            ReportDutySupportingDocument = acq.ReportDutySupportingDocument
                         };
 
                         if (a.AcquisitionTypeCd != 0)
@@ -269,6 +343,32 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                                     AcquisitionTypeNm = aty.AcquisitionTypeNm,
                                     ServiceCd = aty.ServiceCd
                                 };
+                            }
+                        }
+
+                        if (acq.tblAcqLocations != null && acq.tblAcqLocations.Any())
+                        {
+                            foreach (var loc in acq.tblAcqLocations)
+                            {
+                                a.AcquisitionLocationCollection.Add(new AcquisitionLocation()
+                                {
+                                    AcqLocationId = loc.AcqLocationId,
+                                    AcquisitionId = loc.AcquisitionId,
+                                    ZoneCd = loc.ZoneCd,
+                                    CreatedBy = loc.CreatedBy,
+                                    CreatedDt = loc.CreatedDt,
+                                    LastModifiedBy = loc.LastModifiedBy,
+                                    LastModifiedDt = loc.LastModifiedDt,
+                                    LocationId = loc.LocationId,
+                                    Location = loc.tblRefLocation != null ? new Location()
+                                    {
+                                        LocationId = loc.tblRefLocation.LocationId,
+                                        LocationNm = loc.tblRefLocation.LocationNm,
+                                        CityCd = loc.tblRefLocation.CityCd,
+                                        StateCd = loc.tblRefLocation.StateCd,
+                                        ZoneCd = loc.tblRefLocation.ZoneCd,
+                                    } : null
+                                });
                             }
                         }
                         list.Add(a);
@@ -328,6 +428,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.InviteFirstSelNominatedBy = appl.InviteFirstSelNominatedBy;
                     exist.InviteFirstSelStatus = appl.InviteFirstSelStatus;
                     exist.InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy;
+                    exist.FinalSupportingDocument = appl.FinalSupportingDocument;
+                    exist.ReportDutySupportingDocument = appl.ReportDutySupportingDocument;
 
                     entities.SaveChanges();
                     return exist.AcquisitionId;
@@ -413,7 +515,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             using (var entities = new atmEntities())
             {
                 var exist = (from a in entities.tblAcqAnnouncements where a.AcquisitionId == acquisitionid && a.AnnouncementSelectionInd == announcementselectiontype select a).SingleOrDefault();
-                
+
                 if (null != exist)
                 {
                     var ann = new AcquisitionAnnouncement()

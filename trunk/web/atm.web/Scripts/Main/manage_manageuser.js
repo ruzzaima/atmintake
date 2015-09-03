@@ -24,16 +24,17 @@ $(function () {
                 //}
             },
             "aoColumns": [
-                { "bSortable": false },
+                { "bSortable": false, "sWidth" : "50px" },
                 { "bSortable": true },
+                { "bSortable": true, "sClass": "text-center"},
                 { "bSortable": true },
-                { "bSortable": true },
                 { "bSortable": false },
-                { "bSortable": false },
-                { "bSortable": false },
+                { "bSortable": false, "sClass": "text-center" },
+                { "bSortable": false, "sClass": "text-center"},
                 { "bSortable": false },
                 {
                     "bSortable": false,
+                    "sClass": "text-center",
                     "mRender": function (data, type, full) {
                         var id = data;
                         return '<a class="btn btn-sm" href="' + server + "/Manage/UserProfile?id=" + id + '" >Kemaskini</a>';

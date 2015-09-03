@@ -44,7 +44,7 @@ $(function () {
                                     "sClass": "text-middle text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="radio" app-data="true" name="firstselection' + id + '" class="check-row-approve" id="cba_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Temuduga/Pemilihan Akhir</span> </label>';
+                                        return '<label><input type="radio" app-data="true" name="firstselection' + id + '" class="check-row-approve" id="cba_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Temuduga/Pemilihan Akhir</span> </label>';
                                     }
                                 },
                                 {

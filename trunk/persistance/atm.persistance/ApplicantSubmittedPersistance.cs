@@ -901,15 +901,16 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         }
 
 
-        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection)
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, out int total)
         {
             var list = new List<ApplicantSubmitted>();
+            total = 0;
             if (acquisitionid != 0)
             {
                 using (var entities = new atmEntities())
                 {
                     var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
-                    l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection select a;
+                    l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
                     //l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.FirstSelectionInd == firstselection select a;
                     //l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on new { ApplicantId = (int?)a.ApplicantId, AcquisitionId = (int?)a.AcquisitionId } equals new { b.ApplicantId, b.AcquisitionId } where b.FinalSelectionInd == finalselection select a;
 
@@ -919,6 +920,10 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         l = l.Where(a => a.NewICNo.Contains(icno));
                     if (!string.IsNullOrWhiteSpace(searchcriteria))
                         l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
+
+                    total = l.Count();
+                    if (take.HasValue && skip.HasValue)
+                        l = l.OrderBy(a => a.CreatedDt).Skip(skip.Value).Take(take.Value);
 
                     if (l.Any())
                     {

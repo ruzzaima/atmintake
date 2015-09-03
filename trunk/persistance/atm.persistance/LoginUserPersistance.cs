@@ -228,10 +228,10 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return null;
         }
 
-        public IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search, int? take, int? skip)
+        public IEnumerable<LoginUser> LoadAllUser(bool internaluser, bool? isactive, string servicecode, string search, int? take, int? skip, out int total)
         {
             var list = new List<LoginUser>();
-
+            total = 0;
             using (var entities = new atmEntities())
             {
                 var l = from a in entities.tblUsers select a;
@@ -257,6 +257,10 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 //    l = l.Take(take.Value);
                 if (!string.IsNullOrWhiteSpace(search))
                     l = l.Where(a => a.FullName.Contains(search) || a.LoginId.Contains(search));
+
+                total = l.Count();
+                if (take.HasValue && skip.HasValue)
+                    l = l.OrderBy(a => a.CreatedDt).Skip(skip.Value).Take(take.Value);
 
                 if (l.Any())
                     foreach (var exist in l.ToList())

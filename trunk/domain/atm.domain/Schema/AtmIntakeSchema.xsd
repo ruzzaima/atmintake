@@ -499,8 +499,12 @@ new -  to call new at the field init
     <xs:complexType>
       <xs:all>
         <xs:element ref="ApplicantSubmitted"/>
+        <xs:element ref="AcquisitionLocation"/>
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
+        <xs:element name="ReportDutyDate" type="xs:date" nillable="true"/>
+        <xs:element name="FinalSelectionStartDate" type="xs:date" nillable="true"/>
+        <xs:element name="FinalSelectionEndDate" type="xs:date" nillable="true"/>
         <xs:element name="FirstSelectionInd" type="xs:boolean" nillable="true"/>
         <xs:element name="FinalSelectionInd" type="xs:boolean" nillable="true"/>
         <xs:element name="ApplicationStatus" type="xs:boolean" nillable="true"/>
@@ -529,6 +533,8 @@ new -  to call new at the field init
         <xs:element name="SuppDocumentReview" type="xs:boolean" nillable="true"/>
         <xs:element name="Urine" type="xs:boolean" nillable="true"/>
         <xs:element name="WrittenTest" type="xs:boolean" nillable="true"/>
+        <xs:element name="ReportDutyLocId" type="xs:int" nillable="true"/>
+        <xs:element name="FinalSelActualAcqLocationId" type="xs:int" nillable="true"/>
       </xs:all>
       <xs:attribute name="AppId" type="xs:int" use="required"/>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
@@ -631,7 +637,6 @@ new -  to call new at the field init
         <xs:element name="FinalSelShortlisProcessInd" type="xs:boolean" nillable="true"/>
         <xs:element name="InviteFirstSelNominated" type="xs:boolean" nillable="true"/>
         <xs:element name="AcquisitionTypeCd" type="xs:int" nillable="true"/>
-
       </xs:all>
       <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
       <xs:attribute name="NewStatusBy" type="xs:string" use="required"/>
@@ -651,7 +656,8 @@ new -  to call new at the field init
       <xs:attribute name="ToFinalSelNominatedBy" type="xs:string" use="required"/>
       <xs:attribute name="DocumentStatusBy" type="xs:string" use="required"/>
       <xs:attribute name="InviteFirstSelNominatedBy" type="xs:string" use="required"/>
-
+      <xs:attribute name="FinalSupportingDocument" type="xs:string" use="required"/>
+      <xs:attribute name="ReportDutySupportingDocument" type="xs:string" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="AcquisitionCriteria">
