@@ -44,7 +44,7 @@ $(function () {
                                     "sClass": "text-middle text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="radio" app-data="true" name="firstselection' + id + '" class="check-row-approve" id="cba_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Panggil Temuduga/Pemilihan Akhir</span> </label>';
+                                        return '<label><input type="radio" app-data="true" name="firstselection' + id + '" class="check-row-approve" id="cba_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Lulus Temuduga/Pemilihan Akhir</span> </label>';
                                     }
                                 },
                                 {
@@ -60,7 +60,7 @@ $(function () {
                                     "sClass": "text-middle text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<label><input type="radio" reject-data="true" name="firstselection' + id + '" class="check-row-reject" id="cbr_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Tidak Terpilih Ke Temuduga/Pemilihan Akhir</span> </label>';
+                                        return '<label><input type="radio" reject-data="true" name="firstselection' + id + '" class="check-row-reject" id="cbr_' + id + '" value="' + id + '" /> <span style="padding-bottom:5px;">Tidak Lulus Ke Temuduga/Pemilihan Akhir</span> </label>';
                                     }
                                 }
                 ],

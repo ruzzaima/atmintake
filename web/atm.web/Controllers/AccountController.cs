@@ -179,9 +179,13 @@ namespace SevenH.MMCSB.Atm.Web
                         else
                         {
                             ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Invalid_Password, User.Identity.Name, DateTime.Now);
+                            ModelState.AddModelError("", "Kata Laluan tidak tepat.");
                         }
                     }
-                    ModelState.AddModelError("", "Akaun anda telah tidak aktif.");
+                    else
+                    {
+                        ModelState.AddModelError("", "Akaun anda telah tidak aktif.");
+                    }
                 }
                 else
                 {

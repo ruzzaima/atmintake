@@ -113,5 +113,43 @@ namespace SevenH.MMCSB.Persistance
         {
             throw new NotImplementedException();
         }
+
+        public int UpdateFirstSelectionLocationAndDateTime(int acquisitionid, int applicantid, int? locationid, DateTime? startdate,
+            DateTime? enddate, string modifiedby)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateFirstSelectionLocationAndDateTime(int acquisitionid, int applicantid, int locationid, DateTime startdate,
+            DateTime enddate, string modifiedby)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<State> GetSubmittedApplicationStates(int acquisitionid, bool? firstselection, bool? finalselection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<City> GetSubmittedApplicationCities(int acquisitionid, string statecode, bool? firstselection,
+            bool? finalselection)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<State> GetSubmittedApplicationStates(int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<City> GetSubmittedApplicationCities(int acquisitionid, string statecode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<City> GetSubmittedApplicationCities(int acquisitionid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

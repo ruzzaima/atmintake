@@ -3636,12 +3636,24 @@
             public const string PropertyNameCorresponAddrCityCd = "CorresponAddrCityCd";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_CorresponAddrCityNm;
+            public const string PropertyNameCorresponAddrCityNm = "CorresponAddrCityNm";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_CorresponAddrStateCd;
             public const string PropertyNameCorresponAddrStateCd = "CorresponAddrStateCd";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_CorresponAddrStateNm;
+            public const string PropertyNameCorresponAddrStateNm = "CorresponAddrStateNm";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_CorresponAddrCountryCd;
             public const string PropertyNameCorresponAddrCountryCd = "CorresponAddrCountryCd";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_CorresponAddrCountryNm;
+            public const string PropertyNameCorresponAddrCountryNm = "CorresponAddrCountryNm";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
             private  string  m_MobilePhoneNo;
@@ -4740,6 +4752,30 @@
             [XmlAttribute]
             [DebuggerHidden]
 
+            public virtual string CorresponAddrCityNm
+            {
+            set
+            {
+            if( String.Equals( m_CorresponAddrCityNm, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameCorresponAddrCityNm, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_CorresponAddrCityNm= value;
+            OnPropertyChanged(PropertyNameCorresponAddrCityNm);
+            }
+            }
+            get
+            {
+            return m_CorresponAddrCityNm;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
             public virtual string CorresponAddrStateCd
             {
             set
@@ -4764,6 +4800,30 @@
             [XmlAttribute]
             [DebuggerHidden]
 
+            public virtual string CorresponAddrStateNm
+            {
+            set
+            {
+            if( String.Equals( m_CorresponAddrStateNm, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameCorresponAddrStateNm, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_CorresponAddrStateNm= value;
+            OnPropertyChanged(PropertyNameCorresponAddrStateNm);
+            }
+            }
+            get
+            {
+            return m_CorresponAddrStateNm;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
             public virtual string CorresponAddrCountryCd
             {
             set
@@ -4780,6 +4840,30 @@
             get
             {
             return m_CorresponAddrCountryCd;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string CorresponAddrCountryNm
+            {
+            set
+            {
+            if( String.Equals( m_CorresponAddrCountryNm, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameCorresponAddrCountryNm, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_CorresponAddrCountryNm= value;
+            OnPropertyChanged(PropertyNameCorresponAddrCountryNm);
+            }
+            }
+            get
+            {
+            return m_CorresponAddrCountryNm;}
             }
           
             ///<summary>

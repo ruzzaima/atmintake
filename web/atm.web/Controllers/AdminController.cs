@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using SevenH.MMCSB.Atm.Web.Models;
@@ -134,13 +135,13 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             if (!string.IsNullOrWhiteSpace(category))
             {
                 if (category == "00")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, true, out total));
                 if (category == "01")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "02")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "03")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true, param.iDisplayLength, param.iDisplayStart, null, out total));
             }
 
             var applicantSubmitteds = new List<ApplicantSubmitted>();
@@ -196,21 +197,21 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             if (!string.IsNullOrWhiteSpace(category))
             {
                 if (category == "00")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, true, null, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "01")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, false, null, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, false, null, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "02")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "03")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, null, param.iDisplayLength, param.iDisplayStart, true, out total));
                 if (category == "04")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, true, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "05")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, false, null, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, false, null, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "06")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, true, param.iDisplayLength, param.iDisplayStart, null, out total));
                 if (category == "07")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, false, param.iDisplayLength, param.iDisplayStart, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, category, name, icno, param.sSearch, null, null, false, param.iDisplayLength, param.iDisplayStart, null, out total));
             }
 
             var applicantSubmitteds = new List<ApplicantSubmitted>();
@@ -346,6 +347,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     if (null != acq)
                     {
                         vm.Acquisition = acq;
+                        vm.FinalSupportingDocument = acq.FinalSupportingDocument;
                         vm.Announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAnnouncement(acq.AcquisitionId, 2) ?? new AcquisitionAnnouncement() { AnnouncementSelectionInd = 2, AnnouncementTypeInd = "E" };
                     }
                 }
@@ -611,6 +613,39 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return Json(new { OK = false, message = "Tidak Berjaya" });
         }
 
+        public ActionResult SubmitFinalSetLocation(int[] candidates, int? selectedlocation, DateTime? startdate, DateTime? enddate, string selectime)
+        {
+            var did = 0;
+            if (Session["SelectedAcquisition"] == null)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+            if (Session["SelectedAcquisition"] != null)
+            {
+                var acqid = Session["SelectedAcquisition"].ToString();
+                if (!string.IsNullOrWhiteSpace(acqid))
+                {
+                    int.TryParse(acqid, out did);
+                    if (did == 0)
+                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+
+                    if (candidates != null && candidates.Any())
+                    {
+                        if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
+                        {
+                            var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
+                            startdate = newDateTime;
+                        }
+
+                        foreach (var c in candidates)
+                            ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance")
+                                .UpdateFirstSelectionLocationAndDateTime(did, c, selectedlocation, startdate, enddate,
+                                    User.Identity.Name);
+
+                        return Json(new { OK = true, message = "Berjaya" });
+                    }
+                }
+            }
+            return Json(new { OK = false, message = "Tidak Berjaya" });
+        }
         public ActionResult SubmitAnnouncement(AcquisitionAnnouncement announcement)
         {
             var did = 0;
@@ -657,7 +692,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     {
                         vm.Acquisition = acq;
                         var total = 0;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, out total));
+                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, null, out total));
                     }
 
                 }
@@ -685,12 +720,287 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     {
                         vm.Acquisition = acq;
                         var total = 0;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, out total));
+                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, null, out total));
                     }
 
                 }
             }
             return View(vm);
         }
+
+        public ActionResult RedirectForm(int id, int acquisitionid)
+        {
+            if (id != 0 && acquisitionid != 0)
+            {
+                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
+                if (null != acq)
+                {
+                    var appl = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(id, acquisitionid);
+                    if (null != appl)
+                    {
+                        if (acq.AcquisitionType.ServiceCd == "10")
+                            return RedirectToAction("PegawaiKadetForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+                        if (acq.AcquisitionType.ServiceCd == "01")
+                            return RedirectToAction("TDForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+                        if (acq.AcquisitionType.ServiceCd == "02")
+                            return RedirectToAction("TLDMForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+                        if (acq.AcquisitionType.ServiceCd == "03")
+                            return RedirectToAction("TUDMForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+                    }
+                }
+            }
+            return Content("Rekod pemohon dan pemilihan tidak wujud");
+        }
+
+        [Authorize]
+        [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN)]
+        public ActionResult PegawaiKadetForm(int id, int acquisitionid)
+        {
+            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = id };
+
+            if (id != 0 && acquisitionid != 0)
+            {
+                var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(id, acquisitionid);
+                if (null != applicant)
+                {
+                    vm.ApplicantModel = new ApplicantModel(applicant, id);
+                }
+            }
+            else
+            {
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, id);
+            }
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
+            if (null != acq)
+            {
+                vm.Acquisition = acq;
+                vm.ServiceCode = acq.AcquisitionType.ServiceCd;
+            }
+            return View(vm);
+        }
+
+
+        [Authorize]
+        public ActionResult TLDMForm(int id, int acquisitionid)
+        {
+            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = id };
+            var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones();
+            if (null != zones && zones.Any())
+                vm.Zones.AddRange(zones);
+
+            if (id != 0 && acquisitionid != 0)
+            {
+                var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(id, acquisitionid);
+                if (null != applicant)
+                {
+                    vm.ApplicantModel = new ApplicantModel(applicant, id);
+                }
+            }
+            else
+            {
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, id);
+            }
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
+            if (null != acq)
+            {
+
+                if (null != acq.AcquisitionType)
+                {
+                    vm.ServiceCode = acq.AcquisitionType.ServiceCd;
+                    vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
+                }
+                vm.AcquisitionSiri = acq.Siri.Value;
+                vm.AcquisitionYear = acq.Year.Value;
+                vm.Acquisition = acq;
+            }
+
+            return View(vm);
+        }
+
+        [Authorize]
+        public ActionResult TUDMForm(int id, int acquisitionid)
+        {
+            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = id };
+            var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones();
+            if (null != zones && zones.Any())
+                vm.Zones.AddRange(zones);
+
+            if (id != 0 && acquisitionid != 0)
+            {
+                var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(id, acquisitionid);
+                if (null != applicant)
+                {
+                    vm.ApplicantModel = new ApplicantModel(applicant, id);
+                }
+            }
+            else
+            {
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, id);
+            }
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
+            if (null != acq)
+            {
+
+                if (null != acq.AcquisitionType)
+                {
+                    vm.ServiceCode = acq.AcquisitionType.ServiceCd;
+                    vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
+                }
+                vm.AcquisitionSiri = acq.Siri.Value;
+                vm.AcquisitionYear = acq.Year.Value;
+                vm.Acquisition = acq;
+            }
+            return View(vm);
+        }
+
+        [Authorize]
+        public ActionResult TDForm(int id, int acquisitionid)
+        {
+            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = id };
+            var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones();
+            if (null != zones && zones.Any())
+                vm.Zones.AddRange(zones);
+
+            if (id != 0 && acquisitionid != 0)
+            {
+                var applicant = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetApplicant(id, acquisitionid);
+                if (null != applicant)
+                {
+                    vm.ApplicantModel = new ApplicantModel(applicant, id);
+                }
+            }
+            else
+            {
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, id);
+            }
+
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(id);
+            if (null != acq)
+            {
+                if (null != acq.AcquisitionType)
+                {
+                    vm.ServiceCode = acq.AcquisitionType.ServiceCd;
+                    vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
+                }
+                vm.AcquisitionSiri = acq.Siri.Value;
+                vm.AcquisitionYear = acq.Year.Value;
+                vm.Acquisition = acq;
+            }
+
+            vm.MaritalStatuses.AddRange(ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetMaritalStatus());
+            return View(vm);
+        }
+
+        [Authorize]
+        public ActionResult GetSubmittedStates(int acquisitionid, bool? firstselection, bool? finalselection)
+        {
+            if (acquisitionid != 0)
+            {
+                var states = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationStates(acquisitionid, firstselection, finalselection);
+                var enumerable = states as State[] ?? states.ToArray();
+                if (states != null && enumerable.Any())
+                {
+                    var value = from a in enumerable
+                                orderby a.StateDesc
+                                select new
+                                {
+                                    Code = a.StateCd.Trim(),
+                                    Name = a.StateDesc
+                                };
+                    return Json(new
+                    {
+                        OK = true,
+                        message = "Rekod wujud",
+                        list = JsonConvert.SerializeObject(value)
+                    });
+                }
+                return Json(new
+                {
+                    OK = false,
+                    message = "Tiada rekod"
+                });
+            }
+            return Json(new { OK = false, message = "Tidak Berjaya" });
+        }
+        [Authorize]
+        public ActionResult GetSubmittedCities(int acquisitionid, string statecode, bool? firstselection, bool? finalselection)
+        {
+            if (acquisitionid != 0)
+            {
+                var cities = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationCities(acquisitionid, statecode, firstselection, finalselection);
+                var enumerable = cities as City[] ?? cities.ToArray();
+                if (cities != null && enumerable.Any())
+                {
+                    var value = from a in enumerable
+                                orderby a.CityName
+                                select new
+                                {
+                                    Code = a.CityCd.Trim(),
+                                    Name = a.CityName
+                                };
+                    return Json(new
+                    {
+                        OK = true,
+                        message = "Rekod wujud",
+                        list = JsonConvert.SerializeObject(value)
+                    });
+                }
+                return Json(new
+                {
+                    OK = false,
+                    message = "Tiada rekod"
+                });
+            }
+            return Json(new { OK = false, message = "Tidak Berjaya" });
+        }
+
+        public ActionResult LoadSubmittedApplicant(JQueryDataTableParamModel param, string category, int acquisitionid, string statecode, string citycode, bool? firstselection, bool? finalselection, int? finalselectionlocid)
+        {
+            var applicants = new List<ApplicantSubmitted>();
+            var total = 0;
+            if (string.IsNullOrWhiteSpace(category))
+                applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, finalselectionlocid, statecode, citycode, null, out total));
+            else
+            {
+                if (category == "11")
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, statecode, citycode, null, out total));
+                if (category == "12")
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, 0, statecode, citycode, null, out total));
+                if (category == "13")
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, finalselectionlocid, statecode, citycode, null, out total));
+            }
+            var applicantSubmitteds = new List<ApplicantSubmitted>();
+            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
+            Func<ApplicantSubmitted, string> orderingFunction =
+                (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.NewICNo);
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            applicantSubmitteds.AddRange(sortDirection == "asc" ? applicants.OrderBy(orderingFunction) : applicants.OrderByDescending(orderingFunction));
+
+            var aadata = applicantSubmitteds.Select(a => new string[]
+            {
+                a.ApplicantId.ToString(),
+                a.FullName,
+                a.NewICNo,
+                a.CorresponAddrStateNm,
+                a.CorresponAddrCityNm,
+                a.Application.FinalSelActualAcqLocationId.HasValue ? a.Application.FinalSelectionLocation.Location.LocationNm : "Tiada",
+                a.ApplicantId.ToString()
+            }).ToList();
+
+            return Json(new
+            {
+                OK = true,
+                message = "Succeed",
+                sEcho = param.sEcho,
+                iTotalRecords = total,
+                iTotalDisplayRecords = total,
+                aaData = aadata,
+            }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

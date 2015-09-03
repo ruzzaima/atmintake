@@ -539,5 +539,52 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             return null;
         }
+
+
+        public IEnumerable<AcquisitionLocation> GetLocations(int acquisitionid)
+        {
+            var list = new List<AcquisitionLocation>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblAcqLocations where a.AcquisitionId == acquisitionid select a;
+                if (l.Any())
+                {
+                    foreach (var al in l)
+                    {
+                        if (al.AcquisitionId.HasValue)
+                        {
+                            var loc = new AcquisitionLocation
+                            {
+                                AcqLocationId = al.AcqLocationId,
+                                AcquisitionId = al.AcquisitionId,
+                                CreatedBy = al.CreatedBy,
+                                CreatedDt = al.CreatedDt,
+                                LastModifiedBy = al.LastModifiedBy,
+                                LastModifiedDt = al.LastModifiedDt,
+                                ZoneCd = al.ZoneCd
+                            };
+                            if (al.tblRefLocation != null)
+                            {
+                                loc.Location = new Location
+                                {
+                                    LocationId = al.tblRefLocation.LocationId,
+                                    LocationNm = al.tblRefLocation.LocationNm,
+                                    StateCd = al.tblRefLocation.StateCd,
+                                    ZoneCd = al.tblRefLocation.ZoneCd,
+                                    CreatedBy = al.tblRefLocation.CreatedBy,
+                                    CreatedDt = al.tblRefLocation.CreatedDt,
+                                    CityCd = al.tblRefLocation.CityCd,
+                                    ActiveInd = al.tblRefLocation.ActiveInd,
+                                    LastModifiedBy = al.tblRefLocation.LastModifiedBy,
+                                    LastModifiedDt = al.tblRefLocation.LastModifiedDt
+                                };
+                            }
+                            list.Add(loc);
+                        }
+                    }
+                }
+            }
+            return list;
+        }
     }
 }

@@ -111,20 +111,20 @@
                         </a>
                     </li>
                     @*<li class="dropdown">
-                        <a class="sa-side-form" href="">
-                            <span class="menu-item">Pengurusan Sistem</span>
-                        </a>
-                        @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.HRMIS))
-                        {
-                            <ul class="list-unstyled menu-item">
-                                <li>
-                                    <a href="@Url.Action("ExistingAtmMember", "Admin")" class="whiter" style="color: #ffffff">
-                                        Pengurusan Anggota Atm
-                                    </a>
-                                </li>
-                            </ul>
-                        }
-                    </li>*@
+                            <a class="sa-side-form" href="">
+                                <span class="menu-item">Pengurusan Sistem</span>
+                            </a>
+                            @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.HRMIS))
+                            {
+                                <ul class="list-unstyled menu-item">
+                                    <li>
+                                        <a href="@Url.Action("ExistingAtmMember", "Admin")" class="whiter" style="color: #ffffff">
+                                            Pengurusan Anggota Atm
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                        </li>*@
                 }
             </ul>
 

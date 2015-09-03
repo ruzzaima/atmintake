@@ -787,6 +787,10 @@
     <Content Include="Views\Admin\InterviewUpdateAndFinalSelection.cshtml" />
     <Content Include="Views\Admin\PrintFirstInvitation.cshtml" />
     <Content Include="Views\Admin\PrintFinalnvitation.cshtml" />
+    <Content Include="Views\Admin\PegawaiKadetForm.cshtml" />
+    <Content Include="Views\Admin\TDForm.cshtml" />
+    <Content Include="Views\Admin\TLDMForm.cshtml" />
+    <Content Include="Views\Admin\TUDMForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

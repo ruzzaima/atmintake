@@ -177,5 +177,9 @@ namespace SevenH.MMCSB.Atm.Web
         {
             return PersistanceLayer.GetAcquisitionLocations(zone);
         }
+        public IEnumerable<AcquisitionLocation> GetAcquisitionLocations(int acquisitionid)
+        {
+            return PersistanceLayer.GetAcquisitionLocations(acquisitionid);
+        }
     }
 }
