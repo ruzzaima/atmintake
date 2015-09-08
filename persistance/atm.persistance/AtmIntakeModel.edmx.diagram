@@ -40,7 +40,6 @@
         <EntityTypeShape EntityType="AtmIntakeModel.tblApplication" Width="2.5" PointX="30.625" PointY="42.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppQuestionFeedback" Width="1.5" PointX="36.5" PointY="44.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblAppQuestionnaireScore" Width="1.5" PointX="36.5" PointY="49" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblExistingAtmMember" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFAchievement" Width="1.5" PointX="9" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFApplicationStatu" Width="1.5" PointX="37.25" PointY="41.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblRefBloodType" Width="1.5" PointX="3.75" PointY="20.375" IsExpanded="true" />
@@ -48,7 +47,6 @@
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFCountry" Width="1.5" PointX="0.75" PointY="29.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFDocument" Width="1.5" PointX="31.25" PointY="55.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFEthnic" Width="1.5" PointX="3.75" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AtmIntakeModel.tblREFExistingMemberStatu" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFEyeStatu" Width="1.5" PointX="31.25" PointY="37.375" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFGender" Width="1.5" PointX="3.75" PointY="39.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblREFHighEduLevel" Width="1.5" PointX="9" PointY="5.5" IsExpanded="true" />
@@ -171,7 +169,6 @@
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplicantSubmittedPhoto_tblApplicantSubmited" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAppQuestionFeedback_tblApplication" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblAppQuestionnaireScore_tblApplication" ManuallyRouted="false" />
-        <AssociationConnector Association="AtmIntakeModel.FK_tblExistingATMMember_tblREFExistingMemberStatus" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblREFCity_tblREFState" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblRefLocation_tblREFCity" ManuallyRouted="false" />
         <AssociationConnector Association="AtmIntakeModel.FK_tblREFEthnic_tblREFEthnic" ManuallyRouted="false" />
@@ -203,6 +200,9 @@
         <AssociationConnector Association="AtmIntakeModel.FK_tblApplicationStatus_tblREFApplicationStatus" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblUserLog" Width="1.5" PointX="11.375" PointY="12.75" />
         <EntityTypeShape EntityType="AtmIntakeModel.tblUser" Width="1.5" PointX="11.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblExistingAtmMember" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="AtmIntakeModel.tblREFExistingMemberStatu" Width="1.5" PointX="0.75" PointY="1.25" />
+        <AssociationConnector Association="AtmIntakeModel.FK_tblExistingATMMember_tblREFExistingMemberStatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

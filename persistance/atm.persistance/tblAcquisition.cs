@@ -75,6 +75,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<int> ArmyNumberTo { get; set; }
         public string FinalSupportingDocument { get; set; }
         public string ReportDutySupportingDocument { get; set; }
+        public string FinalSupportingDocumentOriginal { get; set; }
+        public string ReportDutySupportingDocumentOriginal { get; set; }
     
         public virtual ICollection<tblAcqAnnouncement> tblAcqAnnouncements { get; set; }
         public virtual ICollection<tblAcqCriteria> tblAcqCriterias { get; set; }

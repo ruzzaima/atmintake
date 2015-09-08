@@ -84,6 +84,7 @@
     <Compile Include="Class\LogStatusCodeString.cs" />
     <Compile Include="Class\Occupation.cs" />
     <Compile Include="Class\LoginStatus.cs" />
+    <Compile Include="Class\ReportDutyLocation.cs" />
     <Compile Include="Class\RolesString.cs" />
     <Compile Include="Class\SportAndAssociation.cs" />
     <Compile Include="Class\SubjectGrade.cs" />

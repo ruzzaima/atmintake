@@ -36,9 +36,9 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        public ActionResult CheckInAtm(int id)
+        public ActionResult CheckInAtm(string id)
         {
-            if (id != 0)
+            if (!string.IsNullOrWhiteSpace(id))
             {
                 var atmexist = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").ExistingAtmMemberByArmyNo(id);
                 if (null != atmexist)

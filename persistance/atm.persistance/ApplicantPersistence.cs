@@ -913,9 +913,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         }
 
 
-        public bool CheckingExistingAtmMemberByArmyNo(int armyno)
+        public bool CheckingExistingAtmMemberByArmyNo(string armyno)
         {
-            if (armyno != 0)
+            if (!string.IsNullOrWhiteSpace(armyno))
             {
                 using (var entities = new atmEntities())
                 {
@@ -926,9 +926,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return false;
         }
 
-        public ExistingMember ExistingAtmMemberByArmyNo(int armyno)
+        public ExistingMember ExistingAtmMemberByArmyNo(string armyno)
         {
-            if (armyno != 0)
+            if (!string.IsNullOrWhiteSpace(armyno))
             {
                 using (var entities = new atmEntities())
                 {

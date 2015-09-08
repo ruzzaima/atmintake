@@ -108,7 +108,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                             return Json(new { OK = true, message = "Muatnaik Berjaya", item = JsonConvert.SerializeObject("") }, JsonRequestBehavior.AllowGet);
                         }
 
-                        if (uploadtype == "ACQDOC")
+                        if (uploadtype == "ACQDOCFS")
                         {
                             var acquisitionid = Request.Form["acquisitionid"];
                             if (hpf.ContentLength > 5000000)
@@ -127,13 +127,43 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                                         var guid = Guid.NewGuid().ToString();
                                         var filename = guid + ext;
                                         hpf.SaveAs(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/SuppDoc"), (filename)));
+                                        acq.FinalSupportingDocumentOriginal = hpf.FileName;
                                         acq.FinalSupportingDocument = filename;
                                         acq.Save();
-                                        return Json(new { OK = true, message = "Muatnaik Berjaya", item = JsonConvert.SerializeObject(new { DocumentName = filename }) }, JsonRequestBehavior.AllowGet);
+                                        return Json(new { OK = true, message = "Muatnaik Berjaya", item = JsonConvert.SerializeObject(new { DocumentName = hpf.FileName }) }, JsonRequestBehavior.AllowGet);
                                     }
                                 }
                             }
                         }
+
+                        if (uploadtype == "ACQDOCRD")
+                        {
+                            var acquisitionid = Request.Form["acquisitionid"];
+                            if (hpf.ContentLength > 5000000)
+                                return Json(new { Ok = false, message = "Muat naik tidak berjaya. Saiz fail melebihi saiz yang dibenarkan (5MB)", item = new object() }, JsonRequestBehavior.AllowGet);
+
+                            if (acquisitionid != null)
+                            {
+                                var path = ConfigurationManager.AppSettings["SuppDocFolder"];
+                                var appid = 0;
+                                int.TryParse(acquisitionid, out appid);
+                                if (appid != 0)
+                                {
+                                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(appid);
+                                    if (null != acq)
+                                    {
+                                        var guid = Guid.NewGuid().ToString();
+                                        var filename = guid + ext;
+                                        hpf.SaveAs(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/SuppDoc"), (filename)));
+                                        acq.ReportDutySupportingDocumentOriginal = hpf.FileName;
+                                        acq.ReportDutySupportingDocument = filename;
+                                        acq.Save();
+                                        return Json(new { OK = true, message = "Muatnaik Berjaya", item = JsonConvert.SerializeObject(new { DocumentName = hpf.FileName }) }, JsonRequestBehavior.AllowGet);
+                                    }
+                                }
+                            }
+                        }
+                        
 
                     }
                     catch (Exception exc)

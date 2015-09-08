@@ -16,7 +16,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
     {
         public int COID { get; set; }
         public string ICNOBaru { get; set; }
-        public int NoTentera { get; set; }
+        public string NoTentera { get; set; }
         public string CONm { get; set; }
         public string ExistingMemberStatusCd { get; set; }
     

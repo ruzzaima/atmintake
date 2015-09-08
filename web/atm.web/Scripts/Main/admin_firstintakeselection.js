@@ -46,6 +46,7 @@ $(function () {
         enddate: ko.observable(''),
         selectime: ko.observable(''),
         finalsuppdoc: ko.mapping.fromJS(finalsuppdoc),
+        finalsuppdocori: ko.mapping.fromJS(finalsuppdocori),
         search: function (d) {
             oTable = $('#applicant_table').dataTable({
                 "sDom": "<'row table-top-control'<'col-md-6 hidden-xs per-page-selector'l><'col-md-6 text-right'f>r>t<'row table-bottom-control'<'col-md-6'i><'col-md-6 text-right'p>>",
@@ -253,7 +254,7 @@ $(function () {
             });
         },
         print: function () {
-            window.open(server + "/Admin/PrintFinalInvitation", "PrintFinalInvite", null, true);
+            window.open(server + "/Admin/PrintFinalnvitation", "PrintFinalInvite", null, true);
         },
         uploaddocument: function () {
             $("#upload_dialog").modal({
@@ -272,7 +273,7 @@ $(function () {
                 limitConcurrentUploads: 1,
                 sequentialUploads: true,
                 progressInterval: 100,
-                formData: { uploadtype: 'ACQDOC', acquisitionid: selectedid },
+                formData: { uploadtype: 'ACQDOCFS', acquisitionid: selectedid },
                 add: function (e, data) {
                     data.context = $('#fileuploadbutton')
                         .click(function () {
@@ -283,7 +284,7 @@ $(function () {
                     var result = ko.mapping.toJS(data.result);
                     if (result.OK) {
                         var docs = ko.mapping.fromJSON(result.item);
-                        viewModel.finalsuppdoc(docs.DocumentName());
+                        viewModel.finalsuppdocori(docs.DocumentName());
                     } else {
                         ShowMessage(result.message);
                     }

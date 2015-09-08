@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SevenH.MMCSB.Atm.Cryptor
+namespace SevenH.Cryptor
 {
 
     public class AESCrypto

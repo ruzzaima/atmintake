@@ -601,7 +601,7 @@ namespace SevenH.MMCSB.Atm.Web
                                                       AchievementCd = sp.AchievementCd,
                                                       Year = sp.Year,
                                                       Others = sp.Others,
-                                                      SportAssocId = sp.SportAssocId
+                                                      SportAssocId = sp.SportAssocId,
                                                   };
                                         ssp.Save();
                                     }
@@ -1068,7 +1068,7 @@ namespace SevenH.MMCSB.Atm.Web
                                             sb.Append("<p>");
                                             sb.Append("<br/><b>Pusat Pemilihan </b> : " + (app.FinalSelectionLocation != null ? app.FinalSelectionLocation.Location.LocationNm : "Tiada Rekod"));
                                             sb.Append("<br/><b>Tarikh </b>: " + string.Format("{0:dd MMM yyyy}", app.FinalSelectionStartDate) + " - " + string.Format("{0:dd MMM yyyy}", app.FinalSelectionEndDate));
-                                            sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FinalSelectionStartDate) + " - " + string.Format("{0:hh:mm tt}", app.FinalSelectionEndDate));
+                                            sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FinalSelectionStartDate));
                                             sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FinalSupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
                                             sb.Append("</p>");
                                         }
@@ -1140,22 +1140,25 @@ namespace SevenH.MMCSB.Atm.Web
             {
                 // get all acquisition which still on and service type is Tentera Darat
                 var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(acquisitionid);
-                var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
-                // TODO : Need to refine this
-                // grab all advertisment where service code for TD = 01
-                var ads = ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments("01", DateTime.Now);
-                if (acqtype == null) return Json(new { OK = false, message = "Jantina diperlukan." });
-                // perempuan
-                if (acq.AcquisitionTypeCd == 3)
+                if (acq.AcquisitionTypeCd != null)
                 {
-                    if (gender == "L")
-                        return Json(new { OK = false, message = "Permohonan pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
-                }
-                // lelaki
-                if (acq.AcquisitionTypeCd == 2)
-                {
-                    if (gender == "P")
-                        return Json(new { OK = false, message = "Permohonan pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                    var acqtype = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetAcquisitionType(acq.AcquisitionTypeCd.Value);
+                    // TODO : Need to refine this
+                    // grab all advertisment where service code for TD = 01
+                    var ads = ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments("01", DateTime.Now);
+                    if (acqtype == null) return Json(new { OK = false, message = "Jantina diperlukan." });
+                    // perempuan
+                    if (acq.AcquisitionTypeCd == 3)
+                    {
+                        if (gender == "L")
+                            return Json(new { OK = false, message = "Permohonan pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                    }
+                    // lelaki
+                    if (acq.AcquisitionTypeCd == 2)
+                    {
+                        if (gender == "P")
+                            return Json(new { OK = false, message = "Permohonan pengambilan ini untuk " + acqtype.AcquisitionTypeNm });
+                    }
                 }
             }
             return Json(new { OK = false, message = "Jantina diperlukan." });

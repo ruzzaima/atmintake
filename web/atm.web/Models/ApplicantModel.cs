@@ -554,7 +554,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
             if (ApplicantId != 0)
             {
                 // get educations
-                var education = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetEducation(ApplicantId);
+                var education = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetEducation(ApplicantId, acquisitionid);
                 if (null != education && education.Any())
                 {
                     ApplicantEducationSubmitteds.Clear();
@@ -562,7 +562,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
                 }
 
                 // get skills
-                var skills = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSkill(ApplicantId);
+                var skills = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSkill(ApplicantId, acquisitionid);
                 if (null != skills && skills.Any())
                 {
                     SkillSubmitteds.AddRange(skills.ToList());
@@ -573,7 +573,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
 
 
                 // get sports
-                var sports = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSport(ApplicantId);
+                var sports = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetSport(ApplicantId, acquisitionid);
                 if (null != sports && sports.Any())
                 {
                     SportSubmitteds.AddRange(sports.Where(a => a.SportAndAssociation != null && a.SportAndAssociation.SportAssociatType == "S").ToList().DistinctBy(a => a.SportAssocId));
@@ -612,7 +612,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
                         if (he.Any())
                         {
                             he = he.OrderBy(a => a.IndexNo);
-                            if (ApplicantEducations != null && ApplicantEducations.Any())
+                            if (ApplicantEducationSubmitteds != null && ApplicantEducationSubmitteds.Any())
                             {
                                 var ledu = new List<ApplicantEducationSubmitted>();
                                 ledu.AddRange(ApplicantEducationSubmitteds);

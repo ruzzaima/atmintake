@@ -864,4 +864,6 @@ $(function () {
     loadSubjects();
     loadZones();
     loadMaritalStatus(servicescode);
+
+    viewModel.applicant.IsAgreeInd(true);
 });

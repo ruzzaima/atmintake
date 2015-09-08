@@ -695,6 +695,8 @@
     <Content Include="Scripts\Main\manage_manageuser.js" />
     <Content Include="Scripts\Main\manage_adduser.js" />
     <Content Include="Scripts\Main\public_common.load.js" />
+    <Content Include="Scripts\Main\admin_td.js" />
+    <Content Include="Scripts\Main\admin_pegawaikadet.js" />
     <Content Include="Scripts\Main\public_tudm.js" />
     <Content Include="Scripts\Main\public_td.js" />
     <Content Include="Scripts\Main\public_tldm.js" />
@@ -750,21 +752,21 @@
     <Content Include="Views\Public\TUDMForm.cshtml" />
     <Content Include="Views\Public\TDForm.cshtml" />
     <Content Include="Views\Shared\_CheckList.cshtml" />
-    <Content Include="Views\Public\_SportAssociationAndSkillView.cshtml" />
-    <Content Include="Views\Public\_DeclarationOfCrimeAndHealth.cshtml" />
-    <Content Include="Views\Public\_PeribadiAddress.cshtml" />
-    <Content Include="Views\Public\_PeribadiParentsAndServices.cshtml" />
-    <Content Include="Views\Public\_SponsorshipAndDeclaration.cshtml" />
-    <Content Include="Views\Public\_PeribadiMaritalAndNationality.cshtml" />
-    <Content Include="Views\Public\_PeribadiPhysical.cshtml" />
-    <Content Include="Views\Public\_PeribadiMain.cshtml" />
-    <Content Include="Views\Public\_PeribadiMainTL.cshtml" />
+    <Content Include="Views\Shared\_SportAssociationAndSkillView.cshtml" />
+    <Content Include="Views\Shared\_DeclarationOfCrimeAndHealth.cshtml" />
+    <Content Include="Views\Shared\_PeribadiAddress.cshtml" />
+    <Content Include="Views\Shared\_PeribadiParentsAndServices.cshtml" />
+    <Content Include="Views\Shared\_SponsorshipAndDeclaration.cshtml" />
+    <Content Include="Views\Shared\_PeribadiMaritalAndNationality.cshtml" />
+    <Content Include="Views\Shared\_PeribadiPhysical.cshtml" />
+    <Content Include="Views\Shared\_PeribadiMain.cshtml" />
+    <Content Include="Views\Shared\_PeribadiMainTL.cshtml" />
     <Content Include="Views\Manage\ManageUser.cshtml" />
-    <Content Include="Views\Public\_PeribadiMainTD.cshtml" />
-    <Content Include="Views\Public\_AcademicPegawai.cshtml" />
-    <Content Include="Views\Public\_AcademicTLDM.cshtml" />
-    <Content Include="Views\Public\_AcademicTUDM.cshtml" />
-    <Content Include="Views\Public\_AcademicTD.cshtml" />
+    <Content Include="Views\Shared\_PeribadiMainTD.cshtml" />
+    <Content Include="Views\Shared\_AcademicPegawai.cshtml" />
+    <Content Include="Views\Shared\_AcademicTLDM.cshtml" />
+    <Content Include="Views\Shared\_AcademicTUDM.cshtml" />
+    <Content Include="Views\Shared\_AcademicTD.cshtml" />
     <Content Include="Views\Manage\UserProfile.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Statistic\ByStateAndGender.cshtml" />
@@ -791,11 +793,17 @@
     <Content Include="Views\Admin\TDForm.cshtml" />
     <Content Include="Views\Admin\TLDMForm.cshtml" />
     <Content Include="Views\Admin\TUDMForm.cshtml" />
+    <Content Include="Views\Shared\_AcademicTDSubmitted.cshtml" />
+    <Content Include="Views\Shared\_SportAssociationAndSkillSubmitted.cshtml" />
+    <Content Include="Views\Shared\_AcademicPegawaiAdmin.cshtml" />
+    <Content Include="Views\Admin\PrintReportDutyList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="bin\" />
     <Folder Include="SuppDoc\" />
+    <Folder Include="Views\Shared\Admin\" />
+    <Folder Include="Views\Shared\Public\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <ItemGroup>
@@ -821,10 +829,6 @@
     <ProjectReference Include="..\..\persistance\atm.persistance\atm.entity.persistance.csproj">
       <Project>{4bc025b8-6498-4bd1-a55d-1d8dd4e2d6c9}</Project>
       <Name>atm.entity.persistance</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\services\atm.cryptor\atm.cryptor.csproj">
-      <Project>{0858df2e-a28f-48ad-a93e-f1612a430171}</Project>
-      <Name>atm.cryptor</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

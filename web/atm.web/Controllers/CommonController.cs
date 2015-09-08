@@ -555,6 +555,34 @@ namespace SevenH.MMCSB.Atm.Web
                 message = "Tiada Photo"
             });
         }
+        public ActionResult GetSubmittedProfilePhoto(int applicantid)
+        {
+            if (applicantid != 0)
+            {
+                var photo = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetPhoto(applicantid);
+                if (photo != null && photo.Photo != null && !string.IsNullOrWhiteSpace(photo.PhotoExt))
+                {
+                    string arg = Convert.ToBase64String(photo.Photo);
+                    string text = photo.PhotoExt;
+                    if (text.Contains("."))
+                    {
+                        text = text.Replace(".", string.Empty);
+                    }
+                    string src = string.Format("data:image/" + text + ";base64,{0}", arg);
+                    return Json(new
+                    {
+                        OK = true,
+                        message = "Photo",
+                        src = src
+                    });
+                }
+            }
+            return Json(new
+            {
+                OK = false,
+                message = "Tiada Photo"
+            });
+        }
 
         public ActionResult GetMaritalStatus(string servicecodes)
         {
@@ -648,7 +676,7 @@ namespace SevenH.MMCSB.Atm.Web
                 message = "Sila masukkan maklumat permohonan dahulu."
             });
         }
-
+        
         public ActionResult GetAcqLocations(int acquisitionid)
         {
             var  acquisitionLocations = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetLocations(acquisitionid);
@@ -661,6 +689,33 @@ namespace SevenH.MMCSB.Atm.Web
                             {
                                 Code = a.AcqLocationId,
                                 Name = a.Location.LocationNm
+                            };
+                return Json(new
+                {
+                    OK = true,
+                    message = "Rekod wujud",
+                    list = JsonConvert.SerializeObject(value)
+                });
+            }
+            return Json(new
+            {
+                OK = false,
+                message = "Tiada Rekod"
+            });
+        }
+        
+        public ActionResult GetReportDutyLocations()
+        {
+            var acquisitionLocations = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetReportDutyLocations();
+            var enumerable = acquisitionLocations as IList<ReportDutyLocation> ?? acquisitionLocations.ToList();
+            if (acquisitionLocations != null && enumerable.Any())
+            {
+                var value = from a in enumerable
+                            orderby a.ReportDutyLoc
+                            select new
+                            {
+                                Code = a.ReportDutyLocId,
+                                Name = a.ReportDutyLoc
                             };
                 return Json(new
                 {

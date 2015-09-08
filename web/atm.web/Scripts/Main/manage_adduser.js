@@ -98,28 +98,24 @@ $(function () {
     viewModel.user.LoginId.subscribe(function (d) {
         showLoading();
         if (d) {
-            if ($.isNumeric(d)) {
-                $.ajax({
-                    type: 'POST',
-                    url: server + '/Manage/CheckInAtm',
-                    data: JSON.stringify({ id: ko.mapping.toJS(d) }),
-                    contentType: "application/json; charset=utf-8",
-                    success: function (msg) {
-                        if (msg.OK) {
-                            viewModel.isvalid(true);
-                            viewModel.user.FullName(msg.name);
-                        } else {
-                            ShowMessage(msg.message);
-                            viewModel.isvalid(false);
-                        }
-                        hideLoading();
-                    },
-                    error: function (xhr) {
+            $.ajax({
+                type: 'POST',
+                url: server + '/Manage/CheckInAtm',
+                data: JSON.stringify({ id: ko.mapping.toJS(d) }),
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.OK) {
+                        viewModel.isvalid(true);
+                        viewModel.user.FullName(msg.name);
+                    } else {
+                        ShowMessage(msg.message);
+                        viewModel.isvalid(false);
                     }
-                });
-            } else {
-                ShowMessage('Sila masukkan angka sahaja.');
-            }
+                    hideLoading();
+                },
+                error: function (xhr) {
+                }
+            });
         }
     });
 

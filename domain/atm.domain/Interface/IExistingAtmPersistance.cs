@@ -11,6 +11,6 @@ namespace SevenH.MMCSB.Atm.Domain
         int AddNew(ExistingMember existingMember);
         int Update(ExistingMember existingMember);
         bool Delete(int existingid);
-        IEnumerable<ExistingMember> Search(string statuscd, string searchcriteria, int armyno);
+        IEnumerable<ExistingMember> Search(string statuscd, string searchcriteria, string armyno);
     }
 }

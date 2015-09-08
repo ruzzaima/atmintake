@@ -1,6 +1,6 @@
-﻿using SevenH.MMCSB.Atm.Domain;
+﻿using SevenH.DCA.Domain;
 
-namespace SevenH.MMCSB.Atm.Cryptor
+namespace SevenH.Cryptor
 {
     class PasswordHash : ICryptorService
     {

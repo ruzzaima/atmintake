@@ -49,8 +49,6 @@ D:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Iesi.Collections.xml
 D:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.csprojResolveAssemblyReference.cache
 D:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.dll
 D:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.pdb
-E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.cryptor.dll
-E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.cryptor.pdb
 E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\atm.domain.dll
 E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\FluentNHibernate.dll
 E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\NHibernate.dll
@@ -64,5 +62,7 @@ E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\NHibernate.xml
 E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Spring.Core.xml
 E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\Iesi.Collections.xml
 E:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.csprojResolveAssemblyReference.cache
-E:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.dll
-E:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\atm.cryptor.pdb
+E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\sevenh.cryptor.dll
+E:\Project\Work\atmintake\services\atm.cryptor\bin\Debug\sevenh.cryptor.pdb
+E:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\sevenh.cryptor.dll
+E:\Project\Work\atmintake\services\atm.cryptor\obj\Debug\sevenh.cryptor.pdb

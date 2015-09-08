@@ -2,10 +2,10 @@
 var oTable;
 
 $(function () {
-
     // validation
     $("#form_peribadi").validationEngine();
     $("#form_akademik").validationEngine();
+    //$("#crime_form").validationEngine();
 
     function initializeAcademics() {
 
@@ -25,6 +25,21 @@ $(function () {
             }
         });
 
+
+        $('input[name="20InstCd"]').on('ifClicked', function (event) {
+            var selectedval = this.value;
+            if (viewModel.applicant.ApplicantEducations().length > 0) {
+                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                    if (v.HighEduLevelCd() === '20') {
+                        if (selectedval === 'O') {
+                            viewModel.overseas20(true);
+                        } else {
+                            viewModel.overseas20(false);
+                        }
+                    }
+                });
+            }
+        });
 
         if (viewModel.applicant.ApplicantEducations().length > 0) {
             $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
@@ -51,6 +66,28 @@ $(function () {
                     });
                 }
 
+                if (v.HighEduLevelCd() === '20') {
+                    $('input[name="20InstCd"]').each(function () {
+                        if (v.OverSeaInd() !== null) {
+                            if (v.OverSeaInd() === true) {
+                                if (this.value === 'O') {
+                                    viewModel.overseas20(true);
+                                    $(this).iCheck('check');
+                                }
+                            } else {
+                                if (this.value === 'D') {
+                                    viewModel.overseas20(false);
+                                    $(this).iCheck('check');
+                                }
+                            }
+                        } else {
+                            if (this.value === 'D') {
+                                viewModel.overseas20(false);
+                                $(this).iCheck('check');
+                            }
+                        }
+                    });
+                }
             });
         }
     }
@@ -93,6 +130,52 @@ $(function () {
         });
     }
 
+    function checkSelection() {
+
+        $('input[name="servicetab_firstchoice"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'TD') {
+                    viewModel.applicant.SelectionTD(1);
+                }
+                if ($(this).prop('value') === 'TLDM') {
+                    viewModel.applicant.SelectionTL(1);
+                }
+                if ($(this).prop('value') === 'TUDM') {
+                    viewModel.applicant.SelectionTU(1);
+                }
+            }
+        });
+
+
+        $('input[name="servicetab_secondchoice"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'TD') {
+                    viewModel.applicant.SelectionTD(2);
+                }
+                if ($(this).prop('value') === 'TLDM') {
+                    viewModel.applicant.SelectionTL(2);
+                }
+                if ($(this).prop('value') === 'TUDM') {
+                    viewModel.applicant.SelectionTU(2);
+                }
+            }
+        });
+
+        $('input[name="servicetab_thirdchoice"]').each(function () {
+            if ($(this).prop('checked')) {
+                if ($(this).prop('value') === 'TD') {
+                    viewModel.applicant.SelectionTD(3);
+                }
+                if ($(this).prop('value') === 'TLDM') {
+                    viewModel.applicant.SelectionTL(3);
+                }
+                if ($(this).prop('value') === 'TUDM') {
+                    viewModel.applicant.SelectionTU(3);
+                }
+            }
+        });
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -122,10 +205,9 @@ $(function () {
         bidang: ko.observableArray([]),
         grades: ko.observableArray([]),
         subjects: ko.observableArray([]),
-        zones: ko.observableArray([]),
-        locations: ko.observableArray([]),
         ischecked: ko.observable(false),
         overseas08: ko.observable(false),
+        overseas20: ko.observable(false),
         saveprofile: function (d) {
             // get birth of date
             var bdate = $('#birthdatepicker').data('date');
@@ -133,10 +215,43 @@ $(function () {
             bdate = splitdate[1] + "/" + splitdate[0] + "/" + splitdate[2];
             viewModel.applicant.BirthDate(bdate);
 
+            if (viewModel.applicant.PalapesInd) {
+                if (viewModel.applicant.PalapesInd()) {
+                    var pedt = $('#palapesgraduationdatepicker').data('date');
+                    if (pedt !== null && pedt !== undefined) {
+                        var splitdate2 = pedt.split("/");
+                        pedt = splitdate2[1] + "/" + splitdate2[0] + "/" + splitdate2[2];
+                        viewModel.applicant.PalapesTauliahEndDt(pedt);
+                    }
+                }
+            }
+
+            if (viewModel.applicant.ScholarshipInd) {
+                if (viewModel.applicant.ScholarshipInd()) {
+                    var cedt = $('#contractstartdatepicker').data('date');
+                    if (cedt !== null && cedt !== undefined) {
+                        var splitdate3 = cedt.split("/");
+                        cedt = splitdate3[1] + "/" + splitdate3[0] + "/" + splitdate3[2];
+                        viewModel.applicant.ScholarshipContractStDate(cedt);
+                    }
+                }
+            }
+
+            if (viewModel.applicant.ArmySelectionInd) {
+                if (viewModel.applicant.ArmySelectionInd()) {
+                    var aedt = $('#attendatmofficerdatedatepicker').data('date');
+                    if (aedt !== null && aedt !== undefined) {
+                        var splitdate4 = aedt.split("/");
+                        aedt = splitdate4[1] + "/" + splitdate4[0] + "/" + splitdate4[2];
+                        viewModel.applicant.ArmySelectionDt(aedt);
+                    }
+                }
+
+            }
+
             $('input[type=text]').val(function () {
                 return this.value.toUpperCase();
             });
-
 
             if (viewModel.applicant.CurrentSalary) {
                 if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
@@ -155,16 +270,21 @@ $(function () {
                     if (v.HighEduLevelCd() === '08') {
                         v.OverSeaInd(viewModel.overseas08());
                     }
+                    if (v.HighEduLevelCd() === '20') {
+                        v.OverSeaInd(viewModel.overseas20());
+                    }
                 });
             }
 
             checkPengakuan();
+            checkSelection();
+
             showLoading();
 
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
-                url: server + '/Public/SubmitProfile',
+                url: server + '/Admin/SubmitProfile',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.OK) {
@@ -184,6 +304,33 @@ $(function () {
                             }
                         }
 
+                        if (viewModel.applicant.PalapesTauliahEndDt) {
+                            if (viewModel.applicant.PalapesTauliahEndDt() !== null && viewModel.applicant.PalapesTauliahEndDt() !== '') {
+                                var splitdate = viewModel.applicant.PalapesTauliahEndDt().split("-");
+                                var bday = splitdate[2].split("T");
+                                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
+                                $('#palapesgraduationdatepicker').data("DateTimePicker").date(bdate);
+                            }
+                        }
+
+                        if (viewModel.applicant.ScholarshipContractStDate) {
+                            if (viewModel.applicant.ScholarshipContractStDate() !== null && viewModel.applicant.ScholarshipContractStDate() !== '') {
+                                var splitdate = viewModel.applicant.ScholarshipContractStDate().split("-");
+                                var bday = splitdate[2].split("T");
+                                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
+                                $('#contractstartdatepicker').data("DateTimePicker").date(bdate);
+                            }
+                        }
+
+                        if (viewModel.applicant.ArmySelectionDt) {
+                            if (viewModel.applicant.ArmySelectionDt() !== null && viewModel.applicant.ArmySelectionDt() !== '') {
+                                var splitdate = viewModel.applicant.ArmySelectionDt().split("-");
+                                var bday = splitdate[2].split("T");
+                                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
+                                $('#attendatmofficerdatedatepicker').data("DateTimePicker").date(bdate);
+                            }
+                        }
+
                         $('.eduyear').val(function () {
                             if (this.value === '0') {
                                 return '';
@@ -196,6 +343,7 @@ $(function () {
 
                         initializeCheckBoxAndRadio();
                         initializeAcademics();
+
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -251,6 +399,7 @@ $(function () {
             viewModel.applicant.Kokos.push({ SportAssocId: ko.observable(0), AchievementCd: ko.observable(''), ApplicantSportAssocId: ko.observable(0) });
         },
         removekoko: function (d) {
+
             if (d) {
                 if (d.ApplicantSportAssocId() === null && d.ApplicantSportAssocId() === 0) {
                     viewModel.applicant.Kokos.remove(d);
@@ -295,37 +444,8 @@ $(function () {
                 $("#form_akademik").validationEngine();
             }
         },
-        saveacademicsandcontinue: function () {
-            var valid = $("#form_akademik").validationEngine('validate');
-            var vars = $("#form_akademik").serialize();
-            if (valid === true) {
-                viewModel.saveprofile();
-                $('#resume a[href="#sport"]').tab('show');
-            } else {
-                $("#form_akademik").validationEngine();
-            }
-        },
         savecontract: function () {
-            // get birth of date
-            var bdate = $('#birthdatepicker').data('date');
-            viewModel.applicant.BirthDate(bdate);
-
-            var pedt = $('#palapesgraduationdatepicker').data('date');
-            viewModel.applicant.PalapesTauliahEndDt(pedt);
-
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant) }),
-                url: server + '/Public/SubmitProfile',
-                contentType: "application/json; charset=utf-8",
-                success: function (msg) {
-                    if (msg.OK) {
-                    }
-                    ShowMessage(msg.message);
-                },
-                error: function (xhr) {
-                }
-            });
+            viewModel.saveprofile();
         },
         savecontractandcontinue: function () {
             viewModel.savecontract();
@@ -351,8 +471,14 @@ $(function () {
             }
         },
         saveacademicandcontinue: function (d) {
-            viewModel.saveacademics();
-            $('#resume a[href="#sponsorship"]').tab('show');
+            var valid = $("#form_akademik").validationEngine('validate');
+            var vars = $("#form_akademik").serialize();
+            if (valid === true) {
+                viewModel.saveacademics();
+                $('#resume a[href="#sponsorship"]').tab('show');
+            } else {
+                $("#form_akademik").validationEngine();
+            }
         },
         saveskill: function (d) {
             viewModel.saveprofile();
@@ -362,11 +488,23 @@ $(function () {
             $('#resume a[href="#crime"]').tab('show');
         },
         savescrime: function (d) {
-            viewModel.saveprofile();
+            var valid = $("#crime_form").validationEngine('validate');
+            var vars = $("#crime_form").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#crime_form").validationEngine();
+            }
         },
         savescrimeandcontinue: function (d) {
-            viewModel.saveprofile();
-            $('#resume a[href="#confirmation"]').tab('show');
+            var valid = $("#crime_form").validationEngine('validate');
+            var vars = $("#crime_form").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+                $('#resume a[href="#confirmation"]').tab('show');
+            } else {
+                $("#crime_form").validationEngine();
+            }
         },
         submitapplication: function (d) {
             if (viewModel.ischecked) {
@@ -386,29 +524,12 @@ $(function () {
                 $('#notification_dialog .btn-submit').unbind("click");
                 $('#notification_dialog .btn-submit').click(function () {
 
-                    var valid = $("#form_peribadi").validationEngine('validate');
-                    var vars = $("#form_peribadi").serialize();
-                    if (valid === false) {
-                        ShowMessage('Sila isikan maklumat yang mandatori!');
-                        $("#form_peribadi").validationEngine();
-                        $('#resume a[href="#confirmation"]').tab('show');
-                        return false;
-                    }
-                    var valida = $("#form_akademik").validationEngine('validate');
-                    var varsa = $("#form_akademik").serialize();
-                    if (valida === false) {
-                        ShowMessage('Sila isikan maklumat yang mandatori!');
-                        $("#form_akademik").validationEngine();
-                        $('#resume a[href="#sport"]').tab('show');
-                        return false;
-                    }
-
                     showLoading();
 
                     $.ajax({
                         type: 'POST',
                         data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
-                        url: server + '/Public/SubmitProfile',
+                        url: server + '/Admin/SubmitProfile',
                         contentType: "application/json; charset=utf-8",
                         success: function (msg) {
                             if (msg.OK) {
@@ -435,6 +556,7 @@ $(function () {
                         }
                     });
 
+
                     $('#notification_dialog').modal('hide');
                 });
 
@@ -454,11 +576,64 @@ $(function () {
                     return d;
                 }
             }
+        },
+        uploadletter: function () {
+            $("#upload_dialog").modal({
+                show: 'true',
+                backdrop: 'true',
+                keyboard: 'true'
+            });
+
+            $('#filuploadname').val('');
+            $('#progressbar').attr('aria-valuenow', '0');
+            $('#progressbar').attr('aria-valuemin', '0');
+            $('#progressbar').width(0);
+            fileupload = $('#filetoupload').fileupload({
+                dataType: 'json',
+                url: server + '/Upload/Upload',
+                limitConcurrentUploads: 1,
+                sequentialUploads: true,
+                progressInterval: 100,
+                formData: { uploadtype: 'LETTER', applicantid: viewModel.applicant.ApplicantId() },
+                add: function (e, data) {
+                    data.context = $('#fileuploadbutton')
+                        .click(function () {
+                            data.submit();
+                        });
+                },
+                done: function (e, data) {
+                    var result = ko.mapping.toJS(data.result);
+                    if (result.OK) {
+                        var docs = ko.mapping.fromJSON(result.item);
+                        viewModel.applicant.OriginalPelepasanDocument(docs.OriginalPelepasanDocument());
+                        viewModel.applicant.PelepasanDocument(docs.PelepasanDocument());
+                    } else {
+                        ShowMessage(result.message);
+                    }
+                    $('#upload_dialog').modal('hide');
+
+                }
+            }).on('fileuploadadd', function (e, data) {
+                $.each(data.files, function (index, file) {
+                    $('#filuploadname').val(file.name);
+                });
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progressbar').css('width', progress + '%');
+            });
+        },
+        downloadletter: function (d) {
+            window.open(server + "/SuppDoc/" + viewModel.applicant.PelepasanDocument(), "DownloadLetter", null, true);
+        },
+        backtolist: function () {
+            location.href = server + "/Admin/SearchApplicant";
         }
     };
 
     viewModel.applicant.CorresponAddrCountryCd.subscribe(function (d) {
         if (d) {
+            viewModel.applicant.CorresponAddrStateCd('');
+            viewModel.applicant.CorresponAddrCityCd('');
             loadStates(d, 'A');
         }
     });
@@ -466,12 +641,15 @@ $(function () {
 
     viewModel.applicant.CorresponAddrStateCd.subscribe(function (d) {
         if (d) {
+            viewModel.applicant.CorresponAddrCityCd('');
             loadCities(d, 'A');
         }
     });
 
     viewModel.applicant.BirthCountryCd.subscribe(function (d) {
         if (d) {
+            viewModel.applicant.BirthStateCd('');
+            viewModel.applicant.BirthCityCd('');
             loadStates(d, 'B');
         }
     });
@@ -479,26 +657,32 @@ $(function () {
 
     viewModel.applicant.BirthStateCd.subscribe(function (d) {
         if (d) {
+            viewModel.applicant.BirthCityCd('');
             loadCities(d, 'B');
         }
     });
 
     viewModel.applicant.RaceCd.subscribe(function (d) {
         if (d) {
+            viewModel.applicant.EthnicCd('');
             loadEthnics(d);
         }
     });
+
     viewModel.applicant.Weight.subscribe(function (d) {
         if (d) {
-            if (viewModel.applicant.Height) {
-                var bmi = d / (viewModel.applicant.Height() * viewModel.applicant.Height());
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
+            var height = ko.mapping.toJS(viewModel.applicant.Height);
+            if (height) {
+                if (height !== null) {
+                    var bmi = d / (height * height);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
             }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -514,10 +698,18 @@ $(function () {
 
     viewModel.applicant.Height.subscribe(function (d) {
         if (d) {
+            var weight = ko.mapping.toJS(viewModel.applicant.Weight);
+            if (weight) {
+                if (weight != null) {
+                    var bmi = weight / (d * d);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
+            }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -528,12 +720,6 @@ $(function () {
                 error: function (xhr) {
                 }
             });
-
-            if (viewModel.applicant.Weight) {
-                var bmi = viewModel.applicant.Weight() / (d * d);
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
-            }
         }
     });
 
@@ -549,6 +735,13 @@ $(function () {
             viewModel.isguardian(true);
         } else {
             viewModel.isguardian(false);
+        }
+    });
+
+    viewModel.applicant.PalapesInd.subscribe(function (d) {
+        if (d) {
+            var selected = ko.mapping.toJS(d);
+            viewModel.ispalapes(selected);
         }
     });
 
@@ -578,6 +771,14 @@ $(function () {
         format: 'DD/MM/YYYY'
     });
 
+    $('#contractstartdatepicker').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+
+    $('#attendatmofficerdatedatepicker').datetimepicker({
+        format: 'DD/MM/YYYY'
+    });
+
 
     if (viewModel.applicant.BirthDate) {
         if (viewModel.applicant.BirthDate() !== null) {
@@ -587,6 +788,36 @@ $(function () {
             $('#birthdatepicker').data("DateTimePicker").date(bdate);
         }
     }
+
+    if (viewModel.applicant.PalapesTauliahEndDt) {
+        if (viewModel.applicant.PalapesTauliahEndDt() !== null) {
+            var splitdate = viewModel.applicant.PalapesTauliahEndDt().split("-");
+            var bday = splitdate[2].split("T");
+            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+            $('#palapesgraduationdatepicker').data("DateTimePicker").date(bdate);
+        }
+    }
+
+    if (viewModel.applicant.ScholarshipContractStDate) {
+        if (viewModel.applicant.ScholarshipContractStDate() !== null) {
+            var splitdate = viewModel.applicant.ScholarshipContractStDate().split("-");
+            var bday = splitdate[2].split("T");
+            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+            $('#contractstartdatepicker').data("DateTimePicker").date(bdate);
+        }
+    }
+
+
+    if (viewModel.applicant.ArmySelectionDt) {
+        if (viewModel.applicant.ArmySelectionDt() !== null) {
+            var splitdate = viewModel.applicant.ArmySelectionDt().split("-");
+            var bday = splitdate[2].split("T");
+            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+            $('#attendatmofficerdatedatepicker').data("DateTimePicker").date(bdate);
+        }
+    }
+
+
 
     if (viewModel.applicant.CorresponAddrCountryCd) {
         loadStates(viewModel.applicant.CorresponAddrCountryCd(), 'A');
@@ -610,20 +841,6 @@ $(function () {
 
     if (viewModel.applicant.RaceCd) {
         loadEthnics(viewModel.applicant.RaceCd());
-    }
-
-    // status kahwin
-    $('input[name="maritalstatus"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        viewModel.applicant.MrtlStatusCd(selectedval);
-    });
-
-    if (viewModel.applicant.MrtlStatusCd) {
-        $('input[name="maritalstatus"]').each(function () {
-            if (this.value === viewModel.applicant.MrtlStatusCd()) {
-                $(this).iCheck('check');
-            }
-        });
     }
 
     // bercermin mata
@@ -781,6 +998,7 @@ $(function () {
     });
 
 
+
     // gender
     $('input[name="gender"]').on('ifClicked', function (event) {
         var selectedval = this.value;
@@ -868,6 +1086,192 @@ $(function () {
         }
     });
 
+
+    // event for pilihan sequence
+    $('input[name="servicetab_firstchoice"]').on('ifClicked', function (event) {
+        var selectedval = this.value;
+        if (selectedval === 'TD') {
+            viewModel.applicant.SelectionTD(1);
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        } else if (selectedval === 'TLDM') {
+            viewModel.applicant.SelectionTL(1);
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        } else if (selectedval === 'TUDM') {
+            viewModel.applicant.SelectionTU(1);
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        }
+
+        // disable the selected value on others radios
+    });
+
+    $('input[name="servicetab_secondchoice"]').on('ifClicked', function (event) {
+        var selectedval = this.value;
+        if (selectedval === 'TD') {
+            viewModel.applicant.SelectionTD(2);
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        } else if (selectedval === 'TLDM') {
+            viewModel.applicant.SelectionTL(2);
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        } else if (selectedval === 'TUDM') {
+            viewModel.applicant.SelectionTU(2);
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        }
+
+        // disable the selected value on others radios
+    });
+
+    $('input[name="servicetab_thirdchoice"]').on('ifClicked', function (event) {
+        var selectedval = this.value;
+        if (selectedval === 'TD') {
+            viewModel.applicant.SelectionTD(3);
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        } else if (selectedval === 'TLDM') {
+            viewModel.applicant.SelectionTL(3);
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        } else if (selectedval === 'TUDM') {
+            viewModel.applicant.SelectionTU(3);
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('disable');
+                    $(this).iCheck('uncheck');
+                } else {
+                    $(this).iCheck('enable');
+                }
+            });
+        }
+
+        // disable the selected value on others radios
+    });
+
+
     //ComputerMSWordcb
     $('input[name="ComputerMSWordcb"]').on('ifChecked', function (event) {
         viewModel.applicant.ComputerMSWord(true);
@@ -913,6 +1317,103 @@ $(function () {
     });
 
 
+    if (viewModel.applicant.SelectionTD) {
+        if (viewModel.applicant.SelectionTD() === 1) {
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+        if (viewModel.applicant.SelectionTD() === 2) {
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+        if (viewModel.applicant.SelectionTD() === 3) {
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TD') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+    }
+    if (viewModel.applicant.SelectionTL) {
+        if (viewModel.applicant.SelectionTL() === 1) {
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+        if (viewModel.applicant.SelectionTL() === 2) {
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+        if (viewModel.applicant.SelectionTL() === 3) {
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TLDM') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+    }
+    if (viewModel.applicant.SelectionTU) {
+        if (viewModel.applicant.SelectionTU() === 1) {
+            $('input[name="servicetab_firstchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+        if (viewModel.applicant.SelectionTU() === 2) {
+            $('input[name="servicetab_secondchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+        if (viewModel.applicant.SelectionTU() === 3) {
+            $('input[name="servicetab_thirdchoice"]').each(function () {
+                if (this.value === 'TUDM') {
+                    $(this).iCheck('check');
+                } else {
+                    $(this).iCheck('uncheck');
+                    $(this).iCheck('disable');
+                }
+            });
+        }
+    }
+
     if (viewModel.applicant.DadName) {
         if (viewModel.applicant.DadName() == null || viewModel.applicant.DadName() === "") {
             viewModel.isguardian(true);
@@ -949,14 +1450,20 @@ $(function () {
     loadAssociations();
     loadAchievements();
     loadHighEducations();
-    loadInstitutions();
+    loadInstitutions('A');
     loadSkillCategories();
     loadSkills("L");
     loadMajorMinor();
     loadGrades();
     loadSubjects();
-    loadZones();
     loadMaritalStatus(servicescode);
 
+    function autosave() {
+        viewModel.saveprofile();
+        ShowMessage("Rekod anda disimpan secara automatik");
+    }
+    //var refreshId = setInterval(autosave(), 50000);
+
+    // admin only
     viewModel.applicant.IsAgreeInd(true);
 });
