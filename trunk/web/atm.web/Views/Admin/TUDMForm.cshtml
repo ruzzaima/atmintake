@@ -2,7 +2,7 @@
 @model SevenH.MMCSB.Atm.Web.Models.ResumeViewModel
 @{
     ViewBag.Title = "Resume Saya";
-    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 @section styles
 {
@@ -31,6 +31,9 @@
                             @Html.Partial("_PeribadiMaritalAndNationality")
                         </div>
                         <div class="col-md-3">
+                            <div class="text-center">
+                                <img class="profile-pic img-rounded" id="profilephoto" src="@Url.Content("~/Images/noimage.jpg")" alt="">
+                            </div>
                             @Html.Partial("_PeribadiPhysical")
                         </div>
                     </div>
@@ -149,10 +152,6 @@
                                     <button type="button" class="btn btn-primary btn-sm" data-bind="click: saveprofile">
                                         <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
                                     </button>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bind="enable: applicant.IsAgreeInd(), click: submitapplication">
-                                        <input type="hidden" data-bind="value: applicant.ApplicantId" />
-                                        <span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Hantar Borang
-                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -185,4 +184,25 @@
     <script src="@Url.Content("~/Scripts/Core/knockout.icheck.handler.js")"></script>
     <script src="@Url.Content("~/Scripts/Main/public_common.load.js")"></script>
     <script src="@Url.Content("~/Scripts/Main/public_tudm.js")"></script>
+    <script type="text/javascript">
+        function loadprofilephoto(applicantid) {
+            if (applicantid !== 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: server + '/Common/GetSubmittedProfilePhoto',
+                    data: JSON.stringify({applicantid : applicantid}),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (msg) {
+                        if (msg.OK) {
+                            $('#profilephoto').attr('src', msg.src);
+                        }
+                    },
+                    error: function (xhr) {
+                    }
+                });
+            }
+        }
+
+        loadprofilephoto(@Model.ApplicantModel.ApplicantId);
+    </script>
 }

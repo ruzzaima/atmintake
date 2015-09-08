@@ -60,7 +60,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblApplication> tblApplications { get; set; }
         public virtual DbSet<tblAppQuestionFeedback> tblAppQuestionFeedbacks { get; set; }
         public virtual DbSet<tblAppQuestionnaireScore> tblAppQuestionnaireScores { get; set; }
-        public virtual DbSet<tblExistingAtmMember> tblExistingAtmMembers { get; set; }
         public virtual DbSet<tblREFAchievement> tblREFAchievements { get; set; }
         public virtual DbSet<tblREFApplicationStatu> tblREFApplicationStatus { get; set; }
         public virtual DbSet<tblRefBloodType> tblRefBloodTypes { get; set; }
@@ -68,7 +67,6 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblREFCountry> tblREFCountries { get; set; }
         public virtual DbSet<tblREFDocument> tblREFDocuments { get; set; }
         public virtual DbSet<tblREFEthnic> tblREFEthnics { get; set; }
-        public virtual DbSet<tblREFExistingMemberStatu> tblREFExistingMemberStatus { get; set; }
         public virtual DbSet<tblREFEyeStatu> tblREFEyeStatus { get; set; }
         public virtual DbSet<tblREFGender> tblREFGenders { get; set; }
         public virtual DbSet<tblREFHighEduLevel> tblREFHighEduLevels { get; set; }
@@ -106,5 +104,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public virtual DbSet<tblApplicationStatu> tblApplicationStatus { get; set; }
         public virtual DbSet<tblUserLog> tblUserLogs { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
+        public virtual DbSet<tblExistingAtmMember> tblExistingAtmMembers { get; set; }
+        public virtual DbSet<tblREFExistingMemberStatu> tblREFExistingMemberStatus { get; set; }
     }
 }

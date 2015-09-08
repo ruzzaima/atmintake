@@ -47,13 +47,13 @@ namespace SevenH.MMCSB.Atm.Domain
         /// </summary>
         /// <param name="armyno"></param>
         /// <returns></returns>
-        bool CheckingExistingAtmMemberByArmyNo(int armyno);
+        bool CheckingExistingAtmMemberByArmyNo(string armyno);
         /// <summary>
         /// Checking by Army No
         /// </summary>
         /// <param name="armyno"></param>
         /// <returns></returns>
-        ExistingMember ExistingAtmMemberByArmyNo(int armyno);
+        ExistingMember ExistingAtmMemberByArmyNo(string armyno);
 
         IEnumerable<Applicant> Search(string category, string name, string icno, string searchcriteria);
         IEnumerable<Applicant> ExecuteQuery(string sql);

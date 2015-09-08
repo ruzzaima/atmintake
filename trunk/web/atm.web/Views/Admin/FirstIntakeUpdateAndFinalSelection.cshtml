@@ -80,14 +80,14 @@
                             <tbody></tbody>
                         </table>
                         <input type="button" class="btn btn-primary btn-sm" value="Simpan Status" data-bind="click: submit" />
-                        @*<input type="button" class="btn btn-primary btn-sm" value="Cetak" data-bind="click: print" />*@
+                        <input type="button" class="btn btn-primary btn-sm" value="Cetak Senarai Calon Yang Dipanggil Temuduga/Panggilan Akhir" data-bind="click: print" />
                     </div>
                     <div class="tab-pane" id="placeanddoc">
                         <div class="row">
                             <div class="form-group">
                                 <label class="control-label">
                                     Dokumen yang perlu di download oleh calon ( <i>Tidak melebihi 5MB</i> ) :
-                                    <span style="text-decoration: underline; cursor: pointer;" data-bind="text: finalsuppdoc, click: downloaddoc"></span>
+                                    <span style="text-decoration: underline; cursor: pointer;" data-bind="text: finalsuppdocori, click: downloaddoc"></span>
                                 </label>
                                 <input type="button" class="btn btn-sm p-l-10 p-5 p-r-10" value="Pilih Dokumen" data-bind="click: uploaddocument" />
                             </div>
@@ -141,8 +141,8 @@
                                         <th class="col-md-1">No. Kad Pengenalan</th>
                                         <th class="col-md-1">Negeri Alamat Surat Menyurat Terkini</th>
                                         <th class="col-md-1">Bandar Surat Menyurat Terkini</th>
-                                        <th class="col-md-2">Tempat Pemilihan Yang Ditetapkan</th>
-                                        <th class="col-md-2 text-center">
+                                        <th class="col-md-1">Tempat Pemilihan Yang Ditetapkan</th>
+                                        <th class="col-md-1 text-center">
                                             <div>
                                                 <label> <input type="checkbox" id="selectall_setloc" /> Pilih Semua Calon</label>
                                             </div>
@@ -151,32 +151,36 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <label>Tetapkan Tempat Pemilihan Kepada : </label>
-                                <select class="" data-bind="options: acqlocations, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: selectedlocation"></select>
-                            </div>
-                            <div class="form-group form-inline">
-                                <label>Tarikh</label>
-                                <div class="input-group" id="startdate">
-                                    <input type="text" class="form-control input-sm" id="startdatepicker" />
-                                    <div class="input-group-addon" style="cursor: pointer">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                        <div class="panel panel-default tile p-15">
+                            <div class="row">
+                                <div class="form-group p-b-10">
+                                    <label class="control-label col-md-3">Tetapkan Tempat Pemilihan Kepada : </label>
+                                    <div class="col-md-3">
+                                        <select class="form-control atm-select" data-bind="options: acqlocations, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: selectedlocation"></select>
                                     </div>
                                 </div>
-                                <label>hingga</label>
-                                <div class="input-group" id="enddate">
-                                    <input type="text" class="form-control input-sm" id="enddatepicker" />
-                                    <div class="input-group-addon" style="cursor: pointer">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                                <div class="form-group form-inline col-md-12 p-t-10">
+                                    <label>Tarikh</label>
+                                    <div class="input-group" id="startdate">
+                                        <input type="text" class="form-control input-sm" id="startdatepicker" />
+                                        <div class="input-group-addon" style="cursor: pointer">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
                                     </div>
+                                    <label>hingga</label>
+                                    <div class="input-group" id="enddate">
+                                        <input type="text" class="form-control input-sm" id="enddatepicker" />
+                                        <div class="input-group-addon" style="cursor: pointer">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                    <label>Masa (hh:mm)</label>
+                                    <input type="text" class="form-control" id="selecttime" data-bind="value: selectime" />
                                 </div>
-                                <label>Masa</label>
-                                <input type="text" class="form-control" id="selecttime" data-bind="value: selectime" />
                             </div>
-                        </div>
-                        <div class="row">
-                            <input type="button" class="btn btn-primary btn-sm" value="Simpan" data-bind="click: submitselectedlocation" />
+                            <div class="row">
+                                <input type="button" class="btn btn-primary btn-sm" value="Simpan" data-bind="click: submitselectedlocation" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,7 +196,8 @@
     <script type="text/javascript">
         var selectedid = @Model.Acquisition.AcquisitionId;
         var announcement = @Html.Raw(JsonConvert.SerializeObject(@Model.Announcement, Formatting.None, new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
-        var finalsuppdoc = '@Html.Raw(Model.FinalSupportingDocument)';
+        var finalsuppdoc = '@Html.Raw(Model.Acquisition.FinalSupportingDocument)';
+        var finalsuppdocori = '@Html.Raw(Model.Acquisition.FinalSupportingDocumentOriginal)';
     </script>
     @Scripts.Render("~/bundles/datepicker")
     <script src="@Url.Content("~/Content/frontend/js/markdown.min.js")"></script> <!-- Markdown Editor -->

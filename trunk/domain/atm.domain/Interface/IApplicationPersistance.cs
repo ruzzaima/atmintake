@@ -21,7 +21,9 @@ namespace SevenH.MMCSB.Atm.Domain
         int UpdateFirstSelectionStatus(int acquisitionid, int applicantid, bool? firstselection, string modifiedby);
         int UpdateLastSelectionStatus(int acquisitionid, int applicantid, bool? finalselection, bool? interview, string modifiedby);
         int UpdateFirstSelectionLocationAndDateTime(int acquisitionid, int applicantid, int? locationid, DateTime? startdate, DateTime? enddate, string modifiedby);
+        int UpdateReportDutyLocationAndDateTime(int acquisitionid, int applicantid, int? locationid, DateTime? reportdutydate, string modifiedby, string selectedservice);
         IEnumerable<State> GetSubmittedApplicationStates(int acquisitionid, bool? firstselection, bool? finalselection);
         IEnumerable<City> GetSubmittedApplicationCities(int acquisitionid, string statecode, bool? firstselection, bool? finalselection);
+        IEnumerable<ReportDutyLocation> GetReportDutyLocations();
     }
 }

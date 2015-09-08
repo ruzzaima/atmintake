@@ -9,7 +9,7 @@ $(function () {
             statuscode: ko.observable(''),
             name: ko.observable(''),
             icno: ko.observable(''),
-            armyno: ko.observable(0)
+            armyno: ko.observable('')
         },
         search: function (d) {
 

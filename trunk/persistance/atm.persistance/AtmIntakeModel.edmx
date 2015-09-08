@@ -286,6 +286,8 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblAcqFinalShorlistCriteria' doe
           <Property Name="ArmyNumberTo" Type="int" />
           <Property Name="FinalSupportingDocument" Type="varchar" MaxLength="255" />
           <Property Name="ReportDutySupportingDocument" Type="varchar" MaxLength="255" />
+          <Property Name="FinalSupportingDocumentOriginal" Type="varchar" MaxLength="255" />
+          <Property Name="ReportDutySupportingDocumentOriginal" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblAdvertisment">
           <Key>
@@ -901,6 +903,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblAcqFinalShorlistCriteria' doe
           <Property Name="FinalSelectionEndDate" Type="datetime" />
           <Property Name="ReportDutyDate" Type="datetime" />
           <Property Name="ReportDutyLocId" Type="int" />
+          <Property Name="FinalServiceCd" Type="char" MaxLength="2" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -947,7 +950,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblApplicationStatus' does not h
           </Key>
           <Property Name="COID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ICNOBaru" Type="varchar" MaxLength="12" Nullable="false" />
-          <Property Name="NoTentera" Type="int" Nullable="false" />
+          <Property Name="NoTentera" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="CONm" Type="varchar" MaxLength="120" Nullable="false" />
           <Property Name="ExistingMemberStatusCd" Type="char" MaxLength="2" />
         </EntityType>
@@ -4274,6 +4277,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <Property Name="ReportDutyLocId" Type="Int32" />
           <NavigationProperty Name="tblREFReportDutyLoc" Relationship="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" FromRole="tblApplication" ToRole="tblREFReportDutyLoc" />
           <NavigationProperty Name="tblApplicationStatus" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" FromRole="tblApplication" ToRole="tblApplicationStatu" />
+          <Property Name="FinalServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblAppQuestionFeedback">
           <Key>
@@ -4304,17 +4308,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <Property Name="LastModifiedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblAcqQuestionnaire" Relationship="Self.FK_tblAppQuestionnaireScore_tblAcqQuestionnaire" FromRole="tblAppQuestionnaireScore" ToRole="tblAcqQuestionnaire" />
           <NavigationProperty Name="tblApplication" Relationship="Self.FK_tblAppQuestionnaireScore_tblApplication" FromRole="tblAppQuestionnaireScore" ToRole="tblApplication" />
-        </EntityType>
-        <EntityType Name="tblExistingAtmMember">
-          <Key>
-            <PropertyRef Name="COID" />
-          </Key>
-          <Property Name="COID" Type="Int32" Nullable="false" />
-          <Property Name="ICNOBaru" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="NoTentera" Type="Int32" Nullable="false" />
-          <Property Name="CONm" Type="String" MaxLength="120" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ExistingMemberStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="tblREFExistingMemberStatu" Relationship="Self.FK_tblExistingATMMember_tblREFExistingMemberStatus" FromRole="tblExistingAtmMember" ToRole="tblREFExistingMemberStatus" />
         </EntityType>
         <EntityType Name="tblREFAchievement">
           <Key>
@@ -4412,14 +4405,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <NavigationProperty Name="tblREFEthnic1" Relationship="Self.FK_tblREFEthnic_tblREFEthnic" FromRole="tblREFEthnic" ToRole="tblREFEthnic1" />
           <NavigationProperty Name="tblREFEthnic2" Relationship="Self.FK_tblREFEthnic_tblREFEthnic" FromRole="tblREFEthnic1" ToRole="tblREFEthnic" />
           <NavigationProperty Name="tblREFRace" Relationship="Self.FK_tblREFEthnic_tblREFRace" FromRole="tblREFEthnic" ToRole="tblREFRace" />
-        </EntityType>
-        <EntityType Name="tblREFExistingMemberStatu">
-          <Key>
-            <PropertyRef Name="ExistingMemberStatusCD" />
-          </Key>
-          <Property Name="ExistingMemberStatusCD" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="ExistingMemberStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="tblExistingAtmMembers" Relationship="Self.FK_tblExistingATMMember_tblREFExistingMemberStatus" FromRole="tblREFExistingMemberStatus" ToRole="tblExistingAtmMember" />
         </EntityType>
         <EntityType Name="tblREFEyeStatu">
           <Key>
@@ -5875,18 +5860,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblExistingATMMember_tblREFExistingMemberStatus">
-          <End Role="tblREFExistingMemberStatus" Type="Self.tblREFExistingMemberStatu" Multiplicity="0..1" />
-          <End Role="tblExistingAtmMember" Type="Self.tblExistingAtmMember" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblREFExistingMemberStatus">
-              <PropertyRef Name="ExistingMemberStatusCD" />
-            </Principal>
-            <Dependent Role="tblExistingAtmMember">
-              <PropertyRef Name="ExistingMemberStatusCd" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblREFCity_tblREFState">
           <End Role="tblREFState" Type="Self.tblREFState" Multiplicity="0..1" />
           <End Role="tblREFCity" Type="Self.tblREFCity" Multiplicity="*" />
@@ -6031,7 +6004,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySet Name="tblApplications" EntityType="Self.tblApplication" />
           <EntitySet Name="tblAppQuestionFeedbacks" EntityType="Self.tblAppQuestionFeedback" />
           <EntitySet Name="tblAppQuestionnaireScores" EntityType="Self.tblAppQuestionnaireScore" />
-          <EntitySet Name="tblExistingAtmMembers" EntityType="Self.tblExistingAtmMember" />
           <EntitySet Name="tblREFAchievements" EntityType="Self.tblREFAchievement" />
           <EntitySet Name="tblREFApplicationStatus" EntityType="Self.tblREFApplicationStatu" />
           <EntitySet Name="tblRefBloodTypes" EntityType="Self.tblRefBloodType" />
@@ -6039,7 +6011,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySet Name="tblREFCountries" EntityType="Self.tblREFCountry" />
           <EntitySet Name="tblREFDocuments" EntityType="Self.tblREFDocument" />
           <EntitySet Name="tblREFEthnics" EntityType="Self.tblREFEthnic" />
-          <EntitySet Name="tblREFExistingMemberStatus" EntityType="Self.tblREFExistingMemberStatu" />
           <EntitySet Name="tblREFEyeStatus" EntityType="Self.tblREFEyeStatu" />
           <EntitySet Name="tblREFGenders" EntityType="Self.tblREFGender" />
           <EntitySet Name="tblREFHighEduLevels" EntityType="Self.tblREFHighEduLevel" />
@@ -6441,10 +6412,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
             <End Role="tblApplication" EntitySet="tblApplications" />
             <End Role="tblAppQuestionnaireScore" EntitySet="tblAppQuestionnaireScores" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblExistingATMMember_tblREFExistingMemberStatus" Association="Self.FK_tblExistingATMMember_tblREFExistingMemberStatus">
-            <End Role="tblREFExistingMemberStatus" EntitySet="tblREFExistingMemberStatus" />
-            <End Role="tblExistingAtmMember" EntitySet="tblExistingAtmMembers" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblREFCity_tblREFState" Association="Self.FK_tblREFCity_tblREFState">
             <End Role="tblREFState" EntitySet="tblREFStates" />
             <End Role="tblREFCity" EntitySet="tblREFCities" />
@@ -6545,6 +6512,12 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           </AssociationSet>
           <EntitySet Name="tblUserLogs" EntityType="AtmIntakeModel.tblUserLog" />
           <EntitySet Name="tblUsers" EntityType="AtmIntakeModel.tblUser" />
+          <EntitySet Name="tblExistingAtmMembers" EntityType="AtmIntakeModel.tblExistingAtmMember" />
+          <EntitySet Name="tblREFExistingMemberStatus" EntityType="AtmIntakeModel.tblREFExistingMemberStatu" />
+          <AssociationSet Name="FK_tblExistingATMMember_tblREFExistingMemberStatus" Association="AtmIntakeModel.FK_tblExistingATMMember_tblREFExistingMemberStatus">
+            <End Role="tblREFExistingMemberStatu" EntitySet="tblREFExistingMemberStatus" />
+            <End Role="tblExistingAtmMember" EntitySet="tblExistingAtmMembers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tblUserRole">
           <Key>
@@ -6615,6 +6588,8 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <Property Name="FinalSupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ReportDutySupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="tblAcqFinalShorlistCriterias" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqFinalShorlistCriteria" />
+          <Property Name="FinalSupportingDocumentOriginal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ReportDutySupportingDocumentOriginal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblREFAcqType">
           <Key>
@@ -6892,6 +6867,37 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <Property Name="ModifiedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="LastLoginDt2" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="tblExistingAtmMember">
+          <Key>
+            <PropertyRef Name="COID" />
+          </Key>
+          <Property Name="COID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ICNOBaru" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="NoTentera" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="CONm" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="ExistingMemberStatusCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="tblREFExistingMemberStatu" Relationship="AtmIntakeModel.FK_tblExistingATMMember_tblREFExistingMemberStatus" FromRole="tblExistingAtmMember" ToRole="tblREFExistingMemberStatu" />
+        </EntityType>
+        <EntityType Name="tblREFExistingMemberStatu">
+          <Key>
+            <PropertyRef Name="ExistingMemberStatusCD" />
+          </Key>
+          <Property Name="ExistingMemberStatusCD" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ExistingMemberStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tblExistingAtmMembers" Relationship="AtmIntakeModel.FK_tblExistingATMMember_tblREFExistingMemberStatus" FromRole="tblREFExistingMemberStatu" ToRole="tblExistingAtmMember" />
+        </EntityType>
+        <Association Name="FK_tblExistingATMMember_tblREFExistingMemberStatus">
+          <End Type="AtmIntakeModel.tblREFExistingMemberStatu" Role="tblREFExistingMemberStatu" Multiplicity="0..1" />
+          <End Type="AtmIntakeModel.tblExistingAtmMember" Role="tblExistingAtmMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblREFExistingMemberStatu">
+              <PropertyRef Name="ExistingMemberStatusCD" />
+            </Principal>
+            <Dependent Role="tblExistingAtmMember">
+              <PropertyRef Name="ExistingMemberStatusCd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7668,6 +7674,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySetMapping Name="tblApplications">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblApplication">
               <MappingFragment StoreEntitySet="tblApplication">
+                <ScalarProperty Name="FinalServiceCd" ColumnName="FinalServiceCd" />
                 <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
                 <ScalarProperty Name="ReportDutyDate" ColumnName="ReportDutyDate" />
                 <ScalarProperty Name="FinalSelectionEndDate" ColumnName="FinalSelectionEndDate" />
@@ -7745,17 +7752,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblExistingAtmMembers">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblExistingAtmMember">
-              <MappingFragment StoreEntitySet="tblExistingAtmMember">
-                <ScalarProperty Name="COID" ColumnName="COID" />
-                <ScalarProperty Name="ICNOBaru" ColumnName="ICNOBaru" />
-                <ScalarProperty Name="NoTentera" ColumnName="NoTentera" />
-                <ScalarProperty Name="CONm" ColumnName="CONm" />
-                <ScalarProperty Name="ExistingMemberStatusCd" ColumnName="ExistingMemberStatusCd" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblREFAchievements">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblREFAchievement">
               <MappingFragment StoreEntitySet="tblREFAchievement">
@@ -7830,14 +7826,6 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
                 <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedDt" ColumnName="LastModifiedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblREFExistingMemberStatus">
-            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFExistingMemberStatu">
-              <MappingFragment StoreEntitySet="tblREFExistingMemberStatus">
-                <ScalarProperty Name="ExistingMemberStatusCD" ColumnName="ExistingMemberStatusCD" />
-                <ScalarProperty Name="ExistingMemberStatus" ColumnName="ExistingMemberStatus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -8161,6 +8149,8 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySetMapping Name="tblAcquisitions">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblAcquisition">
               <MappingFragment StoreEntitySet="tblAcquisition">
+                <ScalarProperty Name="ReportDutySupportingDocumentOriginal" ColumnName="ReportDutySupportingDocumentOriginal" />
+                <ScalarProperty Name="FinalSupportingDocumentOriginal" ColumnName="FinalSupportingDocumentOriginal" />
                 <ScalarProperty Name="ReportDutySupportingDocument" ColumnName="ReportDutySupportingDocument" />
                 <ScalarProperty Name="FinalSupportingDocument" ColumnName="FinalSupportingDocument" />
                 <ScalarProperty Name="ArmyNumberTo" ColumnName="ArmyNumberTo" />
@@ -8315,6 +8305,25 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
                 <ScalarProperty Name="LoginId" ColumnName="LoginId" />
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblExistingAtmMembers">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblExistingAtmMember">
+              <MappingFragment StoreEntitySet="tblExistingAtmMember">
+                <ScalarProperty Name="ExistingMemberStatusCd" ColumnName="ExistingMemberStatusCd" />
+                <ScalarProperty Name="CONm" ColumnName="CONm" />
+                <ScalarProperty Name="NoTentera" ColumnName="NoTentera" />
+                <ScalarProperty Name="ICNOBaru" ColumnName="ICNOBaru" />
+                <ScalarProperty Name="COID" ColumnName="COID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblREFExistingMemberStatus">
+            <EntityTypeMapping TypeName="AtmIntakeModel.tblREFExistingMemberStatu">
+              <MappingFragment StoreEntitySet="tblREFExistingMemberStatus">
+                <ScalarProperty Name="ExistingMemberStatus" ColumnName="ExistingMemberStatus" />
+                <ScalarProperty Name="ExistingMemberStatusCD" ColumnName="ExistingMemberStatusCD" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

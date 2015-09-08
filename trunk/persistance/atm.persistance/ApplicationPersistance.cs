@@ -529,5 +529,50 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             }
             return 0;
         }
+
+
+        public IEnumerable<ReportDutyLocation> GetReportDutyLocations()
+        {
+            var list = new List<ReportDutyLocation>();
+            using (var entities = new atmEntities())
+            {
+                var l = from a in entities.tblREFReportDutyLocs select a;
+                foreach (var rl in l)
+                {
+                    list.Add(new ReportDutyLocation()
+                    {
+                        BUID = rl.BUID,
+                        ReportDutyLoc = rl.ReportDutyLoc,
+                        ReportDutyLocId = rl.ReportDutyLocId
+                    });
+                }
+            }
+            return list;
+        }
+
+
+        public int UpdateReportDutyLocationAndDateTime(int acquisitionid, int applicantid, int? locationid, DateTime? reportdutydate, string modifiedby, string selectedservice)
+        {
+            if (acquisitionid != 0 && applicantid != 0)
+            {
+                using (var entities = new atmEntities())
+                {
+                    var application = (from a in entities.tblApplications where a.AcquisitionId == acquisitionid && a.ApplicantId == applicantid select a).OrderByDescending(a => a.CreatedDt).FirstOrDefault();
+                    if (null != application)
+                    {
+                        application.ReportDutyLocId = locationid;
+                        application.ReportDutyDate = reportdutydate;
+                        application.LastModifiedDt = DateTime.Now;
+                        application.LastModifiedBy = modifiedby;
+                        if (!string.IsNullOrWhiteSpace(selectedservice) && selectedservice != "undefined" && selectedservice != "null")
+                            application.FinalServiceCd = selectedservice;
+                        var upd = entities.SaveChanges();
+
+                        return application.AppId;
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

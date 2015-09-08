@@ -69,7 +69,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     InviteFirstSelStatus = appl.InviteFirstSelStatus,
                     InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy,
                     FinalSupportingDocument = appl.FinalSupportingDocument,
-                    ReportDutySupportingDocument = appl.ReportDutySupportingDocument
+                    FinalSupportingDocumentOriginal = appl.FinalSupportingDocumentOriginal,
+                    ReportDutySupportingDocument = appl.ReportDutySupportingDocument,
+                    ReportDutySupportingDocumentOriginal = appl.ReportDutySupportingDocumentOriginal
                 };
                 entities.tblAcquisitions.Add(acq);
                 if (entities.SaveChanges() > 0)
@@ -131,7 +133,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         InviteFirstSelStatus = acq.InviteFirstSelStatus,
                         InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy,
                         FinalSupportingDocument = acq.FinalSupportingDocument,
-                        ReportDutySupportingDocument = acq.ReportDutySupportingDocument
+                        FinalSupportingDocumentOriginal = acq.FinalSupportingDocumentOriginal,
+                        ReportDutySupportingDocument = acq.ReportDutySupportingDocument,
+                        ReportDutySupportingDocumentOriginal = acq.ReportDutySupportingDocumentOriginal
                     };
 
                     if (a.AcquisitionTypeCd != 0)
@@ -329,7 +333,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             InviteFirstSelStatus = acq.InviteFirstSelStatus,
                             InviteFirstSelStatusBy = acq.InviteFirstSelStatusBy,
                             FinalSupportingDocument = acq.FinalSupportingDocument,
-                            ReportDutySupportingDocument = acq.ReportDutySupportingDocument
+                            FinalSupportingDocumentOriginal = acq.FinalSupportingDocumentOriginal,
+                            ReportDutySupportingDocument = acq.ReportDutySupportingDocument,
+                            ReportDutySupportingDocumentOriginal = acq.ReportDutySupportingDocumentOriginal
                         };
 
                         if (a.AcquisitionTypeCd != 0)
@@ -429,7 +435,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.InviteFirstSelStatus = appl.InviteFirstSelStatus;
                     exist.InviteFirstSelStatusBy = appl.InviteFirstSelStatusBy;
                     exist.FinalSupportingDocument = appl.FinalSupportingDocument;
+                    exist.FinalSupportingDocumentOriginal = appl.FinalSupportingDocumentOriginal;
                     exist.ReportDutySupportingDocument = appl.ReportDutySupportingDocument;
+                    exist.ReportDutySupportingDocumentOriginal = appl.ReportDutySupportingDocumentOriginal;
 
                     entities.SaveChanges();
                     return exist.AcquisitionId;

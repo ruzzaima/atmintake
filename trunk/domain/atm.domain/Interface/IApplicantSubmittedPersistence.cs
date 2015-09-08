@@ -17,7 +17,7 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
 
         int SaveEducation(ApplicantEducationSubmitted education);
         int UpdateEducation(ApplicantEducationSubmitted education);
-        IEnumerable<ApplicantEducationSubmitted> GetEducation(int applicantid);
+        IEnumerable<ApplicantEducationSubmitted> GetEducation(int applicantid, int acquisitionid);
 
         int SaveEducationSubject(ApplicantEduSubjectSubmitted subject);
         int UpdateEducationSubject(ApplicantEduSubjectSubmitted subject);
@@ -26,17 +26,17 @@ namespace SevenH.MMCSB.Atm.Domain.Interface
 
         int SaveSkill(ApplicantSkillSubmitted skill);
         int UpdateSkill(ApplicantSkillSubmitted skill);
-        IEnumerable<ApplicantSkillSubmitted> GetSkill(int applicantid);
+        IEnumerable<ApplicantSkillSubmitted> GetSkill(int applicantid, int acquisitionid);
         int SaveSport(ApplicantSportSubmitted sport);
         int UpdateSport(ApplicantSportSubmitted sport);
-        IEnumerable<ApplicantSportSubmitted> GetSport(int applicantid);
+        IEnumerable<ApplicantSportSubmitted> GetSport(int applicantid, int acquisitionid);
 
         ApplicantSubmittedPhoto GetPhoto(int applicantid);
         int SaveApplicantPhoto(ApplicantSubmittedPhoto photo);
         int UpdateApplicantPhoto(ApplicantSubmittedPhoto photo);
 
         IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string category, string name, string icno, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, bool? all, out int total);
-        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, int? finalselectionlocid, string statecode, string citycode, bool? all, out int total);
+        IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, int? finalselectionlocid, int? reportdutylocid, string statecode, string citycode, bool? all, out int total);
         IEnumerable<ApplicantSubmitted> GetByAcademis(string highleveleducd);
     }
 }

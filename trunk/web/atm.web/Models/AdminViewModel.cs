@@ -14,8 +14,8 @@ namespace SevenH.MMCSB.Atm.Web.Models
         private AcquisitionAnnouncement m_announcement = new AcquisitionAnnouncement();
         public string FinalSupportingDocument { get; set; }
         public string ReportDutySuppotingDocument { get; set; }
-        public string FinalSupportingDocumentPath { get; set; }
-        public string ReportDutySupportingDocumentPath { get; set; }
+        public string FinalSupportingDocumentOriginal { get; set; }
+        public string ReportDutySupportingDocumentOriginal { get; set; }
         public AcquisitionAnnouncement Announcement
         {
             get { return m_announcement; }

@@ -68,7 +68,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return false;
         }
 
-        public IEnumerable<ExistingMember> Search(string status, string searchcriteria, int armyno)
+        public IEnumerable<ExistingMember> Search(string status, string searchcriteria, string armyno)
         {
             var list = new List<ExistingMember>();
             using (var entities = new atmEntities())
@@ -78,7 +78,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     l = l.Where(a => a.ExistingMemberStatusCd == status);
                 if (!string.IsNullOrWhiteSpace(searchcriteria))
                     l = l.Where(a => a.CONm.Contains(searchcriteria) || a.ICNOBaru.Contains(searchcriteria));
-                if (armyno != 0)
+                if (!string.IsNullOrWhiteSpace(armyno))
                     l = l.Where(a => a.NoTentera == armyno);
                 foreach (var atm in l)
                 {

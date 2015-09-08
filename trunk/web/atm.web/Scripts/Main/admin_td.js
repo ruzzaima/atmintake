@@ -6,54 +6,7 @@ $(function () {
     // validation
     $("#form_peribadi").validationEngine();
     $("#form_akademik").validationEngine();
-
-    function initializeAcademics() {
-
-        // sarjana muda oversea indicator
-        $('input[name="08InstCd"]').on('ifClicked', function (event) {
-            var selectedval = this.value;
-            if (viewModel.applicant.ApplicantEducations().length > 0) {
-                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                    if (v.HighEduLevelCd() === '08') {
-                        if (selectedval === 'O') {
-                            viewModel.overseas08(true);
-                        } else {
-                            viewModel.overseas08(false);
-                        }
-                    }
-                });
-            }
-        });
-
-
-        if (viewModel.applicant.ApplicantEducations().length > 0) {
-            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                if (v.HighEduLevelCd() === '08') {
-                    $('input[name="08InstCd"]').each(function () {
-                        if (v.OverSeaInd() !== null) {
-                            if (v.OverSeaInd() === true) {
-                                if (this.value === 'O') {
-                                    viewModel.overseas08(true);
-                                    $(this).iCheck('check');
-                                }
-                            } else {
-                                if (this.value === 'D') {
-                                    viewModel.overseas08(false);
-                                    $(this).iCheck('check');
-                                }
-                            }
-                        } else {
-                            if (this.value === 'D') {
-                                viewModel.overseas08(false);
-                                $(this).iCheck('check');
-                            }
-                        }
-                    });
-                }
-
-            });
-        }
-    }
+    //$("#crime_form").validationEngine();
 
     function checkPengakuan() {
 
@@ -125,7 +78,6 @@ $(function () {
         zones: ko.observableArray([]),
         locations: ko.observableArray([]),
         ischecked: ko.observable(false),
-        overseas08: ko.observable(false),
         saveprofile: function (d) {
             // get birth of date
             var bdate = $('#birthdatepicker').data('date');
@@ -136,7 +88,6 @@ $(function () {
             $('input[type=text]').val(function () {
                 return this.value.toUpperCase();
             });
-
 
             if (viewModel.applicant.CurrentSalary) {
                 if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
@@ -150,21 +101,13 @@ $(function () {
                 }
             }
 
-            if (viewModel.applicant.ApplicantEducations().length > 0) {
-                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                    if (v.HighEduLevelCd() === '08') {
-                        v.OverSeaInd(viewModel.overseas08());
-                    }
-                });
-            }
-
             checkPengakuan();
             showLoading();
 
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
-                url: server + '/Public/SubmitProfile',
+                url: server + '/Admin/SubmitProfile',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
                     if (msg.OK) {
@@ -193,9 +136,6 @@ $(function () {
 
                             }
                         });
-
-                        initializeCheckBoxAndRadio();
-                        initializeAcademics();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -295,7 +235,7 @@ $(function () {
                 $("#form_akademik").validationEngine();
             }
         },
-        saveacademicsandcontinue: function () {
+        saveacademicandcontinue: function () {
             var valid = $("#form_akademik").validationEngine('validate');
             var vars = $("#form_akademik").serialize();
             if (valid === true) {
@@ -306,29 +246,10 @@ $(function () {
             }
         },
         savecontract: function () {
-            // get birth of date
-            var bdate = $('#birthdatepicker').data('date');
-            viewModel.applicant.BirthDate(bdate);
-
-            var pedt = $('#palapesgraduationdatepicker').data('date');
-            viewModel.applicant.PalapesTauliahEndDt(pedt);
-
-            $.ajax({
-                type: 'POST',
-                data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant) }),
-                url: server + '/Public/SubmitProfile',
-                contentType: "application/json; charset=utf-8",
-                success: function (msg) {
-                    if (msg.OK) {
-                    }
-                    ShowMessage(msg.message);
-                },
-                error: function (xhr) {
-                }
-            });
+            viewModel.saveprofile();
         },
         savecontractandcontinue: function () {
-            viewModel.savecontract();
+            viewModel.saveprofile();
             $('#resume a[href="#sport"]').tab('show');
         },
         saveperibadi: function (d) {
@@ -350,9 +271,9 @@ $(function () {
                 $("#form_peribadi").validationEngine();
             }
         },
-        saveacademicandcontinue: function (d) {
-            viewModel.saveacademics();
-            $('#resume a[href="#sponsorship"]').tab('show');
+        g: function (d) {
+            viewModel.saveprofile();
+            $('#resume a[href="#sport"]').tab('show');
         },
         saveskill: function (d) {
             viewModel.saveprofile();
@@ -362,11 +283,23 @@ $(function () {
             $('#resume a[href="#crime"]').tab('show');
         },
         savescrime: function (d) {
-            viewModel.saveprofile();
+            var valid = $("#crime_form").validationEngine('validate');
+            var vars = $("#crime_form").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+            } else {
+                $("#crime_form").validationEngine();
+            }
         },
         savescrimeandcontinue: function (d) {
-            viewModel.saveprofile();
-            $('#resume a[href="#confirmation"]').tab('show');
+            var valid = $("#crime_form").validationEngine('validate');
+            var vars = $("#crime_form").serialize();
+            if (valid === true) {
+                viewModel.saveprofile();
+                $('#resume a[href="#confirmation"]').tab('show');
+            } else {
+                $("#crime_form").validationEngine();
+            }
         },
         submitapplication: function (d) {
             if (viewModel.ischecked) {
@@ -386,29 +319,12 @@ $(function () {
                 $('#notification_dialog .btn-submit').unbind("click");
                 $('#notification_dialog .btn-submit').click(function () {
 
-                    var valid = $("#form_peribadi").validationEngine('validate');
-                    var vars = $("#form_peribadi").serialize();
-                    if (valid === false) {
-                        ShowMessage('Sila isikan maklumat yang mandatori!');
-                        $("#form_peribadi").validationEngine();
-                        $('#resume a[href="#confirmation"]').tab('show');
-                        return false;
-                    }
-                    var valida = $("#form_akademik").validationEngine('validate');
-                    var varsa = $("#form_akademik").serialize();
-                    if (valida === false) {
-                        ShowMessage('Sila isikan maklumat yang mandatori!');
-                        $("#form_akademik").validationEngine();
-                        $('#resume a[href="#sport"]').tab('show');
-                        return false;
-                    }
-
                     showLoading();
 
                     $.ajax({
                         type: 'POST',
                         data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
-                        url: server + '/Public/SubmitProfile',
+                        url: server + '/Admin/SubmitProfile',
                         contentType: "application/json; charset=utf-8",
                         success: function (msg) {
                             if (msg.OK) {
@@ -434,7 +350,6 @@ $(function () {
                             hideLoading();
                         }
                     });
-
                     $('#notification_dialog').modal('hide');
                 });
 
@@ -454,6 +369,9 @@ $(function () {
                     return d;
                 }
             }
+        },
+        backtolist: function () {
+            location.href = server + "/Admin/SearchApplicant";
         }
     };
 
@@ -490,15 +408,18 @@ $(function () {
     });
     viewModel.applicant.Weight.subscribe(function (d) {
         if (d) {
-            if (viewModel.applicant.Height) {
-                var bmi = d / (viewModel.applicant.Height() * viewModel.applicant.Height());
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
+            var height = ko.mapping.toJS(viewModel.applicant.Height);
+            if (height) {
+                if (height !== null) {
+                    var bmi = d / (height * height);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
             }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -514,10 +435,18 @@ $(function () {
 
     viewModel.applicant.Height.subscribe(function (d) {
         if (d) {
+            var weight = ko.mapping.toJS(viewModel.applicant.Weight);
+            if (weight) {
+                if (weight != null) {
+                    var bmi = weight / (d * d);
+                    bmi = parseFloat(bmi).toFixed(2);
+                    viewModel.applicant.Bmi(bmi);
+                }
+            }
 
             $.ajax({
                 type: 'POST',
-                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height()), weight: ko.mapping.toJS(viewModel.applicant.Weight()), acquisitionid: acquisitionid }),
+                data: JSON.stringify({ height: ko.mapping.toJS(viewModel.applicant.Height), weight: ko.mapping.toJS(viewModel.applicant.Weight), acquisitionid: acquisitionid }),
                 url: server + '/Public/CheckHeightWeightBmi',
                 contentType: "application/json; charset=utf-8",
                 success: function (msg) {
@@ -528,12 +457,6 @@ $(function () {
                 error: function (xhr) {
                 }
             });
-
-            if (viewModel.applicant.Weight) {
-                var bmi = viewModel.applicant.Weight() / (d * d);
-                bmi = parseFloat(bmi).toFixed(2);
-                viewModel.applicant.Bmi(bmi);
-            }
         }
     });
 
@@ -577,7 +500,6 @@ $(function () {
     $('#palapesgraduationdatepicker').datetimepicker({
         format: 'DD/MM/YYYY'
     });
-
 
     if (viewModel.applicant.BirthDate) {
         if (viewModel.applicant.BirthDate() !== null) {
@@ -784,10 +706,39 @@ $(function () {
     // gender
     $('input[name="gender"]').on('ifClicked', function (event) {
         var selectedval = this.value;
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify({ gender: selectedval, acquisitionid: acquisitionid }),
+            url: server + '/Public/CheckingGender',
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+                if (!msg.OK) {
+                    ShowMessage(msg.message);
+                }
+            },
+            error: function (xhr) {
+            }
+        });
         viewModel.applicant.GenderCd(selectedval);
     });
 
     if (viewModel.applicant.GenderCd) {
+
+        if (viewModel.applicant.GenderCd() !== '') {
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ gender: ko.mapping.toJS(viewModel.applicant.GenderCd), acquisitionid: acquisitionid }),
+                url: server + '/Public/CheckingGender',
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.OK) {
+                        //location.href = msg.url;
+                    }
+                },
+                error: function (xhr) {
+                }
+            });
+        }
         $('input[name="gender"]').each(function () {
             if (this.value === viewModel.applicant.GenderCd()) {
                 $(this).iCheck('check');
@@ -912,6 +863,20 @@ $(function () {
         viewModel.ischecked(false);
     });
 
+    $('input[name="zone_radio"]').on('ifChanged', function (event) {
+        var selected = this.value;
+        loadLocations(selected);
+        initializeCheckBoxAndRadio();
+    });
+
+    $('input[name="zone_radio"]').on('ifChecked', function (event) {
+        alert(event.type + ' callback');
+    });
+
+    $('input[name="zone_radio"]').on('ifUnchecked', function (event) {
+        alert(event.type + ' callback');
+    });
+
 
     if (viewModel.applicant.DadName) {
         if (viewModel.applicant.DadName() == null || viewModel.applicant.DadName() === "") {
@@ -940,7 +905,6 @@ $(function () {
         }
     }
 
-    initializeAcademics();
     loadCountry();
     loadReligions();
     loadRace();
@@ -958,5 +922,6 @@ $(function () {
     loadZones();
     loadMaritalStatus(servicescode);
 
+    // admin only
     viewModel.applicant.IsAgreeInd(true);
 });

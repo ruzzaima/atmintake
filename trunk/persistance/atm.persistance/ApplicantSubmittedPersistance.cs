@@ -160,7 +160,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     if (null != exist)
                     {
                         var app = BindingToClass(exist);
-                        var edus = GetEducation(app.ApplicantId);
+                        var edus = GetEducation(app.ApplicantId, acquisitionid);
                         foreach (var ed in edus)
                             app.ApplicantEducationSubmittedCollection.Add(ed);
 
@@ -180,7 +180,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     if (null != exist)
                     {
                         var app = BindingToClass(exist);
-                        var edus = GetEducation(app.ApplicantId);
+                        var edus = GetEducation(app.ApplicantId, acquisitionid);
                         foreach (var ed in edus)
                             app.ApplicantEducationSubmittedCollection.Add(ed);
 
@@ -204,7 +204,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         foreach (var u in exist)
                         {
                             var app = BindingToClass(u);
-                            var edus = GetEducation(app.ApplicantId);
+                            var edus = GetEducation(app.ApplicantId, app.AcquisitionId);
                             foreach (var ed in edus)
                                 app.ApplicantEducationSubmittedCollection.Add(ed);
 
@@ -230,7 +230,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         foreach (var u in exist)
                         {
                             var app = BindingToClass(u);
-                            var edus = GetEducation(app.ApplicantId);
+                            var edus = GetEducation(app.ApplicantId, app.AcquisitionId);
                             foreach (var ed in edus)
                                 app.ApplicantEducationSubmittedCollection.Add(ed);
 
@@ -305,12 +305,12 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return 0;
         }
 
-        public IEnumerable<ApplicantEducationSubmitted> GetEducation(int applicantid)
+        public IEnumerable<ApplicantEducationSubmitted> GetEducation(int applicantid, int acquisitionid)
         {
             var list = new List<ApplicantEducationSubmitted>();
             using (var entities = new atmEntities())
             {
-                var l = from a in entities.tblApplicantEduSubmitteds where a.ApplicantId == applicantid select a;
+                var l = from a in entities.tblApplicantEduSubmitteds join b in entities.tblApplicantSubmiteds on a.ApplicantId equals b.ApplicantId where a.ApplicantId == applicantid && b.AcquisitionId == acquisitionid select a;
                 if (l.Any())
                 {
                     foreach (var aes in l)
@@ -323,16 +323,37 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             CreatedBy = aes.CreatedBy,
                             CreatedDt = aes.CreatedDt,
                             EduCertTitle = aes.EduCertTitle,
-                            HighEduLevelCd = aes.HighEduLevelCd,
-                            InstCd = aes.InstCd,
+                            HighEduLevel = aes.tblREFHighEduLevel != null ? aes.tblREFHighEduLevel.HighestEduLevel : string.Empty,
+                            HighEduLevelCd = !string.IsNullOrWhiteSpace(aes.HighEduLevelCd) ? aes.HighEduLevelCd.Trim() : aes.HighEduLevelCd,
+                            InstCd = !string.IsNullOrWhiteSpace(aes.InstCd) ? aes.InstCd.Trim() : aes.InstCd,
                             InstitutionName = aes.InstitutionName,
                             LastModifiedBy = aes.LastModifiedBy,
                             LastModifiedDt = aes.LastModifiedDt,
-                            MajorMinorCd = aes.MajorMinorCd,
+                            MajorMinorCd = !string.IsNullOrWhiteSpace(aes.MajorMinorCd) ? aes.MajorMinorCd.Trim() : aes.MajorMinorCd,
                             OverSeaInd = aes.OverSeaInd,
                             OverallGrade = aes.OverallGrade,
                             SKMLevel = aes.SKMLevel
                         };
+                        var subjects = from a in entities.tblApplicantEduSubjectSubmitteds where a.ApplicantEduId == ed.ApplicantEduId select a;
+                        if (subjects.Any())
+                        {
+                            foreach (var s in subjects)
+                            {
+                                ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted
+                                {
+                                    ApplicantEduId = s.ApplicantEduId,
+                                    CreatedBy = s.CreatedBy,
+                                    CreatedDt = s.CreatedDt,
+                                    EduSubjectId = s.EduSubjectId,
+                                    Grade = s.tblREFSubjectGrade.Grade,
+                                    GradeCd = !string.IsNullOrWhiteSpace(s.GradeCd) ? s.GradeCd.Trim() : s.GradeCd,
+                                    LastModifiedBy = s.LastModifiedBy,
+                                    LastModifiedDt = s.LastModifiedDt,
+                                    Subject = s.tblREFSubject.Subject,
+                                    SubjectCd = s.SubjectCd
+                                });
+                            }
+                        }
                         list.Add(ed);
                     }
                 }
@@ -477,17 +498,17 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return 0;
         }
 
-        public IEnumerable<ApplicantSkillSubmitted> GetSkill(int applicantid)
+        public IEnumerable<ApplicantSkillSubmitted> GetSkill(int applicantid, int acquisitionid)
         {
             var list = new List<ApplicantSkillSubmitted>();
             using (var entities = new atmEntities())
             {
-                var l = from a in entities.tblApplicantSkillSubmitteds where a.ApplicantId == applicantid select a;
+                var l = from a in entities.tblApplicantSkillSubmitteds join b in entities.tblApplicantSubmiteds on a.ApplicantId equals b.ApplicantId where a.ApplicantId == applicantid && b.AcquisitionId == acquisitionid select a;
                 if (l.Any())
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantSkillSubmitted
+                        var sks = new ApplicantSkillSubmitted
                         {
                             AchievementCd = s.AchievementCd,
                             CreatedBy = s.CreatedBy,
@@ -500,9 +521,14 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             LanguageSkillWrite = s.LanguageSkillWrite,
                             Others = s.Others,
                             Skill = s.tblREFSkill.Skill,
-                            SkillCatCd = s.SkillCatCd,
-                            SkillCd = s.SkillCd
-                        });
+                            SkillCatCd = !string.IsNullOrWhiteSpace(s.SkillCatCd) ? s.SkillCatCd.Trim() : s.SkillCatCd,
+                            SkillCd = !string.IsNullOrWhiteSpace(s.SkillCd) ? s.SkillCd.Trim() : s.SkillCd
+                        };
+
+                        if (!string.IsNullOrWhiteSpace(sks.SkillCd) && s.tblREFSkill != null)
+                            sks.Skill = s.tblREFSkill.Skill;
+
+                        list.Add(sks);
                     }
                 }
             }
@@ -559,17 +585,17 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             return 0;
         }
 
-        public IEnumerable<ApplicantSportSubmitted> GetSport(int applicantid)
+        public IEnumerable<ApplicantSportSubmitted> GetSport(int applicantid, int acquisitionid)
         {
             var list = new List<ApplicantSportSubmitted>();
             using (var entities = new atmEntities())
             {
-                var l = from a in entities.tblApplicantSportAssocSubmitteds where a.ApplicantId == applicantid select a;
+                var l = from a in entities.tblApplicantSportAssocSubmitteds join b in entities.tblApplicantSubmiteds on a.ApplicantId equals b.ApplicantId where a.ApplicantId == applicantid && b.AcquisitionId == acquisitionid select a;
                 if (l.Any())
                 {
                     foreach (var s in l)
                     {
-                        list.Add(new ApplicantSportSubmitted
+                        var appsa = new ApplicantSportSubmitted
                         {
                             AchievementCd = s.AchievementCd,
                             ApplicantId = s.ApplicantId,
@@ -581,7 +607,20 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                             Others = s.Others,
                             SportAssocId = s.SportAssocId,
                             Year = s.Year
-                        });
+                        };
+
+                        if (s.SportAssocId.HasValue && s.tblREFSportAndAssociation != null)
+                        {
+                            appsa.SportAndAssociation = new SportAndAssociation()
+                            {
+                                SportAssocId = s.tblREFSportAndAssociation.SportAssocId,
+                                SportAssociatName = s.tblREFSportAndAssociation.SportAssociatName,
+                                SportAssociatType = s.tblREFSportAndAssociation.SportAssociatType,
+                                ActiveInd = s.tblREFSportAndAssociation.ActiveInd,
+                            };
+                        }
+
+                        list.Add(appsa);
                     }
                 }
             }
@@ -901,7 +940,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         foreach (var u in exist)
                         {
                             var app = BindingToClass(u);
-                            var edus = GetEducation(app.ApplicantId);
+                            var edus = GetEducation(app.ApplicantId, acquisitionid);
                             foreach (var ed in edus)
                                 app.ApplicantEducationSubmittedCollection.Add(ed);
 
@@ -923,8 +962,16 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
                     if (!all.HasValue)
-                        l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
-
+                    {
+                        if (invitationfirtselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                        if (firstselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                        if (finalselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FinalSelectionInd == finalselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                        if (!invitationfirtselection.HasValue && !firstselection.HasValue && !finalselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                    }
                     if (!string.IsNullOrWhiteSpace(name))
                         l = l.Where(a => a.FullName.Contains(name));
                     if (!string.IsNullOrWhiteSpace(icno))
@@ -1020,7 +1067,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         }
 
 
-        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, int? finalselectionlocid, string statecode, string citycode, bool? all, out int total)
+        public IEnumerable<ApplicantSubmitted> Search(int acquisitionid, string searchcriteria, bool? invitationfirtselection, bool? firstselection, bool? finalselection, int? take, int? skip, int? finalselectionlocid, int? reportdutylocid, string statecode, string citycode, bool? all, out int total)
         {
             var list = new List<ApplicantSubmitted>();
             total = 0;
@@ -1030,13 +1077,28 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 {
                     var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
                     if (!all.HasValue)
-                        l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                    {
+                        if (invitationfirtselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                        if (firstselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                        if (finalselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FinalSelectionInd == finalselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                        if (!invitationfirtselection.HasValue && !firstselection.HasValue && !finalselection.HasValue)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                    }
 
                     if (finalselectionlocid.HasValue)
                         if (finalselectionlocid.Value == 0)
                             l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.FinalSelActualAcqLocationId == null select a;
                         else
                             l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.FinalSelActualAcqLocationId == finalselectionlocid select a;
+
+                    if (reportdutylocid.HasValue)
+                        if (reportdutylocid.Value == 0)
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.ReportDutyLocId == null select a;
+                        else
+                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid && b.ReportDutyLocId == reportdutylocid select a;
 
                     if (!string.IsNullOrWhiteSpace(statecode) && statecode != "undefined" && statecode != "null")
                         l = l.Where(a => a.CorresponAddrStateCd == statecode);

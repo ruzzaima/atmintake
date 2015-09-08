@@ -41,7 +41,7 @@ $(function () {
                                     "sClass": "text-center",
                                     "mRender": function (data, type, full) {
                                         var id = data;
-                                        return '<a href="' + server + '/RedirectForm?id=' + id + '&acquisitionid=' + selectedid + '" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '" value="Kemaskini" />';
+                                        return '<a href="' + server + '/Admin/RedirectForm?id=' + id + '&acquisitionid=' + selectedid + '" class="btn btn-sm projectdomain" domainid="' + id + '" id="btn_' + id + '">Kemaskini</a>';
                                     }
                                 }
                 ],

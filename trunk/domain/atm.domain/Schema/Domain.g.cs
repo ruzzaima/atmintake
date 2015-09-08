@@ -12162,6 +12162,14 @@
             public const string PropertyNameReportDutySupportingDocument = "ReportDutySupportingDocument";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_FinalSupportingDocumentOriginal;
+            public const string PropertyNameFinalSupportingDocumentOriginal = "FinalSupportingDocumentOriginal";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_ReportDutySupportingDocumentOriginal;
+            public const string PropertyNameReportDutySupportingDocumentOriginal = "ReportDutySupportingDocumentOriginal";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
             private DateTime?  m_CreatedDt;
             public const string PropertyNameCreatedDt = "CreatedDt";
@@ -12819,6 +12827,54 @@
             get
             {
             return m_ReportDutySupportingDocument;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string FinalSupportingDocumentOriginal
+            {
+            set
+            {
+            if( String.Equals( m_FinalSupportingDocumentOriginal, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameFinalSupportingDocumentOriginal, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_FinalSupportingDocumentOriginal= value;
+            OnPropertyChanged(PropertyNameFinalSupportingDocumentOriginal);
+            }
+            }
+            get
+            {
+            return m_FinalSupportingDocumentOriginal;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string ReportDutySupportingDocumentOriginal
+            {
+            set
+            {
+            if( String.Equals( m_ReportDutySupportingDocumentOriginal, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDutySupportingDocumentOriginal, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_ReportDutySupportingDocumentOriginal= value;
+            OnPropertyChanged(PropertyNameReportDutySupportingDocumentOriginal);
+            }
+            }
+            get
+            {
+            return m_ReportDutySupportingDocumentOriginal;}
             }
           
 
@@ -20280,7 +20336,7 @@
             public const string PropertyNameCoId = "CoId";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private  int  m_ArmyNo;
+            private  string  m_ArmyNo;
             public const string PropertyNameArmyNo = "ArmyNo";
           
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -20343,11 +20399,11 @@
             [XmlAttribute]
             [DebuggerHidden]
 
-            public virtual int ArmyNo
+            public virtual string ArmyNo
             {
             set
             {
-            if( m_ArmyNo == value) return;
+            if( String.Equals( m_ArmyNo, value, StringComparison.Ordinal)) return;
             var arg = new PropertyChangingEventArgs(PropertyNameArmyNo, value);
             OnPropertyChanging(arg);
             if( !arg.Cancel)
@@ -21379,6 +21435,102 @@
             }
             }
             get { return m_AnnouncementStatusInd;}
+            }
+          
+
+
+          }
+        
+          ///<summary>
+          /// 
+          ///</summary>
+          [Serializable]
+          [XmlType("ReportDutyLocation",  Namespace=Strings.DefaultNamespace)]
+          public  partial class ReportDutyLocation
+          {
+
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  int  m_ReportDutyLocId;
+            public const string PropertyNameReportDutyLocId = "ReportDutyLocId";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+            private  string  m_ReportDutyLoc;
+            public const string PropertyNameReportDutyLoc = "ReportDutyLoc";
+          
+            [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+            private int?  m_BUID;
+            public const string PropertyNameBUID = "BUID";
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual int ReportDutyLocId
+            {
+            set
+            {
+            if( m_ReportDutyLocId == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDutyLocId, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_ReportDutyLocId= value;
+            OnPropertyChanged(PropertyNameReportDutyLocId);
+            }
+            }
+            get
+            {
+            return m_ReportDutyLocId;}
+            }
+          
+            ///<summary>
+            /// 
+            ///</summary>
+            [XmlAttribute]
+            [DebuggerHidden]
+
+            public virtual string ReportDutyLoc
+            {
+            set
+            {
+            if( String.Equals( m_ReportDutyLoc, value, StringComparison.Ordinal)) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameReportDutyLoc, value);
+            OnPropertyChanging(arg);
+            if( !arg.Cancel)
+            {
+            m_ReportDutyLoc= value;
+            OnPropertyChanged(PropertyNameReportDutyLoc);
+            }
+            }
+            get
+            {
+            return m_ReportDutyLoc;}
+            }
+          
+
+            ///<summary>
+            /// 
+            ///</summary>
+            [DebuggerHidden]
+
+            public virtual int? BUID
+            {
+            set
+            {
+            if(m_BUID == value) return;
+            var arg = new PropertyChangingEventArgs(PropertyNameBUID, value);
+            OnPropertyChanging(arg);
+            if(! arg.Cancel)
+            {
+            m_BUID= value;
+            OnPropertyChanged(PropertyNameBUID);
+            }
+            }
+            get { return m_BUID;}
             }
           
 

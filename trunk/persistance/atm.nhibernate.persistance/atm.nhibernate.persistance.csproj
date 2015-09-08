@@ -56,14 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcquisitionPersistence.cs" />
     <Compile Include="AdvertismentPersistance.cs" />
-    <Compile Include="ApplicantPersistence.cs" />
-    <Compile Include="ApplicantSportPersistance.cs" />
-    <Compile Include="ApplicantSubmittedPersistance.cs" />
-    <Compile Include="ApplicationPersistance.cs" />
     <Compile Include="HibernateSqlExecution.cs" />
-    <Compile Include="LoginUserPersistance.cs" />
     <Compile Include="ReferencePersistence.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

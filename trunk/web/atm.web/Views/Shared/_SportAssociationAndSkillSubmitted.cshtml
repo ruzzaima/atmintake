@@ -1,0 +1,189 @@
+﻿
+<div class="row">
+    <div class="col-md-12">
+        <table class="table tile">
+            <thead>
+                <tr>
+                    <th>Bil.</th>
+                    <th>Sukan</th>
+                    <th>Tahun</th>
+                    <th>Pencapaian/Peringkat (Mewakili)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: applicant.SportSubmitteds">
+                <tr>
+                    <td data-bind="text: $index() + 1">/td>
+                    <td class="col-md-4"><select class="form-control input-sm" data-bind="options: $root.sportslist, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Id', valueAllowUnset: true, value: $data.SportAssocId"></select></td>
+                    <td class="col-md-3">
+                        <input type="text" class="form-control col-md-4" data-bind="value: $data.Year, valueUpdate: 'afterkeydown'" maxlength="4" />
+                    </td>
+                    <td>
+                        <select class="form-control input-sm" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                        <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removesport">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary btn-sm" data-bind="click: addsport">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table tile">
+            <thead>
+                <tr>
+                    <th>Bil.</th>
+                    <th>Badan Beruniform/Persatuan</th>
+                    <th>Tahun</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: applicant.KokoSubmitteds">
+                <tr>
+                    <td data-bind="text: $index() + 1">/td>
+                    <td><select class="form-control input-sm" data-bind="options: $root.kokolist, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Id', valueAllowUnset: true, value: $data.SportAssocId"></select></td>
+                    <td class="col-md-2">
+                        <input type="text" class="form-control input-sm " data-bind="value: $data.Year, valueUpdate: 'afterkeydown'" maxlength="4" />
+                        <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removekoko">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <button type="button" class="btn btn-primary btn-sm" data-bind="click: addkoko">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table tile">
+            <thead>
+                <tr>
+                    <th>Bil.</th>
+                    <th>Kebolehan Berbahasa</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: applicant.SkillSubmitteds">
+                <!-- ko if : $index() + 1 < 3 -->
+                <tr>
+                    <td data-bind="text: $index() + 1">/td>
+                    <td>
+                        <input type="text" class="form-control input-sm" data-bind="value: $data.Skill, valueUpdate: 'afterkeydown'" />
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="true" data-bind="iCheckBox: $data.LanguageSkillSpeak" /> Lisan
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="true" data-bind="iCheckBox: $data.LanguageSkillWrite" /> Menulis
+                        </label>
+                    </td>
+                </tr>
+                <!--/ko-->
+                <!-- ko if : $index() + 1 > 2-->
+                <tr>
+                    <td data-bind="text: $index() + 1">/td>
+                    <td>
+                        <select class="form-control input-sm" data-bind="options: $root.skills, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih', valueAllowUnset:true, value: $data.SkillCd"></select>
+                    </td>
+                    <td>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="true" data-bind="iCheckBox: $data.LanguageSkillSpeak" /> Lisan
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="true" data-bind="iCheckBox: $data.LanguageSkillWrite" /> Menulis
+                        </label>
+                    </td>
+                </tr>
+                <!--/ko-->
+                <input type="hidden" data-bind="value: $data.ApplicantSkillId" />
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default tile">
+            <div class="panel-heading">Kemahiran Komputer</div>
+            <div class="panel-body">
+                <form class="form-inline" id="computer_form">
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="checkbox" value="true" data-bind="iCheckBox: applicant.ComputerMSWord" name="ComputerMSWordcb" />MS Word
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="checkbox" value="true" data-bind="iCheckBox: applicant.ComputerMSExcel" name="ComputerMSExcelcb" />MS Excel
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="checkbox" value="true" data-bind="iCheckBox: applicant.ComputerMSPwrPoint" name="ComputerMSPwrPointcb" />MS Power Point
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="checkbox" value="true" data-bind="iCheckBox: applicant.ComputerICT" name="ComputerICTcb" />ICT
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" class="checkbox" value="true" data-bind="iCheckBox: applicant.ComputerOthersInd" />Lain-Lain
+                            </label>
+                            <input type="text" class="form-control input-sm" data-bind="value: applicant.ComputerOthers, valueUpdate: 'afterkeydown'" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table tile">
+            <thead>
+                <tr>
+                    <th>Bil.</th>
+                    <th>Kegiatan-kegiatan lain yang anda ingin kemukakan</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: applicant.OtherSubmitteds">
+                <tr>
+                    <td data-bind="text: $index() + 1">/td>
+                    <td>
+                        <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                        <input type="text" class="form-control input-sm" data-bind="value: $data.Others, valueUpdate: 'afterkeydown'" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
