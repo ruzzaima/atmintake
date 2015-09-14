@@ -98,6 +98,7 @@ new -  to call new at the field init
       </xs:all>
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="NewICNo" type="xs:string" use="required"/>
+      <xs:attribute name="BirthDtString" type="xs:string" use="required"/>
       <xs:attribute name="NoTentera" type="xs:string" use="required"/>
       <xs:attribute name="FullName" type="xs:string" use="required"/>
       <xs:attribute name="MrtlStatusCd" type="xs:string" use="required"/>
@@ -543,6 +544,7 @@ new -  to call new at the field init
       <xs:attribute name="ApplicantId" type="xs:int" use="required"/>
       <xs:attribute name="AcquisitionId" type="xs:int" use="required"/>
       <xs:attribute name="ArmyNo" type="xs:string" use="required"/>
+      <xs:attribute name="NoKawalan" type="xs:string" use="required"/>
       <xs:attribute name="FinalSelectionRemark" type="xs:string" use="required"/>
       <xs:attribute name="SecurityAADKRemark" type="xs:string" use="required"/>
       <xs:attribute name="SecurityBSPPRemark" type="xs:string" use="required"/>

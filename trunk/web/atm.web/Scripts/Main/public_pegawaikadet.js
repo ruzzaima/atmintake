@@ -176,6 +176,128 @@ $(function () {
         });
     }
 
+    function checkFieldBeforeSubmit() {
+        // get birth of date
+        var bdate = $('#birthdatepicker').data('date');
+        viewModel.applicant.BirthDateString(bdate);
+        var splitdate = bdate.split("/");
+        bdate = splitdate[1] + "/" + splitdate[0] + "/" + splitdate[2];
+        viewModel.applicant.BirthDate(bdate);
+
+        if (viewModel.applicant.PalapesInd) {
+            if (viewModel.applicant.PalapesInd()) {
+                var pedt = $('#palapesgraduationdatepicker').data('date');
+                if (pedt !== null && pedt !== undefined) {
+                    var splitdate2 = pedt.split("/");
+                    pedt = splitdate2[1] + "/" + splitdate2[0] + "/" + splitdate2[2];
+                    viewModel.applicant.PalapesTauliahEndDt(pedt);
+                }
+            }
+        }
+
+        if (viewModel.applicant.ScholarshipInd) {
+            if (viewModel.applicant.ScholarshipInd()) {
+                var cedt = $('#contractstartdatepicker').data('date');
+                if (cedt !== null && cedt !== undefined) {
+                    var splitdate3 = cedt.split("/");
+                    cedt = splitdate3[1] + "/" + splitdate3[0] + "/" + splitdate3[2];
+                    viewModel.applicant.ScholarshipContractStDate(cedt);
+                }
+            }
+        }
+
+        if (viewModel.applicant.ArmySelectionInd) {
+            if (viewModel.applicant.ArmySelectionInd()) {
+                var aedt = $('#attendatmofficerdatedatepicker').data('date');
+                if (aedt !== null && aedt !== undefined) {
+                    var splitdate4 = aedt.split("/");
+                    aedt = splitdate4[1] + "/" + splitdate4[0] + "/" + splitdate4[2];
+                    viewModel.applicant.ArmySelectionDt(aedt);
+                }
+            }
+
+        }
+
+        $('input[type=text]').val(function () {
+            return this.value.toUpperCase();
+        });
+
+        if (viewModel.applicant.CurrentSalary) {
+            if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
+                var formated = viewModel.applicant.CurrentSalary();
+                if (formated !== null) {
+                    if (formated.toString().indexOf(',') !== -1) {
+                        formated = formated.replace(',', '');
+                        viewModel.applicant.CurrentSalary(formated);
+                    }
+                }
+            }
+        }
+
+        if (viewModel.applicant.ApplicantEducations().length > 0) {
+            $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
+                if (v.HighEduLevelCd() === '08') {
+                    v.OverSeaInd(viewModel.overseas08());
+                }
+                if (v.HighEduLevelCd() === '20') {
+                    v.OverSeaInd(viewModel.overseas20());
+                }
+            });
+        }
+    }
+
+    function initializeAfterSubmit() {
+        if (viewModel.applicant.ApplicantId) {
+            loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
+        }
+
+        if (viewModel.applicant.BirthDate) {
+            if (viewModel.applicant.BirthDate() !== null) {
+                var splitdate = viewModel.applicant.BirthDate().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+                $('#birthdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        if (viewModel.applicant.PalapesTauliahEndDt) {
+            if (viewModel.applicant.PalapesTauliahEndDt() !== null && viewModel.applicant.PalapesTauliahEndDt() !== '') {
+                var splitdate = viewModel.applicant.PalapesTauliahEndDt().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
+                $('#palapesgraduationdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        if (viewModel.applicant.ScholarshipContractStDate) {
+            if (viewModel.applicant.ScholarshipContractStDate() !== null && viewModel.applicant.ScholarshipContractStDate() !== '') {
+                var splitdate = viewModel.applicant.ScholarshipContractStDate().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
+                $('#contractstartdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        if (viewModel.applicant.ArmySelectionDt) {
+            if (viewModel.applicant.ArmySelectionDt() !== null && viewModel.applicant.ArmySelectionDt() !== '') {
+                var splitdate = viewModel.applicant.ArmySelectionDt().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
+                $('#attendatmofficerdatedatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        $('.eduyear').val(function () {
+            if (this.value === '0') {
+                return '';
+            }
+            else {
+                return this.value;
+
+            }
+        });
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -210,72 +332,8 @@ $(function () {
         overseas20: ko.observable(false),
         saveprofile: function (d) {
             // get birth of date
-            var bdate = $('#birthdatepicker').data('date');
-            var splitdate = bdate.split("/");
-            bdate = splitdate[1] + "/" + splitdate[0] + "/" + splitdate[2];
-            viewModel.applicant.BirthDate(bdate);
 
-            if (viewModel.applicant.PalapesInd) {
-                if (viewModel.applicant.PalapesInd()) {
-                    var pedt = $('#palapesgraduationdatepicker').data('date');
-                    if (pedt !== null && pedt !== undefined) {
-                        var splitdate2 = pedt.split("/");
-                        pedt = splitdate2[1] + "/" + splitdate2[0] + "/" + splitdate2[2];
-                        viewModel.applicant.PalapesTauliahEndDt(pedt);
-                    }
-                }
-            }
-
-            if (viewModel.applicant.ScholarshipInd) {
-                if (viewModel.applicant.ScholarshipInd()) {
-                    var cedt = $('#contractstartdatepicker').data('date');
-                    if (cedt !== null && cedt !== undefined) {
-                        var splitdate3 = cedt.split("/");
-                        cedt = splitdate3[1] + "/" + splitdate3[0] + "/" + splitdate3[2];
-                        viewModel.applicant.ScholarshipContractStDate(cedt);
-                    }
-                }
-            }
-
-            if (viewModel.applicant.ArmySelectionInd) {
-                if (viewModel.applicant.ArmySelectionInd()) {
-                    var aedt = $('#attendatmofficerdatedatepicker').data('date');
-                    if (aedt !== null && aedt !== undefined) {
-                        var splitdate4 = aedt.split("/");
-                        aedt = splitdate4[1] + "/" + splitdate4[0] + "/" + splitdate4[2];
-                        viewModel.applicant.ArmySelectionDt(aedt);
-                    }
-                }
-
-            }
-
-            $('input[type=text]').val(function () {
-                return this.value.toUpperCase();
-            });
-
-            if (viewModel.applicant.CurrentSalary) {
-                if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
-                    var formated = viewModel.applicant.CurrentSalary();
-                    if (formated !== null) {
-                        if (formated.toString().indexOf(',') !== -1) {
-                            formated = formated.replace(',', '');
-                            viewModel.applicant.CurrentSalary(formated);
-                        }
-                    }
-                }
-            }
-
-            if (viewModel.applicant.ApplicantEducations().length > 0) {
-                $.each(viewModel.applicant.ApplicantEducations(), function (n, v) {
-                    if (v.HighEduLevelCd() === '08') {
-                        v.OverSeaInd(viewModel.overseas08());
-                    }
-                    if (v.HighEduLevelCd() === '20') {
-                        v.OverSeaInd(viewModel.overseas20());
-                    }
-                });
-            }
-
+            checkFieldBeforeSubmit();
             checkPengakuan();
             checkSelection();
 
@@ -291,56 +349,7 @@ $(function () {
                         viewModel.applicant.ApplicantId(msg.id);
                         ko.mapping.fromJSON(msg.item, viewModel.applicant);
 
-                        if (viewModel.applicant.ApplicantId) {
-                            loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
-                        }
-
-                        if (viewModel.applicant.BirthDate) {
-                            if (viewModel.applicant.BirthDate() !== null) {
-                                var splitdate = viewModel.applicant.BirthDate().split("-");
-                                var bday = splitdate[2].split("T");
-                                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
-                                $('#birthdatepicker').data("DateTimePicker").date(bdate);
-                            }
-                        }
-
-                        if (viewModel.applicant.PalapesTauliahEndDt) {
-                            if (viewModel.applicant.PalapesTauliahEndDt() !== null && viewModel.applicant.PalapesTauliahEndDt() !== '') {
-                                var splitdate = viewModel.applicant.PalapesTauliahEndDt().split("-");
-                                var bday = splitdate[2].split("T");
-                                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
-                                $('#palapesgraduationdatepicker').data("DateTimePicker").date(bdate);
-                            }
-                        }
-
-                        if (viewModel.applicant.ScholarshipContractStDate) {
-                            if (viewModel.applicant.ScholarshipContractStDate() !== null && viewModel.applicant.ScholarshipContractStDate() !== '') {
-                                var splitdate = viewModel.applicant.ScholarshipContractStDate().split("-");
-                                var bday = splitdate[2].split("T");
-                                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
-                                $('#contractstartdatepicker').data("DateTimePicker").date(bdate);
-                            }
-                        }
-
-                        if (viewModel.applicant.ArmySelectionDt) {
-                            if (viewModel.applicant.ArmySelectionDt() !== null && viewModel.applicant.ArmySelectionDt() !== '') {
-                                var splitdate = viewModel.applicant.ArmySelectionDt().split("-");
-                                var bday = splitdate[2].split("T");
-                                var bdate = splitdate[1] + "/" + bday[0] + "/" + splitdate[0];
-                                $('#attendatmofficerdatedatepicker').data("DateTimePicker").date(bdate);
-                            }
-                        }
-
-                        $('.eduyear').val(function () {
-                            if (this.value === '0') {
-                                return '';
-                            }
-                            else {
-                                return this.value;
-
-                            }
-                        });
-
+                        initializeAfterSubmit();
                         initializeCheckBoxAndRadio();
                         initializeAcademics();
 
@@ -351,6 +360,31 @@ $(function () {
                 error: function (xhr) {
                     hideLoading();
                 }
+            });
+        },
+        saveprofilesilent: function (d) {
+
+            checkFieldBeforeSubmit();
+            checkPengakuan();
+            checkSelection();
+            
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
+                url: server + '/Public/SubmitProfile',
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.OK) {
+                        viewModel.applicant.ApplicantId(msg.id);
+                        ko.mapping.fromJSON(msg.item, viewModel.applicant);
+                        
+                        initializeAfterSubmit();
+                        initializeCheckBoxAndRadio();
+                        initializeAcademics();
+
+                    }
+                },
+                error: function (xhr) { }
             });
         },
         addacademic: function () {
@@ -1437,6 +1471,11 @@ $(function () {
             viewModel.applicant.CurrentSalary(formated);
         }
     }
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href"); // activated tab
+        alert(target);
+    });
 
     initializeAcademics();
     loadCountry();

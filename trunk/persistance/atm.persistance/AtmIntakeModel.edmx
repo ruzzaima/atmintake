@@ -904,6 +904,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblAcqFinalShorlistCriteria' doe
           <Property Name="ReportDutyDate" Type="datetime" />
           <Property Name="ReportDutyLocId" Type="int" />
           <Property Name="FinalServiceCd" Type="char" MaxLength="2" />
+          <Property Name="NoKawalan" Type="varchar" MaxLength="12" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -4278,6 +4279,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <NavigationProperty Name="tblREFReportDutyLoc" Relationship="AtmIntakeModel.FK_tblApplication_tblREFReportDutyLoc" FromRole="tblApplication" ToRole="tblREFReportDutyLoc" />
           <NavigationProperty Name="tblApplicationStatus" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" FromRole="tblApplication" ToRole="tblApplicationStatu" />
           <Property Name="FinalServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="NoKawalan" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblAppQuestionFeedback">
           <Key>
@@ -7674,6 +7676,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySetMapping Name="tblApplications">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblApplication">
               <MappingFragment StoreEntitySet="tblApplication">
+                <ScalarProperty Name="NoKawalan" ColumnName="NoKawalan" />
                 <ScalarProperty Name="FinalServiceCd" ColumnName="FinalServiceCd" />
                 <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
                 <ScalarProperty Name="ReportDutyDate" ColumnName="ReportDutyDate" />

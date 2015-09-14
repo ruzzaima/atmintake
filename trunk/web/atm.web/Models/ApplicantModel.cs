@@ -541,6 +541,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
                 if (yearint > 10) yearint = 1900 + yearint;
                 var bdate = new DateTime(yearint, Convert.ToInt16(monthstr), Convert.ToInt16(daystr));
                 BirthDate = bdate;
+                BirthDateString = string.Format("{0:dd/MM/yyyy}", bdate);
                 DateTime zeroTime = DateTime.Now;
                 var daterange = DateTime.Now - bdate;
                 int years = (zeroTime + daterange).Year - 1;
@@ -864,6 +865,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
         public bool MomNotApplicable { get; set; }
         public bool DadNotApplicable { get; set; }
         public bool GuardianNotApplicable { get; set; }
+        public string BirthDateString { get; set; }
 
 
         private List<ApplicantEducation> m_applicantEducationCollection = new List<ApplicantEducation>();

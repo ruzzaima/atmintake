@@ -701,6 +701,24 @@ namespace SevenH.MMCSB.Atm.Web
         {
             if (null != applicant)
             {
+                if (!string.IsNullOrWhiteSpace(applicant.BirthDateString))
+                {
+                    var splidate = applicant.BirthDateString.Split('/');
+                    var dd = splidate[0];
+                    var mm = splidate[1];
+                    var yy = splidate[2];
+
+                    int ddi = 0;
+                    int mmi = 0;
+                    int yyi = 0;
+
+                    int.TryParse(dd, out ddi);
+                    int.TryParse(mm, out mmi);
+                    int.TryParse(yy, out yyi);
+
+                    applicant.BirthDate = new DateTime(yyi, mmi, ddi);
+                }
+
                 var app = new Applicant()
                 {
                     ApplicantId = applicant.ApplicantId,
@@ -1010,7 +1028,7 @@ namespace SevenH.MMCSB.Atm.Web
                     ApplicantSubmitted firstOrDefault = applicantSubmitteds.FirstOrDefault();
                     if (firstOrDefault != null)
                     {
-                        sb.Append("<div class=\"row\">");
+                        sb.Append("<div class=\"row p-10\">");
                         sb.Append(string.Format("<b>{0} {1}</b>", firstOrDefault.NewICNo, firstOrDefault.FullName));
                         sb.Append("</div>");
                     }
@@ -1060,12 +1078,13 @@ namespace SevenH.MMCSB.Atm.Web
                                         if (app.FirstSelectionInd.Value)
                                         {
                                             if (acq.AcquisitionType.ServiceCd == "10")
-                                                sb.Append("Tahniah, " + appname + " layak untuk menghadiri temuduga pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + ".");
+                                                sb.Append("Tahniah, " + appname + " layak untuk menghadiri pemilihan akhir " + acq.AcquisitionType.AcquisitionTypeNm + ".");
                                             else
-                                                sb.Append("Tahniah, " + appname + " layak untuk menghadiri temuduga pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
+                                                sb.Append("Tahniah, " + appname + " layak untuk menghadiri pemilihan akhir " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
 
                                             sb.Append("<br/>Butiran adalah seperti berikut:");
                                             sb.Append("<p>");
+                                            sb.Append("<br/><b>No Kawalan Saudara/i </b> : " + (!string.IsNullOrWhiteSpace(app.NoKawalan) ? app.NoKawalan : "Tiada Rekod"));
                                             sb.Append("<br/><b>Pusat Pemilihan </b> : " + (app.FinalSelectionLocation != null ? app.FinalSelectionLocation.Location.LocationNm : "Tiada Rekod"));
                                             sb.Append("<br/><b>Tarikh </b>: " + string.Format("{0:dd MMM yyyy}", app.FinalSelectionStartDate) + " - " + string.Format("{0:dd MMM yyyy}", app.FinalSelectionEndDate));
                                             sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FinalSelectionStartDate));
