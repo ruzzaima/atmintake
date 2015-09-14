@@ -46,6 +46,56 @@ $(function () {
         });
     }
 
+    function checkBeforeSubmit() {
+        // get birth of date
+        var bdate = $('#birthdatepicker').data('date');
+        viewModel.applicant.BirthDateString(bdate);
+        var splitdate = bdate.split("/");
+        bdate = splitdate[1] + "/" + splitdate[0] + "/" + splitdate[2];
+        viewModel.applicant.BirthDate(bdate);
+
+        $('input[type=text]').val(function () {
+            return this.value.toUpperCase();
+        });
+
+        if (viewModel.applicant.CurrentSalary) {
+            if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
+                var formated = viewModel.applicant.CurrentSalary();
+                if (formated !== null) {
+                    if (formated.toString().indexOf(',') !== -1) {
+                        formated = formated.replace(',', '');
+                        viewModel.applicant.CurrentSalary(formated);
+                    }
+                }
+            }
+        }
+    }
+
+    function initializeAfterSubmit() {
+        if (viewModel.applicant.ApplicantId) {
+            loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
+        }
+
+        if (viewModel.applicant.BirthDate) {
+            if (viewModel.applicant.BirthDate() !== null) {
+                var splitdate = viewModel.applicant.BirthDate().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+                $('#birthdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        $('.eduyear').val(function () {
+            if (this.value === '0') {
+                return '';
+            }
+            else {
+                return this.value;
+
+            }
+        });
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -79,28 +129,8 @@ $(function () {
         locations: ko.observableArray([]),
         ischecked: ko.observable(false),
         saveprofile: function (d) {
-            // get birth of date
-            var bdate = $('#birthdatepicker').data('date');
-            var splitdate = bdate.split("/");
-            bdate = splitdate[1] + "/" + splitdate[0] + "/" + splitdate[2];
-            viewModel.applicant.BirthDate(bdate);
 
-            $('input[type=text]').val(function () {
-                return this.value.toUpperCase();
-            });
-
-            if (viewModel.applicant.CurrentSalary) {
-                if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
-                    var formated = viewModel.applicant.CurrentSalary();
-                    if (formated !== null) {
-                        if (formated.toString().indexOf(',') !== -1) {
-                            formated = formated.replace(',', '');
-                            viewModel.applicant.CurrentSalary(formated);
-                        }
-                    }
-                }
-            }
-
+            checkBeforeSubmit();
             checkPengakuan();
             showLoading();
 
@@ -113,29 +143,7 @@ $(function () {
                     if (msg.OK) {
                         viewModel.applicant.ApplicantId(msg.id);
                         ko.mapping.fromJSON(msg.item, viewModel.applicant);
-
-                        if (viewModel.applicant.ApplicantId) {
-                            loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
-                        }
-
-                        if (viewModel.applicant.BirthDate) {
-                            if (viewModel.applicant.BirthDate() !== null) {
-                                var splitdate = viewModel.applicant.BirthDate().split("-");
-                                var bday = splitdate[2].split("T");
-                                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
-                                $('#birthdatepicker').data("DateTimePicker").date(bdate);
-                            }
-                        }
-
-                        $('.eduyear').val(function () {
-                            if (this.value === '0') {
-                                return '';
-                            }
-                            else {
-                                return this.value;
-
-                            }
-                        });
+                        initializeAfterSubmit();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -143,6 +151,26 @@ $(function () {
                 error: function (xhr) {
                     hideLoading();
                 }
+            });
+        },
+        saveprofilesilent: function (d) {
+
+            checkBeforeSubmit();
+            checkPengakuan();
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify({ applicant: ko.mapping.toJS(viewModel.applicant), acquisitionid: acquisitionid }),
+                url: server + '/Public/SubmitProfile',
+                contentType: "application/json; charset=utf-8",
+                success: function (msg) {
+                    if (msg.OK) {
+                        viewModel.applicant.ApplicantId(msg.id);
+                        ko.mapping.fromJSON(msg.item, viewModel.applicant);
+                        initializeAfterSubmit();
+                    }
+                },
+                error: function (xhr) { }
             });
         },
         addacademic: function () {
@@ -270,10 +298,6 @@ $(function () {
             } else {
                 $("#form_peribadi").validationEngine();
             }
-        },
-        g: function (d) {
-            viewModel.saveprofile();
-            $('#resume a[href="#sport"]').tab('show');
         },
         saveskill: function (d) {
             viewModel.saveprofile();
@@ -742,7 +766,7 @@ $(function () {
             }
         });
     }
-    
+
     // cronic_illness
     $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function (event) {
         var selectedval = this.value;
@@ -901,6 +925,10 @@ $(function () {
             viewModel.applicant.CurrentSalary(formated);
         }
     }
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        viewModel.saveprofilesilent();
+    });
 
     loadCountry();
     loadReligions();

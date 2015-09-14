@@ -114,6 +114,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         exist.SuppDocumentReview = application.SuppDocumentReview;
                         exist.Urine = application.Urine;
                         exist.WrittenTest = application.WrittenTest;
+                        exist.NoKawalan = application.NoKawalan;
 
                         entities.SaveChanges();
                         return exist.AppId;
@@ -189,7 +190,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 ReportDutyDate = exist.ReportDutyDate,
                 FinalSelectionEndDate = exist.FinalSelectionEndDate,
                 FinalSelectionStartDate = exist.FinalSelectionStartDate,
-                FinalSelActualAcqLocationId = exist.FinalSelActualAcqLocationId
+                FinalSelActualAcqLocationId = exist.FinalSelActualAcqLocationId,
+                NoKawalan = exist.NoKawalan
             };
 
             if (exist.AcquisitionId.HasValue)

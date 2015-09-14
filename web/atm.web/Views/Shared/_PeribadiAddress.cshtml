@@ -49,13 +49,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="homephoneno" class="control-label">No. Tel Rumah</label>
-                            <input type="text" class="form-control input-sm" id="homephoneno" data-bind="value: applicant.HomePhoneNo, valueUpdate: 'afterkeydown'">
+                            <input type="text" class="form-control input-sm" id="homephoneno" data-bind="value: applicant.HomePhoneNo, valueUpdate: 'afterkeydown'" maxlength="15">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobilephoneno" class="control-label">No Tel Bimbit<span class="red">*</span></label>
-                            <input type="text" class="form-control input-sm validate[required]" id="mobilephoneno" data-bind="value: applicant.MobilePhoneNo, valueUpdate: 'afterkeydown'">
+                            <input type="text" class="form-control input-sm validate[required]" id="mobilephoneno" data-bind="value: applicant.MobilePhoneNo, valueUpdate: 'afterkeydown'" maxlength="15">
                         </div>
                     </div>
                 </div>
