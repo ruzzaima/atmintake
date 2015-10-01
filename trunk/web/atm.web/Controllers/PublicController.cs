@@ -1061,14 +1061,14 @@ namespace SevenH.MMCSB.Atm.Web
                                         sb.Append("<br/><b>Tarikh </b>: " + string.Format("{0:dd MMM yyyy}", app.ReportDutyDate));
                                         sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.ReportDutyDate));
                                         sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.ReportDutySupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa lapor diri</u></a>");
-                                        sb.Append("</p>");
+                                        sb.Append("</p><hr/><br/>");
                                     }
                                     else
                                     {
                                         if (acq.AcquisitionType.ServiceCd == "10")
-                                            sb.Append("Dukacita dimaklumkan, " + appname + " tidak terpilih sebagai " + acq.AcquisitionType.AcquisitionTypeNm + ".");
+                                            sb.Append("<p>Dukacita dimaklumkan, " + appname + " tidak terpilih sebagai " + acq.AcquisitionType.AcquisitionTypeNm + ".</p><hr/><br/>");
                                         else
-                                            sb.Append("Dukacita dimaklumkan, " + appname + " tidak terpilih sebagai " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
+                                            sb.Append("<p>Dukacita dimaklumkan, " + appname + " tidak terpilih sebagai " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".</p><hr/><br/>");
                                     }
                                 }
                                 else
@@ -1088,15 +1088,17 @@ namespace SevenH.MMCSB.Atm.Web
                                             sb.Append("<br/><b>Pusat Pemilihan </b> : " + (app.FinalSelectionLocation != null ? app.FinalSelectionLocation.Location.LocationNm : "Tiada Rekod"));
                                             sb.Append("<br/><b>Tarikh </b>: " + string.Format("{0:dd MMM yyyy}", app.FinalSelectionStartDate) + " - " + string.Format("{0:dd MMM yyyy}", app.FinalSelectionEndDate));
                                             sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FinalSelectionStartDate));
+                                            if (app.FinalSelectionEndDate.HasValue)
+                                                sb.Append(" - " + string.Format("{0:hh:mm tt}", app.FinalSelectionEndDate));
                                             sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FinalSupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
-                                            sb.Append("</p>");
+                                            sb.Append("</p><hr/><br/>");
                                         }
                                         else
                                         {
                                             if (acq.AcquisitionType.ServiceCd == "10")
-                                                sb.Append("Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri temuduga pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + ".");
+                                                sb.Append("<p>Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri temuduga pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + ".</p><hr/><br/>");
                                             else
-                                                sb.Append("Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri temuduga pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
+                                                sb.Append("<p>Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri temuduga pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".</p><hr/><br/>");
                                         }
                                     }
                                     else
@@ -1106,32 +1108,34 @@ namespace SevenH.MMCSB.Atm.Web
                                             if (app.InvitationFirstSel.Value)
                                             {
                                                 if (acq.AcquisitionType.ServiceCd == "10")
-                                                    sb.Append("Tahniah, " + appname + " layak untuk menghadiri pemilihan awal " + acq.AcquisitionType.AcquisitionTypeNm + ".");
+                                                    sb.Append("Tahniah, " + appname + " layak untuk menghadiri pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + ".");
                                                 else
-                                                    sb.Append("Tahniah, " + appname + " layak untuk menghadiri pemilihan awal " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
+                                                    sb.Append("Tahniah, " + appname + " layak untuk menghadiri pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
 
-                                                sb.Append("<br/>Sila hadir ke pusat pemilihan berikut:");
+                                                sb.Append("<br/>Butiran adalah seperti berikut:");
                                                 sb.Append("<p>");
-                                                sb.Append("<ul>");
-                                                if (acq.AcquisitionLocationCollection != null && acq.AcquisitionLocationCollection.Any())
-                                                {
-                                                    foreach (var loc in acq.AcquisitionLocationCollection)
-                                                        sb.Append("<li>" + loc.Location.LocationNm + "</li>");
-                                                }
-                                                sb.Append("</ul>");
-                                                sb.Append("<p>");
+                                                sb.Append("<br/><b>Pusat Pemilihan </b> : " + (app.FirstSelActualAcqLocationId != null ? app.FirstSelectionLocation.Location.LocationNm : "Tiada Rekod"));
+                                                sb.Append("<br/><b>Tarikh </b>: " + string.Format("{0:dd MMM yyyy}", app.FirstSelectionDate));
+                                                if (app.FirstSelectionEndDate.HasValue)
+                                                    sb.Append(" - " + string.Format("{0:dd MMM yyyy}", app.FirstSelectionEndDate));
+                                                sb.Append("<br/><b>Masa </b>: 8:00 AM - 12:00 PM");
+                                                //sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FirstSelectionDate));
+                                                //if (app.FirstSelectionEndDate.HasValue)
+                                                //    sb.Append(" - " + string.Format("{0:hh:mm tt}", app.FirstSelectionEndDate));
+                                                sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FirstSupportingDocument), false) + "','firstsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
+                                                sb.Append("</p><hr/><br/>");
                                             }
                                             else
                                             {
                                                 if (acq.AcquisitionType.ServiceCd == "10")
-                                                    sb.Append("Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri pemilihan awal" + acq.AcquisitionType.AcquisitionTypeNm + ".");
+                                                    sb.Append("<p>Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + ".</p><hr/><br/>");
                                                 else
-                                                    sb.Append("Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri pemilihan awal " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".");
+                                                    sb.Append("<p>Dukacita dimaklumkan, " + appname + " tidak layak untuk menghadiri pemilihan " + acq.AcquisitionType.AcquisitionTypeNm + " " + acq.Siri + "/" + acq.Year + ".</p><hr/><br/>");
                                             }
                                         }
                                         else
                                         {
-                                            sb.Append("Permohonan anda sedang diproses.");
+                                            sb.Append("<p>Permohonan " + acq.AcquisitionType.AcquisitionTypeNm + " anda sedang diproses. </p><hr/><br/>");
                                         }
                                     }
                                 }

@@ -8,6 +8,7 @@
         public virtual Acquisition Acquisition { get; set; }
         public virtual Location ReportDutyLocation { get; set; }
         public virtual AcquisitionLocation FinalSelectionLocation { get; set; }
+        public virtual AcquisitionLocation FirstSelectionLocation { get; set; }
 
         public virtual int Save()
         {

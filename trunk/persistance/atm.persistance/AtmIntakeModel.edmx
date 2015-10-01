@@ -288,6 +288,8 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblAcqFinalShorlistCriteria' doe
           <Property Name="ReportDutySupportingDocument" Type="varchar" MaxLength="255" />
           <Property Name="FinalSupportingDocumentOriginal" Type="varchar" MaxLength="255" />
           <Property Name="ReportDutySupportingDocumentOriginal" Type="varchar" MaxLength="255" />
+          <Property Name="FirstSupportingDocument" Type="varchar" MaxLength="255" />
+          <Property Name="FirstSupportingDocumentOriginal" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="tblAdvertisment">
           <Key>
@@ -905,6 +907,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblAcqFinalShorlistCriteria' doe
           <Property Name="ReportDutyLocId" Type="int" />
           <Property Name="FinalServiceCd" Type="char" MaxLength="2" />
           <Property Name="NoKawalan" Type="varchar" MaxLength="12" />
+          <Property Name="FirstSelectionEndDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblApplicationStatus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -4280,6 +4283,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <NavigationProperty Name="tblApplicationStatus" Relationship="AtmIntakeModel.FK_tblApplicationStatus_tblApplication" FromRole="tblApplication" ToRole="tblApplicationStatu" />
           <Property Name="FinalServiceCd" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="NoKawalan" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="FirstSelectionEndDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblAppQuestionFeedback">
           <Key>
@@ -6592,6 +6596,8 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <NavigationProperty Name="tblAcqFinalShorlistCriterias" Relationship="AtmIntakeModel.FK_tblAcqFinalShorlistCriteria_tblAcquisition" FromRole="tblAcquisition" ToRole="tblAcqFinalShorlistCriteria" />
           <Property Name="FinalSupportingDocumentOriginal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="ReportDutySupportingDocumentOriginal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FirstSupportingDocument" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FirstSupportingDocumentOriginal" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblREFAcqType">
           <Key>
@@ -7676,6 +7682,7 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySetMapping Name="tblApplications">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblApplication">
               <MappingFragment StoreEntitySet="tblApplication">
+                <ScalarProperty Name="FirstSelectionEndDate" ColumnName="FirstSelectionEndDate" />
                 <ScalarProperty Name="NoKawalan" ColumnName="NoKawalan" />
                 <ScalarProperty Name="FinalServiceCd" ColumnName="FinalServiceCd" />
                 <ScalarProperty Name="ReportDutyLocId" ColumnName="ReportDutyLocId" />
@@ -8152,6 +8159,8 @@ warning 6002: The table/view 'DBHRMISINTAKE.dbo.tblREFQuestionnareType' does not
           <EntitySetMapping Name="tblAcquisitions">
             <EntityTypeMapping TypeName="AtmIntakeModel.tblAcquisition">
               <MappingFragment StoreEntitySet="tblAcquisition">
+                <ScalarProperty Name="FirstSupportingDocumentOriginal" ColumnName="FirstSupportingDocumentOriginal" />
+                <ScalarProperty Name="FirstSupportingDocument" ColumnName="FirstSupportingDocument" />
                 <ScalarProperty Name="ReportDutySupportingDocumentOriginal" ColumnName="ReportDutySupportingDocumentOriginal" />
                 <ScalarProperty Name="FinalSupportingDocumentOriginal" ColumnName="FinalSupportingDocumentOriginal" />
                 <ScalarProperty Name="ReportDutySupportingDocument" ColumnName="ReportDutySupportingDocument" />

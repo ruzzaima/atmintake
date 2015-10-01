@@ -10294,6 +10294,10 @@ namespace SevenH.MMCSB.Atm.Domain
         public const string PropertyNameSecurityPDRMRemark = "SecurityPDRMRemark";
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string m_FinalServiceCd;
+        public const string PropertyNameFinalServiceCd = "FinalServiceCd";
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string m_CreatedBy;
         public const string PropertyNameCreatedBy = "CreatedBy";
 
@@ -10315,6 +10319,11 @@ namespace SevenH.MMCSB.Atm.Domain
 
         private DateTime? m_ReportDutyDate;
         public const string PropertyNameReportDutyDate = "ReportDutyDate";
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+
+        private DateTime? m_FirstSelectionEndDate;
+        public const string PropertyNameFirstSelectionEndDate = "FirstSelectionEndDate";
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
@@ -10791,6 +10800,31 @@ namespace SevenH.MMCSB.Atm.Domain
         [XmlAttribute]
         [DebuggerHidden]
 
+        public virtual string FinalServiceCd
+        {
+            set
+            {
+                if (String.Equals(m_FinalServiceCd, value, StringComparison.Ordinal)) return;
+                var arg = new PropertyChangingEventArgs(PropertyNameFinalServiceCd, value);
+                OnPropertyChanging(arg);
+                if (!arg.Cancel)
+                {
+                    m_FinalServiceCd = value;
+                    OnPropertyChanged(PropertyNameFinalServiceCd);
+                }
+            }
+            get
+            {
+                return m_FinalServiceCd;
+            }
+        }
+
+        ///<summary>
+        /// 
+        ///</summary>
+        [XmlAttribute]
+        [DebuggerHidden]
+
         public virtual string CreatedBy
         {
             set
@@ -10899,6 +10933,28 @@ namespace SevenH.MMCSB.Atm.Domain
                 }
             }
             get { return m_ReportDutyDate; }
+        }
+
+
+        ///<summary>
+        /// 
+        ///</summary>
+        [DebuggerHidden]
+
+        public virtual DateTime? FirstSelectionEndDate
+        {
+            set
+            {
+                if (m_FirstSelectionEndDate == value) return;
+                var arg = new PropertyChangingEventArgs(PropertyNameFirstSelectionEndDate, value);
+                OnPropertyChanging(arg);
+                if (!arg.Cancel)
+                {
+                    m_FirstSelectionEndDate = value;
+                    OnPropertyChanged(PropertyNameFirstSelectionEndDate);
+                }
+            }
+            get { return m_FirstSelectionEndDate; }
         }
 
 
@@ -12492,6 +12548,14 @@ namespace SevenH.MMCSB.Atm.Domain
         public const string PropertyNameReportDutySupportingDocumentOriginal = "ReportDutySupportingDocumentOriginal";
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string m_FirstSupportingDocument;
+        public const string PropertyNameFirstSupportingDocument = "FirstSupportingDocument";
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private string m_FirstSupportingDocumentOriginal;
+        public const string PropertyNameFirstSupportingDocumentOriginal = "FirstSupportingDocumentOriginal";
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
 
         private DateTime? m_CreatedDt;
         public const string PropertyNameCreatedDt = "CreatedDt";
@@ -13218,6 +13282,56 @@ namespace SevenH.MMCSB.Atm.Domain
             get
             {
                 return m_ReportDutySupportingDocumentOriginal;
+            }
+        }
+
+        ///<summary>
+        /// 
+        ///</summary>
+        [XmlAttribute]
+        [DebuggerHidden]
+
+        public virtual string FirstSupportingDocument
+        {
+            set
+            {
+                if (String.Equals(m_FirstSupportingDocument, value, StringComparison.Ordinal)) return;
+                var arg = new PropertyChangingEventArgs(PropertyNameFirstSupportingDocument, value);
+                OnPropertyChanging(arg);
+                if (!arg.Cancel)
+                {
+                    m_FirstSupportingDocument = value;
+                    OnPropertyChanged(PropertyNameFirstSupportingDocument);
+                }
+            }
+            get
+            {
+                return m_FirstSupportingDocument;
+            }
+        }
+
+        ///<summary>
+        /// 
+        ///</summary>
+        [XmlAttribute]
+        [DebuggerHidden]
+
+        public virtual string FirstSupportingDocumentOriginal
+        {
+            set
+            {
+                if (String.Equals(m_FirstSupportingDocumentOriginal, value, StringComparison.Ordinal)) return;
+                var arg = new PropertyChangingEventArgs(PropertyNameFirstSupportingDocumentOriginal, value);
+                OnPropertyChanging(arg);
+                if (!arg.Cancel)
+                {
+                    m_FirstSupportingDocumentOriginal = value;
+                    OnPropertyChanged(PropertyNameFirstSupportingDocumentOriginal);
+                }
+            }
+            get
+            {
+                return m_FirstSupportingDocumentOriginal;
             }
         }
 
