@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Helpers;
 using log4net.Appender;
@@ -367,12 +368,35 @@ namespace SevenH.MMCSB.Atm.Web
 
             // educations
             var totaledu = 0.0;
+            var totaledus = 3;
             var edus = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetEducation(applicantid);
             if (null != edus)
             {
-                totaledu = edus.Where(ed => ed.HighEduLevelCd == "14").Aggregate(totaledu, (current1, ed) => ed.ApplicantEduSubjectCollection.Take(3).Where(s => !string.IsNullOrWhiteSpace(s.GradeCd)).Aggregate(current1, (current, s) => current + 1));
+                var applicantEducations = edus as ApplicantEducation[] ?? edus.ToArray();
+                totaledu = applicantEducations.Where(ed => ed.HighEduLevelCd == "14").Aggregate(totaledu, (current1, ed) => ed.ApplicantEduSubjectCollection.Take(3).Where(s => !string.IsNullOrWhiteSpace(s.GradeCd)).Aggregate(current1, (current, s) => current + 1));
+
+                if (acq.AcquisitionType != null)
+                {
+                    // if pegawai.. check for sarjana muda
+                    if (acq.AcquisitionType.ServiceCd == "10")
+                    {
+                        totaledus = totaledus + 1;
+                        var sarjana = applicantEducations.SingleOrDefault(a => a.HighEduLevelCd == "08");
+                        if (null != sarjana)
+                        {
+                            if (!string.IsNullOrWhiteSpace(sarjana.OverallGrade))
+                            {
+                                // parse the value as decimal
+                                decimal pointer = 0.0m;
+                                decimal.TryParse(sarjana.OverallGrade,out pointer);
+                                if (pointer >= (decimal) 2.7)
+                                    totaledu = totaledu + 1;
+                            }
+                        }
+                    }
+                }
             }
-            edupoint = Convert.ToDecimal((totaledu / 3) * 100);
+            edupoint = Convert.ToDecimal((totaledu / totaledus) * 100);
 
             var totalsponsor = 0;
             var totalselected = 0.0;

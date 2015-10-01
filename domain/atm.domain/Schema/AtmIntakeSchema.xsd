@@ -507,6 +507,7 @@ new -  to call new at the field init
         <xs:element name="CreatedDt" type="xs:date" nillable="true"/>
         <xs:element name="LastModifiedDt" type="xs:date" nillable="true"/>
         <xs:element name="ReportDutyDate" type="xs:date" nillable="true"/>
+        <xs:element name="FirstSelectionEndDate" type="xs:date" nillable="true"/>
         <xs:element name="FinalSelectionStartDate" type="xs:date" nillable="true"/>
         <xs:element name="FinalSelectionEndDate" type="xs:date" nillable="true"/>
         <xs:element name="FirstSelectionInd" type="xs:boolean" nillable="true"/>
@@ -551,6 +552,8 @@ new -  to call new at the field init
       <xs:attribute name="SecurityJPNRemark" type="xs:string" use="required"/>
       <xs:attribute name="SecurityKPMRemark" type="xs:string" use="required"/>
       <xs:attribute name="SecurityPDRMRemark" type="xs:string" use="required"/>
+      <xs:attribute name="FinalServiceCd" type="xs:string" use="required"/>
+      
       <xs:attribute name="CreatedBy" type="xs:string" use="required"/>
       <xs:attribute name="LastModifiedBy" type="xs:string" use="required"/>
     </xs:complexType>
@@ -665,6 +668,9 @@ new -  to call new at the field init
       <xs:attribute name="ReportDutySupportingDocument" type="xs:string" use="required"/>
       <xs:attribute name="FinalSupportingDocumentOriginal" type="xs:string" use="required"/>
       <xs:attribute name="ReportDutySupportingDocumentOriginal" type="xs:string" use="required"/>
+      <xs:attribute name="FirstSupportingDocument" type="xs:string" use="required"/>
+      <xs:attribute name="FirstSupportingDocumentOriginal" type="xs:string" use="required"/>
+      
     </xs:complexType>
   </xs:element>
   <xs:element name="AcquisitionCriteria">

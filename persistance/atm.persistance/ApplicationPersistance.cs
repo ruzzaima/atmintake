@@ -60,7 +60,16 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     SelectionCenterId = application.SelectionCenterId,
                     SuppDocumentReview = application.SuppDocumentReview,
                     Urine = application.Urine,
-                    WrittenTest = application.WrittenTest
+                    WrittenTest = application.WrittenTest,
+                    FinalSelActualAcqLocationId = application.FinalSelActualAcqLocationId,
+                    FinalSelectionEndDate = application.FinalSelectionEndDate,
+                    FinalSelectionStartDate = application.FinalSelectionStartDate,
+                    FinalServiceCd = application.FinalServiceCd,
+                    FirstSelectionEndDate = application.FirstSelectionEndDate,
+                    NoKawalan = application.NoKawalan,
+                    ReportDutyDate = application.ReportDutyDate,
+                    ReportDutyLocId = application.ReportDutyLocId,
+
                 };
                 entities.tblApplications.Add(app);
                 if (entities.SaveChanges() > 0) return app.AppId;
@@ -115,6 +124,13 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                         exist.Urine = application.Urine;
                         exist.WrittenTest = application.WrittenTest;
                         exist.NoKawalan = application.NoKawalan;
+                        exist.FinalSelActualAcqLocationId = application.FinalSelActualAcqLocationId;
+                        exist.FinalSelectionEndDate = application.FinalSelectionEndDate;
+                        exist.FinalSelectionStartDate = application.FinalSelectionStartDate;
+                        exist.FinalServiceCd = application.FinalServiceCd;
+                        exist.FirstSelectionEndDate = application.FirstSelectionEndDate;
+                        exist.ReportDutyDate = application.ReportDutyDate;
+                        exist.ReportDutyLocId = application.ReportDutyLocId;
 
                         entities.SaveChanges();
                         return exist.AppId;
@@ -191,7 +207,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 FinalSelectionEndDate = exist.FinalSelectionEndDate,
                 FinalSelectionStartDate = exist.FinalSelectionStartDate,
                 FinalSelActualAcqLocationId = exist.FinalSelActualAcqLocationId,
-                NoKawalan = exist.NoKawalan
+                NoKawalan = exist.NoKawalan,
+                FinalServiceCd = exist.FinalServiceCd,
+                FirstSelectionEndDate = exist.FirstSelectionEndDate,
             };
 
             if (exist.AcquisitionId.HasValue)
@@ -214,6 +232,9 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
             if (exist.FinalSelActualAcqLocationId.HasValue)
                 app.FinalSelectionLocation = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetLocation(exist.FinalSelActualAcqLocationId.Value);
+
+            if (exist.FirstSelActualAcqLocationId.HasValue)
+                app.FirstSelectionLocation = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetLocation(exist.FirstSelActualAcqLocationId.Value);
 
             return app;
         }

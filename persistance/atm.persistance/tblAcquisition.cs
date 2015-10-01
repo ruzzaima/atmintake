@@ -77,6 +77,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public string ReportDutySupportingDocument { get; set; }
         public string FinalSupportingDocumentOriginal { get; set; }
         public string ReportDutySupportingDocumentOriginal { get; set; }
+        public string FirstSupportingDocument { get; set; }
+        public string FirstSupportingDocumentOriginal { get; set; }
     
         public virtual ICollection<tblAcqAnnouncement> tblAcqAnnouncements { get; set; }
         public virtual ICollection<tblAcqCriteria> tblAcqCriterias { get; set; }

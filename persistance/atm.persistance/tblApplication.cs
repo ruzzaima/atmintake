@@ -75,6 +75,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         public Nullable<int> ReportDutyLocId { get; set; }
         public string FinalServiceCd { get; set; }
         public string NoKawalan { get; set; }
+        public Nullable<System.DateTime> FirstSelectionEndDate { get; set; }
     
         public virtual tblAcqLocation tblAcqLocation { get; set; }
         public virtual tblAcqLocation tblAcqLocation1 { get; set; }

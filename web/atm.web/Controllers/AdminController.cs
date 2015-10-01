@@ -1017,26 +1017,26 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return Json(new { OK = false, message = "Tidak Berjaya" });
         }
 
-        public ActionResult LoadSubmittedApplicant(JQueryDataTableParamModel param, string category, int acquisitionid, string statecode, string citycode, bool? firstselection, bool? finalselection, int? finalselectionlocid, int? reportdutylocid)
+        public ActionResult LoadSubmittedApplicant(JQueryDataTableParamModel param, string category, int acquisitionid, string statecode, string citycode, bool? invitationselection, bool? firstselection, bool? finalselection, int? invitationlocid, int? finalselectionlocid, int? reportdutylocid)
         {
             var applicants = new List<ApplicantSubmitted>();
             var total = 0;
             if (string.IsNullOrWhiteSpace(category))
-                applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, finalselectionlocid, reportdutylocid, statecode, citycode, null, out total));
+                applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, invitationselection, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, finalselectionlocid, reportdutylocid, statecode, citycode, null, out total));
             else
             {
                 if (category == "11")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, null, statecode, citycode, null, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, invitationselection, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, null, statecode, citycode, null, out total));
                 if (category == "12")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, 0, null, statecode, citycode, null, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, invitationselection, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, 0, null, statecode, citycode, null, out total));
                 if (category == "13")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, finalselectionlocid, reportdutylocid, statecode, citycode, null, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, invitationselection, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, finalselectionlocid, reportdutylocid, statecode, citycode, null, out total));
                 if (category == "14")
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, 0, statecode, citycode, null, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, invitationselection, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, 0, statecode, citycode, null, out total));
                 if (category == "15")
                 {
                     reportdutylocid = reportdutylocid.HasValue ? reportdutylocid : 0;
-                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, null, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, reportdutylocid, statecode, citycode, null, out total));
+                    applicants.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").Search(acquisitionid, param.sSearch, invitationselection, firstselection, finalselection, param.iDisplayLength, param.iDisplayStart, null, reportdutylocid, statecode, citycode, null, out total));
                 }
             }
             var applicantSubmitteds = new List<ApplicantSubmitted>();

@@ -298,6 +298,633 @@ $(function () {
         });
     }
 
+    function initializeCurrentCheck() {
+        // bercermin mata
+        $('input[name="spectacle"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.SpectaclesUserInd(true);
+            } else {
+                viewModel.applicant.SpectaclesUserInd(false);
+            }
+        });
+
+        $('input[name="spectacle"]').each(function() {
+            if (viewModel.applicant.SpectaclesUserInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // buta warna
+        $('input[name="colorblind"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ColorBlindInd(true);
+            } else {
+                viewModel.applicant.ColorBlindInd(false);
+            }
+        });
+
+        $('input[name="colorblind"]').each(function() {
+            if (viewModel.applicant.ColorBlindInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_exatm
+        $('input[name="servicetab_exatm"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ArmyServiceInd(true);
+            } else {
+                viewModel.applicant.ArmyServiceInd(false);
+            }
+        });
+
+        $('input[name="servicetab_exatm"]').each(function() {
+            if (viewModel.applicant.ArmyServiceInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // palapes
+        $('input[name="servicetab_ispalapes"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.PalapesInd(true);
+            } else {
+                viewModel.applicant.PalapesInd(false);
+            }
+        });
+
+        $('input[name="servicetab_ispalapes"]').each(function() {
+            if (viewModel.applicant.PalapesInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_scholarship
+        $('input[name="servicetab_scholarship"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ScholarshipInd(true);
+            } else {
+                viewModel.applicant.ScholarshipInd(false);
+            }
+        });
+
+        $('input[name="servicetab_scholarship"]').each(function() {
+            if (viewModel.applicant.ScholarshipInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_employeraggrement
+        $('input[name="servicetab_employeraggrement"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.EmployeeAggreeInd(true);
+            } else {
+                viewModel.applicant.EmployeeAggreeInd(false);
+            }
+        });
+
+        $('input[name="servicetab_employeraggrement"]').each(function() {
+            if (viewModel.applicant.EmployeeAggreeInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_attendatmofficer
+        $('input[name="servicetab_attendatmofficer"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ArmySelectionInd(true);
+            } else {
+                viewModel.applicant.ArmySelectionInd(false);
+            }
+        });
+
+        $('input[name="servicetab_attendatmofficer"]').each(function() {
+            if (viewModel.applicant.ArmySelectionInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // gender
+        $('input[name="gender"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            viewModel.applicant.GenderCd(selectedval);
+        });
+
+        if (viewModel.applicant.GenderCd) {
+            $('input[name="gender"]').each(function() {
+                if (this.value === viewModel.applicant.GenderCd()) {
+                    $(this).iCheck('check');
+                }
+            });
+        }
+
+        // cronic_illness
+        $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.CronicIlnessInd(true);
+            } else {
+                viewModel.applicant.CronicIlnessInd(false);
+            }
+        });
+
+        $('input[name="cronic_illness[cronic_illness]"]').each(function() {
+            if (viewModel.applicant.CronicIlnessInd() !== null) {
+                if (viewModel.applicant.CronicIlnessInd()) {
+                    if (this.value === 'Y') {
+                        $(this).iCheck('check');
+                    }
+                } else {
+                    if (this.value === 'N') {
+                        $(this).iCheck('check');
+                    }
+                }
+            }
+        });
+
+        // crime_involve
+        $('input[name="crime_involve[crime_involve]"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.CrimeInvolvement(true);
+            } else {
+                viewModel.applicant.CrimeInvolvement(false);
+            }
+        });
+
+        $('input[name="crime_involve[crime_involve]"]').each(function() {
+            if (viewModel.applicant.CrimeInvolvement() !== null) {
+                if (viewModel.applicant.CrimeInvolvement()) {
+                    if (this.value === 'Y') {
+                        $(this).iCheck('check');
+                    }
+                } else {
+                    if (this.value === 'N') {
+                        $(this).iCheck('check');
+                    }
+                }
+            }
+        });
+
+        // crime_drug
+        $('input[name="crime_drug[crime_drug]"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.DrugCaseInvolvement(true);
+            } else {
+                viewModel.applicant.DrugCaseInvolvement(false);
+            }
+        });
+
+        $('input[name="crime_drug[crime_drug]"]').each(function() {
+            if (viewModel.applicant.DrugCaseInvolvement() !== null) {
+                if (viewModel.applicant.DrugCaseInvolvement()) {
+                    if (this.value === 'Y') {
+                        $(this).iCheck('check');
+                    }
+                } else {
+                    if (this.value === 'N') {
+                        $(this).iCheck('check');
+                    }
+                }
+            }
+        });
+
+        // event for pilihan sequence
+        $('input[name="servicetab_firstchoice"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'TD') {
+                viewModel.applicant.SelectionTD(1);
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            } else if (selectedval === 'TLDM') {
+                viewModel.applicant.SelectionTL(1);
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            } else if (selectedval === 'TUDM') {
+                viewModel.applicant.SelectionTU(1);
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            }
+
+            // disable the selected value on others radios
+        });
+
+        $('input[name="servicetab_secondchoice"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'TD') {
+                viewModel.applicant.SelectionTD(2);
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            } else if (selectedval === 'TLDM') {
+                viewModel.applicant.SelectionTL(2);
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            } else if (selectedval === 'TUDM') {
+                viewModel.applicant.SelectionTU(2);
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            }
+
+            // disable the selected value on others radios
+        });
+
+        $('input[name="servicetab_thirdchoice"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'TD') {
+                viewModel.applicant.SelectionTD(3);
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            } else if (selectedval === 'TLDM') {
+                viewModel.applicant.SelectionTL(3);
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            } else if (selectedval === 'TUDM') {
+                viewModel.applicant.SelectionTU(3);
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('disable');
+                        $(this).iCheck('uncheck');
+                    } else {
+                        $(this).iCheck('enable');
+                    }
+                });
+            }
+
+            // disable the selected value on others radios
+        });
+
+        //ComputerMSWordcb
+        $('input[name="ComputerMSWordcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerMSWord(true);
+        });
+
+        $('input[name="ComputerMSWordcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerMSWord(false);
+        });
+
+        //ComputerMSExcelcb
+        $('input[name="ComputerMSExcelcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerMSExcel(true);
+        });
+
+        $('input[name="ComputerMSExcelcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerMSExcel(false);
+        });
+
+        //ComputerMSPwrPointcb
+        $('input[name="ComputerMSPwrPointcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerMSPwrPoint(true);
+        });
+
+        $('input[name="ComputerMSPwrPointcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerMSPwrPoint(false);
+        });
+
+        //ComputerMSPwrPointcb
+        $('input[name="ComputerICTcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerICT(true);
+        });
+
+        $('input[name="ComputerICTcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerICT(false);
+        });
+
+        $('input[name="aggree_to_submit"]').on('ifChecked', function(event) {
+            viewModel.ischecked(true);
+        });
+
+        $('input[name="aggree_to_submit"]').on('ifUnchecked', function(event) {
+            viewModel.ischecked(false);
+        });
+
+        if (viewModel.applicant.SelectionTD) {
+            if (viewModel.applicant.SelectionTD() === 1) {
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+            if (viewModel.applicant.SelectionTD() === 2) {
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+            if (viewModel.applicant.SelectionTD() === 3) {
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TD') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+        }
+        if (viewModel.applicant.SelectionTL) {
+            if (viewModel.applicant.SelectionTL() === 1) {
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+            if (viewModel.applicant.SelectionTL() === 2) {
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+            if (viewModel.applicant.SelectionTL() === 3) {
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TLDM') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+        }
+        if (viewModel.applicant.SelectionTU) {
+            if (viewModel.applicant.SelectionTU() === 1) {
+                $('input[name="servicetab_firstchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+            if (viewModel.applicant.SelectionTU() === 2) {
+                $('input[name="servicetab_secondchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+            if (viewModel.applicant.SelectionTU() === 3) {
+                $('input[name="servicetab_thirdchoice"]').each(function() {
+                    if (this.value === 'TUDM') {
+                        $(this).iCheck('check');
+                    } else {
+                        $(this).iCheck('uncheck');
+                        $(this).iCheck('disable');
+                    }
+                });
+            }
+        }
+
+        if (viewModel.applicant.DadName) {
+            if (viewModel.applicant.DadName() == null || viewModel.applicant.DadName() === "") {
+                viewModel.isguardian(true);
+            } else {
+                viewModel.isguardian(false);
+            }
+        };
+
+        if (viewModel.applicant.MomName) {
+            if (viewModel.applicant.MomName() == null || viewModel.applicant.MomName() === "") {
+                viewModel.isguardian(true);
+            } else {
+                viewModel.isguardian(false);
+            }
+        };
+        
+        if (viewModel.applicant.CurrentSalary) {
+            if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
+                var formated = FormatCurrency(viewModel.applicant.CurrentSalary());
+                viewModel.applicant.CurrentSalary(formated);
+            }
+        }
+
+        if (viewModel.applicant.BirthDate) {
+            if (viewModel.applicant.BirthDate() !== null) {
+                var splitdate = viewModel.applicant.BirthDate().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+                $('#birthdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        if (viewModel.applicant.PalapesTauliahEndDt) {
+            if (viewModel.applicant.PalapesTauliahEndDt() !== null) {
+                var splitdate = viewModel.applicant.PalapesTauliahEndDt().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+                $('#palapesgraduationdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+        if (viewModel.applicant.ScholarshipContractStDate) {
+            if (viewModel.applicant.ScholarshipContractStDate() !== null) {
+                var splitdate = viewModel.applicant.ScholarshipContractStDate().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+                $('#contractstartdatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+
+
+        if (viewModel.applicant.ArmySelectionDt) {
+            if (viewModel.applicant.ArmySelectionDt() !== null) {
+                var splitdate = viewModel.applicant.ArmySelectionDt().split("-");
+                var bday = splitdate[2].split("T");
+                var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
+                $('#attendatmofficerdatedatepicker').data("DateTimePicker").date(bdate);
+            }
+        }
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -352,6 +979,7 @@ $(function () {
                         initializeAfterSubmit();
                         initializeCheckBoxAndRadio();
                         initializeAcademics();
+                        initializeCurrentCheck();
 
                     }
                     hideLoading();
@@ -381,6 +1009,7 @@ $(function () {
                         initializeAfterSubmit();
                         initializeCheckBoxAndRadio();
                         initializeAcademics();
+                        initializeCurrentCheck();
 
                     }
                 },
@@ -777,16 +1406,7 @@ $(function () {
     });
 
     ko.applyBindings(viewModel);
-
-    if (viewModel.applicant) {
-        if (viewModel.applicant.DadName) {
-            viewModel.isguardian(false);
-        }
-        if (viewModel.applicant.MomName) {
-            viewModel.isguardian(false);
-        }
-    }
-
+    
     $('#resume a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
@@ -810,44 +1430,8 @@ $(function () {
         format: 'DD/MM/YYYY'
     });
 
-
-    if (viewModel.applicant.BirthDate) {
-        if (viewModel.applicant.BirthDate() !== null) {
-            var splitdate = viewModel.applicant.BirthDate().split("-");
-            var bday = splitdate[2].split("T");
-            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
-            $('#birthdatepicker').data("DateTimePicker").date(bdate);
-        }
-    }
-
-    if (viewModel.applicant.PalapesTauliahEndDt) {
-        if (viewModel.applicant.PalapesTauliahEndDt() !== null) {
-            var splitdate = viewModel.applicant.PalapesTauliahEndDt().split("-");
-            var bday = splitdate[2].split("T");
-            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
-            $('#palapesgraduationdatepicker').data("DateTimePicker").date(bdate);
-        }
-    }
-
-    if (viewModel.applicant.ScholarshipContractStDate) {
-        if (viewModel.applicant.ScholarshipContractStDate() !== null) {
-            var splitdate = viewModel.applicant.ScholarshipContractStDate().split("-");
-            var bday = splitdate[2].split("T");
-            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
-            $('#contractstartdatepicker').data("DateTimePicker").date(bdate);
-        }
-    }
-
-
-    if (viewModel.applicant.ArmySelectionDt) {
-        if (viewModel.applicant.ArmySelectionDt() !== null) {
-            var splitdate = viewModel.applicant.ArmySelectionDt().split("-");
-            var bday = splitdate[2].split("T");
-            var bdate = bday[0] + "/" + splitdate[1] + "/" + splitdate[0];
-            $('#attendatmofficerdatedatepicker').data("DateTimePicker").date(bdate);
-        }
-    }
-
+    initializeAfterSubmit();
+    initializeCurrentCheck();
 
 
     if (viewModel.applicant.CorresponAddrCountryCd) {
@@ -873,608 +1457,13 @@ $(function () {
     if (viewModel.applicant.RaceCd) {
         loadEthnics(viewModel.applicant.RaceCd());
     }
-
-    // bercermin mata
-    $('input[name="spectacle"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.SpectaclesUserInd(true);
-        } else {
-            viewModel.applicant.SpectaclesUserInd(false);
-        }
-    });
-
-    $('input[name="spectacle"]').each(function () {
-        if (viewModel.applicant.SpectaclesUserInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // buta warna
-    $('input[name="colorblind"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ColorBlindInd(true);
-        } else {
-            viewModel.applicant.ColorBlindInd(false);
-        }
-    });
-
-    $('input[name="colorblind"]').each(function () {
-        if (viewModel.applicant.ColorBlindInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_exatm
-    $('input[name="servicetab_exatm"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ArmyServiceInd(true);
-        } else {
-            viewModel.applicant.ArmyServiceInd(false);
-        }
-    });
-
-    $('input[name="servicetab_exatm"]').each(function () {
-        if (viewModel.applicant.ArmyServiceInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // palapes
-    $('input[name="servicetab_ispalapes"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.PalapesInd(true);
-        } else {
-            viewModel.applicant.PalapesInd(false);
-        }
-    });
-
-    $('input[name="servicetab_ispalapes"]').each(function () {
-        if (viewModel.applicant.PalapesInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_scholarship
-    $('input[name="servicetab_scholarship"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ScholarshipInd(true);
-        } else {
-            viewModel.applicant.ScholarshipInd(false);
-        }
-    });
-
-    $('input[name="servicetab_scholarship"]').each(function () {
-        if (viewModel.applicant.ScholarshipInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_employeraggrement
-    $('input[name="servicetab_employeraggrement"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.EmployeeAggreeInd(true);
-        } else {
-            viewModel.applicant.EmployeeAggreeInd(false);
-        }
-    });
-
-    $('input[name="servicetab_employeraggrement"]').each(function () {
-        if (viewModel.applicant.EmployeeAggreeInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_attendatmofficer
-    $('input[name="servicetab_attendatmofficer"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ArmySelectionInd(true);
-        } else {
-            viewModel.applicant.ArmySelectionInd(false);
-        }
-    });
-
-    $('input[name="servicetab_attendatmofficer"]').each(function () {
-        if (viewModel.applicant.ArmySelectionInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-
-
-    // gender
-    $('input[name="gender"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        viewModel.applicant.GenderCd(selectedval);
-    });
-
-    if (viewModel.applicant.GenderCd) {
-        $('input[name="gender"]').each(function () {
-            if (this.value === viewModel.applicant.GenderCd()) {
-                $(this).iCheck('check');
-            }
-        });
-    }
-
-    // cronic_illness
-    $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.CronicIlnessInd(true);
-        } else {
-            viewModel.applicant.CronicIlnessInd(false);
-        }
-    });
-
-    $('input[name="cronic_illness[cronic_illness]"]').each(function () {
-        if (viewModel.applicant.CronicIlnessInd() !== null) {
-            if (viewModel.applicant.CronicIlnessInd()) {
-                if (this.value === 'Y') {
-                    $(this).iCheck('check');
-                }
-            } else {
-                if (this.value === 'N') {
-                    $(this).iCheck('check');
-                }
-            }
-        }
-    });
-
-    // crime_involve
-    $('input[name="crime_involve[crime_involve]"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.CrimeInvolvement(true);
-        } else {
-            viewModel.applicant.CrimeInvolvement(false);
-        }
-    });
-
-    $('input[name="crime_involve[crime_involve]"]').each(function () {
-        if (viewModel.applicant.CrimeInvolvement() !== null) {
-            if (viewModel.applicant.CrimeInvolvement()) {
-                if (this.value === 'Y') {
-                    $(this).iCheck('check');
-                }
-            } else {
-                if (this.value === 'N') {
-                    $(this).iCheck('check');
-                }
-            }
-        }
-    });
-
-
-    // crime_drug
-    $('input[name="crime_drug[crime_drug]"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.DrugCaseInvolvement(true);
-        } else {
-            viewModel.applicant.DrugCaseInvolvement(false);
-        }
-    });
-
-    $('input[name="crime_drug[crime_drug]"]').each(function () {
-        if (viewModel.applicant.DrugCaseInvolvement() !== null) {
-            if (viewModel.applicant.DrugCaseInvolvement()) {
-                if (this.value === 'Y') {
-                    $(this).iCheck('check');
-                }
-            } else {
-                if (this.value === 'N') {
-                    $(this).iCheck('check');
-                }
-            }
-        }
-    });
-
-
-    // event for pilihan sequence
-    $('input[name="servicetab_firstchoice"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'TD') {
-            viewModel.applicant.SelectionTD(1);
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        } else if (selectedval === 'TLDM') {
-            viewModel.applicant.SelectionTL(1);
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        } else if (selectedval === 'TUDM') {
-            viewModel.applicant.SelectionTU(1);
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        }
-
-        // disable the selected value on others radios
-    });
-
-    $('input[name="servicetab_secondchoice"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'TD') {
-            viewModel.applicant.SelectionTD(2);
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        } else if (selectedval === 'TLDM') {
-            viewModel.applicant.SelectionTL(2);
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        } else if (selectedval === 'TUDM') {
-            viewModel.applicant.SelectionTU(2);
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        }
-
-        // disable the selected value on others radios
-    });
-
-    $('input[name="servicetab_thirdchoice"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'TD') {
-            viewModel.applicant.SelectionTD(3);
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        } else if (selectedval === 'TLDM') {
-            viewModel.applicant.SelectionTL(3);
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        } else if (selectedval === 'TUDM') {
-            viewModel.applicant.SelectionTU(3);
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('disable');
-                    $(this).iCheck('uncheck');
-                } else {
-                    $(this).iCheck('enable');
-                }
-            });
-        }
-
-        // disable the selected value on others radios
-    });
-
-
-    //ComputerMSWordcb
-    $('input[name="ComputerMSWordcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerMSWord(true);
-    });
-
-    $('input[name="ComputerMSWordcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerMSWord(false);
-    });
-
-    //ComputerMSExcelcb
-    $('input[name="ComputerMSExcelcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerMSExcel(true);
-    });
-
-    $('input[name="ComputerMSExcelcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerMSExcel(false);
-    });
-
-    //ComputerMSPwrPointcb
-    $('input[name="ComputerMSPwrPointcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerMSPwrPoint(true);
-    });
-
-    $('input[name="ComputerMSPwrPointcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerMSPwrPoint(false);
-    });
-
-    //ComputerMSPwrPointcb
-    $('input[name="ComputerICTcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerICT(true);
-    });
-
-    $('input[name="ComputerICTcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerICT(false);
-    });
-
-    $('input[name="aggree_to_submit"]').on('ifChecked', function (event) {
-        viewModel.ischecked(true);
-    });
-
-    $('input[name="aggree_to_submit"]').on('ifUnchecked', function (event) {
-        viewModel.ischecked(false);
-    });
-
-
-    if (viewModel.applicant.SelectionTD) {
-        if (viewModel.applicant.SelectionTD() === 1) {
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-        if (viewModel.applicant.SelectionTD() === 2) {
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-        if (viewModel.applicant.SelectionTD() === 3) {
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TD') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-    }
-    if (viewModel.applicant.SelectionTL) {
-        if (viewModel.applicant.SelectionTL() === 1) {
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-        if (viewModel.applicant.SelectionTL() === 2) {
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-        if (viewModel.applicant.SelectionTL() === 3) {
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TLDM') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-    }
-    if (viewModel.applicant.SelectionTU) {
-        if (viewModel.applicant.SelectionTU() === 1) {
-            $('input[name="servicetab_firstchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-        if (viewModel.applicant.SelectionTU() === 2) {
-            $('input[name="servicetab_secondchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-        if (viewModel.applicant.SelectionTU() === 3) {
-            $('input[name="servicetab_thirdchoice"]').each(function () {
-                if (this.value === 'TUDM') {
-                    $(this).iCheck('check');
-                } else {
-                    $(this).iCheck('uncheck');
-                    $(this).iCheck('disable');
-                }
-            });
-        }
-    }
-
-    if (viewModel.applicant.DadName) {
-        if (viewModel.applicant.DadName() == null || viewModel.applicant.DadName() === "") {
-            viewModel.isguardian(true);
-        } else {
-            viewModel.isguardian(false);
-        }
-    };
-
-    if (viewModel.applicant.MomName) {
-        if (viewModel.applicant.MomName() == null || viewModel.applicant.MomName() === "") {
-            viewModel.isguardian(true);
-        } else {
-            viewModel.isguardian(false);
-        }
-    };
-
+    
     if (viewModel.applicant.ApplicantId) {
         loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
     }
 
-    if (viewModel.applicant.CurrentSalary) {
-        if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
-            var formated = FormatCurrency(viewModel.applicant.CurrentSalary());
-            viewModel.applicant.CurrentSalary(formated);
-        }
-    }
-
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        var target = $(e.target).attr("href"); // activated tab
-        alert(target);
+        viewModel.saveprofilesilent();
     });
 
     initializeAcademics();

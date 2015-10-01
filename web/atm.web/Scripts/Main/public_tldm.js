@@ -95,6 +95,339 @@ $(function () {
         });
     }
 
+    function initializeCurrentCheck() {
+
+        // status kahwin
+        $('input[name="maritalstatus"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            viewModel.applicant.MrtlStatusCd(selectedval);
+        });
+
+        if (viewModel.applicant.MrtlStatusCd) {
+            $('input[name="maritalstatus"]').each(function() {
+                if (this.value === viewModel.applicant.MrtlStatusCd()) {
+                    $(this).iCheck('check');
+                }
+            });
+        }
+
+        // bercermin mata
+        $('input[name="spectacle"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.SpectaclesUserInd(true);
+            } else {
+                viewModel.applicant.SpectaclesUserInd(false);
+            }
+        });
+
+        $('input[name="spectacle"]').each(function() {
+            if (viewModel.applicant.SpectaclesUserInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // buta warna
+        $('input[name="colorblind"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ColorBlindInd(true);
+            } else {
+                viewModel.applicant.ColorBlindInd(false);
+            }
+        });
+
+        $('input[name="colorblind"]').each(function() {
+            if (viewModel.applicant.ColorBlindInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_exatm
+        $('input[name="servicetab_exatm"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ArmyServiceInd(true);
+            } else {
+                viewModel.applicant.ArmyServiceInd(false);
+            }
+        });
+
+        $('input[name="servicetab_exatm"]').each(function() {
+            if (viewModel.applicant.ArmyServiceInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // palapes
+        $('input[name="servicetab_ispalapes"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.PalapesInd(true);
+            } else {
+                viewModel.applicant.PalapesInd(false);
+            }
+        });
+
+        $('input[name="servicetab_ispalapes"]').each(function() {
+            if (viewModel.applicant.PalapesInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_scholarship
+        $('input[name="servicetab_scholarship"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ScholarshipInd(true);
+            } else {
+                viewModel.applicant.ScholarshipInd(false);
+            }
+        });
+
+        $('input[name="servicetab_scholarship"]').each(function() {
+            if (viewModel.applicant.ScholarshipInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_employeraggrement
+        $('input[name="servicetab_employeraggrement"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.EmployeeAggreeInd(true);
+            } else {
+                viewModel.applicant.EmployeeAggreeInd(false);
+            }
+        });
+
+        $('input[name="servicetab_employeraggrement"]').each(function() {
+            if (viewModel.applicant.EmployeeAggreeInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+        // servicetab_attendatmofficer
+        $('input[name="servicetab_attendatmofficer"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.ArmySelectionInd(true);
+            } else {
+                viewModel.applicant.ArmySelectionInd(false);
+            }
+        });
+
+        $('input[name="servicetab_attendatmofficer"]').each(function() {
+            if (viewModel.applicant.ArmySelectionInd()) {
+                if (this.value === 'Y') {
+                    $(this).iCheck('check');
+                }
+            } else {
+                if (this.value === 'N') {
+                    $(this).iCheck('check');
+                }
+            }
+        });
+
+
+        // gender
+        $('input[name="gender"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            viewModel.applicant.GenderCd(selectedval);
+        });
+
+        if (viewModel.applicant.GenderCd) {
+            $('input[name="gender"]').each(function() {
+                if (this.value === viewModel.applicant.GenderCd()) {
+                    $(this).iCheck('check');
+                }
+            });
+        }
+
+
+        // cronic_illness
+        $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.CronicIlnessInd(true);
+            } else {
+                viewModel.applicant.CronicIlnessInd(false);
+            }
+        });
+
+        $('input[name="cronic_illness[cronic_illness]"]').each(function() {
+            if (viewModel.applicant.CronicIlnessInd() !== null) {
+                if (viewModel.applicant.CronicIlnessInd()) {
+                    if (this.value === 'Y') {
+                        $(this).iCheck('check');
+                    }
+                } else {
+                    if (this.value === 'N') {
+                        $(this).iCheck('check');
+                    }
+                }
+            }
+        });
+
+        // crime_involve
+        $('input[name="crime_involve[crime_involve]"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.CrimeInvolvement(true);
+            } else {
+                viewModel.applicant.CrimeInvolvement(false);
+            }
+        });
+
+        $('input[name="crime_involve[crime_involve]"]').each(function() {
+            if (viewModel.applicant.CrimeInvolvement() !== null) {
+                if (viewModel.applicant.CrimeInvolvement()) {
+                    if (this.value === 'Y') {
+                        $(this).iCheck('check');
+                    }
+                } else {
+                    if (this.value === 'N') {
+                        $(this).iCheck('check');
+                    }
+                }
+            }
+        });
+
+
+        // crime_drug
+        $('input[name="crime_drug[crime_drug]"]').on('ifClicked', function(event) {
+            var selectedval = this.value;
+            if (selectedval === 'Y') {
+                viewModel.applicant.DrugCaseInvolvement(true);
+            } else {
+                viewModel.applicant.DrugCaseInvolvement(false);
+            }
+        });
+
+        $('input[name="crime_drug[crime_drug]"]').each(function() {
+            if (viewModel.applicant.DrugCaseInvolvement() !== null) {
+                if (viewModel.applicant.DrugCaseInvolvement()) {
+                    if (this.value === 'Y') {
+                        $(this).iCheck('check');
+                    }
+                } else {
+                    if (this.value === 'N') {
+                        $(this).iCheck('check');
+                    }
+                }
+            }
+        });
+
+
+        //ComputerMSWordcb
+        $('input[name="ComputerMSWordcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerMSWord(true);
+        });
+
+        $('input[name="ComputerMSWordcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerMSWord(false);
+        });
+
+        //ComputerMSExcelcb
+        $('input[name="ComputerMSExcelcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerMSExcel(true);
+        });
+
+        $('input[name="ComputerMSExcelcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerMSExcel(false);
+        });
+
+        //ComputerMSPwrPointcb
+        $('input[name="ComputerMSPwrPointcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerMSPwrPoint(true);
+        });
+
+        $('input[name="ComputerMSPwrPointcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerMSPwrPoint(false);
+        });
+
+        //ComputerMSPwrPointcb
+        $('input[name="ComputerICTcb"]').on('ifChecked', function(event) {
+            viewModel.applicant.ComputerICT(true);
+        });
+
+        $('input[name="ComputerICTcb"]').on('ifUnchecked', function(event) {
+            viewModel.applicant.ComputerICT(false);
+        });
+
+        $('input[name="aggree_to_submit"]').on('ifChecked', function(event) {
+            viewModel.ischecked(true);
+        });
+
+        $('input[name="aggree_to_submit"]').on('ifUnchecked', function(event) {
+            viewModel.ischecked(false);
+        });
+
+
+        if (viewModel.applicant.DadName) {
+            if (viewModel.applicant.DadName() == null || viewModel.applicant.DadName() === "") {
+                viewModel.isguardian(true);
+            } else {
+                viewModel.isguardian(false);
+            }
+        };
+
+        if (viewModel.applicant.MomName) {
+            if (viewModel.applicant.MomName() == null || viewModel.applicant.MomName() === "") {
+                viewModel.isguardian(true);
+            } else {
+                viewModel.isguardian(false);
+            }
+        };
+
+        if (viewModel.applicant.ApplicantId) {
+            loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
+        }
+
+        if (viewModel.applicant.CurrentSalary) {
+            if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
+                var formated = FormatCurrency(viewModel.applicant.CurrentSalary());
+                viewModel.applicant.CurrentSalary(formated);
+            }
+        }
+    }
+
     viewModel = {
         applicant: ko.mapping.fromJS(applicant),
         maritalstatues: ko.observableArray([]),
@@ -144,6 +477,7 @@ $(function () {
                         ko.mapping.fromJSON(msg.item, viewModel.applicant);
 
                         initializeAfterSubmit();
+                        initializeCurrentCheck();
                     }
                     hideLoading();
                     ShowMessage(msg.message);
@@ -169,6 +503,7 @@ $(function () {
                         ko.mapping.fromJSON(msg.item, viewModel.applicant);
 
                         initializeAfterSubmit();
+                        initializeCurrentCheck();
                     }
                 },
                 error: function (xhr) {}
@@ -488,16 +823,7 @@ $(function () {
     });
 
     ko.applyBindings(viewModel);
-
-    if (viewModel.applicant) {
-        if (viewModel.applicant.DadName) {
-            viewModel.isguardian(false);
-        }
-        if (viewModel.applicant.MomName) {
-            viewModel.isguardian(false);
-        }
-    }
-
+    
     $('#resume a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
@@ -546,336 +872,7 @@ $(function () {
     if (viewModel.applicant.RaceCd) {
         loadEthnics(viewModel.applicant.RaceCd());
     }
-
-    // status kahwin
-    $('input[name="maritalstatus"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        viewModel.applicant.MrtlStatusCd(selectedval);
-    });
-
-    if (viewModel.applicant.MrtlStatusCd) {
-        $('input[name="maritalstatus"]').each(function () {
-            if (this.value === viewModel.applicant.MrtlStatusCd()) {
-                $(this).iCheck('check');
-            }
-        });
-    }
-
-    // bercermin mata
-    $('input[name="spectacle"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.SpectaclesUserInd(true);
-        } else {
-            viewModel.applicant.SpectaclesUserInd(false);
-        }
-    });
-
-    $('input[name="spectacle"]').each(function () {
-        if (viewModel.applicant.SpectaclesUserInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // buta warna
-    $('input[name="colorblind"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ColorBlindInd(true);
-        } else {
-            viewModel.applicant.ColorBlindInd(false);
-        }
-    });
-
-    $('input[name="colorblind"]').each(function () {
-        if (viewModel.applicant.ColorBlindInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_exatm
-    $('input[name="servicetab_exatm"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ArmyServiceInd(true);
-        } else {
-            viewModel.applicant.ArmyServiceInd(false);
-        }
-    });
-
-    $('input[name="servicetab_exatm"]').each(function () {
-        if (viewModel.applicant.ArmyServiceInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // palapes
-    $('input[name="servicetab_ispalapes"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.PalapesInd(true);
-        } else {
-            viewModel.applicant.PalapesInd(false);
-        }
-    });
-
-    $('input[name="servicetab_ispalapes"]').each(function () {
-        if (viewModel.applicant.PalapesInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_scholarship
-    $('input[name="servicetab_scholarship"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ScholarshipInd(true);
-        } else {
-            viewModel.applicant.ScholarshipInd(false);
-        }
-    });
-
-    $('input[name="servicetab_scholarship"]').each(function () {
-        if (viewModel.applicant.ScholarshipInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_employeraggrement
-    $('input[name="servicetab_employeraggrement"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.EmployeeAggreeInd(true);
-        } else {
-            viewModel.applicant.EmployeeAggreeInd(false);
-        }
-    });
-
-    $('input[name="servicetab_employeraggrement"]').each(function () {
-        if (viewModel.applicant.EmployeeAggreeInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-    // servicetab_attendatmofficer
-    $('input[name="servicetab_attendatmofficer"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.ArmySelectionInd(true);
-        } else {
-            viewModel.applicant.ArmySelectionInd(false);
-        }
-    });
-
-    $('input[name="servicetab_attendatmofficer"]').each(function () {
-        if (viewModel.applicant.ArmySelectionInd()) {
-            if (this.value === 'Y') {
-                $(this).iCheck('check');
-            }
-        } else {
-            if (this.value === 'N') {
-                $(this).iCheck('check');
-            }
-        }
-    });
-
-
-    // gender
-    $('input[name="gender"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        viewModel.applicant.GenderCd(selectedval);
-    });
-
-    if (viewModel.applicant.GenderCd) {
-        $('input[name="gender"]').each(function () {
-            if (this.value === viewModel.applicant.GenderCd()) {
-                $(this).iCheck('check');
-            }
-        });
-    }
-
-
-    // cronic_illness
-    $('input[name="cronic_illness[cronic_illness]"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.CronicIlnessInd(true);
-        } else {
-            viewModel.applicant.CronicIlnessInd(false);
-        }
-    });
-
-    $('input[name="cronic_illness[cronic_illness]"]').each(function () {
-        if (viewModel.applicant.CronicIlnessInd() !== null) {
-            if (viewModel.applicant.CronicIlnessInd()) {
-                if (this.value === 'Y') {
-                    $(this).iCheck('check');
-                }
-            } else {
-                if (this.value === 'N') {
-                    $(this).iCheck('check');
-                }
-            }
-        }
-    });
-
-    // crime_involve
-    $('input[name="crime_involve[crime_involve]"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.CrimeInvolvement(true);
-        } else {
-            viewModel.applicant.CrimeInvolvement(false);
-        }
-    });
-
-    $('input[name="crime_involve[crime_involve]"]').each(function () {
-        if (viewModel.applicant.CrimeInvolvement() !== null) {
-            if (viewModel.applicant.CrimeInvolvement()) {
-                if (this.value === 'Y') {
-                    $(this).iCheck('check');
-                }
-            } else {
-                if (this.value === 'N') {
-                    $(this).iCheck('check');
-                }
-            }
-        }
-    });
-
-
-    // crime_drug
-    $('input[name="crime_drug[crime_drug]"]').on('ifClicked', function (event) {
-        var selectedval = this.value;
-        if (selectedval === 'Y') {
-            viewModel.applicant.DrugCaseInvolvement(true);
-        } else {
-            viewModel.applicant.DrugCaseInvolvement(false);
-        }
-    });
-
-    $('input[name="crime_drug[crime_drug]"]').each(function () {
-        if (viewModel.applicant.DrugCaseInvolvement() !== null) {
-            if (viewModel.applicant.DrugCaseInvolvement()) {
-                if (this.value === 'Y') {
-                    $(this).iCheck('check');
-                }
-            } else {
-                if (this.value === 'N') {
-                    $(this).iCheck('check');
-                }
-            }
-        }
-    });
-
-
-    //ComputerMSWordcb
-    $('input[name="ComputerMSWordcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerMSWord(true);
-    });
-
-    $('input[name="ComputerMSWordcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerMSWord(false);
-    });
-
-    //ComputerMSExcelcb
-    $('input[name="ComputerMSExcelcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerMSExcel(true);
-    });
-
-    $('input[name="ComputerMSExcelcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerMSExcel(false);
-    });
-
-    //ComputerMSPwrPointcb
-    $('input[name="ComputerMSPwrPointcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerMSPwrPoint(true);
-    });
-
-    $('input[name="ComputerMSPwrPointcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerMSPwrPoint(false);
-    });
-
-    //ComputerMSPwrPointcb
-    $('input[name="ComputerICTcb"]').on('ifChecked', function (event) {
-        viewModel.applicant.ComputerICT(true);
-    });
-
-    $('input[name="ComputerICTcb"]').on('ifUnchecked', function (event) {
-        viewModel.applicant.ComputerICT(false);
-    });
-
-    $('input[name="aggree_to_submit"]').on('ifChecked', function (event) {
-        viewModel.ischecked(true);
-    });
-
-    $('input[name="aggree_to_submit"]').on('ifUnchecked', function (event) {
-        viewModel.ischecked(false);
-    });
-
-
-    if (viewModel.applicant.DadName) {
-        if (viewModel.applicant.DadName() == null || viewModel.applicant.DadName() === "") {
-            viewModel.isguardian(true);
-        } else {
-            viewModel.isguardian(false);
-        }
-    };
-
-    if (viewModel.applicant.MomName) {
-        if (viewModel.applicant.MomName() == null || viewModel.applicant.MomName() === "") {
-            viewModel.isguardian(true);
-        } else {
-            viewModel.isguardian(false);
-        }
-    };
-
-    if (viewModel.applicant.ApplicantId) {
-        loadChecklist(viewModel.applicant.ApplicantId(), acquisitionid);
-    }
-
-    if (viewModel.applicant.CurrentSalary) {
-        if (viewModel.applicant.CurrentSalary() !== null || viewModel.applicant.CurrentSalary() !== '') {
-            var formated = FormatCurrency(viewModel.applicant.CurrentSalary());
-            viewModel.applicant.CurrentSalary(formated);
-        }
-    }
+    initializeCurrentCheck();
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         viewModel.saveprofilesilent();
