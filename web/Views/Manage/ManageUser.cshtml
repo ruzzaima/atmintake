@@ -1,0 +1,62 @@
+﻿@using SevenH.MMCSB.Atm.Domain
+@{
+    ViewBag.Title = "Pengurusan Pengguna";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section styles
+{
+    <style type="text/css">
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-md-12"></div>
+    <div class="tile">
+        <h2 class="tile-title">Profil Pengguna Sistem JOM MASUK TENTERA</h2>
+        <div class="p-10">
+            <div class="form-group">
+                <label class="control-label">Kategori : </label>
+                @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN))
+                {
+                    <label class="radio-inline">
+                        <input type="radio" name="category" value="SP" /> Kakitangan Pengambilan
+                    </label>
+                }
+                <label class="radio-inline">
+                    <input type="radio" name="category" value="AW" /> Awam/Pemohon
+                </label>
+                <input type="button" class="btn btn-sm" value="Teruskan" data-bind="click: searchuser" />
+            </div>
+            <table class="table table-bordered tile" id="user_table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px">Bil.</th>
+                        <th>Nama</th>
+                        <th class="col-md-1 text-center">Id Pengguna</th>
+                        <th class="col-md-2">Emel/Emel Alternatif</th>
+                        <th class="col-md-1 text-center">Perkhidmatan</th>
+                        <th class="col-md-1 text-center">Peranan</th>
+                        <th class="col-md-1 text-center">Status</th>
+                        <th class="col-md-2">Kali Terakhir Login Pada</th>
+                        <th class="col-md-1 text-center">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <a class="btn btn-primary btn-sm" href="@Url.Action("UserProfile", "Manage")">Tambah</a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var admin = @Html.Raw(ObjectBuilder.GetObject <IRoleProvider> ("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN).ToString().ToLower());
+    </script>
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/manage_manageuser.js")"></script>
+}

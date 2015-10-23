@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "Carian Pemohon";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section styles{
+    <style>
+        a:hover {
+            color: #0000ff;
+        }
+
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+    </style>
+}
+
+
+<div class="row">
+    <div class="tile">
+        <h2 class="tile-title">Senarai Anggota ATM</h2>
+        <div class="p-10">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">Nama</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.name" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">No. Kad Pengenalan</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.icno" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label">No. Tentera</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: searchcriteria.armyno" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="button" class="btn btn-sm" value="Carian Calon" data-bind="click: search" />
+            </div>
+            <div class="form-group">
+                <table id="applicant_table" class="table table-bordered tile">
+                    <thead>
+                        <tr>
+                            <th class="col-md-1">Bil</th>
+                            <th>Nama</th>
+                            <th class="col-md-1">No. Kad Pengenalan</th>
+                            <th class="col-md-1">No. Tentera</th>
+                            <th class="col-md-1">COID</th>
+                            <th class="col-md-1">Status Perkhidmatan</th>
+                            <th class="col-md-1">Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <a class="btn btn-sm" href="@Url.Action("Index", "Admin")">Kembali</a>
+    <a class="btn btn-sm" href="@Url.Action("AddExistingAtm", "Admin" )">Tambah Anggota</a>
+</div>
+
+@section scripts{
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_existingatmmember.js")"></script>
+}

@@ -1,0 +1,78 @@
+﻿
+<div class="panel panel-default tile">
+    <div class="panel-heading">
+        <h3 class="panel-title"></h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label for="fullname" class="control-label">Nama Penuh</label>
+            <input type="text" class="form-control input-sm validate[required]" id="fullname" data-bind="value: applicant.FullName, valueUpdate: 'afterkeydown'">
+            <input type="hidden" data-bind="value: applicant.ApplicantId">
+        </div>
+        <div class="form-group">
+            <label for="idnumber" class="control-label">No Kad Pengenalan</label>
+            <input type="text" class="form-control input-sm validate[required]" id="idnumber" data-bind="value: applicant.NewIcNo, valueUpdate: 'afterkeydown'" maxlength="12" readonly="readonly">
+        </div>
+        <div class="form-group">
+            <label for="email" class="control-label">Emel</label>
+            <input type="email" class="form-control input-sm validate[required]" id="email" data-bind="value: applicant.Email, valueUpdate: 'afterkeydown'" readonly="readonly">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label">Tarikh Lahir</label>
+                    <div class="input-group" style="cursor: pointer" id="birthdatepicker">
+                        <input type="text" class="form-control input-sm validate[required]" data-bind="value: applicant.BirthDateString, valueUpdate: 'afterkeydown'">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar "></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="control-label col-md-12">Umur </label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm col-md-4 validate[required]" data-bind="value: applicant.Age, valueUpdate: 'afterkeydown'">
+                            <span class="input-group-addon">tahun</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm col-md-4 validate[required]" data-bind="value: applicant.Month, valueUpdate: 'afterkeydown'">
+                            <span class="input-group-addon">bulan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="religion" class="control-label">Agama</label>
+            <select class="form-control input-sm validate[required]" id="religion" data-bind="options: religions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.ReligionCd"></select>
+        </div>
+        <div class="form-group">
+            <label for="race" class="control-label">Bangsa</label>
+            <select class="form-control input-sm" id="race" data-bind="options: races, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.RaceCd"></select>
+        </div>
+        <div class="form-group">
+            <label for="ethnic" class="control-label">Etnik</label>
+            <select class="form-control input-sm" id="ethnic" data-bind="options: ethnics, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.EthnicCd"></select>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="childno" class="control-label">Anak Ke</label>
+                    <input type="text" class="form-control input-sm" id="childno" data-bind="value: applicant.ChildNo, valueUpdate: 'afterkeydown'">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="childfrom" class="control-label">Daripada</label>
+                    <input type="text" class="form-control input-sm" id="childfrom" data-bind="value: applicant.NoOfSibling, valueUpdate: 'afterkeydown'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

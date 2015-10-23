@@ -1,0 +1,156 @@
+﻿@model SevenH.MMCSB.Atm.Web.Models.AddUserViewModel
+@using Newtonsoft.Json
+@using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
+@{
+    ViewBag.Title = "Tambah Pengguna";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="tile">
+            @if (Model.LoginUser.UserId == 0)
+            {
+                <div class="tile-title">Tambah Pengguna</div>
+            }
+            else
+            {
+                <div class="tile-title">Kemaskini Pengguna</div>
+            }
+            <form id="adduser_form" class="form-horizontal p-15" role="form">
+                <div class="form-group">
+                    @if (Model.LoginUser.LoginRole.Roles == RolesString.AWAM)
+                    {
+                        <label class="col-md-4 text-left">Id Pengguna</label>
+                    }
+                    else
+                    {
+                        <label class="col-md-4 text-left">No Tentera / Id Pengguna</label>
+                    }
+                    <div class="col-md-2">
+                        <input type="text" class="form-control validate[required]" data-bind="value: user.LoginId, enable: user.UserId() == 0" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 text-left">Nama</label>
+                    <div class="col-md-8">
+                        <label data-bind="text: user.FullName"></label>
+                    </div>
+                </div>
+                @if (Model.LoginUser.LoginRole.Roles != RolesString.AWAM)
+                {
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Peranan</label>
+                        <div class="col-md-8">
+                            <label class="radio-inline">
+                                <input type="radio" name="role" value="@RolesString.PEGAWAI_PENGAMBILAN" />@RolesString.PEGAWAI_PENGAMBILAN
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="role" value="@RolesString.KERANI_PENGAMBILAN" />@RolesString.KERANI_PENGAMBILAN
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="role" value="@RolesString.STATISTIC" />@RolesString.STATISTIC
+                            </label>
+                        </div>
+                    </div>
+                }
+                @if (Model.LoginUser.LoginRole.Roles != RolesString.AWAM)
+                {
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Perkhidmatan</label>
+                        <div class="col-md-8">
+                            @foreach (var s in @Model.ListOfService)
+                            {
+                                <label class="radio-inline">
+                                    <input type="radio" name="service" value="@s.ServiceCd" />@s.ServiceDesc
+                                </label>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Kata Laluan</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control validate[required]" data-bind="value: user.Password" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="button" class="btn btn-primary btn-sm" data-bind="click: generatetempassword" value="Jana Kata Laluan Sementara" />
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Emel</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control validate[required]" data-bind="value: user.Email" />
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Emel Alternatif</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control validate[required]" data-bind="value: user.AlternativeEmail" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Kata Laluan Sekarang</label>
+                        <div class="col-md-8">
+                            <label>@string.Format("{0}", ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetPassword(Model.LoginUser.UserId))</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 text-left">Kata Laluan Baru</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" data-bind="value: user.Password" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="button" class="btn btn-primary btn-sm" data-bind="click: generatetempassword" value="Jana Kata Laluan Sementara" />
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="col-md-4 text-left">Kali Terakhir Login Pada</label>
+                    <div class="col-md-8">
+                        <label> @string.Format("{0:dd MMM yyyy hh:mm:tt}", Model.LoginUser.LastLoginDt)</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 text-left">Status</label>
+                    <div class="col-md-8">
+                        <label class="radio-inline">
+                            <input type="radio" name="status" value="Aktif" />Aktif
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="status" value="Tidak Aktif" />Tidak Aktif
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12 p-t-10">
+                        <input type="submit" value="Simpan" class="btn btn-primary btn-sm" data-bind="click: submit" />
+                        @if (Model.LoginUser.LoginRole.Roles == RolesString.AWAM)
+                        {
+                            <input type="submit" value="Simpan &amp; Emel Kata laluan" class="btn btn-primary btn-sm" data-bind="click: submitandemail" />
+                        }
+                        <input type="button" value="Hapus Pengguna" class="btn btn-primary btn-sm" data-bind="click: deleteuser, visible: user.UserId() != 0" />
+                        <input type="button" value="Batal" class="btn btn-primary btn-sm" data-bind="click: cancel" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        var user = @Html.Raw(JsonConvert.SerializeObject(@Model.LoginUser, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+    </script>
+    <script src="@Url.Content("~/Content/frontend/js/validation/validate.min.js")"></script> <!-- jQuery Form Validation Library -->
+    <script src="@Url.Content("~/Content/frontend/js/validation/validationEngine.min.js")"></script> <!-- jQuery Form Validation Library - requirred with above js -->
+    <script src="@Url.Content("~/Scripts/Core/knockout.icheck.handler.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/knockout.iradio.handler.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/manage_adduser.js")"></script>
+}

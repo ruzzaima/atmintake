@@ -1,0 +1,208 @@
+﻿@using Newtonsoft.Json
+@model SevenH.MMCSB.Atm.Web.Models.AdminViewModel
+@{
+    ViewBag.Title = "Panggilan Temuduga/Pemilihan Akhir";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section styles
+{
+    @Styles.Render("~/bundles/datepickercss")
+}
+
+<div class="row">
+    <div class="tile">
+        <h2 class="tile-title">Panggilan Temuduga/Pemilihan Akhir @string.Format("{0}/{1} {2}", Model.Acquisition.Siri, Model.Acquisition.Year, Model.Acquisition.AcquisitionType.AcquisitionTypeNm)</h2>
+        <div class="p-10">
+
+            <div class="tab-container tile">
+                <ul class="nav tab nav-tabs">
+                    @*<li><a href="#home">Mesej</a></li>*@
+                    <li class="active"><a href="#profile">Senarai Permohonan</a></li>
+                    <li><a href="#placeanddoc">Tetapkan Tempat Pemilihan &amp; Dokumen</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    @*<div class="tab-pane " id="home">
+                            <div class="form-group">
+                                <label class="control-label">Tajuk</label>
+                                <input type="text" class="form-control" data-bind="value: announcement.Header" style="text-transform: none" noncap="true" />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Mesej Emel</label>
+                                <textarea class="wysiwye-editor" name="content" rows="10" data-bind="value: announcement.Body"></textarea>
+                            </div>
+                            <input type="button" class="btn btn-primary btn-sm" value="Simpan" data-bind="click: savetemplate" />
+                        </div>*@
+                    <div class="tab-pane active" id="profile">
+                        <div class="row">
+                            <div class="form-inline p-5">
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="04" /> Panggil Temuduga/Pemilihan Akhir
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="05" /> Tidak Dipanggil Temuduga/Pemilihan Akhir
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="02" /> Belum Tukar Status
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="03" /> Semua
+                                </label>
+                                <input type="button" class="btn btn-sm m-l-5" value="Carian Calon" data-bind="click: search" />
+                            </div>
+                        </div>
+                        <table id="applicant_table" class="table table-bordered tile" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">Bil</th>
+                                    <th>Nama</th>
+                                    <th class="col-md-1 text-center">No Kad Pengenalan</th>
+                                    <th class="col-md-2 text-center">Status Permohonan Sekarang</th>
+                                    <th class="col-md-2 text-center">
+                                        <div>
+                                            <label> <input type="checkbox" id="selectall_shortlist" /> Pilih Semua Calon</label>
+                                        </div>
+                                    </th>
+                                    <th class="col-md-2 text-center">
+                                        <div>
+                                            <label> <input type="checkbox" id="selectall_process" /> Pilih Semua Calon</label>
+                                        </div>
+                                    </th>
+                                    <th class="col-md-2 text-center">
+                                        <div>
+                                            <label> <input type="checkbox" id="selectall_reject" /> Pilih Semua Calon</label>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <input type="button" class="btn btn-primary btn-sm" value="Simpan Status" data-bind="click: submit" />
+                        <input type="button" class="btn btn-primary btn-sm" value="Cetak Senarai Calon Yang Dipanggil Temuduga/Panggilan Akhir" data-bind="click: print" />
+                    </div>
+                    <div class="tab-pane" id="placeanddoc">
+                        <div class="row">
+                            <div class="form-group">
+                                <label class="control-label">
+                                    Dokumen yang perlu di download oleh calon ( <i>Tidak melebihi 5MB</i> ) :
+                                    <span style="text-decoration: underline; cursor: pointer;" data-bind="text: finalsuppdocori, click: downloaddoc"></span>
+                                </label>
+                                <input type="button" class="btn btn-sm p-l-10 p-5 p-r-10" value="Pilih Dokumen" data-bind="click: uploaddocument" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group p-5">
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="11" /> Senarai Semua Calon Yang Dipanggil Temuduga/Pemilihan Akhir
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group p-5">
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="12" /> Senarai Calon Yang Belum Ditetapkan Tempat Pemilihan
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group p-5">
+                                <label class="radio-inline">
+                                    <input type="radio" name="search" value="13" /> Senarai Calon Yang Telah Ditetapkan Tempat Pemilihan. Tempat Pemilihan : <select class="" data-bind="options: acqlocations, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: searchcriteria.finalselectionlocid"></select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group p-5">
+                                <label class="control-label col-md-3">Negeri Calon/Permohonan</label>
+                                <div class="col-md-3">
+                                    <select class="form-control atm-select" data-bind="options: applicantstates, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: searchcriteria.state"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group p-5">
+                                <label class="control-label col-md-3">Bandar Calon/Permohonan</label>
+                                <div class="col-md-3">
+                                    <select class="form-control atm-select" data-bind="options: applicantcities, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: searchcriteria.city"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-b-5">
+                            <input type="button" class="btn btn-sm" value="Carian Calon" data-bind="click: searchselected" />
+                        </div>
+                        <div class="row">
+                            <table id="selectedapplicant_table" class="table table-bordered tile" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;">Bil.</th>
+                                        <th>Nama</th>
+                                        <th class="col-md-1">No. Kad Pengenalan</th>
+                                        <th class="col-md-1">Negeri Alamat Surat Menyurat Terkini</th>
+                                        <th class="col-md-1">Bandar Surat Menyurat Terkini</th>
+                                        <th class="col-md-1">Tempat Pemilihan Yang Ditetapkan</th>
+                                        <th class="col-md-1 text-center">
+                                            <div>
+                                                <label> <input type="checkbox" id="selectall_setloc" /> Pilih Semua Calon</label>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="panel panel-default tile p-15">
+                            <div class="row">
+                                <div class="form-group p-b-10">
+                                    <label class="control-label col-md-3">Tetapkan Tempat Pemilihan Kepada : </label>
+                                    <div class="col-md-3">
+                                        <select class="form-control atm-select" data-bind="options: acqlocations, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'Sila Pilih',valueAllowUnset: true, value: selectedlocation"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group form-inline col-md-12 p-t-10">
+                                    <label>Tarikh</label>
+                                    <div class="input-group" id="startdate">
+                                        <input type="text" class="form-control input-sm" id="startdatepicker" />
+                                        <div class="input-group-addon" style="cursor: pointer">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                    <label>hingga</label>
+                                    <div class="input-group" id="enddate">
+                                        <input type="text" class="form-control input-sm" id="enddatepicker" />
+                                        <div class="input-group-addon" style="cursor: pointer">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </div>
+                                    </div>
+                                    <label>Masa (hh:mm)</label>
+                                    <input type="text" class="form-control" id="selecttime" data-bind="value: selectime" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <input type="button" class="btn btn-primary btn-sm" value="Simpan" data-bind="click: submitselectedlocation" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-l-5 m-b-5">
+            <a class="btn btn-sm" href="@Url.Action("Index", "Admin")">Kembali</a>
+        </div>
+    </div>
+</div>
+@Html.Partial("_Uploader")
+@section scripts{
+    <script type="text/javascript">
+        var selectedid = @Model.Acquisition.AcquisitionId;
+        var announcement = @Html.Raw(JsonConvert.SerializeObject(@Model.Announcement, Formatting.None, new JsonSerializerSettings() {ReferenceLoopHandling = ReferenceLoopHandling.Ignore}));
+        var finalsuppdoc = '@Html.Raw(Model.Acquisition.FinalSupportingDocument)';
+        var finalsuppdocori = '@Html.Raw(Model.Acquisition.FinalSupportingDocumentOriginal)';
+    </script>
+    @Scripts.Render("~/bundles/datepicker")
+    <script src="@Url.Content("~/Content/frontend/js/markdown.min.js")"></script> <!-- Markdown Editor -->
+    <script src="@Url.Content("~/Content/frontend/js/editor.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables-1.9.4.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery.fileupload.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_firstintakeselection.js")"></script>
+}
+

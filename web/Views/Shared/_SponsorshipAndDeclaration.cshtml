@@ -1,0 +1,186 @@
+﻿
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default tile">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p>
+                                        Adakah anda ditauliahkan di dalam Pasukan Latihan Pegawai Simpanan (PALAPES) ?
+                                    </p>
+                                    <label class="radio-inline"><input type="radio" class="atm_radio" name="servicetab_ispalapes" value="Y" />Ya</label>
+                                    <label class="radio-inline"><input type="radio" class="atm_radio" name="servicetab_ispalapes" value="N" />Tidak</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" data-bind="visible: applicant.PalapesInd()">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">
+                                Tahun
+                            </label>
+                            <input type="text" class="form-control input-sm" data-bind="value: applicant.PalapesYear, valueUpdate: 'afterkeydown'" maxlength="4" />
+                        </div>
+                        <div class="form-group">
+                            <label for="servicetab_armyservices" class="control-label">Perkhidmatan</label>
+                            <select class="form-control input-sm" id="servicetab_armyservices" data-bind="value: applicant.PalapesServices">
+                                <option value="01">Tentera Darat</option>
+                                <option value="02">Tentera Laut</option>
+                                <option value="03">Tentera Udara</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="servicetab_palapesgraduationdate" class="control-label">Tarikh Tamat Tauliah Sukarela</label>
+                            <div class="input-group" id="palapesgraduationdatepicker">
+                                <input type="text" class="form-control input-sm" id="servicetab_palapesgraduationdate" data-bind="value: applicant.PalapesTauliahEndDt, valueUpdate: 'afterkeydown'" />
+                                <div class="input-group-addon" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="servicetab_palapesinstitute" class="control-label">Pusat Pengajian</label>
+                            <input type="text" class="form-control input-sm" id="servicetab_palapesinstitute" data-bind="value: applicant.PalapesInstitution, valueUpdate: 'afterkeydown'">
+                        </div>
+                        <div class="form-group">
+                            <label for="servicetab_armyno" class="control-label">No. Tentera</label>
+                            <input type="text" class="form-control input-sm" id="servicetab_armyno" data-bind="value: applicant.PalapesArmyNo, valueUpdate: 'afterkeydown'" maxlength="12">
+                        </div>
+                        <div class="form-group">
+                            <label for="servicetab_otherqualification" class="control-label">Lain-Lain Kelulusan (jika ada)</label>
+                            <input type="text" class="form-control input-sm" id="servicetab_otherqualification" data-bind="value: applicant.PalapesRemark, valueUpdate: 'afterkeydown'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default tile">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            Adakah anda terikat dalam perjanjian dengan mana-mana majikan atau badan bernaung biasiswa?
+                        </p>
+                        <label class="radio-inline">
+                            <input type="radio" name="servicetab_scholarship" value="Y" /> Ya
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="servicetab_scholarship" value="N" /> Tidak
+                        </label>
+
+                    </div>
+                    <div class="row" data-bind="visible: applicant.ScholarshipInd()">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="servicetab_oldemployername" class="control-label">Nama Majikan</label>
+                                <input type="text" class="form-control input-sm" id="servicetab_oldemployername" data-bind="value: applicant.ScholarshipBody, valueUpdate: 'afterkeydown'">
+                            </div>
+                            <div class="form-group">
+                                <label for="servicetab_contractperiod" class="control-label">Ikatan Perjanjian Selama</label>
+                                <div class="input-group col-md-6">
+                                    <input type="text" class="form-control input-sm" id="servicetab_contractperiod" data-bind="value: applicant.ScholarshipNoOfYrContract, valueUpdate: 'afterkeydown'" maxlength="2">
+                                    <span class="input-group-addon">bulan</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="servicetab_employeraddress" class="control-label">Alamat</label>
+                                <input type="text" class="form-control input-sm" id="servicetab_employeraddress" data-bind="value: applicant.ScholarshipBodyAddr, valueUpdate: 'afterkeydown'">
+                            </div>
+                            <div class="form-group">
+                                <label for="servicetab_contractstart" class="control-label">Mulai</label>
+                                <div class="input-group" id="contractstartdatepicker">
+                                    <input type="text" class="form-control input-sm" id="servicetab_contractstart" data-bind="value: applicant.ScholarshipContractStDate, valueUpdate: 'afterkeydown'" />
+                                    <div class="input-group-addon" style="cursor: pointer">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default tile">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="row">
+                    <p>
+                        Adakah majikan anda sanggup memberikan pelepasan sekiranya anda dipilih untuk berkhidmat di dalam ATM?
+                    </p>
+                    <label class="radio-inline">
+                        <input type="radio" name="servicetab_employeraggrement" value="Y" />Ya
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="servicetab_employeraggrement" value="N" /> Tidak
+                    </label>
+                </div>
+                <div class="row" data-bind="visible: applicant.EmployeeAggreeInd()">
+                    <div class="form-group">
+                        <label class="control-label">Surat rasmi pelepasan majikan</label>
+                        <input type="button" class="btn btn-sm p-l-10 p-5 p-r-10" value="Pilih Surat" data-bind="click: uploadletter" />
+                        <div class="row p-l-10">
+                            <span style="text-decoration: underline; cursor: pointer;" data-bind="text: applicant.OriginalPelepasanDocument, click: downloadletter"></span>
+                            <input type="hidden" data-bind="value: applicant.OriginalPelepasanDocument" />
+                            <input type="hidden" data-bind="value: applicant.PelepasanDocument" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default tile">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Pernahkah anda menghadiri pemilihan pegawai tentera ?</p>
+                        <label class="radio-inline">
+                            <input type="radio" class="radio" name="servicetab_attendatmofficer" value="Y" /> Ya
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" class="radio" name="servicetab_attendatmofficer" value="N" />Tidak
+                        </label>
+                    </div>
+                </div>
+                <div class="row" data-bind="visible: applicant.ArmySelectionInd()">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="servicetab_attendatmofficerdate" class="control-label">Tarikh</label>
+                            <div class="input-group" id="attendatmofficerdatedatepicker">
+                                <input type="text" class="form-control input-sm" id="servicetab_attendatmofficerdate" data-bind="value: applicant.ArmySelectionDt, valueUpdate: 'afterkeydown'">
+                                <div class="input-group-addon" style="cursor: pointer">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="servicetab_attendatmplace" class="control-label">Tempat</label>
+                            <input type="text" class="form-control input-sm" id="servicetab_attendatmplace" data-bind="value: applicant.ArmySelectionVenue, valueUpdate: 'afterkeydown'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

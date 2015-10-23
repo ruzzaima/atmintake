@@ -1,0 +1,69 @@
+﻿@using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var listacquisition = new List<Acquisition>();
+    var selectedacq = 0;
+    if (User.Identity.IsAuthenticated)
+    {
+        var loguser = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+        if (null != loguser)
+        {
+            // get user's list of domain
+            listacquisition.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAllAcquisition(true, "01"));
+        }
+
+        if (null != Session["SelectedAcquisition"])
+        {
+            var acqid = Session["SelectedAcquisition"].ToString();
+            if (!string.IsNullOrWhiteSpace(acqid))
+            {
+                var did = 0;
+                int.TryParse(acqid, out did);
+                selectedacq = did;
+            }
+        }
+    }
+}
+@section styles{
+    <style>
+        a:hover {
+            color: #0000ff;
+        }
+
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="tile">
+        <h2 class="tile-title">Senarai Pengambilan</h2>
+        <div class="p-10">
+            <table class="table table-bordered tile" id="intakes_table">
+                <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Nama</th>
+                    <th>Siri/Tahun</th>
+                    <th>Status</th>
+                    <th>Tindakan</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        var selectedid = @selectedacq;
+    </script>
+    <script src="@Url.Content("~/Scripts/Core/jquery.dataTables.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/jquery-dataTable-bootstrap-extender.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/admin_intakes.js")"></script>
+}

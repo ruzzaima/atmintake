@@ -1,0 +1,47 @@
+﻿<div id="upload_dialog" class="modal fade" role="dialog" data-keyboard="false" tabindex="-1" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="myModalLabel">
+                    Muatnaik Dokumen
+                </h3>
+            </div>
+            <div class="form-info modal-body">
+                <form action="@Url.Action("Upload", "Upload")" method="post" enctype="multipart/form-data" id="uploaderform" role="form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <span class="input-group-btn p-b-5">
+                                    <span class="btn btn-file btn-sm btn-alt" style="padding-top: 6px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px;">
+                                        Pilih fail&hellip; <input type="file" multiple id="filetoupload">
+                                    </span>
+                                </span>
+                                <input type="text" class="form-control input-sm" style="color: #ffffff; font-weight: bold;" readonly id="filuploadname">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="button" class="btn btn-primary" value="Upload" id="fileuploadbutton" /></div>
+                    </div>
+                    <div style="height:10px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="progress">
+                                <div id="progressbar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                    <span class="sr-only">0% complete</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            @*<div class="modal-footer">
+                <button class="btn btn-primary btn-cancel" data-dismiss="modal" aria-hidden="true">
+                    Cancel
+                </button>
+                <input class="btn btn-primary btn-upload" type="button" name="button" value="Save" />
+            </div>*@
+        </div>
+    </div>
+</div>

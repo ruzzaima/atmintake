@@ -1,0 +1,227 @@
+﻿@using System.Configuration
+@using SevenH.MMCSB.Atm.Domain
+@using SevenH.MMCSB.Atm.Domain.Interface
+<!DOCTYPE html>
+<html>
+<!--[if IE 9 ]><html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <meta name="description" content="ANGKATAN TENTERA MALAYSIA, TENTERA DARAT MALAYSIA, TENTERA LAUT MALAYSIA, TENTERA UDARA MALAYSIA">
+    <meta name="keywords" content="JOM MASUK TENTERA">
+    <title>JOM MASUK TENTERA</title>
+
+    <!-- CSS -->
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/frontendcss")
+    @RenderSection("styles", required: false)
+    @{
+        var fullname = string.Empty;
+        var lastlogout = string.Empty;
+        var applicantid = 0;
+        var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+        if (null != login)
+        {
+            if (null != login.FullName)
+            {
+                fullname = login.FullName;
+            }
+            if (null != login.LastLoginDt)
+            {
+                lastlogout = string.Format("{0: dd MMM yyyy hh:mm tt}", login.LastLoginDt);
+            }
+            if (login.ApplicantId.HasValue)
+            {
+                applicantid = login.ApplicantId.Value;
+            }
+        }
+        else
+        {
+            fullname = User.Identity.Name;
+        }
+    }
+</head>
+<body>
+    <header id="header" class="media">
+        <a href="" id="menu-toggle-atm"></a>
+        <div class="logo-atm pull-left">
+            <div class="m-l-10">
+                <img height="60" src="@Url.Content("~/Images/logoatm.png")" alt="Angkatan Tentera Malaysia" />
+                <img height="60" src="@Url.Content("~/Images/logotdm.png")" alt="Tentera Darat Malaysia" />
+                <img height="60" src="@Url.Content("~/Images/logotldm.png")" alt="Tentera Laut DiRaja Malaysia" />
+                <img height="65" src="@Url.Content("~/Images/logotudm.png")" alt="Tentera Udara DiRaja Malaysia" />
+            </div>
+        </div>
+
+        <div class="media-body">
+            <div class="pull-left m-t-10 m-l-10 logo-font">
+                JOM MASUK TENTERA
+            </div>
+            <div class="media" id="top-menu">
+                <div id="time" class="pull-right">
+                    <span id="hours"></span>
+                    :
+                    <span id="min"></span>
+                    :
+                    <span id="sec"></span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+    <!-- Breadcrumb -->
+    @Html.Partial("_TopMenuPublic")
+
+    <div class="clearfix"></div>
+    <section id="main" class="p-relative" role="main">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+
+            <!-- Sidbar Widgets -->
+            <div class="side-widgets overflow">
+                <!-- Profile Menu -->
+                <div class="text-center s-widget m-t-10 m-r-5 m-l-5 m-b-25 dropdown" id="profile-menu">
+                    <h5 class="m-0">@fullname</h5>
+                    <h6>Log masuk terakhir adalah pada : @lastlogout</h6>
+                    <ul class="dropdown-menu profile-menu">
+                        <li><a href="@Url.Action("ResetPassword", "Account")">Tukar Katalaluan</a></li>
+                        <li><a href="" class="logout">Log Keluar</a></li>
+                    </ul>
+                </div>
+
+                <!-- Calendar -->
+                <div class="s-widget m-b-25 m-r-5 m-l-5">
+                    <div id="sidebar-calendar"></div>
+                </div>
+            </div>
+
+            <!-- Side Menu -->
+            <ul class="list-unstyled side-menu">
+                @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                {
+                    <li>
+                        <a class="sa-side-home" href="@Url.Action("Index", "Admin")">
+                            <span class="menu-item">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sa-side-photos" href="@Url.Action("ManageUser", "Manage")">
+                            <span class="menu-item">Pengurusan Pengguna</span>
+                        </a>
+                    </li>
+                    @*<li class="dropdown">
+                            <a class="sa-side-form" href="">
+                                <span class="menu-item">Pengurusan Sistem</span>
+                            </a>
+                            @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.HRMIS))
+                            {
+                                <ul class="list-unstyled menu-item">
+                                    <li>
+                                        <a href="@Url.Action("ExistingAtmMember", "Admin")" class="whiter" style="color: #ffffff">
+                                            Pengurusan Anggota Atm
+                                        </a>
+                                    </li>
+                                </ul>
+                            }
+                        </li>*@
+                }
+            </ul>
+
+        </aside>
+
+        <!-- Content -->
+        <section id="content" class="container">
+            <div class="block-area">
+                @RenderBody()
+            </div>
+        </section>
+        @Html.Partial("_CommonChecker")
+    </section>
+    @Html.Partial("_Footer")
+    @Html.Partial("_CommonDialog")
+
+    <!-- Javascript Libraries -->
+    <!-- jQuery -->
+    <!-- Bootstrap -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="@Url.Content("~/Scripts/Core/knockout-3.3.0.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/knockout.mapping-latest.debug.js")"></script>
+    <script src="@Url.Content("~/Scripts/Core/knockout.jqueryui.autocomplete.js")"></script>
+    <!-- UX -->
+    <script src="@Url.Content("~/Content/frontend/js/scroll.min.js")"></script>
+    <!-- Custom Scrollbar -->
+    <!-- Other -->
+    <script src="@Url.Content("~/Content/frontend/js/icheck.js")"></script> <!-- iCheck -->
+    <script src="@Url.Content("~/Content/frontend/js/calendar.min.js")"></script> <!-- Calendar -->
+    @{
+        var selectedacq = 0;
+        if (User.Identity.IsAuthenticated && null != Session["SelectedAcquisition"])
+        {
+            var acqid = Session["SelectedAcquisition"].ToString();
+            if (!string.IsNullOrWhiteSpace(acqid))
+            {
+                var did = 0;
+                int.TryParse(acqid, out did);
+                selectedacq = did;
+            }
+        }
+    }
+    <script type="text/javascript">
+        var virtualdirectory = '';
+        var server = '@ConfigurationManager.AppSettings["server"]';
+        var isauth = '@Html.Raw(User.Identity.IsAuthenticated)';
+        var selecteddomain = '@Html.Raw(selectedacq)';
+    </script>
+    <script src="@Url.Content("~/Scripts/Main/default.js")"></script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                ShowMessage('@ViewBag.Message');
+            });
+        </script>
+    }
+
+    <script type="text/javascript">
+        $(function () {
+            $('.projectdomain').click(function () {
+
+                var id = $(this).attr('domainid');
+                var intid = parseInt(id);
+                $.ajax({
+                    type: "POST",
+                    url: server + "/Admin/SetSelectedAcquisition",
+                    data: JSON.stringify({ acqid: intid }),
+                    contentType: "application/json; charset=utf-8",
+                    error: function (xhr) { ShowErrorMessage("Error : " + xhr.statusText); },
+                    success: function (msg) {
+                        if (msg.OK) {
+                            $("#message_dialog .modal-body").html('Pemilihan ' + msg.name + ' dipilih.');
+                            $("#message_dialog").modal({
+                                show: 'true',
+                                backdrop: 'true',
+                                keyboard: 'true'
+                            });
+
+                            $('#message_dialog .btn-cancel').click(function () {
+                                $('#message_dialog').modal('hide');
+                                location.href = server + "/Admin/";
+                            });
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    @RenderSection("scripts", required: false)
+    <!-- All JS functions -->
+    <script src="@Url.Content("~/Content/frontend/js/functions.js")"></script>
+    <script src="@Url.Content("~/Scripts/Main/default.after.js")"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+    var lstOP = new List<SelectListItem>();
+    lstOP.Add(new SelectListItem() { Text = "SELECT", Value = "SELECT" });
+    lstOP.Add(new SelectListItem() { Text = "COUNT", Value = "COUNT" });
+    lstOP.Add(new SelectListItem() { Text = "UPDATE / DELETE", Value = "OTHER" });
+
+    var results = ViewBag.Results;
+    var exectype = ViewBag.ExeType;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>RunSQL</title>
+    <style type="text/css">
+        textarea {
+            width: 90%;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>RUN SQL</h3>
+        @using (Html.BeginForm("RunSQL", "Admin", FormMethod.Get))
+        {
+            <div>
+                @Html.DropDownList("op", lstOP)
+            </div>
+            <div>
+                @Html.TextArea("sql")
+            </div>
+            <div><button type="submit">Execute</button></div>
+        }
+    </div>
+    @if (results != null)
+    {
+        if (exectype == "SELECT")
+        {
+            <br />
+            <div>
+                @if (results.Count > 0)
+                {
+                    <table border="1">
+                        @foreach (object[] row in results)
+                        {
+                            <tr>
+                                @foreach (var col in row)
+                                {
+                                    <td style="min-width:30px;">@col</td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <br />
+                    <div>No result found.</div>
+                }
+            </div>
+        }
+        if (exectype == "COUNT")
+        {
+            <br />
+            <div>
+                @if (results.Count > 0)
+                {
+                    <table border="1">
+                        @foreach (object row in results)
+                        {
+                            <tr>
+                                <td style="min-width:30px;">@row</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <br />
+                    <div>No result found.</div>
+                }
+            </div>
+        }
+        if (exectype == "OTHER")
+        {
+            <br />
+            <div>
+                @if (results != 0)
+                {
+                    <table border="1">
+                        <tr>
+                            <td style="min-width:30px;">Successfully Executed</td>
+                        </tr>
+                    </table>
+                }
+                else
+                {
+                    <br />
+                    <div>Fail Execute</div>
+                }
+            </div>
+        }
+    }
+</body>
+</html>

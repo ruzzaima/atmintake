@@ -1,0 +1,1025 @@
+﻿@using Newtonsoft.Json
+@model SevenH.MMCSB.Atm.Web.Models.ResumeViewModel
+@{
+    ViewBag.Title = "Resume Saya";
+    Layout = "~/Views/Shared/_LayoutWithMenu.cshtml";
+}
+@section styles
+{
+    @Styles.Render("~/bundles/datepickercss")
+}
+
+
+<div class="row">
+    <div class="tab-container tile">
+        <ul class="nav tab nav-tabs" id="resume">
+            <li role="presentation" class="active"><a data-toggle="tab" href="#peribadi">Peribadi</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#akademik">Keputusan Akademik</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#sport">Kegiatan Sukan &amp; Kokurikulum</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#service">Maklumat Perkhidmatan &amp; Ikatan</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#computer">Kemahiran Komputer</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#skill">Kebolehan/Kemahiran</a></li>
+            <li role="presentation"><a data-toggle="tab" href="#crime">Jenayah/Dadah</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="peribadi">
+                <form id="form_peribadi" action="#" role="form">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="fullname" class="control-label">Nama Penuh</label>
+                                        <input type="text" class="form-control input-sm" id="fullname" data-bind="value: applicant.FullName">
+                                        <input type="hidden" data-bind="value: applicant.ApplicantId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="idnumber" class="control-label">No Kad Pengenalan</label>
+                                        <input type="text" class="form-control input-sm" id="idnumber" data-bind="value: applicant.NewIcNo" maxlength="12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="control-label">Emel</label>
+                                        <input type="email" class="form-control input-sm" id="email" data-bind="value: applicant.Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Tarikh Lahir</label>
+                                        <div class="input-group" style="cursor: pointer" id="birthdatepicker">
+                                            <input type="text" class="form-control input-sm" data-bind="value: applicant.BirthDate">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar "></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="religion" class="control-label">Agama</label>
+                                        <select class="form-control input-sm" id="religion" data-bind="options: religions, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.ReligionCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="race" class="control-label">Bangsa</label>
+                                        <select class="form-control input-sm" id="race" data-bind="options: races, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.RaceCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ethnic" class="control-label">Etnik</label>
+                                        <select class="form-control input-sm" id="ethnic" data-bind="options: ethnics, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.EthnicCd"></select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <p>Status Perkahwinan</p>
+                                    @foreach (var m in @Model.MaritalStatuses)
+                                    {
+                                    <label class="radio-inline">
+                                        <input type="radio" class="radio m-b-5" name="maritalstatus" value="@m.MrtlStatusCd" data-bind="checked: applicant.MrtlStatusCd" /><span>@m.MrtlStatus</span>
+                                    </label>
+                                    }
+                                    <div class="form-group">
+                                        <label for="nationality" class="control-label">Kerakyatan</label>
+                                        <select class="form-control input-sm" id="nationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.NationalityCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nationalitycertno" class="control-label">No Sijil Kerakyatan</label>
+                                        <input type="text" class="form-control input-sm" id="nationalitycertno" data-bind="value: applicant.NationalityCertNo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthcertno" class="control-label">No Sijil Lahir</label>
+                                        <input type="text" class="form-control input-sm" id="birthcertno" data-bind="value: applicant.BirthCertNo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthcountry" class="control-label">Negara Kelahiran</label>
+                                        <select class="form-control input-sm" id="birthcountry" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.BirthCountryCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthstate" class="control-label">Negeri Kelahiran</label>
+                                        <select class="form-control input-sm" id="birthstate" data-bind="options: birthstates, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.BirthStateCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthcity" class="control-label">Bandar Kelahiran</label>
+                                        <select class="form-control input-sm" id="birthcity" data-bind="options: birthcities, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.BirthCityCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="placeofbirth" class="control-label">Tempat Kelahiran</label>
+                                        <input type="text" class="form-control input-sm" id="placeofbirth" data-bind="value: applicant.BirthPlace">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"></h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="control-label">Tinggi</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" data-bind="value: applicant.Height">
+                                            <span class="input-group-addon">meter</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Berat</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" data-bind="value: applicant.Weight">
+                                            <span class="input-group-addon">Kg</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bmi" class="control-label">BMI</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control input-sm" id="bmi" data-bind="value: applicant.Bmi">
+                                            <span class="input-group-addon">BMI</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>Tempat Tinggal</p>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="placeofliving" value="L" data-bind="checked: applicant.ResidenceTypeInd" />Luar Bandar
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="placeofliving" value="B" data-bind="checked: applicant.ResidenceTypeInd" />Bandar
+                                        </label>
+                                        <div class="form-group">
+                                            <label for="mailingaddress1" class="control-label">Alamat Surat Menyurat Terkini</label>
+                                            <input type="text" class="form-control input-sm" id="mailingaddress1" data-bind="value: applicant.CorresponAddr1">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-sm" id="mailingaddress2" data-bind="value: applicant.CorresponAddr2">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control input-sm" id="mailingaddress3" data-bind="value: applicant.CorresponAddr3">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mailingpostcode" class="control-label">Poskod</label>
+                                            <input type="text" class="form-control input-sm" id="mailingpostcode" data-bind="value: applicant.CorresponAddrPostCd">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mailingcity" class="control-label">Bandar</label>
+                                            <select class="form-control input-sm" id="mailingcity" data-bind="options: cities, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrCityCd"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <label for="mailingcountry" class="control-label">Negara</label>
+                                            <select class="form-control input-sm" id="mailingcountry" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrCountryCd"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mailingstate" class="control-label">Negeri</label>
+                                            <select class="form-control input-sm" id="mailingstate" data-bind="options: states, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrStateCd"></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="homephoneno" class="control-label">No. Tel Rumah</label>
+                                            <input type="text" class="form-control input-sm" id="homephoneno" data-bind="value: applicant.HomePhoneNo">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobilephoneno" class="control-label">No Tel Bimbit</label>
+                                            <input type="text" class="form-control input-sm" id="mobilephoneno" data-bind="value: applicant.MobilePhoneNo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="col-md-4">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">MAKLUMAT BAPA</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="fathername" class="control-label">Nama Bapa</label>
+                                        <input type="text" class="form-control input-sm" id="fathername" data-bind="value: applicant.DadName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fathernationality" class="control-label">Warganegara Bapa</label>
+                                        <select class="form-control input-sm" id="fathernationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.DadNationalityCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fatheridnumber" class="control-label">No Kad Pengenalan/Passort Bapa</label>
+                                        <input type="text" class="form-control input-sm" id="fatheridnumber" data-bind="value: applicant.DadIcNo" maxlength="12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fatheroccupation" class="control-label">Pekerjaan Bapa</label>
+                                        <input type="text" class="form-control input-sm" id="fatheroccupation" data-bind="value: applicant.DadOccupation" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fatherincome" class="control-label">Pendapatan Sebulan (RM)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input type="text" class="form-control input-sm" id="fatherincome" data-bind="value: applicant.DadSalary">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fahterphoneno" class="control-label">No Telefon</label>
+                                        <input type="text" class="form-control input-sm" id="fahterphoneno">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">MAKLUMAT IBU</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="mothersname" class="control-label">Nama Ibu</label>
+                                        <input type="text" class="form-control input-sm" id="mothersname" data-bind="value: applicant.MomName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mothernationality" class="control-label">Warganegara Ibu</label>
+                                        <select class="form-control input-sm" id="mothernationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.MomNationalityCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="motheridnumber" class="control-label">No Kad Pengenalan/Passport Ibu</label>
+                                        <input type="text" class="form-control input-sm" id="motheridnumber" data-bind="value: applicant.MomIcNo" maxlength="12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="motheroccupation" class="control-label">Pekerjaan Ibu</label>
+                                        <input type="text" class="form-control input-sm" id="motheroccupation" data-bind="value: applicant.MomOccupation" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="motherincome" class="control-label">Pendapatan Sebulan (RM)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input type="text" class="form-control input-sm" id="motherincome" data-bind="value: applicant.MomSalary">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="motherphoneno" class="control-label">No Telefon</label>
+                                        <input type="text" class="form-control input-sm" id="motherphoneno">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4" data-bind="visible: isguardian">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">MAKLUMAT PENJAGA</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="guardianname" class="control-label">Nama Penjaga</label>
+                                        <input type="text" class="form-control input-sm" id="guardianname" data-bind="value: applicant.GuardianName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="guardiannationality" class="control-label">Warganegara Penjaga</label>
+                                        <select class="form-control input-sm" id="guardiannationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.GuardianNationalityCd"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="guardianidnumber" class="control-label">No Kad Pengenalan/Passport Penjaga</label>
+                                        <input type="text" class="form-control input-sm" id="guardianidnumber" data-bind="value: applicant.GuardianIcNo" maxlength="12">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="guardianoccupation" class="control-label">Pekerjaan Penjaga</label>
+                                        <input type="text" class="form-control input-sm" id="guardianoccupation" data-bind="value: applicant.GuardianOccupation" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Pendapatan Sebulan (RM)</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">RM</span>
+                                            <input type="text" class="form-control input-sm" data-bind="value: applicant.GuardianSalary">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="guardianphoneno" class="control-label">No Telefon</label>
+                                        <input type="text" class="form-control input-sm" id="guardianphoneno">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"></h3>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label for="relativephoneno" class="control-label">No Tel Waris</label>
+                                        <input type="text" class="form-control input-sm" id="relativephoneno">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="familyhigheducation" class="control-label">Kelulusan Tertinggi Keluarga</label>
+                                        <input type="text" class="form-control input-sm" id="familyhigheducation" data-bind="value: applicant.FamilyHighestEduLevel">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="childno" class="control-label">Anak Ke</label>
+                                            <input type="text" class="form-control input-sm" id="childno" data-bind="value: applicant.ChildNo">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="childfrom" class="control-label">Daripada</label>
+                                            <input type="text" class="form-control input-sm" id="childfrom" data-bind="value: applicant.NoOfSibling">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <p>Bercermin Mata/Kanta Lekap?</p>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="spectacle" value="true" data-bind="checked: applicant.SpectaclesUserInd" />Ya
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="spectacle" value="false" data-bind="checked: applicant.SpectaclesUserInd" />Tidak
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <p>Kenal Warna?</p>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="colorblind" value="true" data-bind="checked: applicant.ColorBlindInd" />Ya
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="colorblind" value="false" data-bind="checked: applicant.ColorBlindInd" />Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveprofile">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="akademik">
+                <form id="form_akademik">
+                    <div class="row-fluid">
+                        <div data-bind="foreach: applicant.ApplicantEducations">
+                            <div class="col-md-4">
+                                <div class="panel panel-default tile">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">
+                                            <span data-bind="text: $data.HighEduLevel"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Tahun</label>
+                                                    <input type="text" class="form-control" data-bind="value: $data.ConfermentYr" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Keputusan</label>
+                                            <input type="text" class="form-control" data-bind="value: $data.OverallGrade" />
+                                        </div>
+                                        <!-- ko if : $data.HighEduLevelCd() === '14'-->
+                                        <div data-bind="foreach: $data.ApplicantEduSubjectCollection">
+                                            <div class="m-t-10 form-inline">
+                                                <label class="control-label" data-bind="text: $data.Subject"></label>
+                                                <input type="text" class="form-control pull-right" data-bind="value: $data.Grade" />
+                                            </div>
+                                        </div>
+                                        <!--/ko-->
+                                        <!-- ko if : $data.HighEduLevelCd() !== '14'-->
+                                        <div class="form-group">
+                                            <label class="control-label">Bidang</label>
+                                            <input type="text" class="form-control" data-bind="value: $data.EduCertTitle" />
+                                        </div>
+                                        <!--/ko-->
+                                        <div class="form-group">
+                                            <label class="control-label">Nama Institut/Sekolah</label>
+                                            <input type="text" class="form-control" data-bind="value: $data.InstitutionName" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: saveacademics">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="sport">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table tile">
+                            <thead>
+                                <tr>
+                                    <th>Bil.</th>
+                                    <th>Kegiatan Sukan Yang Disertai</th>
+                                    <th>Pencapaian/Peringkat</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: sports">
+                                <tr>
+                                    <td data-bind="text: $index() + 1">/td>
+                                    <td><select class="form-control input-sm" data-bind="options: $root.sportslist, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Id', valueAllowUnset: true, value: $data.SportAssocId"></select></td>
+                                    <td>
+                                        <select class="form-control input-sm" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                                        <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removesport">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm" data-bind="click: addsport">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Bil.</th>
+                                    <th>Kegiatan Ko-Kurikulum Yang Disertai</th>
+                                    <th>Pencapaian/Peringkat</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: kokos">
+                                <tr>
+                                    <td data-bind="text: $index() + 1">/td>
+                                    <td><select class="form-control input-sm" data-bind="options: $root.kokolist, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Id', valueAllowUnset: true, value: $data.SportAssocId"></select></td>
+                                    <td>
+                                        <select class="form-control input-sm" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                                        <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removekoko">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm" data-bind="click: addkoko">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Bil.</th>
+                                    <th>Lain-Lain</th>
+                                    <th>Pencapaian/Peringkat</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: otherssportandassociations">
+                                <tr>
+                                    <td data-bind="text: $index() + 1">/td>
+                                    <td><input type="text" class="form-control input-sm" data-bind="value: $data.SportAssocId" /></td>
+                                    <td>
+                                        <select class="form-control input-sm" data-bind="options: $root.achievements, optionsCaption: 'SILA PILIH', optionsText: 'Name', optionsValue: 'Code', valueAllowUnset: true, value: $data.AchievementCd"></select>
+                                        <input type="hidden" data-bind="value: $data.ApplicantSportAssocId" />
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-sm" data-bind="click: $root.removeothersportnkoko">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm" data-bind="click: addothersportnkoko">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-sm" data-bind="click: savesportnassociation">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="service">
+                <form id="service_form">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="tab-container tile">
+                                <ul class="nav tab nav-tabs" id="servicetab">
+                                    <li role="presentation" class="active"><a data-toggle="tab" href="#servicetab_now">Perkhidmatan Sekarang</a></li>
+                                    <li role="presentation"><a data-toggle="tab" href="#servicetab_contract">Ikatan/Kontrak</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="servicetab_now">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">Pekerjaan Sekarang</label>
+                                                    <input type="text" class="form-control input-sm" id="servicetab_currentoccupation" data-bind="value: applicant.CurrentOccupation">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Organisasi</label>
+                                                    <input type="text" class="form-control input-sm" id="servicetab_currentorganization" data-bind="value: applicant.CurrentOrganisation">
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-md-6">
+                                                        <label class="control-label">Gaji Sebulan</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">RM</span>
+                                                            <input type="text" class="form-control input-sm" id="servicetab_currentsalary" data-bind="value: applicant.CurrentSalary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary btn-sm m-t-10" data-bind="click: savecurrentoccupation">
+                                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="servicetab_contract">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default tile">
+                                                    <div class="panel-heading"></div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <p>
+                                                                                * Adakah anda ditauliahkan di dalam Pasukan Latihan Pegawai Simpanan (PALAPES) ?
+                                                                            </p>
+                                                                            <label class="radio-inline"><input type="radio" name="servicetab_ispalapes" value="true" data-bind="checked: applicant.PalapesInd" />Ya</label>
+                                                                            <label class="radio-inline"><input type="radio" name="servicetab_ispalapes" value="false" data-bind="checked: applicant.PalapesInd" />Tidak</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="control-label">
+                                                                        Tahun
+                                                                    </label>
+                                                                    <input type="text" class="form-control input-sm" data-bind="value: applicant.PalapesYear" />
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_armyno" class="control-label">No. Tentera</label>
+                                                                    <input type="text" class="form-control input-sm" id="servicetab_armyno" data-bind="value: applicant.PalapesArmyNo">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_palapesgraduationdate" class="control-label">Tarikh Tamat Tauliah Sukarela</label>
+                                                                    <div class="input-group" id="palapesgraduationdatepicker">
+                                                                        <input type="text" class="form-control input-sm" id="servicetab_palapesgraduationdate" data-bind="value: applicant.PalapesTauliahEndDt" />
+                                                                        <div class="input-group-addon" style="cursor: pointer">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_palapesinstitute" class="control-label">Pusat Pengajian</label>
+                                                                    <input type="text" class="form-control input-sm" id="servicetab_palapesinstitute" data-bind="value: applicant.PalapesInstitution">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_otherqualification" class="control-label">Lain-Lain Kelulusan (jika ada)</label>
+                                                                    <input type="text" class="form-control input-sm" id="servicetab_otherqualification">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default tile">
+                                                    <div class="panel-heading"></div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <p>
+                                                                    * Adakah anda terikat dalam perjanjian dengan mana-mana majikan atau badan bernaung biasiswa?
+                                                                </p>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="servicetab_scholarship" value="true" data-bind="checked: applicant.ScholarshipInd" /> Ya
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="servicetab_scholarship" value="false" data-bind="checked: applicant.ScholarshipInd" /> Tidak
+                                                                </label>
+
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="servicetab_oldemployername" class="control-label">Nama Majikan</label>
+                                                                        <input type="text" class="form-control input-sm" id="servicetab_oldemployername" data-bind="value: applicant.ScholarshipBody">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="servicetab_contractperiod" class="control-label">Ikatan Perjanjian Selama</label>
+                                                                        <input type="text" class="form-control input-sm" id="servicetab_contractperiod" data-bind="value: applicant.ScholarshipNoOfYrContract">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label for="servicetab_employeraddress" class="control-label">Alamat</label>
+                                                                        <input type="text" class="form-control input-sm" id="servicetab_employeraddress" data-bind="value: applicant.ScholarshipBodyAddr">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="servicetab_contractstart" class="control-label">Mulai</label>
+                                                                        <input type="text" class="form-control input-sm" id="servicetab_contractstart">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default tile">
+                                                    <div class="panel-heading"></div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <p>
+                                                                Adakah majikan anda sanggup memberikan pelepasan sekiranya anda dipilih untuk berkhidmat di dalam ATM?
+                                                            </p>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="servicetab_employeraggrement" value="true" />Ya
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" name="servicetab_employeraggrement" value="false" /> Tidak
+                                                            </label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                <label for="servicetab_currentorganization" class="control-label">Surat rasmi pelepasan majikan</label>
+
+                                                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                                    <span class="btn btn-file btn-sm btn-alt">
+                                                                        <span class="fileupload-new">Muat naik</span>
+                                                                        <span class="fileupload-exists">Tukar</span>
+                                                                        <input type="file" />
+                                                                    </span>
+                                                                    <span class="fileupload-preview"></span>
+                                                                    <a href="#" class="close close-pic fileupload-exists" data-dismiss="fileupload">
+                                                                        <i class="fa fa-times"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default tile">
+                                                    <div class="panel-heading"></div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <p>* Pernahkah anda menghadiri pemilihan pegawai tentera ?</p>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_attendatmofficer" value="true" /> Ya
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_attendatmofficer" value="false" />Tidak
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_attendatmofficerdate" class="control-label">Tarikh</label>
+                                                                    <div class="input input-group">
+                                                                        <input type="text" class="form-control input-sm" id="servicetab_attendatmofficerdate">
+                                                                        <div class="input-group-addon" style="cursor: pointer">
+                                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_attendatmplace" class="control-label">Tempat</label>
+                                                                    <input type="text" class="form-control input-sm" id="servicetab_attendatmplace">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default tile">
+                                                    <div class="panel-heading"></div>
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <p>* Pernahkah anda berkhidmat di ATM ?</p>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" class="radio" name="servicetab_exatm" value="true" /> Ya
+                                                            </label>
+                                                            <label class="radio-inline">
+                                                                <input type="radio" class="radio" name="servicetab_exatm" value="false" /> Tidak
+                                                            </label>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_exatmperiod" class="control-label">Tempoh Perkhidmatan</label>
+                                                                    <input type="text" class="form-control input-sm" id="servicetab_exatmperiod">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label for="servicetab_exatmplace" class="control-label">Tempat</label>
+                                                                    <input type="text" class="form-control input-sm" id="servicetab_exatmplace">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default tile">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">
+                                                            Keutamaan Perkhidmatan Pilihan
+                                                        </h3>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Pilihan Pertama</label>
+                                                            <div class="pull-right">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_firstchoice" value="TDM" />Tentera Darat
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_firstchoice" value="TLDM" />Tentera Laut Diraja Malaysia
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_firstchoice" value="TUDM" />Tentera Udara Diraja Malaysia
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Pilihan Kedua</label>
+                                                            <div class="pull-right">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_secondchoice" value="TDM" />Tentera Darat
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_secondchoice" value="TLDM" />Tentera Laut Diraja Malaysia
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_secondchoice" value="TUDM" />Tentera Udara Diraja Malaysia
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Pilihan Ketiga</label>
+                                                            <div class="pull-right">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_thirdchoice" value="TDM" />Tentera Darat
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_thirdchoice" value="TLDM" />Tentera Laut Diraja Malaysia
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" class="radio" name="servicetab_thirdchoice" value="TUDM" />Tentera Udara Diraja Malaysia
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary btn-sm" data-bind="click: savecontract">
+                                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="computer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default tile">
+                            <div class="panel-heading">
+                                <h4 class="panel-title"></h4>
+                            </div>
+                            <div class="panel-body">
+                                <form class="form-inline" id="computer_form">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox" value="MSWord" />MS Word
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox" value="MSExcel" />MS Excel
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox" value="MSPoint" />MS Power Point
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox" value="ICT" />ICT
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" class="checkbox" value="MSExcel" />Lain-Lain
+                                            </label>
+                                            <input type="text" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary btn-sm m-t-10">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="skill">
+                <div class="row">
+                    <div class="panel panel-default tile">
+                        <div class="panel-heading">
+                            <h4 class="panel-title"></h4>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Bil.</th>
+                                        <th>Jenis</th>
+                                        <th>Kebolehan/Kelebihan</th>
+                                        <th>Pencapaian</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                        <div class="panel-footer">
+
+                            <button type="button" class="btn btn-primary btn-sm m-t-10">
+                                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Tambah
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm m-t-10">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="crime">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form id="crime_form" role="form">
+                            <div class="panel panel-default tile">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"></h4>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Pernahkan anda terlibat di dalam mana-mana kes jenayah ?
+                                        </label>
+                                        <div class="pull-right">
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radio" name="crime_involve" value="Y" />Ya
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radio" name="crime_involve" value="N" />Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">
+                                            Pernahkan anda terlibat di dalam mana-mana kes dadah ?
+                                        </label>
+                                        <div class="pull-right">
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radio" name="crime_drug" value="Y" />Ya
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" class="radio" name="crime_drug" value="N" />Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <button type="button" class="btn btn-primary btn-sm">
+                                        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        var applicant = @Html.Raw(JsonConvert.SerializeObject(@Model.ApplicantModel));
+        var appeducation = @Html.Raw(JsonConvert.SerializeObject(@Model.ApplicantEducation));
+    </script>
+    @Scripts.Render("~/bundles/datepicker")
+    <script src="@Url.Content("~/Scripts/Main/public_resume.js")"></script>
+}

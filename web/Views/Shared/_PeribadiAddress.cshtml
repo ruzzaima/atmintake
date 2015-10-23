@@ -1,0 +1,65 @@
+﻿
+<div class="col-md-12">
+    <div class="col-md-6">
+        <div class="panel panel-default tile">
+            <div class="panel-heading">
+                <h3 class="panel-title">Alamat</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="mailingaddress1" class="control-label">Alamat Surat Menyurat Terkini<span class="red">*</span></label>
+                    <input type="text" class="form-control input-sm validate[required]" id="mailingaddress1" data-bind="value: applicant.CorresponAddr1, valueUpdate: 'afterkeydown'">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" id="mailingaddress2" data-bind="value: applicant.CorresponAddr2, valueUpdate: 'afterkeydown'">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sm" id="mailingaddress3" data-bind="value: applicant.CorresponAddr3, valueUpdate: 'afterkeydown'">
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="mailingpostcode" class="control-label col-md-12">Poskod<span class="red">*</span></label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control input-sm validate[required]" id="mailingpostcode" data-bind="value: applicant.CorresponAddrPostCd, valueUpdate: 'afterkeydown'" maxlength="5">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mailingcity" class="control-label">Bandar<span class="red">*</span></label>
+                    <select class="form-control input-sm validate[required]" id="mailingcity" data-bind="options: cities, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrCityCd"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default tile">
+            <div class="panel-heading">
+                <h3 class="panel-title">Alamat</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="mailingcountry" class="control-label">Negara<span class="red">*</span></label>
+                    <select class="form-control input-sm validate[required]" id="mailingcountry" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrCountryCd"></select>
+                </div>
+                <div class="form-group">
+                    <label for="mailingstate" class="control-label">Negeri<span class="red">*</span></label>
+                    <select class="form-control input-sm validate[required]" id="mailingstate" data-bind="options: states, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.CorresponAddrStateCd"></select>
+                </div>
+                <div class="row" style="margin-bottom: 17px !important;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="homephoneno" class="control-label">No. Tel Rumah</label>
+                            <input type="text" class="form-control input-sm" id="homephoneno" data-bind="value: applicant.HomePhoneNo, valueUpdate: 'afterkeydown'" maxlength="15">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobilephoneno" class="control-label">No Tel Bimbit<span class="red">*</span></label>
+                            <input type="text" class="form-control input-sm validate[required]" id="mobilephoneno" data-bind="value: applicant.MobilePhoneNo, valueUpdate: 'afterkeydown'" maxlength="15">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

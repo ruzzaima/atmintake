@@ -1,0 +1,65 @@
+﻿
+<div class="panel panel-default tile">
+    <div class="panel-heading">
+        <h3 class="panel-title"></h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label">Jantina</label>
+                <div class="row-fluid">
+                    <div class="col-md-6">
+                        <label class="radio-inline">
+                            <input type="radio" name="gender" value="L" /> Lelaki
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="radio-inline">
+                            <input type="radio" name="gender" value="P" /> Perempuan
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Tinggi<span class="red">*</span><i> (Contoh : 1.78)</i></label>
+            <div class="input-group">
+                <input type="text" class="form-control input-sm validate[required,custom[number],min[1],max[2.5]]" data-bind="value: applicant.Height, valueUpdate: 'change'" maxlength="4">
+                <span class="input-group-addon">meter</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Berat<span class="red">*</span><i> (Contoh : 60)</i></label>
+            <div class="input-group">
+                <input type="text" class="form-control input-sm validate[required,custom[number],min[30],max[100]]" data-bind="value: applicant.Weight, valueUpdate: 'change'" maxlength="4">
+                <span class="input-group-addon">Kg</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="bmi" class="control-label">BMI</label>
+            <div class="input-group">
+                <input type="text" class="form-control input-sm" id="bmi" data-bind="value: applicant.Bmi, valueUpdate: 'afterkeydown'" maxlength="4" readonly="readonly">
+                <span class="input-group-addon">BMI</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <p>Bercermin Mata/Kanta Lekap?</p>
+            <label class="radio-inline">
+                <input type="radio" name="spectacle" value="Y" />Ya
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="spectacle" value="N" />Tidak
+            </label>
+        </div>
+        <div class="form-group">
+            <p>Kenal Warna?</p>
+            <label class="radio-inline">
+                <input type="radio" name="colorblind" value="Y" />Ya
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="colorblind" value="N" />Tidak
+            </label>
+        </div>
+    </div>
+
+</div>

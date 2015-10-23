@@ -1,0 +1,164 @@
+﻿
+<div class="col-md-4">
+    <div class="panel panel-default tile">
+        <div class="panel-heading">
+            <h3 class="panel-title">MAKLUMAT BAPA</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" data-bind="iCheckBox: applicant.DadNotApplicable" /> Tidak Berkaitan
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="fathername" class="control-label">Nama Bapa<span class="red">*</span></label>
+                <input type="text" class="form-control input-sm" id="fathername" data-bind="value: applicant.DadName, valueUpdate: 'afterkeydown'">
+            </div>
+            <div class="form-group">
+                <label for="fathernationality" class="control-label">Warganegara Bapa<span class="red">*</span></label>
+                <select class="form-control input-sm" id="fathernationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.DadNationalityCd"></select>
+            </div>
+            <div class="form-group">
+                <label for="fatheridnumber" class="control-label">No Kad Pengenalan/Passport Bapa<span class="red">*</span></label>
+                <input type="text" class="form-control input-sm" id="fatheridnumber" data-bind="value: applicant.DadIcNo, valueUpdate: 'afterkeydown'" maxlength="12">
+            </div>
+            <div class="form-group">
+                <label for="fatheroccupation" class="control-label">Pekerjaan Bapa</label>
+                <input type="text" class="form-control input-sm" id="fatheroccupation" data-bind="value: applicant.DadOccupation, valueUpdate: 'afterkeydown'" />
+            </div>
+            <div class="form-group">
+                <label for="fahterphoneno" class="control-label">No Telefon</label>
+                <input type="text" class="form-control input-sm" id="fahterphoneno" data-bind="value: applicant.DadPhoneNo, valueUpdate: 'afterkeydown'">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="panel panel-default tile">
+        <div class="panel-heading">
+            <h3 class="panel-title">MAKLUMAT IBU</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" data-bind="iCheckBox: applicant.MomNotApplicable" /> Tidak Berkaitan
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="mothersname" class="control-label">Nama Ibu<span class="red">*</span></label>
+                <input type="text" class="form-control input-sm" id="mothersname" data-bind="value: applicant.MomName, valueUpdate: 'afterkeydown'">
+            </div>
+            <div class="form-group">
+                <label for="mothernationality" class="control-label">Warganegara Ibu<span class="red">*</span></label>
+                <select class="form-control input-sm" id="mothernationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.MomNationalityCd"></select>
+            </div>
+            <div class="form-group">
+                <label for="motheridnumber" class="control-label">No Kad Pengenalan/Passport Ibu<span class="red">*</span></label>
+                <input type="text" class="form-control input-sm" id="motheridnumber" data-bind="value: applicant.MomIcNo, valueUpdate: 'afterkeydown'" maxlength="12">
+            </div>
+            <div class="form-group">
+                <label for="motheroccupation" class="control-label">Pekerjaan Ibu</label>
+                <input type="text" class="form-control input-sm" id="motheroccupation" data-bind="value: applicant.MomOccupation, valueUpdate: 'afterkeydown'" />
+            </div>
+            <div class="form-group">
+                <label for="motherphoneno" class="control-label">No Telefon</label>
+                <input type="text" class="form-control input-sm" id="motherphoneno" data-bind="value: applicant.MomPhoneNo, valueUpdate: 'afterkeydown'">
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="panel panel-default tile">
+        <div class="panel-heading">
+            <h3 class="panel-title">MAKLUMAT PENJAGA</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" data-bind="iCheckBox: applicant.GuardianNotApplicable" /> Tidak Berkaitan
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="guardianname" class="control-label">Nama Penjaga<span class="red">*</span></label>
+                <input type="text" class="form-control input-sm" id="guardianname" data-bind="value: applicant.GuardianName, valueUpdate: 'afterkeydown'">
+            </div>
+            <div class="form-group">
+                <label for="guardiannationality" class="control-label">Warganegara Penjaga<span class="red">*</span></label>
+                <select class="form-control input-sm" id="guardiannationality" data-bind="options: countries, optionsText: 'Name', optionsValue: 'Code', optionsCaption: 'SILA PILIH', valueAllowUnset: true, value: applicant.GuardianNationalityCd"></select>
+            </div>
+            <div class="form-group">
+                <label for="guardianidnumber" class="control-label">No Kad Pengenalan/Passport Penjaga<span class="red">*</span></label>
+                <input type="text" class="form-control input-sm" id="guardianidnumber" data-bind="value: applicant.GuardianIcNo, valueUpdate: 'afterkeydown'" maxlength="12">
+            </div>
+            <div class="form-group">
+                <label for="guardianoccupation" class="control-label">Pekerjaan Penjaga</label>
+                <input type="text" class="form-control input-sm" id="guardianoccupation" data-bind="value: applicant.GuardianOccupation, valueUpdate: 'afterkeydown'" />
+            </div>
+            <div class="form-group">
+                <label for="guardianphoneno" class="control-label">No Telefon</label>
+                <input type="text" class="form-control input-sm" id="guardianphoneno" data-bind="value: applicant.GuardianPhoneNo, valueUpdate: 'afterkeydown'">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="panel panel-default tile">
+        <div class="panel-heading"></div>
+        <div class="panel-body">
+            <div class="row m-b-5">
+                <p>Pernahkah anda berkhidmat di ATM?</p>
+                <label class="radio-inline">
+                    <input type="radio" class="radio" name="servicetab_exatm" value="Y" /> Ya
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" class="radio" name="servicetab_exatm" value="N" /> Tidak
+                </label>
+            </div>
+            <div class="row" data-bind="visible: applicant.ArmyServiceInd()">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Tempoh Perkhidmatan</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control input-sm" data-bind="value: applicant.ArmyServiceYrOfServ, valueUpdate: 'afterkeydown'" maxlength="2">
+                            <span class="input-group-addon">tahun</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Sebab anda berhenti dari ATM</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: applicant.ArmyServiceResignRemark, valueUpdate: 'afterkeydown'">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Pekerjaan Sekarang</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: applicant.CurrentOccupation, valueUpdate: 'afterkeydown'">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Nama Tempat Kerja</label>
+                        <input type="text" class="form-control input-sm" data-bind="value: applicant.CurrentOrganisation, valueUpdate: 'afterkeydown'">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-12">Gaji</label>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">RM</span>
+                            <input type="text" class="form-control input-sm money" data-bind="value: applicant.CurrentSalary, valueUpdate: 'afterkeydown'" maxlength="15">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
