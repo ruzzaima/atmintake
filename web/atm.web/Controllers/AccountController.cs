@@ -5,13 +5,9 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
-using FluentNHibernate.Conventions.Inspections;
-using NHibernate.Cfg;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using SevenH.MMCSB.Atm.Web.Models;
-using Spring.Context.Support;
-using Spring.Objects.Factory;
 
 namespace SevenH.MMCSB.Atm.Web
 {

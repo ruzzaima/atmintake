@@ -13,22 +13,20 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             using (var entities = new atmEntities())
             {
                 var exist = (from a in entities.tblUsers where a.UserId == user.UserId select a).SingleOrDefault();
-                if (null != exist)
-                {
-                    exist.AlternativeEmail = user.AlternativeEmail;
-                    exist.ApplicantId = user.ApplicantId;
-                    exist.Email = user.Email;
-                    exist.ModifiedBy = user.ModifiedBy;
-                    exist.ModifiedDt = DateTime.Now;
-                    exist.ServiceCd = user.ServiceCd;
-                    exist.IsLocked = user.IsLocked;
-                    exist.LastLoginDt = user.LastLoginDt;
-                    exist.FirstTime = user.FirstTime;
-                    exist.FullName = user.FullName;
-                    exist.Salt = user.Salt;
-                    entities.SaveChanges();
-                    return exist.UserId;
-                }
+                if (null == exist) return 0;
+                exist.AlternativeEmail = user.AlternativeEmail;
+                exist.ApplicantId = user.ApplicantId;
+                exist.Email = user.Email;
+                exist.ModifiedBy = user.ModifiedBy;
+                exist.ModifiedDt = DateTime.Now;
+                exist.ServiceCd = user.ServiceCd;
+                exist.IsLocked = user.IsLocked;
+                exist.LastLoginDt = user.LastLoginDt;
+                exist.FirstTime = user.FirstTime;
+                exist.FullName = user.FullName;
+                exist.Salt = user.Salt;
+                entities.SaveChanges();
+                return exist.UserId;
             }
             return 0;
         }

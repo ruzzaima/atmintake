@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NHibernate;
 
 namespace SevenH.MMCSB.Atm.Domain.Interface
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using SevenH.MMCSB.Atm.Domain.Interface;
-using Spring.Context.Support;
-using Spring.Objects.Factory;
+﻿using SevenH.MMCSB.Atm.Domain.Interface;
 
 namespace SevenH.MMCSB.Atm.Domain
 {

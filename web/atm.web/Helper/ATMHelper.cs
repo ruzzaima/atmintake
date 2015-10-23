@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web.Helpers;
-using log4net.Appender;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
-using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web
 {
-    public static class ATMHelper
+    public static class AtmHelper
     {
         public static string ResolveServerUrl(string serverUrl, bool forceHttps)
         {

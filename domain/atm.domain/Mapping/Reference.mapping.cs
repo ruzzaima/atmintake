@@ -1,5 +1,4 @@
 ﻿using FluentNHibernate.Mapping;
-using NHibernate.Type;
 
 namespace SevenH.MMCSB.Atm.Domain
 {

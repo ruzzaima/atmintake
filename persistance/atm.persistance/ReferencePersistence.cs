@@ -14,21 +14,19 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
             using (var entities = new atmEntities())
             {
                 var l = from a in entities.tblREFAchievements select a;
-                if (l.Any())
+                if (!l.Any()) return list;
+                foreach (var ac in l)
                 {
-                    foreach (var ac in l)
+                    list.Add(new Achievement()
                     {
-                        list.Add(new Achievement()
-                        {
-                            AchievementCd = ac.AchievementCd,
-                            AchievementDescription = ac.Achievement,
-                            ActiveInd = ac.ActiveInd,
-                            CreatedBy = ac.CreatedBy,
-                            CreatedDt = ac.CreatedDt,
-                            LastModifiedBy = ac.LastModifiedBy,
-                            LastModifiedDt = ac.LastModifiedDt
-                        });
-                    }
+                        AchievementCd = ac.AchievementCd,
+                        AchievementDescription = ac.Achievement,
+                        ActiveInd = ac.ActiveInd,
+                        CreatedBy = ac.CreatedBy,
+                        CreatedDt = ac.CreatedDt,
+                        LastModifiedBy = ac.LastModifiedBy,
+                        LastModifiedDt = ac.LastModifiedDt
+                    });
                 }
             }
             return list;

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SevenH.MMCSB.Atm.Domain.Interface;
+﻿using SevenH.MMCSB.Atm.Domain.Interface;
 
 namespace SevenH.MMCSB.Atm.Domain
 {

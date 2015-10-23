@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using SevenH.MMCSB.Atm.Domain;
-using SevenH.MMCSB.Atm.Domain.Interface;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {

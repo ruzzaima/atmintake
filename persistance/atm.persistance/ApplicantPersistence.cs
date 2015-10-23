@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net.Mail;
 using SevenH.MMCSB.Atm.Domain;
 
 namespace SevenH.MMCSB.Atm.Entity.Persistance

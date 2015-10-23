@@ -635,7 +635,7 @@ namespace SevenH.MMCSB.Atm.Web
                 decimal num3 = 0.0m;
                 decimal num4 = 0.0m;
                 decimal num5 = 0.0m;
-                ATMHelper.Checklist(applicantid, acquisitionid, out num, out num2, out num3, out num4, out num5);
+                AtmHelper.Checklist(applicantid, acquisitionid, out num, out num2, out num3, out num4, out num5);
                 return Json(new
                 {
                     OK = true,

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using NHibernate;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using CodeItem = SevenH.MMCSB.Atm.Domain;
 

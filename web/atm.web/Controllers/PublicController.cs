@@ -7,9 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
-using NHibernate.Dialect.Function;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using SevenH.MMCSB.Atm.Web.Models;
@@ -49,9 +47,9 @@ namespace SevenH.MMCSB.Atm.Web
             if (null != exist) ModelState.AddModelError("", "Pengguna dengan Kad Pengenalan : " + model.IdNumber + " sudah wujud.");
 
             // check validity of id number
-            if (!ATMHelper.MyKadValidation(model.IdNumber)) ModelState.AddModelError("", "Kad Pengenalan : " + model.IdNumber + " tidak sah.");
+            if (!AtmHelper.MyKadValidation(model.IdNumber)) ModelState.AddModelError("", "Kad Pengenalan : " + model.IdNumber + " tidak sah.");
             string message;
-            if (!ATMHelper.MyKadAgeValidation(model.IdNumber, out message)) ModelState.AddModelError("", message);
+            if (!AtmHelper.MyKadAgeValidation(model.IdNumber, out message)) ModelState.AddModelError("", message);
             // checking existing member of atm
             var atmexist = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").ExistingAtmMember(model.IdNumber);
             if (null != atmexist)
@@ -381,7 +379,7 @@ namespace SevenH.MMCSB.Atm.Web
 
                     var message = string.Empty;
                     // check the criteria
-                    if (!ATMHelper.ValidateHeightWeightBmi(Convert.ToDouble(applicant.Height), Convert.ToDouble(applicant.Weight), acquisitionid, applicant.GenderCd, out message))
+                    if (!AtmHelper.ValidateHeightWeightBmi(Convert.ToDouble(applicant.Height), Convert.ToDouble(applicant.Weight), acquisitionid, applicant.GenderCd, out message))
                         return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar." + message });
 
                     if (acquisitionid != 0)
@@ -426,7 +424,7 @@ namespace SevenH.MMCSB.Atm.Web
                         var spopoint = 0.0m;
                         var saspoint = 0.0m;
                         var chpoint = 0.0m;
-                        ATMHelper.Checklist(applicant.ApplicantId, acquisitionid, out peribadipoint, out edupoint, out spopoint, out saspoint, out chpoint);
+                        AtmHelper.Checklist(applicant.ApplicantId, acquisitionid, out peribadipoint, out edupoint, out spopoint, out saspoint, out chpoint);
 
                         if (peribadipoint != 100m)
                             return Json(new { OK = false, message = "Permohonan anda tidak berjaya dihantar. Maklumat peribadi tidak lengkap." });
@@ -988,10 +986,10 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult ValidateMyKad(string idnumber)
         {
-            if (!ATMHelper.MyKadValidation(idnumber))
+            if (!AtmHelper.MyKadValidation(idnumber))
                 return Json(new { OK = false, message = "No Kad Pengenalan : " + idnumber + " tidak sah. Sila masukkan 12 digit no kad pengenalan anda. <i>(Contoh: 900101011234)</i>" });
             string message;
-            if (ATMHelper.MyKadAgeValidation(idnumber, out message))
+            if (AtmHelper.MyKadAgeValidation(idnumber, out message))
                 return Json(new { OK = true, message });
             return Json(new { OK = false, message });
         }
@@ -1060,7 +1058,7 @@ namespace SevenH.MMCSB.Atm.Web
                                         sb.Append("<br/><b>Pusat Latihan </b>: " + (app.ReportDutyLocation != null ? app.ReportDutyLocation.LocationNm : "Tiada Rekod"));
                                         sb.Append("<br/><b>Tarikh </b>: " + string.Format("{0:dd MMM yyyy}", app.ReportDutyDate));
                                         sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.ReportDutyDate));
-                                        sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.ReportDutySupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa lapor diri</u></a>");
+                                        sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + AtmHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.ReportDutySupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa lapor diri</u></a>");
                                         sb.Append("</p><hr/><br/>");
                                     }
                                     else
@@ -1090,7 +1088,7 @@ namespace SevenH.MMCSB.Atm.Web
                                             sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FinalSelectionStartDate));
                                             if (app.FinalSelectionEndDate.HasValue)
                                                 sb.Append(" - " + string.Format("{0:hh:mm tt}", app.FinalSelectionEndDate));
-                                            sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FinalSupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
+                                            sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + AtmHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FinalSupportingDocument), false) + "','finalsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
                                             sb.Append("</p><hr/><br/>");
                                         }
                                         else
@@ -1122,7 +1120,7 @@ namespace SevenH.MMCSB.Atm.Web
                                                 //sb.Append("<br/><b>Masa </b>: " + string.Format("{0:hh:mm tt}", app.FirstSelectionDate));
                                                 //if (app.FirstSelectionEndDate.HasValue)
                                                 //    sb.Append(" - " + string.Format("{0:hh:mm tt}", app.FirstSelectionEndDate));
-                                                sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + ATMHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FirstSupportingDocument), false) + "','firstsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
+                                                sb.Append("<br/><a href=\"#\" onclick=\"javascript:window.open('" + AtmHelper.ResolveServerUrl(VirtualPathUtility.ToAbsolute("~/SuppDoc/" + acq.FirstSupportingDocument), false) + "','firstsupp',null,true);\" style=\"color: #0000ff;\"><u>Download dokumen yang perlu diisi dan dibawa semasa pemilihan</u></a>");
                                                 sb.Append("</p><hr/><br/>");
                                             }
                                             else
@@ -1153,7 +1151,7 @@ namespace SevenH.MMCSB.Atm.Web
         public ActionResult CheckHeightWeightBmi(double? height, double? weight, string gendercode, int acquisitionid)
         {
             string message;
-            var valid = ATMHelper.ValidateHeightWeightBmi(height, weight, acquisitionid, gendercode, out message);
+            var valid = AtmHelper.ValidateHeightWeightBmi(height, weight, acquisitionid, gendercode, out message);
             return Json(new { OK = valid, message = message });
         }
 

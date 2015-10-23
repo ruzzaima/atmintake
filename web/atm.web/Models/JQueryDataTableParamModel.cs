@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SevenH.MMCSB.Atm.Web.Models
+﻿namespace SevenH.MMCSB.Atm.Web.Models
 {
     /// Class that encapsulates most common parameters sent by DataTables plugin
     /// </summary>

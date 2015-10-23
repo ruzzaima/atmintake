@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.AccessControl;
-using SevenH.MMCSB.Atm.Domain.Interface;
-
-namespace SevenH.MMCSB.Atm.Domain
+﻿namespace SevenH.MMCSB.Atm.Domain
 {
     public partial class ApplicantEducation : DomainObject
     {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NHibernate.Mapping;
 using SevenH.MMCSB.Atm.Domain;
 
 namespace SevenH.MMCSB.Atm.Web.Models

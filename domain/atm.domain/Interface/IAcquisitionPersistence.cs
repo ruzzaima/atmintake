@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace SevenH.MMCSB.Atm.Domain
 {

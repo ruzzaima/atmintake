@@ -28,11 +28,8 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 if (null != exist)
                 {
                     var r = (from a in entities.tblUserRoles where a.UserId == exist.UserId select a).SingleOrDefault();
-                    if (null != r)
-                    {
-                        if (!string.IsNullOrWhiteSpace(r.Roles))
-                            return r.Roles.Contains(role);
-                    }
+                    if (!string.IsNullOrWhiteSpace(r?.Roles))
+                        return r.Roles.Contains(role);
                     if (r == null && role == RolesString.AWAM)
                         return true;
                 }
