@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/domain/atm.domain/bin/Debug
+/domain/atm.domain/obj/Debug
+/persistance/atm.persistance/bin/Debug
+/persistance/atm.nhibernate.persistance/obj
+/persistance/atm.nhibernate.persistance/bin
+/persistance/atm.persistance/obj/Debug
+/tools/atm.migration/bin/Debug
+/tools/atm.migration/obj/Debug
+/web/atm.web/bin
+/web/atm.web/obj/Debug
