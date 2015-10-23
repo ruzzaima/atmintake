@@ -12,3 +12,9 @@
 /tools/atm.migration/obj/Debug
 /web/atm.web/bin
 /web/atm.web/obj/Debug
+/elasticsearch
+/IIS Express
+/rabbitmq_server
+/schedulers
+/subscribers.host
+/tools
