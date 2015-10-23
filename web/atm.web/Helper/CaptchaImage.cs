@@ -7,39 +7,36 @@ namespace SevenH.MMCSB.Atm.Web
 {
     public class CaptchaImage
     {
-        public Bitmap Image
-        {
-            get { return this.image; }
-        }
+        public Bitmap Image => this.m_image;
 
-        private string text;
-        private int width;
-        private int height;
-        private System.Drawing.FontFamily fontFamily;
-        private Bitmap image;
+        private string m_text;
+        private readonly int m_width;
+        private readonly int m_height;
+        private readonly FontFamily m_fontFamily;
+        private Bitmap m_image;
 
-        private Random random = new Random( );
+        private readonly Random m_random = new Random( );
 
-        public CaptchaImage( int width, int height, System.Drawing.FontFamily fontFamily )
+        public CaptchaImage( int width, int height, FontFamily fontFamily )
         {
-            this.width = width;
-            this.height = height;
-            this.fontFamily = fontFamily;
+            this.m_width = width;
+            this.m_height = height;
+            this.m_fontFamily = fontFamily;
         }
-        public CaptchaImage( string s, int width, int height, System.Drawing.FontFamily fontFamily )
+        public CaptchaImage( string s, int width, int height, FontFamily fontFamily )
         {
-            this.text = s;
-            this.width = width;
-            this.height = height;
-            this.fontFamily = fontFamily;
+            this.m_text = s;
+            this.m_width = width;
+            this.m_height = height;
+            this.m_fontFamily = fontFamily;
         }
-        public string CreateRandomText( int Length )
+        public string CreateRandomText( int length )
         {
             string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890";
-            char[] chars = new char[ Length ];
+            char[] chars = new char[ length ];
             Random rd = new Random( );
 
-            for ( int i = 0; i < Length; i++ ) {
+            for ( int i = 0; i < length; i++ ) {
                 chars[ i ] = allowedChars[ rd.Next( 0, allowedChars.Length ) ];
             }
 
@@ -49,13 +46,13 @@ namespace SevenH.MMCSB.Atm.Web
         public void GenerateImage( )
         {
             // Create a new 32-bit bitmap image.
-            Bitmap bitmap = new Bitmap( this.width, this.height, PixelFormat.Format32bppArgb );
+            Bitmap bitmap = new Bitmap( this.m_width, this.m_height, PixelFormat.Format32bppArgb );
 
             // Create a graphics object for drawing.
             Graphics g = Graphics.FromImage( bitmap );
             g.PageUnit = GraphicsUnit.Pixel;
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            Rectangle rect = new Rectangle( 0, 0, this.width, this.height );
+            Rectangle rect = new Rectangle( 0, 0, this.m_width, this.m_height );
 
             // Fill in the background.
             HatchBrush hatchBrush = new HatchBrush( HatchStyle.Shingle, Color.LightGray, Color.White );
@@ -68,26 +65,28 @@ namespace SevenH.MMCSB.Atm.Web
             // Adjust the font size until the text fits within the image.
             do {
                 fontSize--;
-                font = new Font( this.fontFamily.Name, fontSize, GraphicsUnit.Pixel );
-                size = g.MeasureString( this.text, font );
+                font = new Font( this.m_fontFamily.Name, fontSize, GraphicsUnit.Pixel );
+                size = g.MeasureString( this.m_text, font );
             } while ( size.Width > rect.Width );
 
             // Set up the text format.
-            StringFormat format = new StringFormat( );
-            format.Alignment = StringAlignment.Center;
-            format.LineAlignment = StringAlignment.Center;
+            StringFormat format = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
 
             // Create a path using the text and warp it randomly.
             GraphicsPath path = new GraphicsPath( );
 
-            path.AddString( this.text, font.FontFamily, (int)font.Style, font.Size, rect, format );
+            path.AddString( this.m_text, font.FontFamily, (int)font.Style, font.Size, rect, format );
             float v = 4F;
             PointF[] points =
 			{
-				new PointF(this.random.Next(rect.Width) / v, this.random.Next(rect.Height) / v),
-				new PointF(rect.Width - this.random.Next(rect.Width) / v, this.random.Next(rect.Height) / v),
-				new PointF(this.random.Next(rect.Width) / v, rect.Height - this.random.Next(rect.Height) / v),
-				new PointF(rect.Width - this.random.Next(rect.Width) / v, rect.Height - this.random.Next(rect.Height) / v)
+				new PointF(this.m_random.Next(rect.Width) / v, this.m_random.Next(rect.Height) / v),
+				new PointF(rect.Width - this.m_random.Next(rect.Width) / v, this.m_random.Next(rect.Height) / v),
+				new PointF(this.m_random.Next(rect.Width) / v, rect.Height - this.m_random.Next(rect.Height) / v),
+				new PointF(rect.Width - this.m_random.Next(rect.Width) / v, rect.Height - this.m_random.Next(rect.Height) / v)
 			};
             Matrix matrix = new Matrix( );
             matrix.Translate( 0F, 0F );
@@ -100,10 +99,10 @@ namespace SevenH.MMCSB.Atm.Web
             // Add some random noise.
             int m = Math.Max( rect.Width, rect.Height );
             for ( int i = 0; i < (int)( rect.Width * rect.Height / 30F ); i++ ) {
-                int x = this.random.Next( rect.Width );
-                int y = this.random.Next( rect.Height );
-                int w = this.random.Next( m / 50 );
-                int h = this.random.Next( m / 50 );
+                int x = this.m_random.Next( rect.Width );
+                int y = this.m_random.Next( rect.Height );
+                int w = this.m_random.Next( m / 50 );
+                int h = this.m_random.Next( m / 50 );
                 g.FillEllipse( hatchBrush, x, y, w, h );
             }
 
@@ -113,12 +112,12 @@ namespace SevenH.MMCSB.Atm.Web
             g.Dispose( );
 
             // Set the image.
-            this.image = bitmap;
+            this.m_image = bitmap;
         }
 
         public void SetText( string text )
         {
-            this.text = text;
+            this.m_text = text;
         }
     }
 }

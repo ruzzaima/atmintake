@@ -54,7 +54,7 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> ResetPassword(ChangePasswordViewModel model)
+        public ActionResult ResetPassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -145,7 +145,7 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -197,7 +197,7 @@ namespace SevenH.MMCSB.Atm.Web
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> LoginFromMain(LoginViewModel model, string returnUrl)
+        public ActionResult LoginFromMain(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -256,7 +256,7 @@ namespace SevenH.MMCSB.Atm.Web
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> FirstTimeLogin(FirstTimeViewModel model)
+        public ActionResult FirstTimeLogin(FirstTimeViewModel model)
         {
             if (ModelState.IsValid)
             {

@@ -12,9 +12,9 @@ namespace SevenH.MMCSB.Atm.Web
     {
         public ActionResult GetCountries()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Country> countries = referenceRepo.GetCountries();
-            if (countries != null && countries.Any<Country>())
+            var referenceRepo = new ReferenceRepo();
+            var countries = referenceRepo.GetCountries().ToArray();
+            if (countries.Any<Country>())
             {
                 var value = from a in countries
                             orderby a.CountryName

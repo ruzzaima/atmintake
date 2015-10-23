@@ -18,19 +18,20 @@ namespace SevenH.MMCSB.Atm.Web
 {
     public class PublicController : Controller
     {
+        public const string LOGIN_USER_PERSISTANCE = "LoginUserPersistance";
 
-        private ILoginUserPersistance _mPersistence;
+        private ILoginUserPersistance m_persistence;
 
         public virtual ILoginUserPersistance LoginPersistance
         {
             get
             {
-                if (((_mPersistence != null))) return _mPersistence;
+                if (((m_persistence != null))) return m_persistence;
                 var ctx = ContextRegistry.GetContext();
-                _mPersistence = ((IObjectFactory)ctx).GetObject("LoginUserPersistance") as ILoginUserPersistance;
-                return _mPersistence;
+                m_persistence = ((IObjectFactory)ctx).GetObject(LOGIN_USER_PERSISTANCE) as ILoginUserPersistance;
+                return m_persistence;
             }
-            set { _mPersistence = value; }
+            set { m_persistence = value; }
         }
 
         public ActionResult Register()
@@ -41,7 +42,7 @@ namespace SevenH.MMCSB.Atm.Web
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             var exist = LoginPersistance.GetByUserName(model.IdNumber);
             if (null != exist) ModelState.AddModelError("", "Pengguna dengan Kad Pengenalan : " + model.IdNumber + " sudah wujud.");
@@ -115,7 +116,7 @@ namespace SevenH.MMCSB.Atm.Web
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Account(UserAccountViewModel model)
+        public ActionResult Account(UserAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -133,7 +134,7 @@ namespace SevenH.MMCSB.Atm.Web
         public ActionResult Resume()
         {
             var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS" } };
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login)
             {
                 vm.ApplicantModel.FullName = login.FullName;
@@ -178,7 +179,7 @@ namespace SevenH.MMCSB.Atm.Web
         public ActionResult PegawaiKadetForm(int id)
         {
             var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = id };
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login && id != 0)
             {
                 if (login.ApplicantId.HasValue && login.ApplicantId.Value != 0)
@@ -210,13 +211,13 @@ namespace SevenH.MMCSB.Atm.Web
 
 
         [Authorize]
-        public ActionResult TLDMForm(int id)
+        public ActionResult TldmForm(int id)
         {
             var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = id };
             var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones();
             if (null != zones && zones.Any())
                 vm.Zones.AddRange(zones);
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login && id != 0)
             {
                 if (login.ApplicantId.HasValue && login.ApplicantId.Value != 0)
@@ -261,7 +262,7 @@ namespace SevenH.MMCSB.Atm.Web
             var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones();
             if (null != zones && zones.Any())
                 vm.Zones.AddRange(zones);
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login && id != 0)
             {
                 if (login.ApplicantId.HasValue && login.ApplicantId.Value != 0)
@@ -307,7 +308,7 @@ namespace SevenH.MMCSB.Atm.Web
             if (null != zones && zones.Any())
                 vm.Zones.AddRange(zones);
 
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login && id != 0)
             {
                 if (login.ApplicantId.HasValue && login.ApplicantId.Value != 0)
@@ -370,7 +371,7 @@ namespace SevenH.MMCSB.Atm.Web
         [Authorize]
         public ActionResult SubmitApplication(int acquisitionid)
         {
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login)
             {
                 if (login.ApplicantId.HasValue)
@@ -813,7 +814,7 @@ namespace SevenH.MMCSB.Atm.Web
                     GuardianNotApplicable = applicant.GuardianNotApplicable
                 };
 
-                var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+                var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
 
                 var id = app.Save();
                 if (id > 0)
@@ -950,7 +951,7 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult SubmitSportAndKoko(IEnumerable<ApplicantSport> sports, IEnumerable<ApplicantSport> kokos, IEnumerable<ApplicantSport> others)
         {
-            var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+            var login = ObjectBuilder.GetObject<ILoginUserPersistance>(LOGIN_USER_PERSISTANCE).GetByUserName(User.Identity.Name);
             if (null != login)
             {
                 if (login.ApplicantId != null)

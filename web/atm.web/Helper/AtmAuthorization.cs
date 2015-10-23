@@ -9,7 +9,6 @@ namespace SevenH.MMCSB.Atm.Web
 
     public class AtmAuthorize : AuthorizeAttribute
     {
-        public string Roles { get; set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {

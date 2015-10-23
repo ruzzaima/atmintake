@@ -9,18 +9,18 @@ namespace SevenH.MMCSB.Atm.Web
     public class ReferenceRepo 
     {
 
-        private IReferencePersistence _mPersistence;
+        private IReferencePersistence m_persistence;
 
         public virtual IReferencePersistence PersistanceLayer
         {
             get
             {
-                if (((_mPersistence != null))) return _mPersistence;
+                if (((m_persistence != null))) return m_persistence;
                 var ctx = ContextRegistry.GetContext();
-                _mPersistence = ((IObjectFactory)ctx).GetObject("ReferencePersistence") as IReferencePersistence;
-                return _mPersistence;
+                m_persistence = ((IObjectFactory)ctx).GetObject("ReferencePersistence") as IReferencePersistence;
+                return m_persistence;
             }
-            set { _mPersistence = value; }
+            set { m_persistence = value; }
         }
 
         public IEnumerable<Achievement> GetAchievements()

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Web.UI;
@@ -12,17 +11,12 @@ namespace SevenH.MMCSB.Atm.Web
 {
     public class MailService
     {
-        private Stream ConvertByteArrayToStream(byte[] input)
-        {
-            return new MemoryStream(input);
-        }
-
         private List<string> Spliter(string source)
         {
             if (source != null)
             {
                 var result = new List<string>();
-                var t = source.Split(new string[] { ",", " ", ";" }, StringSplitOptions.RemoveEmptyEntries);
+                var t = source.Split(new[] { ",", " ", ";" }, StringSplitOptions.RemoveEmptyEntries);
                 if (t.Any())
                 {
                     result.AddRange(t);
@@ -40,25 +34,29 @@ namespace SevenH.MMCSB.Atm.Web
         {
             var client = new SmtpClient();
 
-            var mailDefinition = new MailDefinition();
-            mailDefinition.Priority = MailPriority.High;
-            mailDefinition.From = "noreply@atm.gov.my";
-            mailDefinition.IsBodyHtml = true;
-            mailDefinition.Subject = "[ATM]Notifikasi Pendaftaran";
-            mailDefinition.BodyFileName = templatepath;
+            var mailDefinition = new MailDefinition
+            {
+                Priority = MailPriority.High,
+                From = "noreply@atm.gov.my",
+                IsBodyHtml = true,
+                Subject = "[ATM]Notifikasi Pendaftaran",
+                BodyFileName = templatepath
+            };
 
-            var ldReplacement = new ListDictionary();
-            if (dateTime.HasValue)
-                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", dateTime.Value));
-            else
-                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
+            var ldReplacement = new ListDictionary
+            {
+                {
+                    "<%RegistrationDateTime%>", dateTime.HasValue
+                        ? $"{dateTime.Value:dd/MM/yyyy}"
+                        : $"{user.CreatedDt:dd/MM/yyyy}"
+                },
+                {"<%FullName%>", user.FullName.Trim().ToUpper()},
+                {"<%UserName%>", user.UserName.Trim().ToUpper()},
+                {"<%Password%>", user.Password},
+                {"<%LoginUrl%>", loginurl}
+            };
 
-            ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
-            ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
-            ldReplacement.Add("<%Password%>", user.Password);
-            ldReplacement.Add("<%LoginUrl%>", loginurl);
-            var mail = new MailMessage();
-            mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
+            var mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
             mail.From = new MailAddress(from, "No Reply");
 
             if (null != ccs)
@@ -75,7 +73,7 @@ namespace SevenH.MMCSB.Atm.Web
 
             mail.Subject = "[ATM]Notifikasi Pendaftaran";
             mail.IsBodyHtml = true;
-            AlternateView htmlView = null;
+            AlternateView htmlView;
             htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
             mail.AlternateViews.Add(htmlView);
 
@@ -87,8 +85,9 @@ namespace SevenH.MMCSB.Atm.Web
                     {
                         client.Send(mail);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
+                        //ignore
                     }
                 }
         }
@@ -96,26 +95,30 @@ namespace SevenH.MMCSB.Atm.Web
         public void SendMail(string subject, string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
         {
             var client = new SmtpClient();
-            var mailDefinition = new MailDefinition();
-            mailDefinition.Priority = MailPriority.High;
-            mailDefinition.From = from;
-            mailDefinition.IsBodyHtml = true;
-            mailDefinition.Subject = subject;
-            mailDefinition.BodyFileName = templatepath;
+            var mailDefinition = new MailDefinition
+            {
+                Priority = MailPriority.High,
+                From = @from,
+                IsBodyHtml = true,
+                Subject = subject,
+                BodyFileName = templatepath
+            };
 
-            var ldReplacement = new ListDictionary();
-            if (dateTime.HasValue)
-                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", dateTime.Value));
-            else
-                ldReplacement.Add("<%RegistrationDateTime%>", string.Format("{0:dd/MM/yyyy}", user.CreatedDt));
+            var ldReplacement = new ListDictionary
+            {
+                {
+                    "<%RegistrationDateTime%>", dateTime.HasValue
+                        ? $"{dateTime.Value:dd/MM/yyyy}"
+                        : $"{user.CreatedDt:dd/MM/yyyy}"
+                },
+                {"<%FullName%>", user.FullName.Trim().ToUpper()},
+                {"<%UserName%>", user.UserName.Trim().ToUpper()}
+            };
 
-            ldReplacement.Add("<%FullName%>", user.FullName.Trim().ToUpper());
-            ldReplacement.Add("<%UserName%>", user.UserName.Trim().ToUpper());
             if (!string.IsNullOrWhiteSpace(user.Password))
                 ldReplacement.Add("<%Password%>", user.Password);
             ldReplacement.Add("<%LoginUrl%>", loginurl);
-            var mail = new MailMessage();
-            mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
+            var mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
             mail.From = new MailAddress(from, "No Reply");
 
             if (null != ccs)
@@ -131,8 +134,7 @@ namespace SevenH.MMCSB.Atm.Web
                 }
             mail.Subject = subject;
             mail.IsBodyHtml = true;
-            AlternateView htmlView = null;
-            htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
+            var htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
             mail.AlternateViews.Add(htmlView);
 
             if (null != tos)
@@ -143,9 +145,9 @@ namespace SevenH.MMCSB.Atm.Web
                     {
                         client.Send(mail);
                     }
-                    catch (Exception exm)
+                    catch (Exception)
                     {
-
+                        // ignored
                     }
                 }
         }
@@ -182,8 +184,9 @@ namespace SevenH.MMCSB.Atm.Web
                     {
                         client.Send(mail);
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
+                        // ignored
                     }
                 }
         }

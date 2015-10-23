@@ -59,7 +59,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
         public ActionResult SubmitUser(LoginUser loguser)
         {
-            if (loguser.LoginRole != null && !string.IsNullOrWhiteSpace(loguser.LoginRole.Roles))
+            if (!string.IsNullOrWhiteSpace(loguser.LoginRole?.Roles))
             {
                 if (loguser.LoginRole != null)
                 {
@@ -168,23 +168,19 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
             Func<LoginUser, string> orderingFunction = (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.LoginId);
             var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-            {
-                if (users != null) users = users.OrderBy(orderingFunction);
-            }
-            else if (users != null) users = users.OrderByDescending(orderingFunction);
+            users = sortDirection == "asc" ? users?.OrderBy(orderingFunction) : users?.OrderByDescending(orderingFunction);
 
             var loginUsers = users as IList<LoginUser> ?? users.ToList();
-            var aadata = loginUsers.Select(a => new string[]
+            var aadata = loginUsers.Select(a => new[]
             {
                 a.UserId.ToString(),
                 a.FullName,
                 a.LoginId,
-                string.Format("{0}<br/>{1}", a.Email, a.AlternativeEmail),
+                $"{a.Email}<br/>{a.AlternativeEmail}",
                 a.ServiceName,
                 a.LoginRole.Roles,
                 a.IsLocked ? "Tidak Aktif" : "Aktif",
-                string.Format("{0:dd/MM/yyyy hh:mm:tt}", a.LastLoginDt),
+                $"{a.LastLoginDt:dd/MM/yyyy hh:mm:tt}",
                 a.UserId.ToString()
             }).ToList();
 

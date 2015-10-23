@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using SevenH.MMCSB.Atm.Domain;
-using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
@@ -12,11 +11,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Account", "Public");
 
-            return RedirectToAction("Login", "Account");
-
-            var vm = new HomeViewModel();
-            vm.ListOfAdvertisment.AddRange(ObjectBuilder.GetObject<IAdvertismentPersistance>("AdvertismentPersistance").GetAdvertisments(true, null));
-            return View(vm);
+            return RedirectToAction("Login", "Account");;
         }
 
         public ActionResult Advertisment(int id)
