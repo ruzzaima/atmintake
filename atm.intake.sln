@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{4ABF9EE7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "atm.migration", "tools\atm.migration\atm.migration.csproj", "{75E6ED6C-2F76-455B-81DA-F5CB84DB98CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "atm.web", "web\atm.web.csproj", "{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{75E6ED6C-2F76-455B-81DA-F5CB84DB98CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75E6ED6C-2F76-455B-81DA-F5CB84DB98CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75E6ED6C-2F76-455B-81DA-F5CB84DB98CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,5 +58,6 @@ Global
 		{4BC025B8-6498-4BD1-A55D-1D8DD4E2D6C9} = {33D17568-8ECB-4C97-9304-9AAAFA3581E3}
 		{21B84AC3-08A8-49C8-926B-974ACCBCA79D} = {33D17568-8ECB-4C97-9304-9AAAFA3581E3}
 		{75E6ED6C-2F76-455B-81DA-F5CB84DB98CE} = {4ABF9EE7-C1C5-460A-9A33-92D90157228B}
+		{A0FF2DA1-FBF5-4DA9-865F-90A6A1B14F94} = {80F5FC4B-B3AE-4CEC-BCB3-0FD2004AE3BD}
 	EndGlobalSection
 EndGlobal

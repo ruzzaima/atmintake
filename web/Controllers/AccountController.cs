@@ -149,12 +149,13 @@ namespace SevenH.MMCSB.Atm.Web
         {
             if (ModelState.IsValid)
             {
-                var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(model.UserName);
+                var security = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance");
+                var login = security.GetByUserName(model.UserName);
                 if (null != login)
                 {
                     if (!login.IsLocked)
                     {
-                        if (ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Validate(model.UserName, model.Password))
+                        if (security.Validate(model.UserName, model.Password))
                         {
                             FormsAuthentication.SetAuthCookie(model.UserName, true);
                             if (login.FirstTime)
@@ -163,18 +164,21 @@ namespace SevenH.MMCSB.Atm.Web
                                 login.LastLoginDt2 = login.LastLoginDt;
                             login.LastLoginDt = DateTime.Now;
                             login.Save();
-                            ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);
+                            security.LoggingUser(login.UserId, LogStatusCodeString.Successful_Login, User.Identity.Name, DateTime.Now);
                             if (login.ApplicantId.HasValue) Session["IsRegistered"] = "Yes"; else Session["IsRegistered"] = "No";
-                            if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.AWAM))
+
+                            var role = ObjectBuilder.GetObject<IRoleProvider>("RoleProvider");
+
+                            if (role.CheckUserIsInRole(login.LoginId, RolesString.AWAM))
                                 return RedirectToAction("Application", "Public");
-                            if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.SUPER_ADMIN))
+                            if (role.CheckUserIsInRole(login.LoginId, RolesString.SUPER_ADMIN))
                                 return RedirectToAction("ManageUser", "Manage");
-                            if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(login.LoginId, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                            if (role.CheckUserIsInRole(login.LoginId, RolesString.PEGAWAI_PENGAMBILAN) || role.CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || role.CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
                                 return RedirectToAction("Intakes", "Admin");
                         }
                         else
                         {
-                            ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(login.UserId, LogStatusCodeString.Invalid_Password, User.Identity.Name, DateTime.Now);
+                            security.LoggingUser(login.UserId, LogStatusCodeString.Invalid_Password, User.Identity.Name, DateTime.Now);
                             ModelState.AddModelError("", "Kata Laluan tidak tepat.");
                         }
                     }

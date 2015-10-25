@@ -18,3 +18,7 @@
 /schedulers
 /subscribers.host
 /tools
+/packages
+/domain/atm.domain/bin
+/web/bin
+/web/obj/Debug

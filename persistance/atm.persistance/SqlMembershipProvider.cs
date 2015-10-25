@@ -28,7 +28,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 entities.SaveChanges();
                 return exist.UserId;
             }
-            return 0;
+
         }
 
         public bool CustomChangePassword(string username, string oldpassword, string newpassword)

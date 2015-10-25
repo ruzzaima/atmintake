@@ -7,29 +7,25 @@ namespace SevenH.MMCSB.Atm.Domain
     public partial class Acquisition : DomainObject
     {
         public virtual ICollection<AcquisitionEducationCriteria> AcquisitionEducationCriterias { get; set; }
-
         public virtual ICollection<AcqQuestionnaire> AcqQuestionnaires { get; set; }
-
         public virtual Advertisment Advertisment { get; set; }
-
         public virtual AcquisitionType AcquisitionType { get; set; }
-
-        private IAcquisitionPersistence _mPersistence;
+        private IAcquisitionPersistence m_persistence;
 
 
         public virtual IAcquisitionPersistence PersistanceLayer
         {
             get
             {
-                if (((_mPersistence == null)))
+                if (((m_persistence == null)))
                 {
                     var ctx = ContextRegistry.GetContext();
-                    _mPersistence =
-                        ((IObjectFactory)ctx).GetObject("AcquisitionPersistence") as IAcquisitionPersistence;
+                    m_persistence =
+                        ((IObjectFactory)ctx).GetObject(Strings.ACQUISITION_PERSISTANCE) as IAcquisitionPersistence;
                 }
-                return _mPersistence;
+                return m_persistence;
             }
-            set { _mPersistence = value; }
+            set { m_persistence = value; }
         }
 
         public virtual int Save()

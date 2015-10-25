@@ -99,7 +99,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 entities.SaveChanges();
                 return exist.Id;
             }
-            return 0;
+
         }
 
         public IEnumerable<Advertisment> GetAdvertisments(bool? isactive, DateTime? enddate)

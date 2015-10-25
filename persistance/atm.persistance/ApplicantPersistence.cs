@@ -54,7 +54,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.BirthCertNo = appl.BirthCertNo;
                     exist.BirthCityCd = appl.BirthCityCd;
                     exist.BirthCountryCd = appl.BirthCountryCd;
-                    exist.BirthDt = appl.BirthDt.Value;
+                    exist.BirthDt = appl.BirthDt ?? DateTime.MinValue;
                     exist.BirthPlace = appl.BirthPlace;
                     exist.BirthStateCd = appl.BirthStateCd;
                     exist.BloodTypeCd = appl.BloodTypeCd;
@@ -450,39 +450,31 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
 
         public IEnumerable<ApplicantSkill> GetSkill(int applicantid)
         {
-            var list = new List<ApplicantSkill>();
             using (var entities = new atmEntities())
             {
-                var l = from a in entities.tblApplicantSkills where a.ApplicantId == applicantid select a;
-                if (l.Any())
-                {
-                    foreach (var s in l)
-                    {
-                        var apps = new ApplicantSkill
-                        {
-                            AchievementCd = s.AchievementCd,
-                            CreatedBy = s.CreatedBy,
-                            CreatedDt = s.CreatedDt,
-                            LastModifiedBy = s.LastModifiedBy,
-                            LastModifiedDt = s.LastModifiedDt,
-                            ApplicantId = s.ApplicantId,
-                            ApplicantSkillId = s.ApplicantSkillId,
-                            LanguageSkillSpeak = s.LanguageSkillSpeak,
-                            LanguageSkillWrite = s.LanguageSkillWrite,
-                            Others = s.Others,
-                            Skill = s.tblREFSkill.Skill,
-                            SkillCatCd = !string.IsNullOrWhiteSpace(s.SkillCatCd) ? s.SkillCatCd.Trim() : s.SkillCatCd,
-                            SkillCd = !string.IsNullOrWhiteSpace(s.SkillCd) ? s.SkillCd.Trim() : s.SkillCd
-                        };
+                var skills = entities.tblApplicantSkills.Where(sk => sk.ApplicantId == applicantid).ToList();
+                var list = from s in skills
+                           select new ApplicantSkill
+                           {
+                               AchievementCd = s.AchievementCd,
+                               CreatedBy = s.CreatedBy,
+                               CreatedDt = s.CreatedDt,
+                               LastModifiedBy = s.LastModifiedBy,
+                               LastModifiedDt = s.LastModifiedDt,
+                               ApplicantId = s.ApplicantId,
+                               ApplicantSkillId = s.ApplicantSkillId,
+                               LanguageSkillSpeak = s.LanguageSkillSpeak,
+                               LanguageSkillWrite = s.LanguageSkillWrite,
+                               Others = s.Others,
+                               Skill = s.tblREFSkill?.Skill,
+                               SkillCatCd = s.SkillCatCd?.Trim(),
+                               SkillCd = s.SkillCd?.Trim()
+                           };
 
-                        if (!string.IsNullOrWhiteSpace(apps.SkillCd) && s.tblREFSkill != null)
-                            apps.Skill = s.tblREFSkill.Skill;
 
-                        list.Add(apps);
-                    }
-                }
+                return list.ToList();
+
             }
-            return list;
         }
 
         public int SaveSport(ApplicantSport sport)
@@ -714,7 +706,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 BirthCertNo = appl.BirthCertNo,
                 BirthCityCd = appl.BirthCityCd,
                 BirthCountryCd = appl.BirthCountryCd,
-                BirthDt = appl.BirthDt.Value,
+                BirthDt = appl.BirthDt ?? DateTime.MinValue,
                 BirthPlace = appl.BirthPlace,
                 BirthStateCd = appl.BirthStateCd,
                 BloodTypeCd = appl.BloodTypeCd,
@@ -1054,7 +1046,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     var l = entities.tblApplicants.SqlQuery(sql).ToList();
                     if (l.Any())
                     {
-                        list.AddRange(l.Select(app => BindingToClass(app)));
+                        list.AddRange(l.Select(BindingToClass));
                     }
                 }
             }
