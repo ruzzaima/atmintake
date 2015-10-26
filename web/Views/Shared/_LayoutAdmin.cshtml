@@ -1,6 +1,12 @@
-﻿@using System.Configuration
-@using SevenH.MMCSB.Atm.Domain
+﻿@using SevenH.MMCSB.Atm.Domain
 @using SevenH.MMCSB.Atm.Domain.Interface
+@using ConfigurationManager = System.Configuration.ConfigurationManager
+@using ObjectBuilder = SevenH.MMCSB.Atm.Domain.ObjectBuilder
+
+@{
+
+    var user = HttpContext.Current.User;
+}
 <!DOCTYPE html>
 <html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -20,7 +26,7 @@
         var fullname = string.Empty;
         var lastlogout = string.Empty;
         var applicantid = 0;
-        var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+        var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(user.Identity.Name);
         if (null != login)
         {
             if (null != login.FullName)
@@ -38,7 +44,7 @@
         }
         else
         {
-            fullname = User.Identity.Name;
+            fullname = user.Identity.Name;
         }
     }
 </head>
@@ -98,7 +104,7 @@
 
             <!-- Side Menu -->
             <ul class="list-unstyled side-menu">
-                @if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.SUPER_ADMIN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.PEGAWAI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.KERANI_PENGAMBILAN) || ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.STATISTIC))
+                @if (user.IsInRole(RolesString.SUPER_ADMIN) || user.IsInRole(RolesString.PEGAWAI_PENGAMBILAN) || user.IsInRole(RolesString.KERANI_PENGAMBILAN) || user.IsInRole(RolesString.STATISTIC))
                 {
                     <li>
                         <a class="sa-side-home" href="@Url.Action("Index", "Admin")">
@@ -158,7 +164,7 @@
     <script src="@Url.Content("~/Content/frontend/js/calendar.min.js")"></script> <!-- Calendar -->
     @{
         var selectedacq = 0;
-        if (User.Identity.IsAuthenticated && null != Session["SelectedAcquisition"])
+        if (user.Identity.IsAuthenticated && null != Session["SelectedAcquisition"])
         {
             var acqid = Session["SelectedAcquisition"].ToString();
             if (!string.IsNullOrWhiteSpace(acqid))
@@ -172,7 +178,7 @@
     <script type="text/javascript">
         var virtualdirectory = '';
         var server = '@ConfigurationManager.AppSettings["server"]';
-        var isauth = '@Html.Raw(User.Identity.IsAuthenticated)';
+        var isauth = '@Html.Raw(user.Identity.IsAuthenticated)';
         var selecteddomain = '@Html.Raw(selectedacq)';
     </script>
     <script src="@Url.Content("~/Scripts/Main/default.js")"></script>

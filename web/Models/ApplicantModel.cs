@@ -118,8 +118,8 @@ namespace SevenH.MMCSB.Atm.Web.Models
                 var lastid = NewIcNo.Substring(NewIcNo.Length - 1);
                 var checkgend = 0;
                 int.TryParse(lastid, out checkgend);
-                var even = new List<int>() { 0, 2, 4, 6, 8 };
-                var odd = new List<int>() { 1, 3, 5, 7, 9 };
+                var even = new List<int> { 0, 2, 4, 6, 8 };
+                var odd = new List<int> { 1, 3, 5, 7, 9 };
                 if (string.IsNullOrWhiteSpace(app.GenderCd))
                 {
                     if (even.Contains(checkgend)) GenderCd = "P";
@@ -193,7 +193,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
                     Skills.AddRange(skills.ToList());
 
                     if (Skills.Count <= 2)
-                        Skills.Add(new ApplicantSkill() { SkillCd = "", SkillCatCd = "L", Skill = "" });
+                        Skills.Add(new ApplicantSkill { SkillCd = "", SkillCatCd = "L", Skill = "" });
                 }
 
 
@@ -258,18 +258,18 @@ namespace SevenH.MMCSB.Atm.Web.Models
                                                     if (null != subbs)
                                                     {
                                                         if (ed.ApplicantEduSubjectCollection.All(a => a.SubjectCd != subbs.SubjectCd))
-                                                            ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject() { SubjectCd = subbs.SubjectCd, Subject = subbs.Subject });
+                                                            ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject { SubjectCd = subbs.SubjectCd, Subject = subbs.Subject });
                                                     }
                                                     else
                                                     {
                                                         if (!ed.ApplicantEduSubjectCollection.Any(a => subbs != null && a.SubjectCd == subbs.SubjectCd))
-                                                            ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                            ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
                                                     }
                                                 }
                                                 else
                                                 {
                                                     if (ed.ApplicantEduSubjectCollection.All(a => a.SubjectCd != s.SubjectCd))
-                                                        ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                        ed.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
                                                 }
 
                                             }
@@ -285,14 +285,14 @@ namespace SevenH.MMCSB.Atm.Web.Models
                                     {
                                         if (ledu.All(a => a.HighEduLevelCd != h.HighEduLevelCd))
                                         {
-                                            var edu = new ApplicantEducation() { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
+                                            var edu = new ApplicantEducation { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
 
                                             if (h.HighEduLevelCd == "14")
                                             {
                                                 var subjects = refrepos.GetSubjects(h.HighEduLevelCd);
                                                 if (subjects.Any())
                                                     foreach (var s in subjects.Take(10))
-                                                        edu.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                        edu.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
 
                                                 var totalsubject = 16 - ed.ApplicantEduSubjectCollection.Count();
                                                 for (int i = 0; i < totalsubject; i++)
@@ -312,13 +312,13 @@ namespace SevenH.MMCSB.Atm.Web.Models
                             {
                                 foreach (var h in he)
                                 {
-                                    var edu = new ApplicantEducation() { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
+                                    var edu = new ApplicantEducation { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
                                     if (h.HighEduLevelCd == "14")
                                     {
                                         var subjects = refrepos.GetSubjects(h.HighEduLevelCd);
                                         if (subjects.Any())
                                             foreach (var s in subjects.Take(10))
-                                                edu.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                edu.ApplicantEduSubjectCollection.Add(new ApplicantEduSubject { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
 
                                         for (int i = 0; i < 6; i++)
                                         {
@@ -366,10 +366,10 @@ namespace SevenH.MMCSB.Atm.Web.Models
                             foreach (var s in skills)
                             {
                                 if (!Skills.Any(a => a.SkillCd.Trim() == s.SkillCd.Trim()))
-                                    Skills.Add(new ApplicantSkill() { SkillCd = s.SkillCd.Trim(), SkillCatCd = "L", Skill = s.SkillDescription.Trim() });
+                                    Skills.Add(new ApplicantSkill { SkillCd = s.SkillCd.Trim(), SkillCatCd = "L", Skill = s.SkillDescription.Trim() });
                             }
                             if (Skills.Count <= 2)
-                                Skills.Add(new ApplicantSkill() { SkillCd = "", SkillCatCd = "L", Skill = "" });
+                                Skills.Add(new ApplicantSkill { SkillCd = "", SkillCatCd = "L", Skill = "" });
                         }
 
                         if (Others.Count() == 0)
@@ -491,8 +491,8 @@ namespace SevenH.MMCSB.Atm.Web.Models
                 var lastid = NewIcNo.Substring(NewIcNo.Length - 1);
                 var checkgend = 0;
                 int.TryParse(lastid, out checkgend);
-                var even = new List<int>() { 0, 2, 4, 6, 8 };
-                var odd = new List<int>() { 1, 3, 5, 7, 9 };
+                var even = new List<int> { 0, 2, 4, 6, 8 };
+                var odd = new List<int> { 1, 3, 5, 7, 9 };
                 if (string.IsNullOrWhiteSpace(app.GenderCd))
                 {
                     if (even.Contains(checkgend)) GenderCd = "P";
@@ -567,7 +567,7 @@ namespace SevenH.MMCSB.Atm.Web.Models
                     SkillSubmitteds.AddRange(skills.ToList());
 
                     if (SkillSubmitteds.Count <= 2)
-                        SkillSubmitteds.Add(new ApplicantSkillSubmitted() { SkillCd = "", SkillCatCd = "L", Skill = "" });
+                        SkillSubmitteds.Add(new ApplicantSkillSubmitted { SkillCd = "", SkillCatCd = "L", Skill = "" });
                 }
 
 
@@ -632,18 +632,18 @@ namespace SevenH.MMCSB.Atm.Web.Models
                                                     if (null != subbs)
                                                     {
                                                         if (ed.ApplicantEduSubjectSubmittedCollection.All(a => a.SubjectCd != subbs.SubjectCd))
-                                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = subbs.SubjectCd, Subject = subbs.Subject });
+                                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted { SubjectCd = subbs.SubjectCd, Subject = subbs.Subject });
                                                     }
                                                     else
                                                     {
                                                         if (!ed.ApplicantEduSubjectSubmittedCollection.Any(a => subbs != null && a.SubjectCd == subbs.SubjectCd))
-                                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                            ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
                                                     }
                                                 }
                                                 else
                                                 {
                                                     if (ed.ApplicantEduSubjectSubmittedCollection.All(a => a.SubjectCd != s.SubjectCd))
-                                                        ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                        ed.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
                                                 }
 
                                             }
@@ -659,14 +659,14 @@ namespace SevenH.MMCSB.Atm.Web.Models
                                     {
                                         if (ledu.All(a => a.HighEduLevelCd != h.HighEduLevelCd))
                                         {
-                                            var edu = new ApplicantEducationSubmitted() { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
+                                            var edu = new ApplicantEducationSubmitted { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
 
                                             if (h.HighEduLevelCd == "14")
                                             {
                                                 var subjects = refrepos.GetSubjects(h.HighEduLevelCd);
                                                 if (subjects.Any())
                                                     foreach (var s in subjects.Take(10))
-                                                        edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                        edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
 
                                                 var totalsubject = 16 - ed.ApplicantEduSubjectSubmittedCollection.Count();
                                                 for (int i = 0; i < totalsubject; i++)
@@ -686,13 +686,13 @@ namespace SevenH.MMCSB.Atm.Web.Models
                             {
                                 foreach (var h in he)
                                 {
-                                    var edu = new ApplicantEducationSubmitted() { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
+                                    var edu = new ApplicantEducationSubmitted { HighEduLevelCd = h.HighEduLevelCd, HighEduLevel = h.HighestEduLevel };
                                     if (h.HighEduLevelCd == "14")
                                     {
                                         var subjects = refrepos.GetSubjects(h.HighEduLevelCd);
                                         if (subjects.Any())
                                             foreach (var s in subjects.Take(10))
-                                                edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted() { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
+                                                edu.ApplicantEduSubjectSubmittedCollection.Add(new ApplicantEduSubjectSubmitted { SubjectCd = s.SubjectCd, Subject = s.SubjectDescription });
 
                                         for (int i = 0; i < 6; i++)
                                         {
@@ -740,10 +740,10 @@ namespace SevenH.MMCSB.Atm.Web.Models
                             foreach (var s in skills)
                             {
                                 if (!SkillSubmitteds.Any(a => a.SkillCd.Trim() == s.SkillCd.Trim()))
-                                    SkillSubmitteds.Add(new ApplicantSkillSubmitted() { SkillCd = s.SkillCd.Trim(), SkillCatCd = "L", Skill = s.SkillDescription.Trim() });
+                                    SkillSubmitteds.Add(new ApplicantSkillSubmitted { SkillCd = s.SkillCd.Trim(), SkillCatCd = "L", Skill = s.SkillDescription.Trim() });
                             }
                             if (SkillSubmitteds.Count <= 2)
-                                SkillSubmitteds.Add(new ApplicantSkillSubmitted() { SkillCd = "", SkillCatCd = "L", Skill = "" });
+                                SkillSubmitteds.Add(new ApplicantSkillSubmitted { SkillCd = "", SkillCatCd = "L", Skill = "" });
                         }
 
                         if (!OtherSubmitteds.Any())

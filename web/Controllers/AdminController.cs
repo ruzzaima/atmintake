@@ -10,7 +10,7 @@ using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
-    [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.KERANI_PENGAMBILAN + "," + RolesString.PEGAWAI_PENGAMBILAN)]
+    [Authorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.KERANI_PENGAMBILAN + "," + RolesString.PEGAWAI_PENGAMBILAN)]
     public class AdminController : Controller
     {
         public const string ACQUISITION_PERSISTENCE = "AcquisitionPersistence";
@@ -217,7 +217,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             applicantSubmitteds.AddRange(sortDirection == "asc" ? applicants.OrderBy(orderingFunction) : applicants.OrderByDescending(orderingFunction));
 
-            var aadata = applicantSubmitteds.Select(a => new string[]
+            var aadata = applicantSubmitteds.Select(a => new[]
             {
                 a.ApplicantId.ToString(),
                 a.FullName,
@@ -271,14 +271,17 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 var usr = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
                 if (null != usr)
                 {
-                    if (!string.IsNullOrWhiteSpace(usr.ServiceCd))
-                        intakes.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAllAcquisition(null, usr.ServiceCd).ToList());
-                    else
-                        intakes.AddRange(ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAllAcquisition(null, string.Empty).ToList());
+                    intakes.AddRange(!string.IsNullOrWhiteSpace(usr.ServiceCd)
+                        ? ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE)
+                            .GetAllAcquisition(null, usr.ServiceCd)
+                            .ToList()
+                        : ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE)
+                            .GetAllAcquisition(null, string.Empty)
+                            .ToList());
                 }
             }
 
-            var aadata = intakes.Select(a => new string[]
+            var aadata = intakes.Select(a => new[]
             {
                 a.AcquisitionId.ToString(),
                 a.AcquisitionType.AcquisitionTypeNm,
@@ -300,13 +303,13 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
         public ActionResult FirstIntakeSelection()
         {
-            var vm = new AdminViewModel() { Announcement = new AcquisitionAnnouncement() { AnnouncementSelectionInd = 1, AnnouncementTypeInd = "E" } };
+            var vm = new AdminViewModel { Announcement = new AcquisitionAnnouncement { AnnouncementSelectionInd = 1, AnnouncementTypeInd = "E" } };
             if (Session[SELECTED_ACQUISITION] == null)
                 return RedirectToAction("Intakes", "Admin");
             var acqid = Session[SELECTED_ACQUISITION]?.ToString();
             if (string.IsNullOrWhiteSpace(acqid)) return View(vm);
 
-            var did = 0;
+            int did;
             int.TryParse(acqid, out did);
             if (did == 0)
                 return RedirectToAction("Intakes", "Admin");
@@ -315,7 +318,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             if (null != acq)
             {
                 vm.Acquisition = acq;
-                vm.Announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAnnouncement(acq.AcquisitionId, 1) ?? new AcquisitionAnnouncement() { AnnouncementSelectionInd = 1, AnnouncementTypeInd = "E" };
+                vm.Announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAnnouncement(acq.AcquisitionId, 1) ?? new AcquisitionAnnouncement { AnnouncementSelectionInd = 1, AnnouncementTypeInd = "E" };
             }
             return View(vm);
         }
@@ -328,7 +331,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             var acqid = Session[SELECTED_ACQUISITION]?.ToString();
             if (!string.IsNullOrWhiteSpace(acqid))
             {
-                var did = 0;
+                int did;
                 int.TryParse(acqid, out did);
                 if (did == 0)
                     return RedirectToAction("Intakes", "Admin");
@@ -337,7 +340,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 if (null != acq)
                 {
                     vm.Acquisition = acq;
-                    vm.Announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAnnouncement(acq.AcquisitionId, 2) ?? new AcquisitionAnnouncement() { AnnouncementSelectionInd = 2, AnnouncementTypeInd = "E" };
+                    vm.Announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAnnouncement(acq.AcquisitionId, 2) ?? new AcquisitionAnnouncement { AnnouncementSelectionInd = 2, AnnouncementTypeInd = "E" };
                 }
             }
             return View(vm);
@@ -346,7 +349,6 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         public ActionResult InterviewUpdateAndFinalSelection()
         {
             var vm = new AdminViewModel();
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return RedirectToAction("Intakes", "Admin");
             if (Session[SELECTED_ACQUISITION] != null)
@@ -354,6 +356,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 var acqid = Session[SELECTED_ACQUISITION].ToString();
                 if (!string.IsNullOrWhiteSpace(acqid))
                 {
+                    var did = 0;
                     int.TryParse(acqid, out did);
                     if (did == 0)
                         return RedirectToAction("Intakes", "Admin");
@@ -369,7 +372,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult RunSQL(string sql, string op)
+        public ActionResult RunSql(string sql, string op)
         {
             try
             {
@@ -410,67 +413,68 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
         public ActionResult SubmitFirstSelection(int[] candidates, int[] processcandidates, int[] rejectcandidates)
         {
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] != null)
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+
+
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+
+
+
+            var did = 0;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+            var persistance = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE);
+            var announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAnnouncement(did, 1);
+            var from = ConfigurationManager.AppSettings["fromEmail"];
+            if ((candidates != null && candidates.Any()) || (processcandidates != null && processcandidates.Any()) || (rejectcandidates != null && rejectcandidates.Any()))
             {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-                    var persistance = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE);
-                    var announcement = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAnnouncement(did, 1);
-                    var from = ConfigurationManager.AppSettings["fromEmail"];
-                    if ((candidates != null && candidates.Any()) || (processcandidates != null && processcandidates.Any()) || (rejectcandidates != null && rejectcandidates.Any()))
+                // TODO : Later to think about email template for reject
+                if (candidates != null && candidates.Any())
+                    foreach (var c in candidates)
                     {
-                        // TODO : Later to think about email template for reject
-                        if (candidates != null && candidates.Any())
-                            foreach (var c in candidates)
-                            {
-                                if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstInvitationStatus(did, c, true, User.Identity.Name) > 0)
-                                {
-                                    // sending an email
-                                    //if (null != announcement)
-                                    //{
-                                    //    var applicant = persistance.GetApplicant(c);
-                                    //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
-                                    //    {
-                                    //        var mail = new MailService();
-                                    //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
-                                    //    }
-                                    //}
-                                }
-                            }
-
-                        if (rejectcandidates != null && rejectcandidates.Any())
-                            foreach (var c in rejectcandidates)
-                            {
-                                if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstInvitationStatus(did, c, false, User.Identity.Name) > 0)
-                                {
-                                    // sending an email
-                                    //if (null != announcement)
-                                    //{
-                                    //    var applicant = persistance.GetApplicant(c);
-                                    //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
-                                    //    {
-                                    //        var mail = new MailService();
-                                    //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
-                                    //    }
-                                    //}
-                                }
-                            }
-
-                        if (processcandidates != null && processcandidates.Any())
-                            foreach (var c in processcandidates)
-                                ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateStatus(did, c, null, null, null, null, User.Identity.Name);
-
-
-                        return Json(new { OK = true, message = "Berjaya" });
+                        if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstInvitationStatus(did, c, true, User.Identity.Name) > 0)
+                        {
+                            // sending an email
+                            //if (null != announcement)
+                            //{
+                            //    var applicant = persistance.GetApplicant(c);
+                            //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
+                            //    {
+                            //        var mail = new MailService();
+                            //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
+                            //    }
+                            //}
+                        }
                     }
-                }
+
+                if (rejectcandidates != null && rejectcandidates.Any())
+                    foreach (var c in rejectcandidates)
+                    {
+                        if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstInvitationStatus(did, c, false, User.Identity.Name) > 0)
+                        {
+                            // sending an email
+                            //if (null != announcement)
+                            //{
+                            //    var applicant = persistance.GetApplicant(c);
+                            //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
+                            //    {
+                            //        var mail = new MailService();
+                            //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
+                            //    }
+                            //}
+                        }
+                    }
+
+                if (processcandidates != null && processcandidates.Any())
+                    foreach (var c in processcandidates)
+                        ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateStatus(did, c, null, null, null, null, User.Identity.Name);
+
+
+                return Json(new { OK = true, message = "Berjaya" });
             }
             return Json(new { OK = false, message = "Tidak Berjaya" });
         }
@@ -479,244 +483,213 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] != null)
-            {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+
+            if ((candidates == null || !candidates.Any()) && (processcandidates == null || !processcandidates.Any()) &&
+                (rejectcandidates == null || !rejectcandidates.Any()))
+                return Json(new {OK = false, message = "Tidak Berjaya"});
+            // TODO : Later to think about email template for reject
+            if (candidates != null && candidates.Any())
+                foreach (var c in candidates)
                 {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-
-                    if ((candidates != null && candidates.Any()) || (processcandidates != null && processcandidates.Any()) || (rejectcandidates != null && rejectcandidates.Any()))
+                    if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstSelectionStatus(did, c, true, User.Identity.Name) > 0)
                     {
-                        // TODO : Later to think about email template for reject
-                        if (candidates != null && candidates.Any())
-                            foreach (var c in candidates)
-                            {
-                                if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstSelectionStatus(did, c, true, User.Identity.Name) > 0)
-                                {
-                                    // sending an email
-                                    //if (null != announcement)
-                                    //{
-                                    //    var applicant = persistance.GetApplicant(c);
-                                    //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
-                                    //    {
-                                    //        var mail = new MailService();
-                                    //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
-                                    //    }
-                                    //}
-                                }
-                            }
-
-                        if (rejectcandidates != null && rejectcandidates.Any())
-                            foreach (var c in rejectcandidates)
-                            {
-                                if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstSelectionStatus(did, c, false, User.Identity.Name) > 0)
-                                {
-                                    // sending an email
-                                    //if (null != announcement)
-                                    //{
-                                    //    var applicant = persistance.GetApplicant(c);
-                                    //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
-                                    //    {
-                                    //        var mail = new MailService();
-                                    //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
-                                    //    }
-                                    //}
-                                }
-                            }
-
-                        if (processcandidates != null && processcandidates.Any())
-                            foreach (var c in processcandidates)
-                                ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateStatus(did, c, null, null, null, null, User.Identity.Name);
-
-
-                        return Json(new { OK = true, message = "Berjaya" });
+                        // sending an email
+                        //if (null != announcement)
+                        //{
+                        //    var applicant = persistance.GetApplicant(c);
+                        //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
+                        //    {
+                        //        var mail = new MailService();
+                        //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
+                        //    }
+                        //}
                     }
                 }
-            }
-            return Json(new { OK = false, message = "Tidak Berjaya" });
+
+            if (rejectcandidates != null && rejectcandidates.Any())
+                foreach (var c in rejectcandidates)
+                {
+                    if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateFirstSelectionStatus(did, c, false, User.Identity.Name) > 0)
+                    {
+                        // sending an email
+                        //if (null != announcement)
+                        //{
+                        //    var applicant = persistance.GetApplicant(c);
+                        //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
+                        //    {
+                        //        var mail = new MailService();
+                        //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
+                        //    }
+                        //}
+                    }
+                }
+
+            if (processcandidates != null && processcandidates.Any())
+                foreach (var c in processcandidates)
+                    ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateStatus(did, c, null, null, null, null, User.Identity.Name);
+
+
+            return Json(new { OK = true, message = "Berjaya" });
         }
         public ActionResult SubmitLastSelection(int[] candidates, int[] processcandidates, int[] rejectcandidates)
         {
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] != null)
-            {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            int did;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+
+            if ((candidates == null || !candidates.Any()) && (processcandidates == null || !processcandidates.Any()) &&
+                (rejectcandidates == null || !rejectcandidates.Any()))
+                return Json(new {OK = false, message = "Tidak Berjaya"});
+            // TODO : Later to think about email template for reject
+            if (candidates != null && candidates.Any())
+                foreach (var c in candidates)
                 {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-
-                    if ((candidates != null && candidates.Any()) || (processcandidates != null && processcandidates.Any()) || (rejectcandidates != null && rejectcandidates.Any()))
+                    if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateLastSelectionStatus(did, c, true, true, User.Identity.Name) > 0)
                     {
-                        // TODO : Later to think about email template for reject
-                        if (candidates != null && candidates.Any())
-                            foreach (var c in candidates)
-                            {
-                                if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateLastSelectionStatus(did, c, true, true, User.Identity.Name) > 0)
-                                {
-                                    // sending an email
-                                    //if (null != announcement)
-                                    //{
-                                    //    var applicant = persistance.GetApplicant(c);
-                                    //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
-                                    //    {
-                                    //        var mail = new MailService();
-                                    //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
-                                    //    }
-                                    //}
-                                }
-                            }
-
-                        if (rejectcandidates != null && rejectcandidates.Any())
-                            foreach (var c in rejectcandidates)
-                            {
-                                if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateLastSelectionStatus(did, c, false, false, User.Identity.Name) > 0)
-                                {
-                                    // sending an email
-                                    //if (null != announcement)
-                                    //{
-                                    //    var applicant = persistance.GetApplicant(c);
-                                    //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
-                                    //    {
-                                    //        var mail = new MailService();
-                                    //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
-                                    //    }
-                                    //}
-                                }
-                            }
-
-                        if (processcandidates != null && processcandidates.Any())
-                            foreach (var c in processcandidates)
-                                ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateStatus(did, c, null, null, null, null, User.Identity.Name);
-
-
-                        return Json(new { OK = true, message = "Berjaya" });
+                        // sending an email
+                        //if (null != announcement)
+                        //{
+                        //    var applicant = persistance.GetApplicant(c);
+                        //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
+                        //    {
+                        //        var mail = new MailService();
+                        //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
+                        //    }
+                        //}
                     }
                 }
-            }
-            return Json(new { OK = false, message = "Tidak Berjaya" });
+
+            if (rejectcandidates != null && rejectcandidates.Any())
+                foreach (var c in rejectcandidates)
+                {
+                    if (ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateLastSelectionStatus(did, c, false, false, User.Identity.Name) > 0)
+                    {
+                        // sending an email
+                        //if (null != announcement)
+                        //{
+                        //    var applicant = persistance.GetApplicant(c);
+                        //    if (null != applicant && !string.IsNullOrWhiteSpace(announcement.Header) && !string.IsNullOrWhiteSpace(announcement.Body))
+                        //    {
+                        //        var mail = new MailService();
+                        //        mail.SendWithMessage(from, new List<string> { applicant.Email }, null, null, null, announcement.Header, announcement.Body, null);
+                        //    }
+                        //}
+                    }
+                }
+
+            if (processcandidates != null && processcandidates.Any())
+                foreach (var c in processcandidates)
+                    ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateStatus(did, c, null, null, null, null, User.Identity.Name);
+
+
+            return Json(new { OK = true, message = "Berjaya" });
         }
 
         public ActionResult SubmitFinalSetLocation(int[] candidates, int? selectedlocation, DateTime? startdate, DateTime? enddate, string selectime)
         {
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] != null)
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var did = 0;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+
+            if (candidates == null || !candidates.Any()) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
             {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-
-                    if (candidates != null && candidates.Any())
-                    {
-                        if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
-                        {
-                            var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
-                            startdate = newDateTime;
-                        }
-
-                        foreach (var c in candidates)
-                            ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance")
-                                .UpdateFirstSelectionLocationAndDateTime(did, c, selectedlocation, startdate, enddate,
-                                    User.Identity.Name);
-
-                        return Json(new { OK = true, message = "Berjaya" });
-                    }
-                }
+                var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
+                startdate = newDateTime;
             }
-            return Json(new { OK = false, message = "Tidak Berjaya" });
+
+            foreach (var c in candidates)
+                ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance")
+                    .UpdateFirstSelectionLocationAndDateTime(did, c, selectedlocation, startdate, enddate,
+                        User.Identity.Name);
+
+            return Json(new { OK = true, message = "Berjaya" });
         }
         public ActionResult SubmitReportDutySetLocation(int[] candidates, int? selectedlocation, DateTime? startdate, DateTime? enddate, string selectime, string selectedservice)
         {
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] != null)
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var did = 0;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+
+            if (candidates == null || !candidates.Any()) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
             {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-
-                    if (candidates != null && candidates.Any())
-                    {
-                        if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
-                        {
-                            var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
-                            startdate = newDateTime;
-                        }
-
-                        foreach (var c in candidates)
-                            ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateReportDutyLocationAndDateTime(did, c, selectedlocation, startdate, User.Identity.Name, selectedservice);
-
-                        return Json(new { OK = true, message = "Berjaya" });
-                    }
-                }
+                var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
+                startdate = newDateTime;
             }
-            return Json(new { OK = false, message = "Tidak Berjaya" });
+
+            foreach (var c in candidates)
+                ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").UpdateReportDutyLocationAndDateTime(did, c, selectedlocation, startdate, User.Identity.Name, selectedservice);
+
+            return Json(new { OK = true, message = "Berjaya" });
         }
         public ActionResult SubmitAnnouncement(AcquisitionAnnouncement announcement)
         {
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] != null)
-            {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var did = 0;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
 
-                    announcement.AnnouncementTypeInd = "E";
-                    announcement.AcquisitionId = did;
-                    announcement.CreatedBy = User.Identity.Name;
-                    announcement.CreatedDate = DateTime.Now;
-                    if (announcement.Save() > 0)
-                        return Json(new { OK = true, message = "Berjaya" });
-
-                }
-            }
+            announcement.AnnouncementTypeInd = "E";
+            announcement.AcquisitionId = did;
+            announcement.CreatedBy = User.Identity.Name;
+            announcement.CreatedDate = DateTime.Now;
+            if (announcement.Save() > 0)
+                return Json(new { OK = true, message = "Berjaya" });
             return Json(new { OK = false, message = "Tidak Berjaya" });
         }
 
         public ActionResult PrintFirstInvitation()
         {
             var vm = new AdminViewModel();
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return RedirectToAction("Intakes", "Admin");
-            if (Session[SELECTED_ACQUISITION] != null)
+            if (Session[SELECTED_ACQUISITION] == null) return View(vm);
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (!string.IsNullOrWhiteSpace(acqid))
             {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
+                var did = 0;
+                int.TryParse(acqid, out did);
+                if (did == 0)
+                    return RedirectToAction("Intakes", "Admin");
+
+                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
+                if (null != acq)
                 {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return RedirectToAction("Intakes", "Admin");
-
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
-                    if (null != acq)
-                    {
-                        vm.Acquisition = acq;
-                        var total = 0;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, null, out total));
-                    }
-
+                    vm.Acquisition = acq;
+                    int total;
+                    vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, null, out total));
                 }
+
             }
             return View(vm);
         }
@@ -724,87 +697,72 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         public ActionResult PrintFinalnvitation()
         {
             var vm = new AdminViewModel();
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return RedirectToAction("Intakes", "Admin");
-            if (Session[SELECTED_ACQUISITION] != null)
+            if (Session[SELECTED_ACQUISITION] == null) return View(vm);
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return View(vm);
+            int did;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return RedirectToAction("Intakes", "Admin");
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
+            if (null != acq)
             {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return RedirectToAction("Intakes", "Admin");
-
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
-                    if (null != acq)
-                    {
-                        vm.Acquisition = acq;
-                        var total = 0;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, null, out total));
-                    }
-
-                }
+                vm.Acquisition = acq;
+                var total = 0;
+                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, true, null, null, null, null, out total));
             }
             return View(vm);
         }
         public ActionResult PrintReportDutyList()
         {
             var vm = new AdminViewModel();
-            var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return RedirectToAction("Intakes", "Admin");
-            if (Session[SELECTED_ACQUISITION] != null)
+            if (Session[SELECTED_ACQUISITION] == null) return View(vm);
+            var acqid = Session[SELECTED_ACQUISITION].ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return View(vm);
+
+
+            var did = 0;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return RedirectToAction("Intakes", "Admin");
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
+            if (null != acq)
             {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return RedirectToAction("Intakes", "Admin");
-
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
-                    if (null != acq)
-                    {
-                        vm.Acquisition = acq;
-                        var total = 0;
-                        vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, null, true, null, null, null, out total));
-                    }
-
-                }
+                vm.Acquisition = acq;
+                int total;
+                vm.ListOfApplicant.AddRange(ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).Search(did, string.Empty, string.Empty, string.Empty, string.Empty, null, null, true, null, null, null, out total));
             }
             return View(vm);
         }
 
         public ActionResult RedirectForm(int id, int acquisitionid)
         {
-            if (id != 0 && acquisitionid != 0)
-            {
-                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(acquisitionid);
-                if (null != acq)
-                {
-                    var appl = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).GetApplicant(id, acquisitionid);
-                    if (null != appl)
-                    {
-                        if (acq.AcquisitionType.ServiceCd == "10")
-                            return RedirectToAction("PegawaiKadetForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
-                        if (acq.AcquisitionType.ServiceCd == "01")
-                            return RedirectToAction("TdForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
-                        if (acq.AcquisitionType.ServiceCd == "02")
-                            return RedirectToAction("TLDMForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
-                        if (acq.AcquisitionType.ServiceCd == "03")
-                            return RedirectToAction("TudmForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
-                    }
-                }
-            }
+            if (id == 0 || acquisitionid == 0) return RedirectToAction("Index", "Admin");
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(acquisitionid);
+            if (null == acq) return RedirectToAction("Index", "Admin");
+            var appl = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>(APPLICANT_SUBMITTED_PERSISTENCE).GetApplicant(id, acquisitionid);
+            if (null == appl) return RedirectToAction("Index", "Admin");
+            if (acq.AcquisitionType.ServiceCd == "10")
+                return RedirectToAction("PegawaiKadetForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+            if (acq.AcquisitionType.ServiceCd == "01")
+                return RedirectToAction("TdForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+            if (acq.AcquisitionType.ServiceCd == "02")
+                return RedirectToAction("TldmForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
+            if (acq.AcquisitionType.ServiceCd == "03")
+                return RedirectToAction("TudmForm", "Admin", new { id = appl.ApplicantId, acquisitionid = acq.AcquisitionId });
             return RedirectToAction("Index", "Admin");
         }
 
-        [Authorize]
-        [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN)]
+        [Authorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN)]
         public ActionResult PegawaiKadetForm(int id, int acquisitionid)
         {
-            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
+            var vm = new ResumeViewModel { ApplicantModel = new ApplicantModel { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
 
             if (id != 0 && acquisitionid != 0)
             {
@@ -816,23 +774,21 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }
             else
             {
-                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, acquisitionid);
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted { ColorBlindInd = true }, acquisitionid);
             }
 
             var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(acquisitionid);
-            if (null != acq)
-            {
-                vm.Acquisition = acq;
-                vm.ServiceCode = acq.AcquisitionType.ServiceCd;
-            }
+            if (null == acq) return View(vm);
+            vm.Acquisition = acq;
+            vm.ServiceCode = acq.AcquisitionType.ServiceCd;
             return View(vm);
         }
 
 
         [Authorize]
-        public ActionResult TLDMForm(int id, int acquisitionid)
+        public ActionResult TldmForm(int id, int acquisitionid)
         {
-            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
+            var vm = new ResumeViewModel { ApplicantModel = new ApplicantModel { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
             var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones();
             if (null != zones && zones.Any())
                 vm.Zones.AddRange(zones);
@@ -847,22 +803,19 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }
             else
             {
-                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, acquisitionid);
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted { ColorBlindInd = true }, acquisitionid);
             }
 
             var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(acquisitionid);
-            if (null != acq)
+            if (null == acq) return View(vm);
+            if (null != acq.AcquisitionType)
             {
-
-                if (null != acq.AcquisitionType)
-                {
-                    vm.ServiceCode = acq.AcquisitionType.ServiceCd;
-                    vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
-                }
-                vm.AcquisitionSiri = acq.Siri.Value;
-                vm.AcquisitionYear = acq.Year.Value;
-                vm.Acquisition = acq;
+                vm.ServiceCode = acq.AcquisitionType.ServiceCd;
+                vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
             }
+            vm.AcquisitionSiri = acq.Siri.Value;
+            vm.AcquisitionYear = acq.Year.Value;
+            vm.Acquisition = acq;
 
             return View(vm);
         }
@@ -870,7 +823,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         [Authorize]
         public ActionResult TudmForm(int id, int acquisitionid)
         {
-            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
+            var vm = new ResumeViewModel { ApplicantModel = new ApplicantModel { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
             var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones().ToList();
             if (zones.Any())
                 vm.Zones.AddRange(zones);
@@ -885,29 +838,26 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }
             else
             {
-                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, acquisitionid);
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted { ColorBlindInd = true }, acquisitionid);
             }
 
             var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(acquisitionid);
-            if (null != acq)
+            if (null == acq) return View(vm);
+            if (null != acq.AcquisitionType)
             {
-
-                if (null != acq.AcquisitionType)
-                {
-                    vm.ServiceCode = acq.AcquisitionType.ServiceCd;
-                    vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
-                }
-                vm.AcquisitionSiri = acq.Siri.Value;
-                vm.AcquisitionYear = acq.Year.Value;
-                vm.Acquisition = acq;
+                vm.ServiceCode = acq.AcquisitionType.ServiceCd;
+                vm.AcquisitionName = acq.AcquisitionType.AcquisitionTypeNm;
             }
+            vm.AcquisitionSiri = acq.Siri.Value;
+            vm.AcquisitionYear = acq.Year.Value;
+            vm.Acquisition = acq;
             return View(vm);
         }
 
         [Authorize]
         public ActionResult TdForm(int id, int acquisitionid)
         {
-            var vm = new ResumeViewModel() { ApplicantModel = new ApplicantModel() { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
+            var vm = new ResumeViewModel { ApplicantModel = new ApplicantModel { ApplicantId = 0, NationalityCd = "MYS", GenderCd = "L" }, AcquisitionId = acquisitionid };
             var zones = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetZones().ToArray();
             if (zones.Any())
                 vm.Zones.AddRange(zones);
@@ -922,7 +872,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             }
             else
             {
-                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted() { ColorBlindInd = true }, acquisitionid);
+                vm.ApplicantModel = new ApplicantModel(new ApplicantSubmitted { ColorBlindInd = true }, acquisitionid);
             }
 
 
@@ -946,64 +896,54 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         [Authorize]
         public ActionResult GetSubmittedStates(int acquisitionid, bool? firstselection, bool? finalselection)
         {
-            if (acquisitionid != 0)
-            {
-                var states = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationStates(acquisitionid, firstselection, finalselection);
-                var enumerable = states as State[] ?? states.ToArray();
-                if (states != null && enumerable.Any())
-                {
-                    var value = from a in enumerable
-                                orderby a.StateDesc
-                                select new
-                                {
-                                    Code = a.StateCd.Trim(),
-                                    Name = a.StateDesc
-                                };
-                    return Json(new
-                    {
-                        OK = true,
-                        message = "Rekod wujud",
-                        list = JsonConvert.SerializeObject(value)
-                    });
-                }
+            if (acquisitionid == 0) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var states = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationStates(acquisitionid, firstselection, finalselection);
+            var enumerable = states as State[] ?? states.ToArray();
+            if (states == null || !enumerable.Any())
                 return Json(new
                 {
                     OK = false,
                     message = "Tiada rekod"
                 });
-            }
-            return Json(new { OK = false, message = "Tidak Berjaya" });
+            var value = from a in enumerable
+                orderby a.StateDesc
+                select new
+                {
+                    Code = a.StateCd.Trim(),
+                    Name = a.StateDesc
+                };
+            return Json(new
+            {
+                OK = true,
+                message = "Rekod wujud",
+                list = JsonConvert.SerializeObject(value)
+            });
         }
         [Authorize]
         public ActionResult GetSubmittedCities(int acquisitionid, string statecode, bool? firstselection, bool? finalselection)
         {
-            if (acquisitionid != 0)
-            {
-                var cities = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationCities(acquisitionid, statecode, firstselection, finalselection);
-                var enumerable = cities as City[] ?? cities.ToArray();
-                if (cities != null && enumerable.Any())
-                {
-                    var value = from a in enumerable
-                                orderby a.CityName
-                                select new
-                                {
-                                    Code = a.CityCd.Trim(),
-                                    Name = a.CityName
-                                };
-                    return Json(new
-                    {
-                        OK = true,
-                        message = "Rekod wujud",
-                        list = JsonConvert.SerializeObject(value)
-                    });
-                }
+            if (acquisitionid == 0) return Json(new {OK = false, message = "Tidak Berjaya"});
+            var cities = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationCities(acquisitionid, statecode, firstselection, finalselection);
+            var enumerable = cities as City[] ?? cities.ToArray();
+            if (cities == null || !enumerable.Any())
                 return Json(new
                 {
                     OK = false,
                     message = "Tiada rekod"
                 });
-            }
-            return Json(new { OK = false, message = "Tidak Berjaya" });
+            var value = from a in enumerable
+                orderby a.CityName
+                select new
+                {
+                    Code = a.CityCd.Trim(),
+                    Name = a.CityName
+                };
+            return Json(new
+            {
+                OK = true,
+                message = "Rekod wujud",
+                list = JsonConvert.SerializeObject(value)
+            });
         }
 
         public ActionResult LoadSubmittedApplicant(JQueryDataTableParamModel param, string category, int acquisitionid, string statecode, string citycode, bool? invitationselection, bool? firstselection, bool? finalselection, int? invitationlocid, int? finalselectionlocid, int? reportdutylocid)
@@ -1062,7 +1002,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (null != applicant)
             {
-                var app = new ApplicantSubmitted()
+                var app = new ApplicantSubmitted
                 {
                     ApplicantId = applicant.ApplicantId,
                     AcquisitionId = acquisitionid,
@@ -1276,7 +1216,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                         OK = true,
                         message = "Berjaya",
                         id,
-                        item = JsonConvert.SerializeObject(new ApplicantModel(appupdated, acquisitionid), Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
+                        item = JsonConvert.SerializeObject(new ApplicantModel(appupdated, acquisitionid), Formatting.None, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore })
                     });
                 }
             }

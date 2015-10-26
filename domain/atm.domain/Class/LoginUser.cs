@@ -1,43 +1,22 @@
-﻿using SevenH.MMCSB.Atm.Domain.Interface;
+﻿using System;
+using Bespoke.Sph.Domain;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
-    public partial class LoginUser : DomainObject
+    public partial class LoginUser : UserProfile
     {
-        public virtual LoginRole LoginRole { get; set; }
+        public int? ApplicantId { set; get; }
+        public int UserId { set; get; }
+        public string LoginId { set; get; }
+        public string Salt { set; get; }
+        public string Status { set; get; }
+        public bool IsLocked { set; get; }
+        public bool FirstTime { set; get; }
+        public string AlternativeEmail { set; get; }
+        public string ServiceCd { set; get; }
+        public string ServiceName { set; get; }
+        public DateTime? LastLoginDt { set; get; }
+        public DateTime? LastLoginDt2 { set; get; }
 
-        public virtual int Save()
-        {
-            if (UserId == 0)
-                UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").AddNew(this);
-            else
-                UserId = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Update(this);
-
-            if (LoginRole != null && !string.IsNullOrWhiteSpace(LoginRole.Roles))
-            {
-                if (LoginRole.Roles != RolesString.AWAM)
-                {
-                    LoginRole.UserId = UserId;
-                    LoginRole.Save();
-                }
-            }
-
-            return UserId;
-        }
-
-        public virtual bool ChangePasswordFirstTime(string newpassword)
-        {
-            if (!string.IsNullOrWhiteSpace(newpassword))
-                return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").ChangePasswordFirstTime(UserId, false, newpassword);
-
-            return false;
-        }
-        public virtual bool ChangePassword(string newpassword)
-        {
-            if (!string.IsNullOrWhiteSpace(newpassword))
-                return ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").ChangePasswordFirstTime(UserId, true, newpassword);
-
-            return false;
-        }
     }
 }

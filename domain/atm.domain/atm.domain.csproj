@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="domain.sph">
+      <HintPath>..\..\library\domain.sph.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\FluentNHibernate.2.0.1.0\lib\net40\FluentNHibernate.dll</HintPath>
@@ -120,16 +123,11 @@
     <Compile Include="Interface\ICryptorService.cs" />
     <Compile Include="Interface\IExistingAtmPersistance.cs" />
     <Compile Include="Interface\IHibernateSqlExecution.cs" />
-    <Compile Include="Interface\ILoginUserPersistance.cs" />
-    <Compile Include="Interface\IMembershipProvider.cs" />
     <Compile Include="Interface\IReferencePersistence.cs" />
-    <Compile Include="Interface\IRoleProvider.cs" />
     <Compile Include="Interface\IStatisticPersistance.cs" />
     <Compile Include="Mapping\Acquisition.mapping.cs" />
     <Compile Include="Mapping\ApplicantSubmitted.mapping.cs" />
     <Compile Include="Mapping\ExistingMember.mapping.cs" />
-    <Compile Include="Mapping\LoginRole.mapping.cs" />
-    <Compile Include="Mapping\LoginUser.mapping.cs" />
     <Compile Include="Mapping\Reference.mapping.cs" />
     <Compile Include="Mapping\Applicant.mapping.cs" />
     <Compile Include="Class\Applicant.cs" />
@@ -143,7 +141,6 @@
     <Compile Include="Class\ApplicantSkill.cs" />
     <Compile Include="Class\ApplicantEduSubject.cs" />
     <Compile Include="Class\ApplicantEducation.cs" />
-    <Compile Include="Class\LoginRole.cs" />
     <Compile Include="Class\LoginUser.cs" />
     <Compile Include="Core\DomainObject.cs" />
     <Compile Include="Core\ObjectBuilder.cs" />

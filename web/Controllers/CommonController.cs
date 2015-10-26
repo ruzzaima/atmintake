@@ -4,7 +4,10 @@ using SevenH.MMCSB.Atm.Domain.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Bespoke.Sph.Domain;
+using ObjectBuilder = SevenH.MMCSB.Atm.Domain.ObjectBuilder;
 
 namespace SevenH.MMCSB.Atm.Web
 {
@@ -14,88 +17,78 @@ namespace SevenH.MMCSB.Atm.Web
         {
             var referenceRepo = new ReferenceRepo();
             var countries = referenceRepo.GetCountries().ToArray();
-            if (countries.Any<Country>())
-            {
-                var value = from a in countries
-                            orderby a.CountryName
-                            select new
-                            {
-                                Code = a.CountryCd.Trim(),
-                                Name = a.CountryName
-                            };
+            if (!countries.Any())
                 return Json(new
                 {
-                    OK = true,
-                    message = "Rekod wujud",
-                    list = JsonConvert.SerializeObject(value)
+                    OK = false,
+                    message = "Tiada rekod"
                 });
-            }
+            var value = from a in countries
+                orderby a.CountryName
+                select new
+                {
+                    Code = a.CountryCd.Trim(),
+                    Name = a.CountryName
+                };
             return Json(new
             {
-                OK = false,
-                message = "Tiada rekod"
+                OK = true,
+                message = "Rekod wujud",
+                list = JsonConvert.SerializeObject(value)
             });
         }
 
         public ActionResult GetStates(string countrycode)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<State> states = referenceRepo.GetStates(countrycode);
-            if (states != null && states.Any<State>())
-            {
-                var value = from a in states
-                            orderby a.StateDesc
-                            select new
-                            {
-                                Code = a.StateCd.Trim(),
-                                Name = a.StateDesc
-                            };
+            var referenceRepo = new ReferenceRepo();
+            var states = referenceRepo.GetStates(countrycode).ToList();
+            if (!states.Any())
                 return Json(new
                 {
-                    OK = true,
-                    message = "Rekod wujud",
-                    list = JsonConvert.SerializeObject(value)
+                    OK = false,
+                    message = "Tiada rekod"
                 });
-            }
+            var value = from a in states
+                orderby a.StateDesc
+                select new
+                {
+                    Code = a.StateCd.Trim(),
+                    Name = a.StateDesc
+                };
             return Json(new
             {
-                OK = false,
-                message = "Tiada rekod"
+                OK = true,
+                message = "Rekod wujud",
+                list = JsonConvert.SerializeObject(value)
             });
         }
 
         public ActionResult GetCities(string statecode)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<City> cities = referenceRepo.GetCities(statecode);
-            if (cities != null && cities.Any<City>())
-            {
-                var value = from a in cities
-                            orderby a.CityName
-                            select new
-                            {
-                                Code = a.CityCd.Trim(),
-                                Name = a.CityName
-                            };
-                return Json(new
+            var referenceRepo = new ReferenceRepo();
+            var cities = referenceRepo.GetCities(statecode).ToList();
+ 
+
+            var value = from a in cities
+                orderby a.CityName
+                select new
                 {
-                    OK = true,
-                    message = "Rekod wujud",
-                    list = JsonConvert.SerializeObject(value)
-                });
-            }
+                    Code = a.CityCd.Trim(),
+                    Name = a.CityName
+                };
             return Json(new
             {
-                OK = false,
-                message = "Tiada rekod"
+                OK = cities.Any(),
+                message = cities.Any() ? "Rekod wujud" : "Tiada Rekod",
+                list = JsonConvert.SerializeObject(value)
             });
         }
 
         public ActionResult GetReligions()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Religion> religions = referenceRepo.GetReligions();
-            if (religions != null && religions.Any<Religion>())
+            var referenceRepo = new ReferenceRepo();
+            var religions = referenceRepo.GetReligions();
+            if (religions != null && religions.Any())
             {
                 var value = from a in religions
                             orderby a.ReligionDescription
@@ -120,9 +113,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetRaces()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Race> races = referenceRepo.GetRaces();
-            if (races != null && races.Any<Race>())
+            var referenceRepo = new ReferenceRepo();
+            var races = referenceRepo.GetRaces();
+            if (races != null && races.Any())
             {
                 var value = from a in races
                             orderby a.RaceDescription
@@ -147,9 +140,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetOccupations()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Occupation> occupations = referenceRepo.GetOccupations();
-            if (occupations != null && occupations.Any<Occupation>())
+            var referenceRepo = new ReferenceRepo();
+            var occupations = referenceRepo.GetOccupations();
+            if (occupations != null && occupations.Any())
             {
                 var value = from a in occupations
                             select new
@@ -173,9 +166,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetHighEducationLevel()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<HighEduLevel> highEduLevels = referenceRepo.GetHighEduLevels();
-            if (highEduLevels != null && highEduLevels.Any<HighEduLevel>())
+            var referenceRepo = new ReferenceRepo();
+            var highEduLevels = referenceRepo.GetHighEduLevels();
+            if (highEduLevels != null && highEduLevels.Any())
             {
                 var value = from a in highEduLevels
                             orderby a.HighestEduLevel
@@ -200,9 +193,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetInstitutions(string category)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Institution> institutions = referenceRepo.GetInstitutions();
-            if (institutions != null && institutions.Any<Institution>())
+            var referenceRepo = new ReferenceRepo();
+            var institutions = referenceRepo.GetInstitutions();
+            if (institutions != null && institutions.Any())
             {
                 var value = from a in institutions
                             orderby a.InstNm
@@ -227,9 +220,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetEthnics(string racecode)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Ethnic> ethnics = referenceRepo.GetEthnics(racecode);
-            if (ethnics != null && ethnics.Any<Ethnic>())
+            var referenceRepo = new ReferenceRepo();
+            var ethnics = referenceRepo.GetEthnics(racecode);
+            if (ethnics != null && ethnics.Any())
             {
                 var value = from a in ethnics
                             orderby a.EthnicDescription
@@ -254,9 +247,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetSports()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<SportAndAssociation> sportAndAssociations = referenceRepo.GetSportAndAssociations("S");
-            if (sportAndAssociations != null && sportAndAssociations.Any<SportAndAssociation>())
+            var referenceRepo = new ReferenceRepo();
+            var sportAndAssociations = referenceRepo.GetSportAndAssociations("S");
+            if (sportAndAssociations != null && sportAndAssociations.Any())
             {
                 var value = from a in sportAndAssociations
                             orderby a.SportAssociatName
@@ -281,9 +274,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetAssociations()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<SportAndAssociation> sportAndAssociations = referenceRepo.GetSportAndAssociations("A");
-            if (sportAndAssociations != null && sportAndAssociations.Any<SportAndAssociation>())
+            var referenceRepo = new ReferenceRepo();
+            var sportAndAssociations = referenceRepo.GetSportAndAssociations("A");
+            if (sportAndAssociations != null && sportAndAssociations.Any())
             {
                 var value = from a in sportAndAssociations
                             orderby a.SportAssociatName
@@ -308,9 +301,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetAchivements()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Achievement> achievements = referenceRepo.GetAchievements();
-            if (achievements != null && achievements.Any<Achievement>())
+            var referenceRepo = new ReferenceRepo();
+            var achievements = referenceRepo.GetAchievements();
+            if (achievements != null && achievements.Any())
             {
                 var value = from a in achievements
                             orderby a.AchievementDescription
@@ -335,9 +328,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetSkillCategories()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<SkillCat> skillCats = referenceRepo.GetSkillCats();
-            if (skillCats != null && skillCats.Any<SkillCat>())
+            var referenceRepo = new ReferenceRepo();
+            var skillCats = referenceRepo.GetSkillCats();
+            if (skillCats != null && skillCats.Any())
             {
                 var value = from a in skillCats
                             orderby a.SkillCatDesc
@@ -362,9 +355,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetSkills(string category)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<Skill> skills = referenceRepo.GetSkills(category);
-            if (skills == null || !skills.Any<Skill>())
+            var referenceRepo = new ReferenceRepo();
+            var skills = referenceRepo.GetSkills(category);
+            if (skills == null || !skills.Any())
             {
                 return Json(new
                 {
@@ -406,9 +399,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetMajorMinor()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<MajorMinor> majorMinors = referenceRepo.GetMajorMinors();
-            if (majorMinors != null && majorMinors.Any<MajorMinor>())
+            var referenceRepo = new ReferenceRepo();
+            var majorMinors = referenceRepo.GetMajorMinors();
+            if (majorMinors != null && majorMinors.Any())
             {
                 var value = from a in majorMinors
                             orderby a.MajorMinorDesc
@@ -433,9 +426,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetGrades()
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<SubjectGrade> subjectGrades = referenceRepo.GetSubjectGrades();
-            if (subjectGrades != null && subjectGrades.Any<SubjectGrade>())
+            var referenceRepo = new ReferenceRepo();
+            var subjectGrades = referenceRepo.GetSubjectGrades();
+            if (subjectGrades != null && subjectGrades.Any())
             {
                 var value = from a in subjectGrades
                             orderby a.Ranking
@@ -483,7 +476,7 @@ namespace SevenH.MMCSB.Atm.Web
         {
             var referenceRepo = new ReferenceRepo();
             var zones = referenceRepo.GetZones();
-            if (zones != null && zones.Any<Zone>())
+            if (zones != null && zones.Any())
             {
                 var value = zones.OrderBy(a => a.ZoneNm).Select(a => new { Code = a.ZoneCd, Name = a.ZoneNm });
                 return Json(new
@@ -502,9 +495,9 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetLocations(string zone)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<AcquisitionLocation> acquisitionLocations = referenceRepo.GetAcquisitionLocations(zone);
-            if (acquisitionLocations != null && acquisitionLocations.Any<AcquisitionLocation>())
+            var referenceRepo = new ReferenceRepo();
+            var acquisitionLocations = referenceRepo.GetAcquisitionLocations(zone);
+            if (acquisitionLocations != null && acquisitionLocations.Any())
             {
                 var value = from a in acquisitionLocations
                             orderby a.Location.LocationNm
@@ -534,13 +527,13 @@ namespace SevenH.MMCSB.Atm.Web
                 var photo = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").GetPhoto(applicantid);
                 if (photo != null && photo.Photo != null && !string.IsNullOrWhiteSpace(photo.PhotoExt))
                 {
-                    string arg = Convert.ToBase64String(photo.Photo);
-                    string text = photo.PhotoExt;
+                    var arg = Convert.ToBase64String(photo.Photo);
+                    var text = photo.PhotoExt;
                     if (text.Contains("."))
                     {
                         text = text.Replace(".", string.Empty);
                     }
-                    string src = string.Format("data:image/" + text + ";base64,{0}", arg);
+                    var src = string.Format("data:image/" + text + ";base64,{0}", arg);
                     return Json(new
                     {
                         OK = true,
@@ -562,13 +555,13 @@ namespace SevenH.MMCSB.Atm.Web
                 var photo = ObjectBuilder.GetObject<IApplicantSubmittedPersistence>("ApplicantSubmittedPersistence").GetPhoto(applicantid);
                 if (photo != null && photo.Photo != null && !string.IsNullOrWhiteSpace(photo.PhotoExt))
                 {
-                    string arg = Convert.ToBase64String(photo.Photo);
-                    string text = photo.PhotoExt;
+                    var arg = Convert.ToBase64String(photo.Photo);
+                    var text = photo.PhotoExt;
                     if (text.Contains("."))
                     {
                         text = text.Replace(".", string.Empty);
                     }
-                    string src = string.Format("data:image/" + text + ";base64,{0}", arg);
+                    var src = string.Format("data:image/" + text + ";base64,{0}", arg);
                     return Json(new
                     {
                         OK = true,
@@ -586,23 +579,23 @@ namespace SevenH.MMCSB.Atm.Web
 
         public ActionResult GetMaritalStatus(string servicecodes)
         {
-            ReferenceRepo referenceRepo = new ReferenceRepo();
-            IEnumerable<MaritalStatus> maritalStatus = referenceRepo.GetMaritalStatus();
-            if (maritalStatus != null && maritalStatus.Any<MaritalStatus>())
+            var referenceRepo = new ReferenceRepo();
+            var maritalStatus = referenceRepo.GetMaritalStatus();
+            if (maritalStatus != null && maritalStatus.Any())
             {
-                List<MaritalStatus> source = maritalStatus.ToList<MaritalStatus>();
+                var source = maritalStatus.ToList();
                 List<MaritalStatus> arg_84_0;
                 if (!(servicecodes == "10"))
                 {
                     arg_84_0 = (from a in source
                                 where a.MrtlStatusCd != "4" && a.MrtlStatusCd != "5"
-                                select a).ToList<MaritalStatus>();
+                                select a).ToList();
                 }
                 else
                 {
                     arg_84_0 = (from a in source
                                 where a.MrtlStatusCd != "5"
-                                select a).ToList<MaritalStatus>();
+                                select a).ToList();
                 }
                 source = arg_84_0;
                 var value = from a in source
@@ -630,11 +623,11 @@ namespace SevenH.MMCSB.Atm.Web
         {
             if (applicantid != 0 && acquisitionid != 0)
             {
-                decimal num = 0.0m;
-                decimal num2 = 0.0m;
-                decimal num3 = 0.0m;
-                decimal num4 = 0.0m;
-                decimal num5 = 0.0m;
+                var num = 0.0m;
+                var num2 = 0.0m;
+                var num3 = 0.0m;
+                var num4 = 0.0m;
+                var num5 = 0.0m;
                 AtmHelper.Checklist(applicantid, acquisitionid, out num, out num2, out num3, out num4, out num5);
                 return Json(new
                 {
@@ -655,20 +648,25 @@ namespace SevenH.MMCSB.Atm.Web
             });
         }
 
-        public ActionResult CheckApplicant()
+        public async Task<ActionResult> CheckApplicant()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                LoginUser byUserName = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
-                if (byUserName != null && byUserName.ApplicantId.HasValue)
+            var context = new SphDataContext();
+            if (!User.Identity.IsAuthenticated)
+                return Json(new
                 {
-                    return Json(new
-                    {
-                        OK = true,
-                        message = "Maklumat id pemohon wujud.",
-                        id = byUserName.ApplicantId.Value
-                    });
-                }
+                    OK = false,
+                    message = "Sila masukkan maklumat permohonan dahulu."
+                });
+            var user = await context.LoadOneAsync<UserProfile>(x => x.UserName == User.Identity.Name);
+            var byUserName = user as LoginUser;
+            if (byUserName?.ApplicantId != null)
+            {
+                return Json(new
+                {
+                    OK = true,
+                    message = "Maklumat id pemohon wujud.",
+                    id = byUserName.ApplicantId.Value
+                });
             }
             return Json(new
             {

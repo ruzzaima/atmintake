@@ -5,40 +5,33 @@ using SevenH.MMCSB.Atm.Web.Models;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
-    [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN + "," + RolesString.STATISTIC)]
+    [Authorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN + "," + RolesString.STATISTIC)]
     public class StatisticController : Controller
     {
 
         public ActionResult Index()
         {
             var vm = new StatisticViewModel();
-            var did = 0;
             if (Session["SelectedAcquisition"] == null)
                 return RedirectToAction("Intakes", "Admin");
-            if (Session["SelectedAcquisition"] != null)
+            var acqid = Session["SelectedAcquisition"]?.ToString();
+            if (!string.IsNullOrWhiteSpace(acqid))
             {
-                var acqid = Session["SelectedAcquisition"].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return RedirectToAction("Intakes", "Admin");
+                int did;
+                int.TryParse(acqid, out did);
+                if (did == 0)
+                    return RedirectToAction("Intakes", "Admin");
 
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
-                    if (null != acq)
-                    {
-                        vm.Acquisition = acq;
-                    }
+                var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(did);
+                if (null != acq)
+                {
+                    vm.Acquisition = acq;
                 }
             }
             return View(vm);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">AcquisitionId</param>
-        /// <returns></returns>
+
         public ActionResult ByStateAndGender(int id)
         {
             var vm = new StatisticViewModel();
@@ -50,11 +43,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">AcquisitionId</param>
-        /// <returns></returns>
+
         public ActionResult ByStateAndGenderRace(int id)
         {
             var vm = new StatisticViewModel();
@@ -67,11 +56,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">AcquisitionId</param>
-        /// <returns></returns>
+
         public ActionResult ByStateAndGenderRaceEthnic(int id, string race)
         {
             var vm = new StatisticViewModel();
@@ -85,11 +70,6 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">AcquisitionId</param>
-        /// <returns></returns>
         public ActionResult ByStateAndGenderAcademics(int id)
         {
             var vm = new StatisticViewModel();
@@ -102,11 +82,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View(vm);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id">AcquisitionId</param>
-        /// <returns></returns>
+   
         public ActionResult ByStateAndGenderReligion(int id)
         {
             var vm = new StatisticViewModel();

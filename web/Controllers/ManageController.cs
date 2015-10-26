@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
+using Bespoke.Sph.Domain;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using SevenH.MMCSB.Atm.Web.Models;
+using ObjectBuilder = SevenH.MMCSB.Atm.Domain.ObjectBuilder;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
-    [AtmAuthorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN)]
+    [Authorize(Roles = RolesString.SUPER_ADMIN + "," + RolesString.PEGAWAI_PENGAMBILAN + "," + RolesString.KERANI_PENGAMBILAN)]
     public class ManageController : Controller
     {
         public ActionResult ManageUser()
@@ -18,15 +21,18 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             return View();
         }
 
-        public ActionResult UserProfile(int? id)
+        public async Task<ActionResult> UserProfile(string id)
         {
+            var context = new SphDataContext();
+            var user = await context.LoadOneAsync<UserProfile>(x => x.Id == id);
+
             var vm = new AddUserViewModel();
             var services = ObjectBuilder.GetObject<IReferencePersistence>("ReferencePersistence").GetServices();
             var enumerable = services as IList<Service> ?? services.ToList();
             if (enumerable.Any())
                 vm.ListOfService.AddRange(enumerable);
-            if (id.HasValue)
-                vm.LoginUser = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetById(id.Value);
+            if (null != user)
+                vm.LoginUser = user as LoginUser;
             else
                 vm.LoginUser.Status = "Y";
 
@@ -35,26 +41,20 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
         public ActionResult CheckInAtm(string id)
         {
-            if (!string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(id))
+                return Json(new {OK = false, message = "Sila bekalkan maklumat pengguna."});
+            var atmexist = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").ExistingAtmMemberByArmyNo(id);
+            if (null != atmexist)
             {
-                var atmexist = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").ExistingAtmMemberByArmyNo(id);
-                if (null != atmexist)
+                if (atmexist.ExistingMemberStatus != null)
                 {
-                    if (atmexist.ExistingMemberStatus != null)
-                    {
-                        if (atmexist.ExistingMemberStatus.Code.Trim() != "1")
-                            return Json(new { OK = false, message = "Anda tidak layak memohon kerana anda tidak berkhidmat di dalam ATM." });
-                        else
-                            return Json(new { OK = true, message = "Pengguna wujud dan layak.", name = atmexist.Name });
-                    }
-                    return Json(new { OK = false, message = "Maklumat status tidak wujud." });
+                    if (atmexist.ExistingMemberStatus.Code.Trim() != "1")
+                        return Json(new { OK = false, message = "Anda tidak layak memohon kerana anda tidak berkhidmat di dalam ATM." });
+                    return Json(new { OK = true, message = "Pengguna wujud dan layak.", name = atmexist.Name });
                 }
-                else
-                {
-                    return Json(new { OK = false, message = "Maklumat pengguna tidak wujud di dalam HRMIS." });
-                }
+                return Json(new { OK = false, message = "Maklumat status tidak wujud." });
             }
-            return Json(new { OK = false, message = "Sila bekalkan maklumat pengguna." });
+            return Json(new { OK = false, message = "Maklumat pengguna tidak wujud di dalam HRMIS." });
         }
 
         public ActionResult SubmitUser(LoginUser loguser)
@@ -133,21 +133,20 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         }
 
 
-        public ActionResult DeleteUser(int userid)
+        public async Task<ActionResult> DeleteUser(string username)
         {
-            if (userid != 0)
+            var context = new SphDataContext();
+            var user = await context.LoadOneAsync<UserProfile>(x => x.UserName == username);
+            if (null == user) return HttpNotFound("Cannot find user " + username);
+            using (var session = context.OpenSession())
             {
-                var user = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetById(userid);
-                if (null != user)
-                {
-                    if (!user.ApplicantId.HasValue)
-                    {
-                        if (ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").Delete(userid))
-                            return Json(new { OK = true, message = "Makluamt pengguna berjaya dihapuskan." });
-                    }
-                }
+                session.Delete(user);
+                await session.SubmitChanges();
             }
-            return Json(new { OK = false, message = "Tidak Berjaya." });
+
+            Membership.DeleteUser(username, true);
+            return Json(new { OK = true, message = "Makluamt pengguna berjaya dihapuskan." });
+
         }
 
         public ActionResult LoadUser(JQueryDataTableParamModel param, string category)

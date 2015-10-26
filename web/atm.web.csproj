@@ -166,7 +166,6 @@
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
-    <Compile Include="Helper\AtmAuthorization.cs" />
     <Compile Include="Helper\CaptchaImage.cs" />
     <Compile Include="Helper\ReferenceRepo.cs" />
     <Compile Include="Global.asax.cs">
