@@ -1,6 +1,4 @@
 ﻿@using System.Configuration
-@using SevenH.MMCSB.Atm.Domain
-@using SevenH.MMCSB.Atm.Domain.Interface
 <!DOCTYPE html>
 <html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -17,33 +15,12 @@
     @Styles.Render("~/bundles/frontendcss")
     @RenderSection("styles", required: false)
     @{
-        var fullname = string.Empty;
         var lastlogout = string.Empty;
+        var user = HttpContext.Current.User;
         var applicantid = 0;
-        var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
-        if (null != login)
-        {
-            if (null != login.FullName)
-            {
-                fullname = login.FullName;
-            }
-            if (login.LastLoginDt.HasValue)
-            {
-                lastlogout = string.Format("{0: dd MMM yyyy hh:mm tt}", login.LastLoginDt);
-            }
-            if (login.LastLoginDt2.HasValue)
-            {
-                lastlogout = string.Format("{0: dd MMM yyyy hh:mm tt}", login.LastLoginDt2);
-            }
-            if (login.ApplicantId.HasValue)
-            {
-                applicantid = login.ApplicantId.Value;
-            }
-        }
-        else
-        {
-            fullname = User.Identity.Name;
-        }
+
+        var fullname = user.Identity.Name;
+
     }
 </head>
 <body>
@@ -51,10 +28,10 @@
         <a href="" id="menu-toggle-atm"></a>
         <div class="logo-atm pull-left">
             <div class="m-l-10">
-                <img height="60" src="@Url.Content("~/Images/logoatm.png")" alt="Angkatan Tentera Malaysia" />
-                <img height="60" src="@Url.Content("~/Images/logotdm.png")" alt="Tentera Darat Malaysia" />
-                <img height="60" src="@Url.Content("~/Images/logotldm.png")" alt="Tentera Laut DiRaja Malaysia" />
-                <img height="65" src="@Url.Content("~/Images/logotudm.png")" alt="Tentera Udara DiRaja Malaysia" />
+                <img height="60" src="~/Images/logoatm.png" alt="Angkatan Tentera Malaysia" />
+                <img height="60" src="~/Images/logotdm.png" alt="Tentera Darat Malaysia" />
+                <img height="60" src="~/Images/logotldm.png" alt="Tentera Laut DiRaja Malaysia" />
+                <img height="65" src="~/Images/logotudm.png" alt="Tentera Udara DiRaja Malaysia" />
             </div>
         </div>
 
@@ -88,7 +65,7 @@
                 <div class="text-center s-widget m-b-25 m-l-5 m-r-5 dropdown" id="profile-menu">
 
                     <a href="" data-toggle="dropdown">
-                        <img class="profile-pic img-rounded" id="profilephoto" src="@Url.Content("~/Images/noimage.jpg")" alt="">
+                        <img class="profile-pic img-rounded" id="profilephoto" src="~/Images/noimage.jpg")" alt="">
                     </a>
                     <p>
                         <i>Ukuran passport</i>
@@ -99,7 +76,7 @@
                     <ul class="dropdown-menu profile-menu m-l-5 m-r-5">
                         <li><a href="@Url.Action("Application", "Public")">Permohonan</a></li>
                         <li><a href="@Url.Action("Account", "Public")">Profil Saya</a></li>
-                        <li><a href="@Url.Action("ResetPassword", "Account")">Tukar Katalaluan</a></li>
+                        <li><a href="@Url.Action("ChangePassword", "Account")">Tukar Katalaluan</a></li>
                         <li><a href="" class="logout">Log Keluar</a></li>
                     </ul>
                 </div>
@@ -143,16 +120,16 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-    <script src="@Url.Content("~/Scripts/Core/knockout-3.3.0.js")"></script>
-    <script src="@Url.Content("~/Scripts/Core/knockout.mapping-latest.debug.js")"></script>
-    <script src="@Url.Content("~/Scripts/Core/knockout.jqueryui.autocomplete.js")"></script>
+    <script src="~/Scripts/Core/knockout-3.3.0.js"></script>
+    <script src="~/Scripts/Core/knockout.mapping-latest.debug.js"></script>
+    <script src="~/Scripts/Core/knockout.jqueryui.autocomplete.js"></script>
     <!-- UX -->
-    <script src="@Url.Content("~/Content/frontend/js/scroll.min.js")"></script>
+    <script src="~/Content/frontend/js/scroll.min.js"></script>
     <!-- Custom Scrollbar -->
     <!-- Other -->
-    <script src="@Url.Content("~/Content/frontend/js/calendar.min.js")"></script> <!-- Calendar -->
-    <script src="@Url.Content("~/Content/frontend/js/feeds.min.js")"></script> <!-- News Feeds -->
-    <script src="@Url.Content("~/Content/frontend/js/icheck.js")"></script> <!-- iCheck -->
+    <script src="~/Content/frontend/js/calendar.min.js"></script> <!-- Calendar -->
+    <script src="~/Content/frontend/js/feeds.min.js"></script> <!-- News Feeds -->
+    <script src="~/Content/frontend/js/icheck.js"></script> <!-- iCheck -->
     <script type="text/javascript">
         var virtualdirectory = '';
         var server = '@ConfigurationManager.AppSettings["server"]';
@@ -162,8 +139,8 @@
         var pengakuan = 0;
         var sponsorship = 0;
     </script>
-    <script src="@Url.Content("~/Scripts/Core/jquery.fileupload.js")"></script>
-    <script src="@Url.Content("~/Scripts/Main/default.js")"></script>
+    <script src="~/Scripts/Core/jquery.fileupload.js"></script>
+    <script src="~/Scripts/Main/default.js"></script>
     <script type="text/javascript">
         $(function () {
             var applicantid = @applicantid;
@@ -262,7 +239,7 @@
     }
     @RenderSection("scripts", required: false)
     <!-- All JS functions -->
-    <script src="@Url.Content("~/Content/frontend/js/functions.js")"></script>
-    <script src="@Url.Content("~/Scripts/Main/default.after.js")"></script>
+    <script src="~/Content/frontend/js/functions.js"></script>
+    <script src="~/Scripts/Main/default.after.js"></script>
 </body>
 </html>

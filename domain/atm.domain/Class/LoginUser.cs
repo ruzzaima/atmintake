@@ -3,7 +3,8 @@ using Bespoke.Sph.Domain;
 
 namespace SevenH.MMCSB.Atm.Domain
 {
-    public partial class LoginUser : UserProfile
+    [EntityType(typeof(UserProfile))]
+    public class LoginUser : UserProfile
     {
         public int? ApplicantId { set; get; }
         public int UserId { set; get; }

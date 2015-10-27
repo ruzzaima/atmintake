@@ -1,14 +1,18 @@
 ﻿@using SevenH.MMCSB.Atm.Domain
+@{
+
+    var user = HttpContext.Current.User;
+}
 <ol class="breadcrumb">
-    @if (User.Identity.IsAuthenticated)
+    @if (user.Identity.IsAuthenticated)
     {
-        if (ObjectBuilder.GetObject<IRoleProvider>("RoleProvider").CheckUserIsInRole(User.Identity.Name, RolesString.AWAM))
+        if (user.IsInRole(RolesString.AWAM))
         {
             <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Application", "Public")">Permohonan</a></li>
             <li class="hidden-print"><a class="hidden-print" href="@Url.Action("Account", "Public")">Profil Saya</a></li>
         }
 
-        <li class="hidden-print"><a class="hidden-print" href="@Url.Action("ResetPassword", "Account")">Tukar Kata Laluan</a></li>
+        <li class="hidden-print"><a class="hidden-print" href="@Url.Action("ChangePassword", "Account")">Tukar Kata Laluan</a></li>
         <li class="hidden-print"><a class="hidden-print logout" href="">Log Keluar</a></li>
     }
     else

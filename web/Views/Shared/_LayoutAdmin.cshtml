@@ -23,29 +23,8 @@
     @Styles.Render("~/bundles/frontendcss")
     @RenderSection("styles", required: false)
     @{
-        var fullname = string.Empty;
         var lastlogout = string.Empty;
-        var applicantid = 0;
-        var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(user.Identity.Name);
-        if (null != login)
-        {
-            if (null != login.FullName)
-            {
-                fullname = login.FullName;
-            }
-            if (null != login.LastLoginDt)
-            {
-                lastlogout = string.Format("{0: dd MMM yyyy hh:mm tt}", login.LastLoginDt);
-            }
-            if (login.ApplicantId.HasValue)
-            {
-                applicantid = login.ApplicantId.Value;
-            }
-        }
-        else
-        {
-            fullname = user.Identity.Name;
-        }
+        var fullname = user.Identity.Name;
     }
 </head>
 <body>
@@ -91,7 +70,7 @@
                     <h5 class="m-0">@fullname</h5>
                     <h6>Log masuk terakhir adalah pada : @lastlogout</h6>
                     <ul class="dropdown-menu profile-menu">
-                        <li><a href="@Url.Action("ResetPassword", "Account")">Tukar Katalaluan</a></li>
+                        <li><a href="@Url.Action("ChangePassword", "Account")">Tukar Katalaluan</a></li>
                         <li><a href="" class="logout">Log Keluar</a></li>
                     </ul>
                 </div>

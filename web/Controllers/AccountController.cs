@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using Bespoke.Sph.Domain;
+using Bespoke.Sph.Web.Areas.Sph.Controllers;
+using Newtonsoft.Json;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Web.Models;
 
@@ -17,17 +19,22 @@ namespace SevenH.MMCSB.Atm.Web
             return View();
         }
 
-        [AllowAnonymous]
-        public ActionResult ResetPassword()
-        {
-            return View();
-        }
+     
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
+        }
+
+        [AllowAnonymous]
+        public ActionResult Unlock(string id)
+        {
+            var m = Membership.FindUsersByName(id)[id];
+            if(null == m)return HttpNotFound("No user " + id);
+            m.UnlockUser();
+            return Content("OK");
         }
 
         [HttpPost]
@@ -45,7 +52,7 @@ namespace SevenH.MMCSB.Atm.Web
             if (ModelState.IsValid)
             {
                 var directory = Bespoke.Sph.Domain.ObjectBuilder.GetObject<IDirectoryService>();
-                if (await directory.AuthenticateAsync(model.UserName, model.Password))
+                if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     var context = new SphDataContext();
@@ -78,7 +85,62 @@ namespace SevenH.MMCSB.Atm.Web
             return View(model);
         }
 
-        
+        [AllowAnonymous]
+        [Route("change-password")]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("change-password")]
+        public async Task<ActionResult> ChangePassword(ChangePaswordModel model)
+        {
+            var userName = User.Identity.Name;
+
+            if (!Membership.ValidateUser(userName, model.OldPassword))
+            {
+                return Json(new { success = false, status = "PASSWORD_INCORRECT", message = "Your old password is incorrect", user = userName });
+            }
+            if (model.Password != model.ConfirmPassword)
+                return Json(new { success = false, status = "PASSWORD_DOESNOT_MATCH", message = "Your password is not the same" });
+
+
+            var user = Membership.GetUser(userName);
+            if (null == user) throw new Exception("Cannot find user");
+
+            try
+            {
+                var valid = user.ChangePassword(model.OldPassword, model.Password);
+                if (!valid)
+                    return Json(new { success = false, status = "ERROR_CHANGING_PASSWORD", message = "There's an error changing your password" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, status = "EXCEPTION_CHANGING_PASSWORD", message = ex.Message });
+            }
+
+            var context = new SphDataContext();
+            var profile = await context.LoadOneAsync<UserProfile>(u => u.UserName == User.Identity.Name);
+            profile.HasChangedDefaultPassword = true;
+
+            using (var session = context.OpenSession())
+            {
+                session.Attach(profile);
+                await session.SubmitChanges("Change password");
+            }
+
+            if (Request.ContentType.Contains("application/json"))
+            {
+                this.Response.ContentType = "application/json; charset=utf-8";
+                return Content(JsonConvert.SerializeObject(new { success = true, status = "OK" }));
+            }
+
+            return Redirect("/");
+        }
+
+
         public ActionResult FirstTimeLogin()
         {
             return View();
@@ -103,6 +165,6 @@ namespace SevenH.MMCSB.Atm.Web
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        
+
     }
 }

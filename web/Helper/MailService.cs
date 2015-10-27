@@ -13,24 +13,21 @@ namespace SevenH.MMCSB.Atm.Web
     {
         private List<string> Spliter(string source)
         {
-            if (source != null)
+            if (source == null) return new List<string>();
+            var result = new List<string>();
+            var t = source.Split(new[] { ",", " ", ";" }, StringSplitOptions.RemoveEmptyEntries);
+            if (t.Any())
             {
-                var result = new List<string>();
-                var t = source.Split(new[] { ",", " ", ";" }, StringSplitOptions.RemoveEmptyEntries);
-                if (t.Any())
-                {
-                    result.AddRange(t);
-                }
-                else
-                {
-                    result.Add(source);
-                }
-                return result;
+                result.AddRange(t);
             }
-            return new List<string>();
+            else
+            {
+                result.Add(source);
+            }
+            return result;
         }
 
-        public void Send(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
+        public void Send(string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime, string password)
         {
             var client = new SmtpClient();
 
@@ -48,11 +45,11 @@ namespace SevenH.MMCSB.Atm.Web
                 {
                     "<%RegistrationDateTime%>", dateTime.HasValue
                         ? $"{dateTime.Value:dd/MM/yyyy}"
-                        : $"{user.CreatedDt:dd/MM/yyyy}"
+                        : $"{user.CreatedDate:dd/MM/yyyy}"
                 },
                 {"<%FullName%>", user.FullName.Trim().ToUpper()},
                 {"<%UserName%>", user.UserName.Trim().ToUpper()},
-                {"<%Password%>", user.Password},
+                {"<%Password%>", password},
                 {"<%LoginUrl%>", loginurl}
             };
 
@@ -73,8 +70,7 @@ namespace SevenH.MMCSB.Atm.Web
 
             mail.Subject = "[ATM]Notifikasi Pendaftaran";
             mail.IsBodyHtml = true;
-            AlternateView htmlView;
-            htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
+            var htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
             mail.AlternateViews.Add(htmlView);
 
             if (null != tos)
@@ -92,7 +88,7 @@ namespace SevenH.MMCSB.Atm.Web
                 }
         }
 
-        public void SendMail(string subject, string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime)
+        public void SendMail(string subject, string from, IEnumerable<string> tos, IEnumerable<string> ccs, IEnumerable<string> bccs, LoginUser user, string loginurl, string templatepath, DateTime? dateTime, string password)
         {
             var client = new SmtpClient();
             var mailDefinition = new MailDefinition
@@ -109,14 +105,15 @@ namespace SevenH.MMCSB.Atm.Web
                 {
                     "<%RegistrationDateTime%>", dateTime.HasValue
                         ? $"{dateTime.Value:dd/MM/yyyy}"
-                        : $"{user.CreatedDt:dd/MM/yyyy}"
+                        : $"{user.CreatedDate:dd/MM/yyyy}"
                 },
                 {"<%FullName%>", user.FullName.Trim().ToUpper()},
                 {"<%UserName%>", user.UserName.Trim().ToUpper()}
             };
 
-            if (!string.IsNullOrWhiteSpace(user.Password))
-                ldReplacement.Add("<%Password%>", user.Password);
+            // TODO: what with this obsession with password
+            if (!string.IsNullOrWhiteSpace(password))
+                ldReplacement.Add("<%Password%>", password);
             ldReplacement.Add("<%LoginUrl%>", loginurl);
             var mail = mailDefinition.CreateMailMessage(user.Email, ldReplacement, new Control());
             mail.From = new MailAddress(from, "No Reply");

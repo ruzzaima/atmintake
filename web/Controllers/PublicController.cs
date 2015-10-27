@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Bespoke.Sph.Domain;
 using Newtonsoft.Json;
 using SevenH.MMCSB.Atm.Domain;
@@ -49,44 +50,58 @@ namespace SevenH.MMCSB.Atm.Web
                     ModelState.AddModelError("", "Anda tidak layak memohon kerana pernah menyertai ATM dan telah diberhentikan atas sebab tatatertib");
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+            // check no kad pengenalan valid or not
+            model.IdNumber = model.IdNumber.Replace("-", "");
+            model.IdNumber = model.IdNumber.Trim();
+            var login = new LoginUser
             {
-                // check no kad pengenalan valid or not
-                var rand = new Random();
-                model.IdNumber = model.IdNumber.Replace("-", "");
-                model.IdNumber = model.IdNumber.Trim();
-                var login = new LoginUser
-                {
-                    FullName = model.FullName,
-                    UserName = model.IdNumber,
-                    LoginId = model.IdNumber,
-                    Email = model.Email,
-                    AlternativeEmail = model.AlternateEmail,
-                    Salt = Guid.NewGuid().ToString(),
-                    FirstTime = true,
-                    IsLocked = false,
-                    CreatedBy = "Registration"
-                };
+                FullName = model.FullName,
+                UserName = model.IdNumber,
+                LoginId = model.IdNumber,
+                Email = model.Email,
+                AlternativeEmail = model.AlternateEmail,
+                Salt = Guid.NewGuid().ToString(),
+                FirstTime = true,
+                IsLocked = false,
+                CreatedBy = "Registration",
+                Id = model.IdNumber,
+                CreatedDate = DateTime.Now,
+                Designation = "Public",
+                HasChangedDefaultPassword = true,
+                IsLockedOut = false
+            };
 
-                using (var session = context.OpenSession())
-                {
-                    session.Attach(login);
-                    await session.SubmitChanges();
-                }
-                // send notification email
-                var from = ConfigurationManager.AppSettings["fromEmail"];
-                var url = this.Request.Url;
-                if (url != null)
-                {
-                    var loginurl = ConfigurationManager.AppSettings["server"] + "/Account/Login";
-                    var templatepath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Templates"), "Registration.html");
-                    var mail = new MailService();
-                    mail.Send(from, new List<string> { login.Email, login.AlternativeEmail }, null, null, login, loginurl, templatepath, null);
-                }
-                TempData["Message"] = "Id pengguna dan Kata laluan telah dihantar ke emel yang didaftarkan. Sila semak emel anda.";
-                return RedirectToAction("Login", "Account");
+            using (var session = context.OpenSession())
+            {
+                session.Attach(login);
+                await session.SubmitChanges();
             }
-            return View(model);
+
+            var password = Membership.GeneratePassword(6, 0);
+            var member = Membership.GetUserNameByEmail(login.Email);
+            var t = Membership.GetUser(login.UserName);
+            var exist1 = !string.IsNullOrEmpty(member) || null != t;
+            if (!exist1)
+                Membership.CreateUser(login.UserName, password, login.Email);
+          
+
+
+            if (!Roles.IsUserInRole(login.UserName, RolesString.AWAM))
+                Roles.AddUserToRole(login.UserName, RolesString.AWAM);
+
+            // send notification email
+            var from = ConfigurationManager.AppSettings["fromEmail"];
+            var url = this.Request.Url;
+            if (url != null)
+            {
+                var loginurl = ConfigurationManager.AppSettings["server"] + "/Account/Login";
+                var templatepath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Templates"), "Registration.html");
+                var mail = new MailService();
+                mail.Send(@from, new List<string> { login.Email, login.AlternativeEmail }, null, null, login, loginurl, templatepath, null, password);
+            }
+            TempData["Message"] = "Id pengguna dan Kata laluan telah dihantar ke emel yang didaftarkan. Sila semak emel anda.";
+            return RedirectToAction("Login", "Account");
         }
 
         [Authorize]
@@ -718,7 +733,7 @@ namespace SevenH.MMCSB.Atm.Web
 
         public async Task<ActionResult> SubmitProfile(ApplicantModel applicant, int acquisitionid)
         {
-            if (null == applicant) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (null == applicant) return Json(new { OK = false, message = "Tidak Berjaya" });
             if (!string.IsNullOrWhiteSpace(applicant.BirthDateString))
             {
                 var splidate = applicant.BirthDateString.Split('/');

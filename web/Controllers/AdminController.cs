@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+using Bespoke.Sph.Domain;
 using Newtonsoft.Json;
 using SevenH.MMCSB.Atm.Domain;
 using SevenH.MMCSB.Atm.Domain.Interface;
 using SevenH.MMCSB.Atm.Web.Models;
+using ConfigurationManager = System.Configuration.ConfigurationManager;
+using ObjectBuilder = SevenH.MMCSB.Atm.Domain.ObjectBuilder;
 
 namespace SevenH.MMCSB.Atm.Web.Controllers
 {
@@ -262,13 +265,14 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         }
 
 
-        public ActionResult LoadIntakes(JQueryDataTableParamModel param)
+        public async Task<ActionResult> LoadIntakes(JQueryDataTableParamModel param)
         {
             var intakes = new List<Acquisition>();
 
             if (User.Identity.IsAuthenticated)
             {
-                var usr = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+                var context = new SphDataContext();
+                var usr = (await context.LoadOneAsync<UserProfile>(x => x.UserName == User.Identity.Name)) as LoginUser;
                 if (null != usr)
                 {
                     intakes.AddRange(!string.IsNullOrWhiteSpace(usr.ServiceCd)
@@ -351,22 +355,19 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             var vm = new AdminViewModel();
             if (Session[SELECTED_ACQUISITION] == null)
                 return RedirectToAction("Intakes", "Admin");
-            if (Session[SELECTED_ACQUISITION] != null)
-            {
-                var acqid = Session[SELECTED_ACQUISITION].ToString();
-                if (!string.IsNullOrWhiteSpace(acqid))
-                {
-                    var did = 0;
-                    int.TryParse(acqid, out did);
-                    if (did == 0)
-                        return RedirectToAction("Intakes", "Admin");
+            var acqid = Session[SELECTED_ACQUISITION]?.ToString();
+            if (string.IsNullOrWhiteSpace(acqid)) return View(vm);
 
-                    var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
-                    if (null != acq)
-                    {
-                        vm.Acquisition = acq;
-                    }
-                }
+
+            var did = 0;
+            int.TryParse(acqid, out did);
+            if (did == 0)
+                return RedirectToAction("Intakes", "Admin");
+
+            var acq = ObjectBuilder.GetObject<IAcquisitionPersistence>(ACQUISITION_PERSISTENCE).GetAcquisition(did);
+            if (null != acq)
+            {
+                vm.Acquisition = acq;
             }
             return View(vm);
         }
@@ -415,11 +416,11 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new { OK = false, message = "Tidak Berjaya" });
 
 
             var acqid = Session[SELECTED_ACQUISITION].ToString();
-            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new { OK = false, message = "Tidak Berjaya" });
 
 
 
@@ -483,16 +484,16 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
             var did = 0;
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new { OK = false, message = "Tidak Berjaya" });
             var acqid = Session[SELECTED_ACQUISITION].ToString();
-            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new { OK = false, message = "Tidak Berjaya" });
             int.TryParse(acqid, out did);
             if (did == 0)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
 
             if ((candidates == null || !candidates.Any()) && (processcandidates == null || !processcandidates.Any()) &&
                 (rejectcandidates == null || !rejectcandidates.Any()))
-                return Json(new {OK = false, message = "Tidak Berjaya"});
+                return Json(new { OK = false, message = "Tidak Berjaya" });
             // TODO : Later to think about email template for reject
             if (candidates != null && candidates.Any())
                 foreach (var c in candidates)
@@ -541,9 +542,9 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new { OK = false, message = "Tidak Berjaya" });
             var acqid = Session[SELECTED_ACQUISITION].ToString();
-            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new { OK = false, message = "Tidak Berjaya" });
             int did;
             int.TryParse(acqid, out did);
             if (did == 0)
@@ -551,7 +552,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
             if ((candidates == null || !candidates.Any()) && (processcandidates == null || !processcandidates.Any()) &&
                 (rejectcandidates == null || !rejectcandidates.Any()))
-                return Json(new {OK = false, message = "Tidak Berjaya"});
+                return Json(new { OK = false, message = "Tidak Berjaya" });
             // TODO : Later to think about email template for reject
             if (candidates != null && candidates.Any())
                 foreach (var c in candidates)
@@ -601,15 +602,15 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new { OK = false, message = "Tidak Berjaya" });
             var acqid = Session[SELECTED_ACQUISITION].ToString();
-            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new { OK = false, message = "Tidak Berjaya" });
             var did = 0;
             int.TryParse(acqid, out did);
             if (did == 0)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
 
-            if (candidates == null || !candidates.Any()) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (candidates == null || !candidates.Any()) return Json(new { OK = false, message = "Tidak Berjaya" });
             if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
             {
                 var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
@@ -627,15 +628,15 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new { OK = false, message = "Tidak Berjaya" });
             var acqid = Session[SELECTED_ACQUISITION].ToString();
-            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new { OK = false, message = "Tidak Berjaya" });
             var did = 0;
             int.TryParse(acqid, out did);
             if (did == 0)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
 
-            if (candidates == null || !candidates.Any()) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (candidates == null || !candidates.Any()) return Json(new { OK = false, message = "Tidak Berjaya" });
             if (startdate.HasValue && !string.IsNullOrWhiteSpace(selectime))
             {
                 var newDateTime = startdate.Value.Add(TimeSpan.Parse(selectime));
@@ -651,9 +652,9 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         {
             if (Session[SELECTED_ACQUISITION] == null)
                 return Json(new { OK = false, message = "Tidak berjaya. Sila kembali kepada menu utama." });
-            if (Session[SELECTED_ACQUISITION] == null) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (Session[SELECTED_ACQUISITION] == null) return Json(new { OK = false, message = "Tidak Berjaya" });
             var acqid = Session[SELECTED_ACQUISITION].ToString();
-            if (string.IsNullOrWhiteSpace(acqid)) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (string.IsNullOrWhiteSpace(acqid)) return Json(new { OK = false, message = "Tidak Berjaya" });
             var did = 0;
             int.TryParse(acqid, out did);
             if (did == 0)
@@ -896,7 +897,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         [Authorize]
         public ActionResult GetSubmittedStates(int acquisitionid, bool? firstselection, bool? finalselection)
         {
-            if (acquisitionid == 0) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (acquisitionid == 0) return Json(new { OK = false, message = "Tidak Berjaya" });
             var states = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationStates(acquisitionid, firstselection, finalselection);
             var enumerable = states as State[] ?? states.ToArray();
             if (states == null || !enumerable.Any())
@@ -906,12 +907,12 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     message = "Tiada rekod"
                 });
             var value = from a in enumerable
-                orderby a.StateDesc
-                select new
-                {
-                    Code = a.StateCd.Trim(),
-                    Name = a.StateDesc
-                };
+                        orderby a.StateDesc
+                        select new
+                        {
+                            Code = a.StateCd.Trim(),
+                            Name = a.StateDesc
+                        };
             return Json(new
             {
                 OK = true,
@@ -922,7 +923,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         [Authorize]
         public ActionResult GetSubmittedCities(int acquisitionid, string statecode, bool? firstselection, bool? finalselection)
         {
-            if (acquisitionid == 0) return Json(new {OK = false, message = "Tidak Berjaya"});
+            if (acquisitionid == 0) return Json(new { OK = false, message = "Tidak Berjaya" });
             var cities = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetSubmittedApplicationCities(acquisitionid, statecode, firstselection, finalselection);
             var enumerable = cities as City[] ?? cities.ToArray();
             if (cities == null || !enumerable.Any())
@@ -932,12 +933,12 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     message = "Tiada rekod"
                 });
             var value = from a in enumerable
-                orderby a.CityName
-                select new
-                {
-                    Code = a.CityCd.Trim(),
-                    Name = a.CityName
-                };
+                        orderby a.CityName
+                        select new
+                        {
+                            Code = a.CityCd.Trim(),
+                            Name = a.CityName
+                        };
             return Json(new
             {
                 OK = true,
@@ -998,7 +999,7 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         }
 
 
-        public ActionResult SubmitProfile(ApplicantModel applicant, int acquisitionid)
+        public async Task<ActionResult> SubmitProfile(ApplicantModel applicant, int acquisitionid)
         {
             if (null != applicant)
             {
@@ -1099,7 +1100,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                     GuardianNotApplicable = applicant.GuardianNotApplicable
                 };
 
-                var login = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
+                var context = new SphDataContext();
+                var login = (await context.LoadOneAsync<UserProfile>(x => x.UserName == User.Identity.Name)) as LoginUser;
 
                 var id = app.Save();
                 if (id > 0)

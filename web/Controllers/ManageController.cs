@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -42,94 +41,35 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
         public ActionResult CheckInAtm(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
-                return Json(new {OK = false, message = "Sila bekalkan maklumat pengguna."});
+                return Json(new { OK = false, message = "Sila bekalkan maklumat pengguna." });
             var atmexist = ObjectBuilder.GetObject<IApplicantPersistence>("ApplicantPersistence").ExistingAtmMemberByArmyNo(id);
-            if (null != atmexist)
+            if (null == atmexist)
+                return Json(new {OK = false, message = "Maklumat pengguna tidak wujud di dalam HRMIS."});
+            if (atmexist.ExistingMemberStatus != null)
             {
-                if (atmexist.ExistingMemberStatus != null)
-                {
-                    if (atmexist.ExistingMemberStatus.Code.Trim() != "1")
-                        return Json(new { OK = false, message = "Anda tidak layak memohon kerana anda tidak berkhidmat di dalam ATM." });
-                    return Json(new { OK = true, message = "Pengguna wujud dan layak.", name = atmexist.Name });
-                }
-                return Json(new { OK = false, message = "Maklumat status tidak wujud." });
+                if (atmexist.ExistingMemberStatus.Code.Trim() != "1")
+                    return Json(new { OK = false, message = "Anda tidak layak memohon kerana anda tidak berkhidmat di dalam ATM." });
+                return Json(new { OK = true, message = "Pengguna wujud dan layak.", name = atmexist.Name });
             }
-            return Json(new { OK = false, message = "Maklumat pengguna tidak wujud di dalam HRMIS." });
+            return Json(new { OK = false, message = "Maklumat status tidak wujud." });
         }
 
-        public ActionResult SubmitUser(LoginUser loguser)
+        public async Task<ActionResult> SubmitUser(LoginUser loguser)
         {
-            if (!string.IsNullOrWhiteSpace(loguser.LoginRole?.Roles))
+           
+            var context = new SphDataContext();
+            using (var session = context.OpenSession())
             {
-                if (loguser.LoginRole != null)
-                {
-                    if (loguser.LoginRole.Roles != RolesString.AWAM)
-                    {
-                        loguser.Email = "NA";
-                        loguser.AlternativeEmail = "NA";
-                        if (loguser.UserId == 0)
-                            loguser.Salt = Guid.NewGuid().ToString();
-                    }
-                }
-                loguser.CreatedDt = DateTime.Now;
-                loguser.CreatedBy = User.Identity.Name;
-                loguser.IsLocked = loguser.Status != "Aktif";
-                if (loguser.Save() > 0)
-                {
-                    var user = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
-                    if (null != user)
-                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(user.UserId, LogStatusCodeString.Create_User, User.Identity.Name, DateTime.Now);
-                    return Json(new { OK = true, message = "Berjaya." });
-                }
+                session.Attach(loguser);
+                await session.SubmitChanges();
             }
-            return Json(new { OK = false, message = "Tidak Berjaya." });
+
+            return Json(new {OK = true, message = "Pengguna sudah disimpan"});
         }
 
         public ActionResult SubmitAndEmailUser(LoginUser loguser)
         {
-            if (loguser.LoginRole != null && !string.IsNullOrWhiteSpace(loguser.Email))
-            {
-                if (loguser.LoginRole != null)
-                {
-                    if (loguser.LoginRole.Roles != RolesString.AWAM)
-                    {
-                        loguser.Email = "NA";
-                        loguser.AlternativeEmail = "NA";
-                        if (loguser.UserId == 0)
-                            loguser.Salt = Guid.NewGuid().ToString();
-                    }
-                }
-                if (loguser.UserId == 0)
-                {
-                    loguser.CreatedDt = DateTime.Now;
-                    loguser.CreatedBy = User.Identity.Name;
-                }
-                loguser.IsLocked = loguser.Status != "Aktif";
-                loguser.FirstTime = true;
-                if (loguser.Save() > 0)
-                {
-                    // change the password if the is new password
-                    if (loguser.UserId != 0)
-                        loguser.ChangePassword(loguser.Password);
-
-                    var user = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").GetByUserName(User.Identity.Name);
-                    if (null != user)
-                    {
-                        var url = this.Request.Url;
-                        if (url != null)
-                        {
-                            var from = ConfigurationManager.AppSettings["fromEmail"];
-                            var loginurl = ConfigurationManager.AppSettings["server"] + "/Account/Login";
-                            var templatepath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Templates"), "TempPassword.html");
-                            var mail = new MailService();
-                            mail.SendMail("[JOM MASUK TENTERA]Notifikasi Kata Laluan Sementara", from, new List<string> { loguser.Email, loguser.AlternativeEmail }, null, null, loguser, loginurl, templatepath, DateTime.Now);
-                        }
-                        ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoggingUser(user.UserId, LogStatusCodeString.Create_User, User.Identity.Name, DateTime.Now);
-                    }
-                    return Json(new { OK = true, message = "Berjaya." });
-                }
-            }
-            return Json(new { OK = false, message = "Tidak Berjaya." });
+            throw new Exception("What do we do here????");
         }
 
 
@@ -149,35 +89,19 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
 
         }
 
-        public ActionResult LoadUser(JQueryDataTableParamModel param, string category)
+        public async Task<ActionResult> LoadUser(JQueryDataTableParamModel param, string category)
         {
+            var context = new SphDataContext();
+            var lo = await context.LoadAsync(context.UserProfiles, 1, 40, true);
+            var users = lo.ItemCollection.Cast<LoginUser>();
 
-            IEnumerable<LoginUser> users = null;
-            var total = 0;
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                if (category == "SP")
-                    users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(true, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart, out total);
-                if (category == "AW")
-                    users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(false, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart, out total);
-            }
-            else
-                users = ObjectBuilder.GetObject<ILoginUserPersistance>("LoginUserPersistance").LoadAllUser(true, true, string.Empty, param.sSearch, param.iDisplayLength, param.iDisplayStart, out total);
-
-            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            Func<LoginUser, string> orderingFunction = (c => sortColumnIndex == 0 ? c.FullName : sortColumnIndex == 1 ? c.FullName : c.LoginId);
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            users = sortDirection == "asc" ? users?.OrderBy(orderingFunction) : users?.OrderByDescending(orderingFunction);
-
-            var loginUsers = users as IList<LoginUser> ?? users.ToList();
-            var aadata = loginUsers.Select(a => new[]
+            var aadata = users.Select(a => new[]
             {
                 a.UserId.ToString(),
                 a.FullName,
                 a.LoginId,
                 $"{a.Email}<br/>{a.AlternativeEmail}",
                 a.ServiceName,
-                a.LoginRole.Roles,
                 a.IsLocked ? "Tidak Aktif" : "Aktif",
                 $"{a.LastLoginDt:dd/MM/yyyy hh:mm:tt}",
                 a.UserId.ToString()
@@ -188,8 +112,8 @@ namespace SevenH.MMCSB.Atm.Web.Controllers
                 OK = true,
                 message = "Succeed",
                 sEcho = param.sEcho,
-                iTotalRecords = total,
-                iTotalDisplayRecords = total,
+                iTotalRecords = lo.TotalRows,
+                iTotalDisplayRecords = 40,
                 aaData = aadata,
             }, JsonRequestBehavior.AllowGet);
         }
