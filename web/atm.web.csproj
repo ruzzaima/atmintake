@@ -704,7 +704,7 @@
     <Content Include="Views\Shared\_EmptyLayout.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Public\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_TopMenuPublic.cshtml" />
     <Content Include="Views\Public\Account.cshtml" />
     <Content Include="Views\Shared\_LayoutWithMenu.cshtml" />

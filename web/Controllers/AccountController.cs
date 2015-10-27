@@ -89,7 +89,15 @@ namespace SevenH.MMCSB.Atm.Web
         [Route("change-password")]
         public ActionResult ChangePassword()
         {
-            return View();
+            return View(new ChangePasswordViewModel ());
+        }
+
+        [AllowAnonymous]
+        [Route("sign-out")]
+        public ActionResult SignOut()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index","AtmHome");
         }
 
         [HttpPost]

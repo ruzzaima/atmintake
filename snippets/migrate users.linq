@@ -42,7 +42,16 @@ void Main()
 					ChangedDate = reader.GetNullableDateTime(15) ?? DateTime.Now,
 					ChangedBy = reader.ToString(16),
 					LastLoginDt2 = reader.GetNullableDateTime(17),
-					Designation = "Public"
+					Designation = "Public",
+					HasChangedDefaultPassword = true,
+					Bil = reader.GetInt32(0),
+					Department = null,
+					Dirty = false,
+					IsLocked = reader.GetBoolean(10),
+					Telephone = "",
+					Status = ""
+					
+					
 				};
 				users.Add(us);
 			}

@@ -1,7 +1,7 @@
 ﻿<ol class="breadcrumb">
-    @if (User.Identity.IsAuthenticated)
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
     {
-        <li class="hidden-print"><a class="hidden-print logout" href="">Log Keluar</a></li>
+        <li class="hidden-print"><a class="hidden-print logout" href="@Url.Action("SignOut","Account")">Log Keluar</a></li>
     }
     else
     {
