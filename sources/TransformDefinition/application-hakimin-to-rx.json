@@ -1,0 +1,122 @@
+{
+  "$type": "Bespoke.Sph.Domain.TransformDefinition, domain.sph",
+  "ClassName": "ApplicationHakiminToRx",
+  "CodeNamespace": "atm.Integrations.Transforms",
+  "MapCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.Map, domain.sph]], domain.sph",
+    "$values": [
+      {
+        "$type": "Bespoke.Sph.Domain.DirectMap, domain.sph",
+        "Source": "tblApplicantSubmited.LastModifiedDt",
+        "TypeName": "",
+        "Destination": "ChangedDate",
+        "SourceTypeName": "",
+        "DestinationTypeName": "",
+        "WebId": "e922fada-c441-4547-f2ae-974d984c9ba0"
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.DirectMap, domain.sph",
+        "Source": "tblApplicantSubmited.CreatedDt",
+        "TypeName": "",
+        "Destination": "CreatedDate",
+        "SourceTypeName": "",
+        "DestinationTypeName": "",
+        "WebId": "a93ac076-a8d1-44de-9c40-055122b0c46a"
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.DirectMap, domain.sph",
+        "Source": "tblApplicantSubmited.BirthDt",
+        "TypeName": "",
+        "Destination": "BirthDt",
+        "SourceTypeName": "",
+        "DestinationTypeName": "",
+        "WebId": "b8322105-ef79-4dd3-8eff-af3d679c393a"
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.DirectMap, domain.sph",
+        "Source": "tblApplicantSkill.LastModifiedDt",
+        "TypeName": "",
+        "Destination": "ChangedDate",
+        "SourceTypeName": "",
+        "DestinationTypeName": "",
+        "WebId": "261a4c10-321e-4dc6-c950-44edb3cac0e0"
+      }
+    ]
+  },
+  "FunctoidCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.Functoid, domain.sph]], domain.sph",
+    "$values": []
+  },
+  "InputCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.MethodArg, domain.sph]], domain.sph",
+    "$values": [
+      {
+        "$type": "Bespoke.Sph.Domain.MethodArg, domain.sph",
+        "Name": "tblApplicantSubmited",
+        "TypeName": "atm.Adapters.dbo.OriginalData.tblApplicantSubmited, atm.OriginalData",
+        "ValueProvider": null,
+        "WebId": "9972ae52-6e74-4e20-d784-ae6d080ef3fd"
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.MethodArg, domain.sph",
+        "Name": "tblApplicantSkill",
+        "TypeName": "atm.Adapters.dbo.OriginalData.tblApplicantSkill, atm.OriginalData",
+        "ValueProvider": null,
+        "WebId": "08e0f555-b7cd-41b3-aaac-7b93054865aa"
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.MethodArg, domain.sph",
+        "Name": "tblApplicantEdu",
+        "TypeName": "atm.Adapters.dbo.OriginalData.tblApplicantEdu, atm.OriginalData",
+        "ValueProvider": null,
+        "WebId": "5a8ca24d-5cb0-4266-a558-e5c4749e16e4"
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.MethodArg, domain.sph",
+        "Name": "tblApplicantSkillSubmitted",
+        "TypeName": "atm.Adapters.dbo.OriginalData.tblApplicantSkillSubmitted, atm.OriginalData",
+        "ValueProvider": null,
+        "WebId": "c498bac1-bcb8-4268-922f-47114d2d4ca6"
+      }
+    ]
+  },
+  "ReferencedAssemblyCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.ReferencedAssembly, domain.sph]], domain.sph",
+    "$values": [
+      {
+        "$type": "Bespoke.Sph.Domain.ReferencedAssembly, domain.sph",
+        "Name": "atm.OriginalData",
+        "FullName": "atm.OriginalData, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "Version": "0.0.0.0",
+        "Location": "d:\\project\\work\\atmintake\\output\\atm.OriginalData.dll",
+        "IsGac": false,
+        "IsStrongName": false,
+        "RuntimeVersion": "v4.0.30319",
+        "WebId": null
+      },
+      {
+        "$type": "Bespoke.Sph.Domain.ReferencedAssembly, domain.sph",
+        "Name": "atm.Application",
+        "FullName": "atm.Application, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "Version": "0.0.0.0",
+        "Location": "d:\\project\\work\\atmintake\\output\\atm.Application.dll",
+        "IsGac": false,
+        "IsStrongName": false,
+        "RuntimeVersion": "v4.0.30319",
+        "WebId": null
+      }
+    ]
+  },
+  "TransformDefinitionId": 0,
+  "Name": "ApplicationHakiminToRx",
+  "Description": "",
+  "InputTypeName": null,
+  "OutputTypeName": "Bespoke.atm_application.Domain.Application, atm.Application",
+  "IsPublished": false,
+  "CreatedBy": "admin2",
+  "Id": "application-hakimin-to-rx",
+  "CreatedDate": "2015-10-27T15:40:38.9931187+08:00",
+  "ChangedBy": "admin2",
+  "ChangedDate": "2015-10-29T11:27:15.644161+08:00",
+  "WebId": "e7aa9119-e8e8-48d3-f5bf-0df1c4fd9aab"
+}

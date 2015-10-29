@@ -1,0 +1,33 @@
+{
+  "$type": "Bespoke.Sph.Domain.TransformDefinition, domain.sph",
+  "ClassName": "OriginalDataToApplication",
+  "CodeNamespace": "atm.Integrations.Transforms",
+  "MapCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.Map, domain.sph]], domain.sph",
+    "$values": []
+  },
+  "FunctoidCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.Functoid, domain.sph]], domain.sph",
+    "$values": []
+  },
+  "InputCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.MethodArg, domain.sph]], domain.sph",
+    "$values": []
+  },
+  "ReferencedAssemblyCollection": {
+    "$type": "Bespoke.Sph.Domain.ObjectCollection`1[[Bespoke.Sph.Domain.ReferencedAssembly, domain.sph]], domain.sph",
+    "$values": []
+  },
+  "TransformDefinitionId": 0,
+  "Name": "OriginalDataToApplication",
+  "Description": "for duplicating data into Rx Data store",
+  "InputTypeName": "atm.Adapters.dbo.OriginalData.tblApplicantSubmited, atm.OriginalData",
+  "OutputTypeName": "Bespoke.atm_application.Domain.Application, atm.Application",
+  "IsPublished": false,
+  "CreatedBy": "admin2",
+  "Id": "original-data-to-application",
+  "CreatedDate": "2015-10-27T15:35:09.1455247+08:00",
+  "ChangedBy": "admin2",
+  "ChangedDate": "2015-10-27T15:35:09.1455247+08:00",
+  "WebId": "5ee13502-4016-4e4f-8638-282f24ea9870"
+}

@@ -10,10 +10,26 @@
 /// <reference path="../../Scripts/jsPlumb/jsPlumb.js" />
 
 
+bespoke.sph.domain.TransformDefinitionPage = function(no){
+    var model = {
+        no : ko.observable(no),
+        name : ko.observable("Page " + ko.unwrap(no)),
+        functoids : ko.observableArray(),
+        mappings : ko.observableArray(),
+        source : ko.observable(),
+        target : ko.observable(),
+        active : ko.observable(true)
+    };
+
+    return model;
+}
+
 define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_ko.mapping", objectbuilders.app, objectbuilders.router],
     function (context, logger, system, koMapping, app, router) {
 
         var td = ko.observable(new bespoke.sph.domain.TransformDefinition({ Id: "0" })),
+            pages = ko.observableArray(),
+            currentPage = ko.observable(),
             functoidToolboxItems = ko.observableArray(),
             originalEntity = "",
             errors = ko.observableArray(),
@@ -30,8 +46,21 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
 
 
 
-                var query = String.format("Id eq '{0}'", id);
-                return $.get("/transform-definition/functoids")
+                var query = String.format("Id eq '{0}'", id),                    
+                    pageId = String.format("transform-definition-page-{0}", id);
+                return  context.loadOneAsync("Setting", "Key eq '" + pageId + "'")
+                            .then(function(settingPage){
+                                if(settingPage){
+                                    var items = _(JSON.parse(ko.unwrap(settingPage.Value))).map(function(v){
+                                        return ko.mapping.fromJS(v);
+                                    });
+                                    pages(items);
+                                }else{
+                                    var pg = new bespoke.sph.domain.TransformDefinitionPage(1);
+                                    pages.push(pg);
+                                }
+                                return $.get("/transform-definition/functoids");   
+                            })
                             .then(function (list) {
                                 functoidToolboxItems(list.$values);
                                 return context.loadOneAsync("TransformDefinition", query);
@@ -64,6 +93,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
             },
             isJsPlumbReady,
             jsPlumbInstance = null,
+            changingPage = false,
             initializeFunctoid = function (fnc) {
                 var element = $("#" + fnc.WebId());
                 jsPlumbInstance.makeSource(element, {
@@ -153,15 +183,22 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                     if (!connectionInitialized) {
                         return;
                     }
+                    if(changingPage)return;
 
                     // direct map
                     if (info.sourceId.indexOf("source-field-") > -1 && info.targetId.indexOf("destination-field-") > -1) {
                         var sourceField2 = info.sourceId.replace("source-field-", "").replace("-", "."),
                             destinationField2 = info.targetId.replace("destination-field-", "").replace("-", ".");
 
+                        var exists = _(td().MapCollection()).find(function(v){ return ko.unwrap(v.Source) === sourceField2 && ko.unwrap(v.Destination) === destinationField2;});
+                        if(exists)return;
+                        if(info.connection.map) return;
+
+
                         var dm = new bespoke.sph.domain.DirectMap({ Source: sourceField2, Destination: destinationField2, WebId: system.guid() });
                         td().MapCollection.push(dm);
                         info.connection.map = dm;
+                        currentPage().mappings.push(ko.unwrap(dm.WebId));
                     }
                     //  functoid map
                     if (info.targetId.indexOf("destination-field-") > -1 && info.sourceId.indexOf("source-field-") < 0) {
@@ -171,6 +208,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                         fm.Functoid(info.sourceId);
                         td().MapCollection.push(fm);
                         info.connection.map = fm;
+                        currentPage().mappings.push(ko.unwrap(fm.WebId));
                     }
 
 
@@ -364,6 +402,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                 connectionInitialized = true;
 
                 jsPlumb.fire("jsPlumbDemoLoaded", instance);
+                currentPage(pages()[0]);
 
             },
             attached = function () {
@@ -459,7 +498,11 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                     },
                     "plugins": ["search"]
 
-                }).jstree("open_all");
+                })
+                .jstree("open_all")
+                .bind("after_open.jstree after_close.jstree", function(){
+                    currentPage(currentPage());
+                });
 
 
                 var destinations = [];
@@ -504,19 +547,26 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                         fnt.Y(y);
                     }
                 });
-                var data = ko.mapping.toJSON(td);
+                var data = ko.mapping.toJSON(td),
+                    pageId = String.format("transform-definition-page-{0}", ko.unwrap(td().Id)),
+                    pageSetting = [new bespoke.sph.domain.Setting({Id : pageId, WebId : pageId, Key : pageId, Value : ko.mapping.toJSON(pages)})],
+                    pageJson = ko.mapping.toJSON(pageSetting);
                 isBusy(true);
 
 
-                return context.post(data, "/transform-definition")
-                     .done(function (result) {
-                         isBusy(false);
-                         if (!td().Id() || td().Id() === "0") {
-                             td().Id(result.id);
-                             router.navigate("transform.definition.edit/" + result.id);
-                         }
 
-                         originalEntity = ko.toJSON(td);
+                return context.post(pageJson, "/setting/save")
+                        .then(function(){
+                            return context.post(data, "/transform-definition");
+                        }) 
+                        .then(function (result) {
+                             isBusy(false);
+                             if (!td().Id() || td().Id() === "0") {
+                                 td().Id(result.id);
+                                 router.navigate("transform.definition.edit/" + result.id);
+                             }
+
+                             originalEntity = ko.toJSON(td);
                      });
             },
             canDeactivate = function () {
@@ -627,7 +677,106 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                                  logger.error("You alread have the partial code define, in " + result.message);
                              }
                          });
+            },
+            addPage = function(){
+                var pg = new bespoke.sph.domain.TransformDefinitionPage( pages().length + 1 );
+                pages.push(pg);
+
+                currentPage(pg);
+                return Task.fromResult(0);
+            },
+            changePage = function(page){
+                currentPage(page);
+                console.log(ko.toJS(page));
             };
+
+            currentPage.subscribe(function(page){
+
+                var instance = jsPlumbInstance;
+                changingPage = true;
+
+                _(pages()).each(function(p){ p.active(false);});
+                page.active(true);
+
+                instance.deleteEveryEndpoint();
+                // redraw everything here
+                var sourceWindows = jsPlumb.getSelector("#source-panel li.jstree-leaf");
+                var targetWindows = jsPlumb.getSelector("#destination-panel li.jstree-leaf");
+
+               
+                instance.makeSource(sourceWindows, {
+                        //filter: "li.jstree-leaf",
+                        anchor: ["RightMiddle"],
+                        connector: ["Straight"],
+                        connectorStyle: { strokeStyle: "#5c96bc", lineWidth: 2, outlineColor: "transparent", outlineWidth: 4 }
+                    });
+                          
+
+                instance.makeTarget(targetWindows, {
+                    //filter: "a.jstree-anchor",
+                    dropOptions: { hoverClass: "dragHover" },
+                    anchor: ["LeftMiddle"],
+                    maxConnections: 1,
+                    onMaxConnections: function (info, e) {
+                        alert("Maximum connections (" + info.maxConnections + ") reached" + e);
+                    }
+                });
+
+
+                // direct maps
+                _(td().MapCollection()).each(function (m) {
+                    var id = ko.unwrap(m.WebId);
+                    if(page.mappings().indexOf(id) < 0 )return;
+                    if(!ko.unwrap(m.Source)) return;
+                    
+                    try {
+
+                        var src1 = "source-field-" + ko.unwrap(m.Source).replace(".", "-"),
+                            src = src1,
+                            target = "destination-field-" + ko.unwrap(m.Destination).replace(".", "-");
+
+                        while(src.lastIndexOf("-") > -1 ){
+                            if(document.getElementById(src))break;
+                            src = src.substring(0, src.lastIndexOf("-"));
+                        }
+
+
+
+                        if(!document.getElementById(src))return;
+                        if(!document.getElementById(target))return;
+
+                        var original = src1 === src;
+                        if(!original){
+
+                            var conn2 = jsPlumbInstance.connect({ 
+                                        source: src, 
+                                        target: target, 
+                                        paintStyle:{ lineWidth:1, strokeStyle:'rgba(190, 190, 190, 0.4)' },
+                                        anchors:["Right", "Left"],
+                                        endpoint:[ "Rectangle", { width:10, height:8 } ]
+                                    });
+                            conn2.map = m;
+                            return;
+                        }
+                        var conn = jsPlumbInstance.connect({ source: src, target: target});
+                        conn.map = m;
+
+                    }catch (e) {
+                        console.log("Cannot connect", ko.mapping.toJS(m));
+                        console.log(e);
+                    }
+                    
+                });
+                // functoid maps
+                _(td().MapCollection()).each(function (m) {
+                    if (typeof m.Source === "undefined") {
+                        var conn = jsPlumbInstance.connect({ source: ko.unwrap(m.Functoid), target: "destination-field-" + ko.unwrap(m.Destination).replace(".", "-") });
+                        conn.map = m;
+                    }
+                });
+
+                changingPage = false;
+            });
 
         var vm = {
             isBusy: isBusy,
@@ -641,6 +790,8 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
             destinationSchema: destinationSchema,
             td: td,
             editProp: editProp,
+            changePage : changePage,
+            pages : pages,
             toolbar: {
                 saveCommand: save,
                 commands: ko.observableArray([
@@ -672,6 +823,11 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                             }
                             return true;
                         })
+                    },
+                    {
+                        command : addPage,
+                        caption : "Add Page",
+                        icon : "fa fa-file-o"
                     }
                 ])
             }
