@@ -91,7 +91,7 @@
                 </li>
             </ul>
         </div>
-        <div id="container-canvas" data-bind="foreach: FunctoidCollection">
+        <div id="container-canvas" data-bind="foreach: $root.functoids">
             <!-- ko ifnot : ko.unwrap($type) === 'Bespoke.Sph.Domain.SourceFunctoid, domain.sph' -->
             <div class="functoid" style="z-index: 999" data-bind="style : {'left': X() + 'px','top': Y() + 'px'},
                 attr : {id : WebId},
