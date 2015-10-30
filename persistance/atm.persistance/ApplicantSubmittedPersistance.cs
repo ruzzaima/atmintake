@@ -56,7 +56,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                     exist.BirthCertNo = appl.BirthCertNo;
                     exist.BirthCityCd = appl.BirthCityCd;
                     exist.BirthCountryCd = appl.BirthCountryCd;
-                    exist.BirthDt = appl.BirthDt.Value;
+                    exist.BirthDt = appl.BirthDt?? DateTime.Now;
                     exist.BirthPlace = appl.BirthPlace;
                     exist.BirthStateCd = appl.BirthStateCd;
                     exist.BloodTypeCd = appl.BloodTypeCd;
@@ -221,21 +221,19 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             var list = new List<ApplicantSubmitted>();
 
-            if (acquisitionid != 0)
+            if (acquisitionid == 0) return list;
+            using (var entities = new atmEntities())
             {
-                using (var entities = new atmEntities())
+                var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
+                if (!exist.Any()) return list;
+                foreach (var u in exist)
                 {
-                    var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
-                    if (exist.Any())
-                        foreach (var u in exist)
-                        {
-                            var app = BindingToClass(u);
-                            var edus = GetEducation(app.ApplicantId, app.AcquisitionId);
-                            foreach (var ed in edus)
-                                app.ApplicantEducationSubmittedCollection.Add(ed);
+                    var app = BindingToClass(u);
+                    var edus = GetEducation(app.ApplicantId, app.AcquisitionId);
+                    foreach (var ed in edus)
+                        app.ApplicantEducationSubmittedCollection.Add(ed);
 
-                            list.Add(app);
-                        }
+                    list.Add(app);
                 }
             }
             return list;
@@ -719,7 +717,7 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
                 BirthCertNo = appl.BirthCertNo,
                 BirthCityCd = appl.BirthCityCd,
                 BirthCountryCd = appl.BirthCountryCd,
-                BirthDt = appl.BirthDt.Value,
+                BirthDt = appl.BirthDt ?? DateTime.MinValue,
                 BirthPlace = appl.BirthPlace,
                 BirthStateCd = appl.BirthStateCd,
                 BloodTypeCd = appl.BloodTypeCd,
@@ -931,21 +929,19 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             var list = new List<ApplicantSubmitted>();
 
-            if (acquisitionid != 0)
+            if (acquisitionid == 0) return list;
+            using (var entities = new atmEntities())
             {
-                using (var entities = new atmEntities())
+                var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid && a.RaceCd == racecode select a;
+                if (!exist.Any()) return list;
+                foreach (var u in exist)
                 {
-                    var exist = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid && a.RaceCd == racecode select a;
-                    if (exist.Any())
-                        foreach (var u in exist)
-                        {
-                            var app = BindingToClass(u);
-                            var edus = GetEducation(app.ApplicantId, acquisitionid);
-                            foreach (var ed in edus)
-                                app.ApplicantEducationSubmittedCollection.Add(ed);
+                    var app = BindingToClass(u);
+                    var edus = GetEducation(app.ApplicantId, acquisitionid);
+                    foreach (var ed in edus)
+                        app.ApplicantEducationSubmittedCollection.Add(ed);
 
-                            list.Add(app);
-                        }
+                    list.Add(app);
                 }
             }
             return list;
@@ -956,46 +952,42 @@ namespace SevenH.MMCSB.Atm.Entity.Persistance
         {
             var list = new List<ApplicantSubmitted>();
             total = 0;
-            if (acquisitionid != 0)
+            if (acquisitionid == 0) return list;
+            using (var entities = new atmEntities())
             {
-                using (var entities = new atmEntities())
+                var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
+                if (!all.HasValue)
                 {
-                    var l = from a in entities.tblApplicantSubmiteds where a.AcquisitionId == acquisitionid select a;
-                    if (!all.HasValue)
-                    {
-                        if (invitationfirtselection.HasValue)
-                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
-                        if (firstselection.HasValue)
-                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
-                        if (finalselection.HasValue)
-                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FinalSelectionInd == finalselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
-                        if (!invitationfirtselection.HasValue && !firstselection.HasValue && !finalselection.HasValue)
-                            l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
-                    }
-                    if (!string.IsNullOrWhiteSpace(name))
-                        l = l.Where(a => a.FullName.Contains(name));
-                    if (!string.IsNullOrWhiteSpace(icno))
-                        l = l.Where(a => a.NewICNo.Contains(icno));
-                    if (!string.IsNullOrWhiteSpace(searchcriteria))
-                        l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
+                    if (invitationfirtselection.HasValue)
+                        l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                    if (firstselection.HasValue)
+                        l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                    if (finalselection.HasValue)
+                        l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.FinalSelectionInd == finalselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                    if (!invitationfirtselection.HasValue && !firstselection.HasValue && !finalselection.HasValue)
+                        l = from a in entities.tblApplicantSubmiteds join b in entities.tblApplications on a.ApplicantId equals b.ApplicantId where b.InvitationFirstSel == invitationfirtselection && b.FinalSelectionInd == finalselection && b.FirstSelectionInd == firstselection && a.AcquisitionId == acquisitionid && b.AcquisitionId == acquisitionid select a;
+                }
+                if (!string.IsNullOrWhiteSpace(name))
+                    l = l.Where(a => a.FullName.Contains(name));
+                if (!string.IsNullOrWhiteSpace(icno))
+                    l = l.Where(a => a.NewICNo.Contains(icno));
+                if (!string.IsNullOrWhiteSpace(searchcriteria))
+                    l = l.Where(a => a.NewICNo.Contains(searchcriteria) || a.FullName.Contains(searchcriteria));
 
-                    total = l.Count();
+                total = l.Count();
 
-                    if (take.HasValue && skip.HasValue)
-                        l = l.OrderBy(a => a.FullName).Skip(skip.Value).Take(take.Value);
+                if (take.HasValue && skip.HasValue)
+                    l = l.OrderBy(a => a.FullName).Skip(skip.Value).Take(take.Value);
 
-                    if (l.Any())
-                    {
-                        foreach (var app in l)
-                        {
-                            var aps = BindingToClass(app);
-                            if (aps.AcquisitionId != 0)
-                                aps.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(aps.AcquisitionId);
-                            aps.Application = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetByApplicantIdAndAcquisitionId(aps.ApplicantId, aps.AcquisitionId);
+                if (!l.Any()) return list;
+                foreach (var app in l)
+                {
+                    var aps = BindingToClass(app);
+                    if (aps.AcquisitionId != 0)
+                        aps.Acquisition = ObjectBuilder.GetObject<IAcquisitionPersistence>("AcquisitionPersistence").GetAcquisition(aps.AcquisitionId);
+                    aps.Application = ObjectBuilder.GetObject<IApplicationPersistance>("ApplicationPersistance").GetByApplicantIdAndAcquisitionId(aps.ApplicantId, aps.AcquisitionId);
 
-                            list.Add(aps);
-                        }
-                    }
+                    list.Add(aps);
                 }
             }
             return list;
