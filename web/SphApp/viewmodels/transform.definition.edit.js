@@ -8,8 +8,7 @@
 /// <reference path="../services/datacontext.js" />
 /// <reference path="../schemas/trigger.workflow.g.js" />
 /// <reference path="../../Scripts/jsPlumb/jsPlumb.js" />
-
-
+/// <reference path="~/Scripts/_task.js" />
 bespoke.sph.domain.TransformDefinitionPage = function(no, name){
     var model = {
         no : ko.observable(no),
@@ -30,6 +29,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
         var td = ko.observable(new bespoke.sph.domain.TransformDefinition({ Id: "0" })),
             pages = ko.observableArray(),
             currentPage = ko.observable(),
+            hideUnconnectedNodes = ko.observable(false),
             functoidToolboxItems = ko.observableArray(),
             functoids = ko.observableArray(),
             originalEntity = "",
@@ -56,9 +56,6 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                                         return ko.mapping.fromJS(v);
                                     });
                                     pages(items);
-                                }else{
-                                    var pg = new bespoke.sph.domain.TransformDefinitionPage(1);
-                                    pages.push(pg);
                                 }
                                 return $.get("/transform-definition/functoids");   
                             })
@@ -72,6 +69,14 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                                     v.designer = ko.observable({ FontAwesomeIcon: "", "BootstrapIcon": "", "PngIcon": "", Category: "" });
                                 });
                                 td(b);
+                                if(pages().length === 0){
+
+                                    var pg = new bespoke.sph.domain.TransformDefinitionPage(1, "Page 1");
+                                    pg.functoids(_(b.FunctoidCollection()).map(function(v){ return ko.unwrap(v.WebId);}));
+                                    pg.mappings(_(b.MapCollection()).map(function(v){ return ko.unwrap(v.WebId);}));
+                                    pages.push(pg);
+                                }
+
                                 originalEntity = ko.toJSON(td);
                                 return context.get("/transform-definition/json-schema/" + b.OutputTypeName());
 
@@ -338,6 +343,11 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                         for (var key in branch.properties) {
                             if (branch.properties.hasOwnProperty(key)) {
 
+                                // if hide unconnected
+                                if(hideUnconnectedNodes()){
+                                    
+                                }
+
                                 var leaf = {
                                     id: side + parent + key ,
                                     icon : icon(branch.properties[key]),
@@ -365,6 +375,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                 };
 
                 buildTree("source-field-", root, "", sources);
+                
                 $("#source-panel").jstree({
                     'core': {
                         'data': sources
@@ -376,10 +387,9 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                                     action: function () {
                                         var parent = $(element).jstree("get_selected", true),
                                             mb = parent[0].data;
-
-
+                                        console.log(mb);
                                     }
-                                },
+                                }
                         ]
                     },
                     "plugins": ["search","contextmenu"]
@@ -405,9 +415,10 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                                         var parent = $(element).jstree("get_selected", true),
                                             mb = parent[0].data;
 
+                                        console.log(mb);
 
                                     }
-                                },
+                                }
                         ]
                     },
                     "plugins": ["search","contextmenu"]
@@ -427,6 +438,20 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                             li.show();
                         }
 
+                    });
+                });
+                $.getScript("/scripts/jquery.contextMenu.js", function () {
+
+                    $.contextMenu({
+                        selector: "ul.nav-pills>li",
+                        callback: function (key) {
+                            console.log(ko.dataFor(this));
+                            console.log(key);
+                        },
+                        items: {
+                            "rename": { name: "Rename<br/>", icon: "bug" },
+                            "delete": { name: "Delete<br/>", icon: "circle-o" }
+                        }
                     });
                 });
 
@@ -504,18 +529,21 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                             $("div.modalBlockout,div.modalHost").remove();
                             if (!result) return;
                             if (result === "OK") {
-                                for (var g in td()) {
-                                    if (typeof td()[g] === "function" && (td()[g].name === "c" || td()[g].name === "observable")) {
-                                        td()[g](ko.unwrap(clone[g]));
-                                    } else {
-                                        td()[g] = clone[g];
+                                var td1 = td();
+                                for (var g in td1) {
+                                    if (td1.hasOwnProperty(g)) {
+                                        if (typeof td1[g] === "function" && (td1[g].name === "c" || td1[g].name === "observable")) {
+                                            td1[g](ko.unwrap(clone[g]));
+                                        } else {
+                                            td1[g] = clone[g];
+                                        }
                                     }
                                 }
 
                                 // try build the tree for new item
-                                if (!td().Id() || td().Id() === "0") {
+                                if (!td1.Id() || td1.Id() === "0") {
                                     var inTask = context.post(ko.toJSON(td), "/transform-definition/json-schema"),
-                                       outTask = context.get("/transform-definition/json-schema/" + td().OutputTypeName());
+                                       outTask = context.get("/transform-definition/json-schema/" + td1.OutputTypeName());
                                     $.when(inTask, outTask).done(function (input, output) {
                                         sourceSchema(input[0]);
                                         destinationSchema(output[0]);
@@ -539,7 +567,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                             errors.removeAll();
                         } else {
                             logger.error("There are errors in your map, !!!");
-                            var uniqueList = _.uniq(result.Errors, function (item, key, a) {
+                            var uniqueList = _.uniq(result.Errors, function (item) {
                                 return item.ItemWebId;
                             });
                             errors(uniqueList);
@@ -780,7 +808,21 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                             conn2.map = m;
                             return;
                         }
-                        var conn = jsPlumbInstance.connect({ source: src, target: target});
+                        var label = "From : "+ ko.unwrap(m.Source) +"<br>To : " + ko.unwrap(m.Destination),
+                            conn = jsPlumbInstance.connect({ source: src, target: target});
+                        conn.bind("mouseenter", function(conn1) {
+                            if(conn1.getOverlay("connLabel")){
+                                return;
+                            }
+                            conn1.addOverlay(["Label", { label: label, location: 0.5, id: "connLabel", cssClass: "connector-label" }]);
+                            setTimeout(function(){
+                                conn1.removeOverlay("connLabel");
+                            }, 5000);
+                        }); 
+
+                        conn.bind("mouseout", function(conn1) {
+                            conn1.removeOverlay("connLabel");
+                        });
                         conn.map = m;
 
                     }catch (e) {
@@ -819,6 +861,7 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
             td: td,
             editProp: editProp,
             changePage : changePage,
+            hideUnconnectedNodes: hideUnconnectedNodes,
             pages : pages,
             toolbar: {
                 saveCommand: save,
@@ -857,7 +900,13 @@ define(["services/datacontext", "services/logger", objectbuilders.system, "ko/_k
                         caption : "Add Page",
                         icon : "fa fa-file-o"
                     }
-                ])
+                ]),
+                toggleCommands : ko.observableArray([
+                {
+                    caption: "Hide unconnected members",
+                    icon: "fa fa-users",
+                    toggle : hideUnconnectedNodes
+                }])
             }
         };
 
