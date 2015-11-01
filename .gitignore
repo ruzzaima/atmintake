@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -25,3 +25,7 @@
 /sources/_generated/Application
 /sources/_generated/OriginalData
 /sources/_generated/ApplicationHakiminToRx
+TestResults/
+test/atm.load.test/obj/
+*.webtestresult
+test/atm.load.test/bin/
