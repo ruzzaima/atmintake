@@ -5,67 +5,25 @@ namespace SevenH.MMCSB.Atm.Web.Models
 {
     public class StatisticViewModel
     {
-        private List<ApplicantSubmitted> m_listOfApplicant = new List<ApplicantSubmitted>();
-        private List<State> m_listOfState = new List<State>();
-        private Acquisition m_acquisition = new Acquisition();
-        private List<Race> m_listOfRace = new List<Race>();
-        private List<Ethnic> m_listOfEthnic = new List<Ethnic>();
-        private Race m_race = new Race();
-        private List<HighEduLevel> m_highEduLevel = new List<HighEduLevel>();
-        private List<Religion> m_listOfReligion = new List<Religion>();
-
-        public List<Religion> ListOfReligion
-        {
-            get { return m_listOfReligion; }
-            set { m_listOfReligion = value; }
-        }
+        public List<Religion> ListOfReligion { get; set; } = new List<Religion>();
 
 
-        public List<HighEduLevel> ListOfHighEduLevel
-        {
-            get { return m_highEduLevel; }
-            set { m_highEduLevel = value; }
-        }
+        public List<HighEduLevel> ListOfHighEduLevel { get; set; } = new List<HighEduLevel>();
 
 
-        public Race Race
-        {
-            get { return m_race; }
-            set { m_race = value; }
-        }
+        public Race Race { get; set; } = new Race();
 
 
-        public List<Ethnic> ListOfEthnic
-        {
-            get { return m_listOfEthnic; }
-            set { m_listOfEthnic = value; }
-        }
-
-        
-        public List<Race> ListOfRace
-        {
-            get { return m_listOfRace; }
-            set { m_listOfRace = value; }
-        }
-
-        public Acquisition Acquisition
-        {
-            get { return m_acquisition; }
-            set { m_acquisition = value; }
-        }
+        public List<Ethnic> ListOfEthnic { get; set; } = new List<Ethnic>();
 
 
-        public List<State> ListOfState
-        {
-            get { return m_listOfState; }
-            set { m_listOfState = value; }
-        }
+        public List<Race> ListOfRace { get; set; } = new List<Race>();
 
-        public List<ApplicantSubmitted> ListOfApplicant
-        {
-            get { return m_listOfApplicant; }
-            set { m_listOfApplicant = value; }
-        }
+        public Acquisition Acquisition { get; set; } = new Acquisition();
 
+
+        public List<State> ListOfState { get; set; } = new List<State>();
+
+        public List<ApplicantSubmitted> ListOfApplicant { get; set; } = new List<ApplicantSubmitted>();
     }
 }

@@ -5,13 +5,6 @@ namespace SevenH.MMCSB.Atm.Web.Models
 {
     public class ApplicationViewModel
     {
-        private List<Advertisment> m_listOfAdvertisment = new List<Advertisment>();
-
-        public List<Advertisment> ListOfAdvertisment
-        {
-            get { return m_listOfAdvertisment; }
-            set { m_listOfAdvertisment = value; }
-        }
-
+        public List<Advertisment> ListOfAdvertisment { get; set; } = new List<Advertisment>();
     }
 }
