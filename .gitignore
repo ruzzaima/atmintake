@@ -2,30 +2,19 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/domain/atm.domain/bin/Debug
-/domain/atm.domain/obj/Debug
-/persistance/atm.persistance/bin/Debug
-/persistance/atm.nhibernate.persistance/obj
-/persistance/atm.nhibernate.persistance/bin
-/persistance/atm.persistance/obj/Debug
-/tools/atm.migration/bin/Debug
-/tools/atm.migration/obj/Debug
-/web/atm.web/bin
-/web/atm.web/obj/Debug
+**/bin/
+**/obj/
 /elasticsearch
 /IIS Express
 /rabbitmq_server
 /schedulers
 /subscribers.host
-/tools
 /packages
-/domain/atm.domain/bin
-/web/bin
-/web/obj/Debug
-/sources/_generated/Application
-/sources/_generated/OriginalData
-/sources/_generated/ApplicationHakiminToRx
+/sources/_generated
 TestResults/
-test/atm.load.test/obj/
 *.webtestresult
-test/atm.load.test/bin/
+/tools/csproj.gen.exe.config
+/tools/dead.letter.viewer.exe.config
+/tools/mapping.compiler.exe.config
+/tools/offline.generator.exe.config
+/tools/sph.builder.exe.config
